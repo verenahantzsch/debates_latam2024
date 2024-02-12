@@ -1,0 +1,44 @@
+﻿"ncat_subtipov2","cat_pais","n_subtipo_pais","n_debates_con_subtipo_pais","n_debates_pais","n_debates_osc_pais","pr_debates_osc_sobre_totdebates","pr_debates_con_subtipo_pais_sobre_debatesosc","pr_debates_con_subtipo_pais_sobre_totdebates"
+"ong_democracia","Argentina",2,2,4,2,50,100,50
+"asoc_empresaria","Bolivia",2,2,13,5,38.5,40,15.4
+"asoc_iglesia","Bolivia",1,1,13,5,38.5,20,7.7
+"coordinadora","Bolivia",1,1,13,5,38.5,20,7.7
+"movimiento_estudiantil","Bolivia",1,1,13,5,38.5,20,7.7
+"ong_ddhh","Bolivia",1,1,13,5,38.5,20,7.7
+"ong_internacional","Bolivia",1,1,13,5,38.5,20,7.7
+"asoc_empresaria","Brasil",1,1,51,4,7.8,25,2
+"asoc_iglesia","Brasil",3,3,51,4,7.8,75,5.8999999999999995
+"asoc_empresaria","Chile",2,2,29,5,17.2,40,6.9
+"coordinadora","Chile",3,1,29,5,17.2,20,3.4000000000000004
+"ong_genero","Chile",12,3,29,5,17.2,60,10.299999999999999
+"asoc_empresaria","Colombia",11,8,45,14,31.1,57.099999999999994,17.8
+"coordinadora","Colombia",6,4,45,14,31.1,28.599999999999998,8.9
+"empresa","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"movimiento_estudiantil","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"ong_ddhh","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"ong_democracia","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"ong_internacional","Colombia",3,2,45,14,31.1,14.299999999999999,4.3999999999999995
+"thinkthank","Colombia",3,2,45,14,31.1,14.299999999999999,4.3999999999999995
+"asoc_empresaria","Costa Rica",3,3,51,7,13.700000000000001,42.9,5.8999999999999995
+"asoc_prof","Costa Rica",2,2,51,7,13.700000000000001,28.599999999999998,3.9
+"asoc_sindical","Costa Rica",1,1,51,7,13.700000000000001,14.299999999999999,2
+"ong_internacional","Costa Rica",1,1,51,7,13.700000000000001,14.299999999999999,2
+"asoc_empresaria","Ecuador",6,6,15,6,40,100,40
+"asoc_empresaria","Guatemala",13,13,26,21,80.80000000000001,61.9,50
+"asoc_iglesia","Guatemala",7,4,26,21,80.80000000000001,19,15.4
+"ong_democracia","Guatemala",1,1,26,21,80.80000000000001,4.8,3.8
+"ong_internacional","Guatemala",1,1,26,21,80.80000000000001,4.8,3.8
+"ong_migrantes","Guatemala",3,2,26,21,80.80000000000001,9.5,7.7
+"thinkthank","Guatemala",3,3,26,21,80.80000000000001,14.299999999999999,11.5
+"asoc_empresaria","Honduras",1,1,6,1,16.7,100,16.7
+"movimiento_estudiantil","Mexico",1,1,11,1,9.1,100,9.1
+"asoc_empresaria","Panama",6,6,17,11,64.7,54.50000000000001,35.3
+"asoc_iglesia","Panama",1,1,17,11,64.7,9.1,5.8999999999999995
+"thinkthank","Panama",4,4,17,11,64.7,36.4,23.5
+"asoc_empresaria","Paraguay",2,1,10,4,40,25,10
+"asoc_prof","Paraguay",1,1,10,4,40,25,10
+"ong_democracia","Paraguay",3,3,10,4,40,75,30
+"asoc_prof","Peru",2,2,16,4,25,50,12.5
+"ong_democracia","Peru",2,2,16,4,25,50,12.5
+"thinkthank","Peru",1,1,16,4,25,25,6.2
+"asoc_empresaria","Republica Dominicana",1,1,1,1,100,100,100

@@ -1,0 +1,159 @@
+﻿"english_cat_tipoorgv2","english_ncat_subtipov2","english_cat_pais","n_subtipo_pais","n_debates_con_subtipo_pais","n_debates_pais","n_debates_tipo_pais","pr_debates_tipo_sobre_totdebates","pr_debates_con_subtipo_pais_sobre_debatestipo","pr_debates_con_subtipo_pais_sobre_totdebates"
+"cso","ong_democracia","Argentina",2,2,4,2,50,100,50
+"state","electoral_state","Argentina",2,2,4,2,50,100,50
+"cmm","digital_privado","Bolivia",1,1,13,10,76.9,10,7.7
+"cmm","media_association","Bolivia",1,1,13,10,76.9,10,7.7
+"cmm","open_private_tv","Bolivia",4,3,13,10,76.9,30,23.1
+"cmm","press_association","Bolivia",6,6,13,10,76.9,60,46.2
+"cmm","private_graphics","Bolivia",2,1,13,10,76.9,10,7.7
+"cso","business_association","Bolivia",2,2,13,5,38.5,40,15.4
+"cso","church_association","Bolivia",1,1,13,5,38.5,20,7.7
+"cso","coordinates","Bolivia",1,1,13,5,38.5,20,7.7
+"cso","ngo_ddhh","Bolivia",1,1,13,5,38.5,20,7.7
+"cso","ngo_international","Bolivia",1,1,13,5,38.5,20,7.7
+"cso","student_movement","Bolivia",1,1,13,5,38.5,20,7.7
+"educ","public_education","Bolivia",1,1,13,1,7.7,100,7.7
+"cmm","open_church_tv","Brazil",4,3,51,49,96.1,6.1,5.8999999999999995
+"cmm","open_private_tv","Brazil",50,44,51,49,96.1,89.8,86.3
+"cmm","press_association","Brazil",1,1,51,49,96.1,2,2
+"cmm","private_graphics","Brazil",7,7,51,49,96.1,14.299999999999999,13.700000000000001
+"cmm","private_radio","Brazil",3,3,51,49,96.1,6.1,5.8999999999999995
+"cmm","private_telecommunications","Brazil",5,5,51,49,96.1,10.2,9.8
+"cso","business_association","Brazil",1,1,51,4,7.8,25,2
+"cso","church_association","Brazil",3,3,51,4,7.8,75,5.8999999999999995
+"educ","church_association_education","Brazil",1,1,51,1,2,100,2
+"educ","church_education","Brazil",1,1,51,1,2,100,2
+"educ","private_education","Brazil",1,1,51,1,2,100,2
+"pmm","open_public_tv","Brazil",1,1,51,1,2,100,2
+"state","autonomous_state","Brazil",1,1,51,3,5.8999999999999995,33.300000000000004,2
+"state","subnational_state","Brazil",2,2,51,3,5.8999999999999995,66.7,3.9
+"cmm","digital_privado","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"cmm","international_tv","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"cmm","media_association","Chile",18,18,29,23,79.3,78.3,62.1
+"cmm","open_private_tv","Chile",3,3,29,23,79.3,13,10.299999999999999
+"cmm","private_radio","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"cmm","tv_payed_private","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"cso","business_association","Chile",2,2,29,5,17.2,40,6.9
+"cso","coordinates","Chile",3,1,29,5,17.2,20,3.4000000000000004
+"cso","ngo_gender","Chile",12,3,29,5,17.2,60,10.299999999999999
+"educ","educ_privada","Chile",1,1,29,3,10.299999999999999,33.300000000000004,3.4000000000000004
+"educ","public_education","Chile",2,2,29,3,10.299999999999999,66.7,6.9
+"pmm","open_public_tv","Chile",1,1,29,1,3.4000000000000004,100,3.4000000000000004
+"cmm","digital_privado","Colombia",5,3,45,37,82.19999999999999,8.1,6.7
+"cmm","international_tv","Colombia",1,1,45,37,82.19999999999999,2.7,2.1999999999999997
+"cmm","open_private_tv","Colombia",22,21,45,37,82.19999999999999,56.8,46.7
+"cmm","private_graphics","Colombia",24,21,45,37,82.19999999999999,56.8,46.7
+"cmm","private_production_tv","Colombia",4,2,45,37,82.19999999999999,5.4,4.3999999999999995
+"cmm","private_program_tv","Colombia",2,1,45,37,82.19999999999999,2.7,2.1999999999999997
+"cmm","private_radio","Colombia",10,10,45,37,82.19999999999999,27,22.2
+"cmm","tv_payed_private","Colombia",3,3,45,37,82.19999999999999,8.1,6.7
+"cso","business_association","Colombia",11,8,45,14,31.1,57.099999999999994,17.8
+"cso","company","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"cso","coordinates","Colombia",6,4,45,14,31.1,28.599999999999998,8.9
+"cso","ngo_ddhh","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"cso","ngo_international","Colombia",3,2,45,14,31.1,14.299999999999999,4.3999999999999995
+"cso","ong_democracia","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"cso","student_movement","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"cso","thinkthank","Colombia",3,2,45,14,31.1,14.299999999999999,4.3999999999999995
+"educ","church_education","Colombia",1,1,45,9,20,11.1,2.1999999999999997
+"educ","educ_privada","Colombia",6,6,45,9,20,66.7,13.3
+"educ","education","Colombia",1,1,45,9,20,11.1,2.1999999999999997
+"educ","public_education","Colombia",1,1,45,9,20,11.1,2.1999999999999997
+"pmm","open_public_tv","Colombia",1,1,45,7,15.6,14.299999999999999,2.1999999999999997
+"pmm","public_cultural_space","Colombia",1,1,45,7,15.6,14.299999999999999,2.1999999999999997
+"pmm","public_subnational_tv","Colombia",6,6,45,7,15.6,85.7,13.3
+"state","state_media","Colombia",2,2,45,3,6.7,66.7,4.3999999999999995
+"state","subnational_state","Colombia",1,1,45,3,6.7,33.300000000000004,2.1999999999999997
+"cmm","digital_privado","Costa Rica",2,2,51,26,51,7.7,3.9
+"cmm","open_private_tv","Costa Rica",22,20,51,26,51,76.9,39.2
+"cmm","private_graphics","Costa Rica",4,2,51,26,51,7.7,3.9
+"cmm","private_radio","Costa Rica",6,6,51,26,51,23.1,11.799999999999999
+"cmm","university_graphics","Costa Rica",1,1,51,26,51,3.8,2
+"cso","association_professional","Costa Rica",2,2,51,7,13.700000000000001,28.599999999999998,3.9
+"cso","business_association","Costa Rica",3,3,51,7,13.700000000000001,42.9,5.8999999999999995
+"cso","ngo_international","Costa Rica",1,1,51,7,13.700000000000001,14.299999999999999,2
+"cso","trade_union_association","Costa Rica",1,1,51,7,13.700000000000001,14.299999999999999,2
+"educ","educ_privada","Costa Rica",5,5,51,16,31.4,31.2,9.8
+"educ","public_education","Costa Rica",10,10,51,16,31.4,62.5,19.6
+"educ","public_education_association","Costa Rica",1,1,51,16,31.4,6.2,2
+"pmm","open_public_tv","Costa Rica",2,2,51,2,3.9,100,3.9
+"state","electoral_state","Costa Rica",3,3,51,3,5.8999999999999995,100,5.8999999999999995
+NA,NA,"Costa Rica",5,5,51,5,9.8,100,9.8
+"cso","business_association","Dominican Republic",1,1,1,1,100,100,100
+"cmm","international_tv","Ecuador",1,1,15,6,40,16.7,6.7
+"cmm","media_association","Ecuador",1,1,15,6,40,16.7,6.7
+"cmm","open_private_tv","Ecuador",5,5,15,6,40,83.3,33.300000000000004
+"cmm","press_association","Ecuador",1,1,15,6,40,16.7,6.7
+"cmm","private_graphics","Ecuador",2,2,15,6,40,33.300000000000004,13.3
+"cso","business_association","Ecuador",6,6,15,6,40,100,40
+"educ","church_education","Ecuador",1,1,15,1,6.7,100,6.7
+"state","electoral_state","Ecuador",2,2,15,2,13.3,100,13.3
+NA,NA,"Ecuador",1,1,15,1,6.7,100,6.7
+"cmm","media_association","El Salvador",2,2,4,3,75,66.7,50
+"cmm","open_private_tv","El Salvador",1,1,4,3,75,33.300000000000004,25
+"educ","public_education","El Salvador",1,1,4,1,25,100,25
+"cmm","international_tv","Guatemala",2,2,26,7,26.900000000000002,28.599999999999998,7.7
+"cmm","open_private_tv","Guatemala",7,7,26,7,26.900000000000002,100,26.900000000000002
+"cso","business_association","Guatemala",13,13,26,21,80.80000000000001,61.9,50
+"cso","church_association","Guatemala",7,4,26,21,80.80000000000001,19,15.4
+"cso","migrant NGO","Guatemala",3,2,26,21,80.80000000000001,9.5,7.7
+"cso","ngo_international","Guatemala",1,1,26,21,80.80000000000001,4.8,3.8
+"cso","ong_democracia","Guatemala",1,1,26,21,80.80000000000001,4.8,3.8
+"cso","thinkthank","Guatemala",3,3,26,21,80.80000000000001,14.299999999999999,11.5
+"educ","educ_privada","Guatemala",2,2,26,3,11.5,66.7,7.7
+"educ","public_education","Guatemala",1,1,26,3,11.5,33.300000000000004,3.8
+"cmm","open_university_tv","Honduras",2,2,6,2,33.300000000000004,100,33.300000000000004
+"cso","business_association","Honduras",1,1,6,1,16.7,100,16.7
+"educ","educ_privada","Honduras",2,2,6,2,33.300000000000004,100,33.300000000000004
+NA,NA,"Honduras",3,3,6,3,50,100,50
+"cmm","media_association","Mexico",5,5,11,5,45.5,100,45.5
+"cso","student_movement","Mexico",1,1,11,1,9.1,100,9.1
+"state","electoral_state","Mexico",7,7,11,7,63.6,100,63.6
+"cmm","international_tv","Nicaragua",1,1,2,1,50,100,50
+"cmm","open_private_tv","Nicaragua",1,1,2,1,50,100,50
+NA,NA,"Nicaragua",1,1,2,1,50,100,50
+"cmm","open_church_tv","Panama",3,3,17,7,41.199999999999996,42.9,17.599999999999998
+"cmm","open_private_tv","Panama",13,7,17,7,41.199999999999996,100,41.199999999999996
+"cso","business_association","Panama",6,6,17,11,64.7,54.50000000000001,35.3
+"cso","church_association","Panama",1,1,17,11,64.7,9.1,5.8999999999999995
+"cso","thinkthank","Panama",4,4,17,11,64.7,36.4,23.5
+"educ","educ_privada","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"educ","education","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"educ","private_education","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"educ","public_education","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"state","electoral_state","Panama",2,2,17,2,11.799999999999999,100,11.799999999999999
+NA,NA,"Panama",1,1,17,1,5.8999999999999995,100,5.8999999999999995
+"cmm","international_tv","Paraguay",1,1,10,6,60,16.7,10
+"cmm","media_association","Paraguay",2,2,10,6,60,33.300000000000004,20
+"cmm","open_private_tv","Paraguay",3,3,10,6,60,50,30
+"cmm","tv_payed_private","Paraguay",1,1,10,6,60,16.7,10
+"cso","association_professional","Paraguay",1,1,10,4,40,25,10
+"cso","business_association","Paraguay",2,1,10,4,40,25,10
+"cso","ong_democracia","Paraguay",3,3,10,4,40,75,30
+"educ","educ_privada","Paraguay",1,1,10,1,10,100,10
+NA,"NA","Paraguay",2,2,10,2,20,100,20
+"cmm","media_association","Peru",2,2,16,6,37.5,33.300000000000004,12.5
+"cmm","open_private_tv","Peru",1,1,16,6,37.5,16.7,6.2
+"cmm","press_association","Peru",1,1,16,6,37.5,16.7,6.2
+"cmm","private_graphics","Peru",2,2,16,6,37.5,33.300000000000004,12.5
+"cmm","tv_payed_private","Peru",1,1,16,6,37.5,16.7,6.2
+"cso","association_professional","Peru",2,2,16,4,25,50,12.5
+"cso","ong_democracia","Peru",2,2,16,4,25,50,12.5
+"cso","thinkthank","Peru",1,1,16,4,25,25,6.2
+"educ","education","Peru",1,1,16,2,12.5,50,6.2
+"educ","public_education","Peru",3,1,16,2,12.5,50,6.2
+"state","electoral_state","Peru",7,7,16,8,50,87.5,43.8
+"state","subnational_state","Peru",1,1,16,8,50,12.5,6.2
+"cmm","media_association","Uruguay",1,1,12,8,66.7,12.5,8.3
+"cmm","open_private_tv","Uruguay",9,7,12,8,66.7,87.5,58.3
+"cmm","press_association","Uruguay",1,1,12,8,66.7,12.5,8.3
+"cmm","private_graphics","Uruguay",1,1,12,8,66.7,12.5,8.3
+"pmm","open_public_tv","Uruguay",1,1,12,1,8.3,100,8.3
+"pmm","public_radio","Uruguay",1,1,12,1,8.3,100,8.3
+"pmm","public_subnational_tv","Uruguay",1,1,12,1,8.3,100,8.3
+"state","electoral_state","Uruguay",1,1,12,1,8.3,100,8.3
+NA,NA,"Uruguay",3,3,12,3,25,100,25
+"cmm","international_tv","Venezuela",1,1,4,4,100,25,25
+"cmm","open_private_tv","Venezuela",4,3,4,4,100,75,75
+"cmm","private_cultural_space","Venezuela",1,1,4,4,100,25,25
+"pmm","open_public_tv","Venezuela",1,1,4,1,25,100,25

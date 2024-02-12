@@ -1,0 +1,159 @@
+﻿"cat_tipoorgv2","ncat_subtipov2","cat_pais","n_subtipo_pais","n_debates_con_subtipo_pais","n_debates_pais","n_debates_tipo_pais","pr_debates_tipo_sobre_totdebates","pr_debates_con_subtipo_pais_sobre_debatestipo","pr_debates_con_subtipo_pais_sobre_totdebates"
+"estado","estado_electoral","Argentina",2,2,4,2,50,100,50
+"osc","ong_democracia","Argentina",2,2,4,2,50,100,50
+"educ","educ_publica","Bolivia",1,1,13,1,7.7,100,7.7
+"mmc","asoc_medios","Bolivia",1,1,13,10,76.9,10,7.7
+"mmc","asoc_prensa","Bolivia",6,6,13,10,76.9,60,46.2
+"mmc","digital_privado","Bolivia",1,1,13,10,76.9,10,7.7
+"mmc","grafico_privado","Bolivia",2,1,13,10,76.9,10,7.7
+"mmc","tv_abierta_privada","Bolivia",4,3,13,10,76.9,30,23.1
+"osc","asoc_empresaria","Bolivia",2,2,13,5,38.5,40,15.4
+"osc","asoc_iglesia","Bolivia",1,1,13,5,38.5,20,7.7
+"osc","coordinadora","Bolivia",1,1,13,5,38.5,20,7.7
+"osc","movimiento_estudiantil","Bolivia",1,1,13,5,38.5,20,7.7
+"osc","ong_ddhh","Bolivia",1,1,13,5,38.5,20,7.7
+"osc","ong_internacional","Bolivia",1,1,13,5,38.5,20,7.7
+"educ","educ_asoc_iglesia","Brasil",1,1,51,1,2,100,2
+"educ","educ_asoc_privadas","Brasil",1,1,51,1,2,100,2
+"educ","educ_iglesia","Brasil",1,1,51,1,2,100,2
+"estado","estado_autonomo","Brasil",1,1,51,3,5.8999999999999995,33.300000000000004,2
+"estado","estado_subnacional","Brasil",2,2,51,3,5.8999999999999995,66.7,3.9
+"mmc","asoc_prensa","Brasil",1,1,51,49,96.1,2,2
+"mmc","grafico_privado","Brasil",7,7,51,49,96.1,14.299999999999999,13.700000000000001
+"mmc","radio_privada","Brasil",3,3,51,49,96.1,6.1,5.8999999999999995
+"mmc","telecomu_privado","Brasil",5,5,51,49,96.1,10.2,9.8
+"mmc","tv_abierta_privada","Brasil",50,44,51,49,96.1,89.8,86.3
+"mmc","tv_iglesia_abierta","Brasil",4,3,51,49,96.1,6.1,5.8999999999999995
+"mmp","tv_publica_abierta","Brasil",1,1,51,1,2,100,2
+"osc","asoc_empresaria","Brasil",1,1,51,4,7.8,25,2
+"osc","asoc_iglesia","Brasil",3,3,51,4,7.8,75,5.8999999999999995
+"educ","educ_privada","Chile",1,1,29,3,10.299999999999999,33.300000000000004,3.4000000000000004
+"educ","educ_publica","Chile",2,2,29,3,10.299999999999999,66.7,6.9
+"mmc","asoc_medios","Chile",18,18,29,23,79.3,78.3,62.1
+"mmc","digital_privado","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"mmc","radio_privada","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"mmc","tv_abierta_privada","Chile",3,3,29,23,79.3,13,10.299999999999999
+"mmc","tv_internacional","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"mmc","tv_pago_privada","Chile",1,1,29,23,79.3,4.3,3.4000000000000004
+"mmp","tv_publica_abierta","Chile",1,1,29,1,3.4000000000000004,100,3.4000000000000004
+"osc","asoc_empresaria","Chile",2,2,29,5,17.2,40,6.9
+"osc","coordinadora","Chile",3,1,29,5,17.2,20,3.4000000000000004
+"osc","ong_genero","Chile",12,3,29,5,17.2,60,10.299999999999999
+"educ","educ_asoc","Colombia",1,1,45,9,20,11.1,2.1999999999999997
+"educ","educ_iglesia","Colombia",1,1,45,9,20,11.1,2.1999999999999997
+"educ","educ_privada","Colombia",6,6,45,9,20,66.7,13.3
+"educ","educ_publica","Colombia",1,1,45,9,20,11.1,2.1999999999999997
+"estado","estado_medios","Colombia",2,2,45,3,6.7,66.7,4.3999999999999995
+"estado","estado_subnacional","Colombia",1,1,45,3,6.7,33.300000000000004,2.1999999999999997
+"mmc","digital_privado","Colombia",5,3,45,37,82.19999999999999,8.1,6.7
+"mmc","grafico_privado","Colombia",24,21,45,37,82.19999999999999,56.8,46.7
+"mmc","radio_privada","Colombia",10,10,45,37,82.19999999999999,27,22.2
+"mmc","tv_abierta_privada","Colombia",22,21,45,37,82.19999999999999,56.8,46.7
+"mmc","tv_internacional","Colombia",1,1,45,37,82.19999999999999,2.7,2.1999999999999997
+"mmc","tv_pago_privada","Colombia",3,3,45,37,82.19999999999999,8.1,6.7
+"mmc","tv_productora_privada","Colombia",4,2,45,37,82.19999999999999,5.4,4.3999999999999995
+"mmc","tv_programa_privado","Colombia",2,1,45,37,82.19999999999999,2.7,2.1999999999999997
+"mmp","espaciocultural_publico","Colombia",1,1,45,7,15.6,14.299999999999999,2.1999999999999997
+"mmp","tv_publica_abierta","Colombia",1,1,45,7,15.6,14.299999999999999,2.1999999999999997
+"mmp","tv_subnacional_publica","Colombia",6,6,45,7,15.6,85.7,13.3
+"osc","asoc_empresaria","Colombia",11,8,45,14,31.1,57.099999999999994,17.8
+"osc","coordinadora","Colombia",6,4,45,14,31.1,28.599999999999998,8.9
+"osc","empresa","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"osc","movimiento_estudiantil","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"osc","ong_ddhh","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"osc","ong_democracia","Colombia",1,1,45,14,31.1,7.1,2.1999999999999997
+"osc","ong_internacional","Colombia",3,2,45,14,31.1,14.299999999999999,4.3999999999999995
+"osc","thinkthank","Colombia",3,2,45,14,31.1,14.299999999999999,4.3999999999999995
+"educ","educ_asoc_publica","Costa Rica",1,1,51,16,31.4,6.2,2
+"educ","educ_privada","Costa Rica",5,5,51,16,31.4,31.2,9.8
+"educ","educ_publica","Costa Rica",10,10,51,16,31.4,62.5,19.6
+"estado","estado_electoral","Costa Rica",3,3,51,3,5.8999999999999995,100,5.8999999999999995
+"mmc","digital_privado","Costa Rica",2,2,51,26,51,7.7,3.9
+"mmc","grafico_privado","Costa Rica",4,2,51,26,51,7.7,3.9
+"mmc","grafico_universitario","Costa Rica",1,1,51,26,51,3.8,2
+"mmc","radio_privada","Costa Rica",6,6,51,26,51,23.1,11.799999999999999
+"mmc","tv_abierta_privada","Costa Rica",22,20,51,26,51,76.9,39.2
+"mmp","tv_publica_abierta","Costa Rica",2,2,51,2,3.9,100,3.9
+"osc","asoc_empresaria","Costa Rica",3,3,51,7,13.700000000000001,42.9,5.8999999999999995
+"osc","asoc_prof","Costa Rica",2,2,51,7,13.700000000000001,28.599999999999998,3.9
+"osc","asoc_sindical","Costa Rica",1,1,51,7,13.700000000000001,14.299999999999999,2
+"osc","ong_internacional","Costa Rica",1,1,51,7,13.700000000000001,14.299999999999999,2
+NA,NA,"Costa Rica",5,5,51,5,9.8,100,9.8
+"educ","educ_iglesia","Ecuador",1,1,15,1,6.7,100,6.7
+"estado","estado_electoral","Ecuador",2,2,15,2,13.3,100,13.3
+"mmc","asoc_medios","Ecuador",1,1,15,6,40,16.7,6.7
+"mmc","asoc_prensa","Ecuador",1,1,15,6,40,16.7,6.7
+"mmc","grafico_privado","Ecuador",2,2,15,6,40,33.300000000000004,13.3
+"mmc","tv_abierta_privada","Ecuador",5,5,15,6,40,83.3,33.300000000000004
+"mmc","tv_internacional","Ecuador",1,1,15,6,40,16.7,6.7
+"osc","asoc_empresaria","Ecuador",6,6,15,6,40,100,40
+NA,NA,"Ecuador",1,1,15,1,6.7,100,6.7
+"educ","educ_publica","El Salvador",1,1,4,1,25,100,25
+"mmc","asoc_medios","El Salvador",2,2,4,3,75,66.7,50
+"mmc","tv_abierta_privada","El Salvador",1,1,4,3,75,33.300000000000004,25
+"educ","educ_privada","Guatemala",2,2,26,3,11.5,66.7,7.7
+"educ","educ_publica","Guatemala",1,1,26,3,11.5,33.300000000000004,3.8
+"mmc","tv_abierta_privada","Guatemala",7,7,26,7,26.900000000000002,100,26.900000000000002
+"mmc","tv_internacional","Guatemala",2,2,26,7,26.900000000000002,28.599999999999998,7.7
+"osc","asoc_empresaria","Guatemala",13,13,26,21,80.80000000000001,61.9,50
+"osc","asoc_iglesia","Guatemala",7,4,26,21,80.80000000000001,19,15.4
+"osc","ong_democracia","Guatemala",1,1,26,21,80.80000000000001,4.8,3.8
+"osc","ong_internacional","Guatemala",1,1,26,21,80.80000000000001,4.8,3.8
+"osc","ong_migrantes","Guatemala",3,2,26,21,80.80000000000001,9.5,7.7
+"osc","thinkthank","Guatemala",3,3,26,21,80.80000000000001,14.299999999999999,11.5
+"educ","educ_privada","Honduras",2,2,6,2,33.300000000000004,100,33.300000000000004
+"mmc","tv_abierta_universitaria","Honduras",2,2,6,2,33.300000000000004,100,33.300000000000004
+"osc","asoc_empresaria","Honduras",1,1,6,1,16.7,100,16.7
+NA,NA,"Honduras",3,3,6,3,50,100,50
+"estado","estado_electoral","Mexico",7,7,11,7,63.6,100,63.6
+"mmc","asoc_medios","Mexico",5,5,11,5,45.5,100,45.5
+"osc","movimiento_estudiantil","Mexico",1,1,11,1,9.1,100,9.1
+"mmc","tv_abierta_privada","Nicaragua",1,1,2,1,50,100,50
+"mmc","tv_internacional","Nicaragua",1,1,2,1,50,100,50
+NA,NA,"Nicaragua",1,1,2,1,50,100,50
+"educ","educ_asoc","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"educ","educ_asoc_privadas","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"educ","educ_privada","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"educ","educ_publica","Panama",1,1,17,3,17.599999999999998,33.300000000000004,5.8999999999999995
+"estado","estado_electoral","Panama",2,2,17,2,11.799999999999999,100,11.799999999999999
+"mmc","tv_abierta_privada","Panama",13,7,17,7,41.199999999999996,100,41.199999999999996
+"mmc","tv_iglesia_abierta","Panama",3,3,17,7,41.199999999999996,42.9,17.599999999999998
+"osc","asoc_empresaria","Panama",6,6,17,11,64.7,54.50000000000001,35.3
+"osc","asoc_iglesia","Panama",1,1,17,11,64.7,9.1,5.8999999999999995
+"osc","thinkthank","Panama",4,4,17,11,64.7,36.4,23.5
+NA,NA,"Panama",1,1,17,1,5.8999999999999995,100,5.8999999999999995
+"educ","educ_privada","Paraguay",1,1,10,1,10,100,10
+"mmc","asoc_medios","Paraguay",2,2,10,6,60,33.300000000000004,20
+"mmc","tv_abierta_privada","Paraguay",3,3,10,6,60,50,30
+"mmc","tv_internacional","Paraguay",1,1,10,6,60,16.7,10
+"mmc","tv_pago_privada","Paraguay",1,1,10,6,60,16.7,10
+"osc","asoc_empresaria","Paraguay",2,1,10,4,40,25,10
+"osc","asoc_prof","Paraguay",1,1,10,4,40,25,10
+"osc","ong_democracia","Paraguay",3,3,10,4,40,75,30
+NA,"NA","Paraguay",2,2,10,2,20,100,20
+"educ","educ_asoc","Peru",1,1,16,2,12.5,50,6.2
+"educ","educ_publica","Peru",3,1,16,2,12.5,50,6.2
+"estado","estado_electoral","Peru",7,7,16,8,50,87.5,43.8
+"estado","estado_subnacional","Peru",1,1,16,8,50,12.5,6.2
+"mmc","asoc_medios","Peru",2,2,16,6,37.5,33.300000000000004,12.5
+"mmc","asoc_prensa","Peru",1,1,16,6,37.5,16.7,6.2
+"mmc","grafico_privado","Peru",2,2,16,6,37.5,33.300000000000004,12.5
+"mmc","tv_abierta_privada","Peru",1,1,16,6,37.5,16.7,6.2
+"mmc","tv_pago_privada","Peru",1,1,16,6,37.5,16.7,6.2
+"osc","asoc_prof","Peru",2,2,16,4,25,50,12.5
+"osc","ong_democracia","Peru",2,2,16,4,25,50,12.5
+"osc","thinkthank","Peru",1,1,16,4,25,25,6.2
+"osc","asoc_empresaria","Republica Dominicana",1,1,1,1,100,100,100
+"estado","estado_electoral","Uruguay",1,1,12,1,8.3,100,8.3
+"mmc","asoc_medios","Uruguay",1,1,12,8,66.7,12.5,8.3
+"mmc","asoc_prensa","Uruguay",1,1,12,8,66.7,12.5,8.3
+"mmc","grafico_privado","Uruguay",1,1,12,8,66.7,12.5,8.3
+"mmc","tv_abierta_privada","Uruguay",9,7,12,8,66.7,87.5,58.3
+"mmp","radio_publica","Uruguay",1,1,12,1,8.3,100,8.3
+"mmp","tv_publica_abierta","Uruguay",1,1,12,1,8.3,100,8.3
+"mmp","tv_subnacional_publica","Uruguay",1,1,12,1,8.3,100,8.3
+NA,NA,"Uruguay",3,3,12,3,25,100,25
+"mmc","espaciocultural_privado","Venezuela",1,1,4,4,100,25,25
+"mmc","tv_abierta_privada","Venezuela",4,3,4,4,100,75,75
+"mmc","tv_internacional","Venezuela",1,1,4,4,100,25,25
+"mmp","tv_publica_abierta","Venezuela",1,1,4,1,25,100,25

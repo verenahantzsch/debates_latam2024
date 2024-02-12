@@ -1,0 +1,45 @@
+ncat_subtipov2,str_subtipo
+asoc_empresaria,Asociación empresaria
+asoc_iglesia,Asociación religiosa
+ong_genero,ONG en pos de igualdad de género
+thinkthank,Think Thanlk
+coordinadora,Coordinadora de varias OCSs
+ong_democracia,ONG en pos de la democracia
+ong_internacional,ONG internacional
+asoc_prof,Asociación de profesionales
+movimiento_estudiantil,Movimiento estudiantil
+ong_migrantes,ONG en pos de los derechos de los inmigrantes
+ong_ddhh,ONG en pos de los DDHH
+asoc_sindical,Sindicato
+empresa,Empresa
+tv_publica_abierta,Canal de TV abierto público nacional
+tv_subnacional_publica,Canal de TV abierto público subnacional
+espaciocultural_publico,Espacio cultural público
+radio_publica,Radio pública
+tv_abierta_privada,Canal de TV abierta privada
+grafico_privado,Medio gráfico privado
+asoc_medios,Asociación de propietarios de medios
+radio_privada,Radio abierta privada
+asoc_prensa,Asociación de periodistas
+digital_privado,Medio con base digital privado
+tv_internacional,Canal internacional
+tv_iglesia_abierta,Canal de TV abierta de la Iglesia
+tv_pago_privada,Canal de TV por suscripción o pago privado
+telecomu_privado,Empresa del sector telecomunicaciones
+tv_productora_privada,Productora de TV comercial
+tv_abierta_universitaria,Canal de TV abierto universitario
+tv_programa_privado,Programa de TV privado
+espaciocultural_privado,Espacio cultural privado
+grafico_universitario,Medio gráfico universitario
+estado_electoral,Organismo electoral nacional
+estado_subnacional,Administración estatal subnacional
+estado_medios,Organismo estatal del sector comunicaciones
+estado_autonomo,Ente descentralizado
+educ_publica,Institución de educiación superior pública
+educ_privada,Institución de educiación superior privada
+educ_asoc,Asociación de instituciones educativas (variedad de instituciones)
+educ_iglesia,Institución de educación superior de la Iglesia
+educ_asoc_privadas,Asociación de instituciones educativas privadas
+educ_asoc_iglesia,Asociación de instituciones educativas religiosas
+educ_asoc_publica,Asociación de instituciones educativas públicas
+NA,Sin datos
