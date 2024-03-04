@@ -57,6 +57,17 @@ library(tidyverse)
 # data propia ############
 
 
+# datos
+stwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
+base <- readxl::read_xlsx("./datav2023/base_final3v2023.xlsx")
+elecciones <-  readxl::read_xlsx("./datav2023/base_eleccionesv2023.xlsx") # base auxiliar: años que hubo elecciones por país
+base_organizadores <- readxl::read_xlsx("./datav2023/base_organizadoresv2023.xlsx")
+base_formatos <- readxl::read_xlsx("./datav2023/base_formatos_longv2023.xlsx")
+base_temas <- readxl::read_xlsx("./datav2023/base_temas_longv2023.xlsx")
+base_normativa <- readxl::read_xlsx("./datav2023/base_debates_limpiav2023.xlsx", sheet = "debates_normativo")
+base_anual <- readxl::read_xlsx("./datav2023/base_anualv2023.xlsx")
+
+}
 # data cantu carreras #########
 
 # ellos usan una "masterdatabase.csv" para todos sus analisis, 

@@ -22,7 +22,7 @@ saltear_NAs <-  function(cadena, operacion){
   
 }
 
-# nueva base ####################3
+# nueva base ####################
 
 # creo id de deabate
 data_base_limpia <- data_base_sucia %>% rowid_to_column("id_debate")
