@@ -1,3 +1,6 @@
+
+# CREO QUE ESTE SCRIPT QUEDO OBSOLETO, PERO REVISAR AL FINAL#####
+
 # LIBRERIAS #####
 library(tidyverse)
 

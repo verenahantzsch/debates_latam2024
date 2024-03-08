@@ -1,42 +1,51 @@
 ############ ESTE SCRIPT ES PARA CIERTOS TRABAJOS QUE REQUIEREN DE UN AGREGADO DE DATA MANUAL ###########
-
+### SE EJECUTA LUEGO DE LA PRIMERA LIMPIEZA DE DATOS #######################
 
 # LIBRERIAS #####
 
 library(tidyverse)
 
-setwd("/home/carolina/Documents/Proyectos R/debates_latam/tesis_doctorado/datav2023")
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
 # Importación de datos #####
 
 base <- readxl::read_xlsx("base_final1v2023.xlsx") # base con datos por debate
 elecciones <-  readxl::read_xlsx("base_eleccionesv2023.xlsx") # base auxiliar: años que hubo elecciones por país
 
+
 # ausencias ########
 
 # creo base con un nombre de ausente por fila
 
 base_ausentes <- base %>% 
-  select(ncat_eleccion, cat_pais, t_fecha, ncat_ronda, 
+  select(id_debate, ncat_eleccion, cat_pais, t_fecha, ncat_ronda, 
          str_organizador, 
          str_ausentes, n_ausentes, n_invitados, n_presentes, str_presentes) %>%
   mutate(nombres_ausentes = strsplit(str_ausentes, ";")) %>% 
   unnest(nombres_ausentes)
  
-# creo base para completar manualmente. SOLO RETENGO PAISES QUE ACTUALICE RESPECTO DE 2022
+# creo base para completar manualmente. SOLO RETENGO PAISES QUE ACTUALICE RESPECTO DE LA ULTIMA VEZ
+# saltear paso si no aplica
 
-base_datosausentes <- base_ausentes %>% 
-  distinct(nombres_ausentes, ncat_eleccion, cat_pais) %>% 
-  subset(str_detect(cat_pais, "Colombia|Costa|Chile|Brasil")) %>% 
-  subset(ncat_eleccion>2020)
-
-# guardo base en excel, para su manipulacion manual
-#base_datosausentes %>% 
- # writexl::write_xlsx("base_datosausentes.xlsx")
+# base_datosausentes <- base_ausentes %>% 
+#   distinct(nombres_ausentes, ncat_eleccion, cat_pais) %>% 
+#   #subset(str_detect(cat_pais, "Colombia|Costa|Chile|Brasil")) %>% 
+#   subset(ncat_eleccion>2022)
+# 
+# # guardo base en excel, para su manipulacion manual
+# base_datosausentes %>% 
+#   writexl::write_xlsx("base_datosausentes_paracompletar.xlsx")
 
 # leo base ya modificada
 
 base_datosausentes <- readxl::read_xlsx("base_datosausentes.xlsx")
+
+# cambio NAS por 0 a los fines del índice. 
+
+base_datosausentes <- base_datosausentes %>% 
+  mutate(n_porcentajevotos = ifelse(n_porcentajevotos == "NA"|is.na(n_porcentajevotos),
+                                    0,
+                                    n_porcentajevotos))
 
 # uno datos a base de todos los ausentes
 
@@ -46,7 +55,7 @@ base_ausentes_added <- base_ausentes %>%
 # sumariso (por debate) 
 
 base_ausencias <- base_ausentes_added %>% 
-  group_by(ncat_eleccion, cat_pais, t_fecha, str_organizador) %>% 
+  group_by(ncat_eleccion, cat_pais, t_fecha, str_organizador, id_debate) %>% 
   summarise( n_porcentajeausentes = sum(as.numeric(n_porcentajevotos), na.rm = TRUE))
 
 # uno a base general
@@ -59,6 +68,37 @@ base <- base %>%
   mutate(n_indexausentes = ifelse(n_ausentes==0, 0, n_indexausentes),
          n_porcentajeausentes = ifelse(n_ausentes==0, 0, n_porcentajeausentes))
 
+
+# presencias #######
+
+# creo base con un nombre de presente por fila
+
+base_presentes <- base %>% 
+  select(id_debate, ncat_eleccion, cat_pais, t_fecha, ncat_ronda, 
+         str_organizador, 
+         str_ausentes, n_ausentes, n_invitados, n_presentes, str_presentes) %>%
+  mutate(nombres_candidatos = strsplit(str_presentes, ";")) %>% 
+  unnest(nombres_candidatos) %>% 
+  mutate(dico_candidato_presente = 1)
+
+# agrego col a base_ausentes para luego unir
+
+base_ausentes <- base_ausentes %>% 
+  dplyr::rename("nombres_candidatos" = nombres_ausentes) %>% 
+  mutate(dico_candidato_presente = 0)
+
+# uno con base de ausencias
+all_candidates <- base_presentes %>% 
+  rbind(base_ausentes)
+
+# guardo base
+
+#all_candidates %>% 
+#     writexl::write_xlsx("all_candidates.xlsx")
+  
+### ACA ME QUEDE VIERNES 8 MARZO 2024 BORRAR ESTO #############
+# PASO QUE SIGUE ES CREAR BASE DE UNIQUES DE CANDIDATOS PARA REVISAR HOMOGENEIDAD DE NOMBRES Y PENSAR COMO HACER EL MATCH
+# PERO EN PPIO LA BASE A TRABAJAR ES ESA A LA QUE DEBERIAMOS AGREGAR DATOS DE ENCUESTAS EN 7 DIAS PREVIOS POR CANIDDATO, SI ES INCUMBENT, SI REELIGE Y ALGUNA OTRA CONSIDERADA PERTINENTE EJ LEGISLACION, EN OTRO NIVEL
 
 # CREACION DE VARIABLES ORDINALES de NORMATIVA  ####
 # vamos a crear tablas para asignar manualmente un numero a una categoria. 

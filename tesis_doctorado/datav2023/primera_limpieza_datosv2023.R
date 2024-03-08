@@ -2,11 +2,12 @@
 
 # LIBRERIAS #####
 library(tidyverse)
-
+#install.packages("openxl")
+#install.packages("writexl")
 
 # DATOS PROPIOS #####
 
-setwd("/home/carolina/Documents/Proyectos R/debates_latam/tesis_doctorado/datav2023")
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023/")
 
 # base de excel original
 data_base_sucia <- readxl::read_xlsx("base_debates_limpiav2023.xlsx", sheet = "debates_agregado")
@@ -25,18 +26,28 @@ saltear_NAs <-  function(cadena, operacion){
 # nueva base ####################
 
 # creo id de deabate
-data_base_limpia <- data_base_sucia %>% rowid_to_column("id_debate")
 
-data_base_limpia <- data_base_limpia %>% 
+# check pre filtrado
+data_base_sucia$dico_precandidaturas %>% unique()
+
+data_base_limpia <- data_base_sucia %>% 
   # descarto algunos pocos debates que no aplican
-  subset(is.na(dico_precandidaturas)|dico_precandidaturas==FALSE) %>% 
-  # primeros cambios
-  dplyr::rename("n_presentes2" = n_presentes, "n_duracion" = n_mins) %>% 
-  mutate(dico_analytics = ifelse(str_detect(tolower(longstr_formato), "analytics")|dico_analytics==1,
-                                        1,
-                                        0),
-         t_fecha =  openxlsx::convertToDate(t_fecha),
+  subset(is.na(dico_precandidaturas)|dico_precandidaturas==FALSE)
+
+# creo id de debates
+data_base_limpia <- data_base_limpia %>% rowid_to_column("id_debate") 
+
+# primeros cambios 
+
+data_base_limpia <- data_base_limpia %>%
+  # formateo de fechas y horas
+  dplyr::rename("n_duracion" = n_mins) %>% 
+  mutate(t_fecha =  openxlsx::convertToDate(t_fecha),
          t_hora =  openxlsx::convertToDateTime(t_hora))  %>% 
+  # formateo de variable dico_analytics 
+  mutate(dico_analytics = ifelse(str_detect(tolower(longstr_formato), "analytics")|dico_analytics==1,
+                                 1,
+                                 0)) %>% 
   mutate(dico_analytics = ifelse(is.na(dico_analytics),
                                          0,
                                 dico_analytics)) %>% 
@@ -45,8 +56,8 @@ data_base_limpia <- data_base_limpia %>%
                                    str_count(str_organizador, ";")+1),
          n_presentes = ifelse(str_presentes=="NA"|str_presentes=="sin datos","NA", 
                               str_count(str_presentes, ";")+1),
-         n_catorganizador = ifelse(cat_organizador=="NA","NA", 
-                                   str_count(cat_organizador, ";")+1),
+         #n_catorganizador = ifelse(cat_organizador=="NA","NA", 
+         #                          str_count(cat_organizador, ";")+1),
          n_panelistas = ifelse(str_panelistas=="NA","NA", 
                                str_count(str_panelistas, ";")+1),
          n_moderadores = ifelse(str_moderadores=="NA","NA", 
@@ -54,22 +65,23 @@ data_base_limpia <- data_base_limpia %>%
          n_ausentes = ifelse(str_ausentes=="sin datos","NA", ifelse(
            str_detect(str_ausentes, "sin ausencias conocidas"), 
            0, str_count(str_ausentes, ";")+1)))  %>% 
-  select(-n_organizador) %>% 
   mutate(n_ausentes = as.numeric(n_ausentes),
          n_presentes = as.numeric(n_presentes),
-         n_invitados = n_presentes + n_ausentes) %>% 
-  select(-c(n_presentes2, n_hs))  
+         n_invitados = n_presentes + n_ausentes) 
 
-# Agrego base anual y creo algunos cambios mas en funcion de estos datos 
+# descarto columnas que no voy a usar 
 data_base_limpia <- data_base_limpia %>% 
-  left_join(data_anual_sucia) %>% 
-  mutate(n_candidaturas = as.numeric(n_candidaturas),
-       n_candidaturas = ifelse(ncat_ronda==2, 2, n_candidaturas),
-       n_proporcioninvitados = n_invitados/n_candidaturas)   
-  
+  # columnas que contienen comentarios
+  select(!starts_with("longstr_")) %>% 
+  select(!starts_with("comentarios_")) %>% 
+  # columnas que vamos a construir mejor en lo que sigue, o que no vamos a utilizar porque quedaron muy incompletas
+  select(-cat_organizador, -cat_subtipoorg, -n_organizador, 
+         -dico_impugnado, -str_impugnado, -n_hs)
+
+
 # creo variables dicotomicas 
 data_base_limpia <- data_base_limpia %>% 
-  # creo dicotómicas para organizador # esto al final lo hago en "segunda_limpieza_datos"
+  # creo dicotómicas para organizador -> NO -> # esto al final lo hago en "segunda_limpieza_datos"
   # creo dicotómicas para formato
   mutate( dico_formato_apertura = saltear_NAs(cat_formato,str_detect(cat_formato,"apertura")) ,
           dico_formato_libre = saltear_NAs(cat_formato,str_detect(cat_formato,"libre")) ,
@@ -89,28 +101,27 @@ data_base_limpia <- data_base_limpia %>%
           dico_temas_monotema = saltear_NAs(cat_temas,str_detect(cat_temas,"monotema")) ,
           dico_temas_bloques = saltear_NAs(cat_temas,str_detect(cat_temas,"bloques")) )
 
-# agrego variables externas
 
-# datos_externos <- data_qog_latam_selection_renamed %>% 
-#   select(gol_enpres, p_polity2, pais, año_electoral) %>% 
-#   dplyr::rename(n_efcandidatos = gol_enpres,
-#                 cat_pais = pais,
-#                 ncat_eleccion = año_electoral)
-# 
-# data_base_limpia <- data_base_limpia %>% 
-#   left_join(datos_externos)
-
-# guardo  ##########
-
-# xlsx
-data_base_limpia %>%  writexl::write_xlsx("base_final1v2023.xlsx")
-
-
-# creo base simple auxiliar de elecciones ###############
+# Creo base anual limpia ###############
+# creo base simple auxiliar de elecciones 
 
 data_anual_limpia <- data_anual_sucia %>% 
   select(cat_pais, ncat_eleccion, cat_ballotage, n_candidaturas)
 
-data_anual_limpia  %>%  writexl::write_xlsx("base_eleccionesv2023.xlsx")
+# ultimos cambios conjuntos ###############
+# Uno base anual limpia y creo algunos cambios mas en funcion de estos datos 
+data_base_limpia <- data_base_limpia %>% 
+  left_join(data_anual_limpia) %>% 
+  mutate(n_candidaturas = as.numeric(n_candidaturas),
+         ncat_ronda = as.numeric(ncat_ronda), 
+       n_candidaturas = ifelse(ncat_ronda==2, 2, n_candidaturas),
+       n_proporcioninvitados = n_invitados/n_candidaturas)   
+  
+# guardo  ambas bases ##########
 
+# xlsx
+
+data_base_limpia %>%  writexl::write_xlsx("base_final1v2023.xlsx")
+
+data_anual_limpia  %>%  writexl::write_xlsx("base_eleccionesv2023.xlsx")
 

@@ -1,4 +1,6 @@
 ### ESTE SCRIPT CREA LAS BASES CON LAS QUE FINALMENTE SE TRABAJARA (en trabajo_capitulosv2023.R) ############
+### SE EJECUTA LUEGO DE PRIMERA Y SEGUNDA LIMPIEZAS #####
+
 
 # LIBRERIAS #####
 library(tidyverse)
