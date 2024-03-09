@@ -91,14 +91,31 @@ base_ausentes <- base_ausentes %>%
 all_candidates <- base_presentes %>% 
   rbind(base_ausentes)
 
-# guardo base
+# limpieza automatica 
+### ACA ME QUEDE SABADO 9 MARZO 2024 BORRAR ESTO #############
+# ESTOY REVISANDO MANUALMENTE BASE DE UNIQUE CANDIDATES GUARDADA ABAJO
+# PERO EN PPIO LA BASE A TRABAJAR ES ESA A LA QUE DEBERIAMOS AGREGAR DATOS DE ENCUESTAS EN 7 DIAS PREVIOS POR CANIDDATO, SI ES INCUMBENT, SI REELIGE Y ALGUNA OTRA CONSIDERADA PERTINENTE EJ LEGISLACION, EN OTRO NIVEL
+
+all_candidates <- all_candidates %>% 
+  mutate(nombres_candidatos = str_replace(nombres_candidatos, ".*:", ""),
+         nombres_candidatos = str_trim(nombres_candidatos, "both"),
+         nombres_candidatos = str_replace(nombres_candidatos, ".", ""),
+         nombres_candidatos = str_replace(nombres_candidatos, ":", ""),
+         nombres_candidatos = iconv(nombres_candidatos, to = "ASCII//TRANSLIT"))
+
+
+# paso intermedio y manual para homogenizar nombres de candidatos
+unique_candidates <- all_candidates %>% 
+  select(cat_pais, ncat_eleccion, nombres_candidatos) %>% 
+  unique() %>% 
+  arrange(cat_pais, nombres_candidatos, ncat_eleccion) %>% 
+  #writexl::write_xlsx("base_uniquecandidates_paracompletar.xlsx")
+
+# guardo base #VOLVER A GUARDAR DESPUES DE LIMPIAR  #########
 
 #all_candidates %>% 
 #     writexl::write_xlsx("all_candidates.xlsx")
   
-### ACA ME QUEDE VIERNES 8 MARZO 2024 BORRAR ESTO #############
-# PASO QUE SIGUE ES CREAR BASE DE UNIQUES DE CANDIDATOS PARA REVISAR HOMOGENEIDAD DE NOMBRES Y PENSAR COMO HACER EL MATCH
-# PERO EN PPIO LA BASE A TRABAJAR ES ESA A LA QUE DEBERIAMOS AGREGAR DATOS DE ENCUESTAS EN 7 DIAS PREVIOS POR CANIDDATO, SI ES INCUMBENT, SI REELIGE Y ALGUNA OTRA CONSIDERADA PERTINENTE EJ LEGISLACION, EN OTRO NIVEL
 
 # CREACION DE VARIABLES ORDINALES de NORMATIVA  ####
 # vamos a crear tablas para asignar manualmente un numero a una categoria. 
