@@ -99,7 +99,7 @@ all_candidates <- base_presentes %>%
 all_candidates <- all_candidates %>% 
   mutate(nombres_candidatos = str_replace(nombres_candidatos, ".*:", ""),
          nombres_candidatos = str_trim(nombres_candidatos, "both"),
-         nombres_candidatos = str_replace(nombres_candidatos, ".", ""),
+         nombres_candidatos = str_replace(nombres_candidatos, "[.]", ""),
          nombres_candidatos = str_replace(nombres_candidatos, ":", ""),
          nombres_candidatos = iconv(nombres_candidatos, to = "ASCII//TRANSLIT"))
 
@@ -108,7 +108,7 @@ all_candidates <- all_candidates %>%
 unique_candidates <- all_candidates %>% 
   select(cat_pais, ncat_eleccion, nombres_candidatos) %>% 
   unique() %>% 
-  arrange(cat_pais, nombres_candidatos, ncat_eleccion) %>% 
+  arrange(cat_pais, nombres_candidatos, ncat_eleccion) #%>% 
   #writexl::write_xlsx("base_uniquecandidates_paracompletar.xlsx")
 
 # guardo base #VOLVER A GUARDAR DESPUES DE LIMPIAR  #########
