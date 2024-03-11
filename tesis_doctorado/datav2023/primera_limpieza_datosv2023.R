@@ -28,11 +28,11 @@ saltear_NAs <-  function(cadena, operacion){
 # creo id de deabate
 
 # check pre filtrado
-data_base_sucia$dico_precandidaturas %>% unique()
+data_base_sucia$dico_pre_vice_candidaturas %>% unique()
 
 data_base_limpia <- data_base_sucia %>% 
   # descarto algunos pocos debates que no aplican
-  subset(is.na(dico_precandidaturas)|dico_precandidaturas==FALSE)
+  subset(is.na(dico_pre_vice_candidaturas)|dico_pre_vice_candidaturas==FALSE)
 
 # creo id de debates
 data_base_limpia <- data_base_limpia %>% rowid_to_column("id_debate") 

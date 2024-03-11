@@ -105,16 +105,16 @@ all_candidates <- all_candidates %>%
 
 
 # paso intermedio y manual para homogenizar nombres de candidatos
-unique_candidates <- all_candidates %>% 
-  select(cat_pais, ncat_eleccion, nombres_candidatos) %>% 
-  unique() %>% 
-  arrange(cat_pais, nombres_candidatos, ncat_eleccion) #%>% 
-  #writexl::write_xlsx("base_uniquecandidates_paracompletar.xlsx")
+#unique_candidates <- all_candidates %>% 
+#  select(cat_pais, ncat_eleccion, nombres_candidatos) %>% 
+#  unique() %>% 
+#  arrange(cat_pais, nombres_candidatos, ncat_eleccion) %>% 
+#  writexl::write_xlsx("base_uniquecandidates_paracompletar.xlsx")
 
 # guardo base #VOLVER A GUARDAR DESPUES DE LIMPIAR  #########
 
-#all_candidates %>% 
-#     writexl::write_xlsx("all_candidates.xlsx")
+all_candidates %>% 
+     writexl::write_xlsx("all_candidates.xlsx")
   
 
 # CREACION DE VARIABLES ORDINALES de NORMATIVA  ####

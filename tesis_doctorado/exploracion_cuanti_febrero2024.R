@@ -67,7 +67,7 @@ base <- readxl::read_xlsx("./datav2023/base_final3v2023.xlsx")
 # base_normativa <- readxl::read_xlsx("./datav2023/base_debates_limpiav2023.xlsx", sheet = "debates_normativo")
 # base_anual <- readxl::read_xlsx("./datav2023/base_anualv2023.xlsx")
 
-}
+
 # data cantu carreras #########
 
 # ellos usan una "masterdatabase.csv" para todos sus analisis, 
@@ -105,8 +105,9 @@ rm(Dataset.20180111 ) # limpiamos escritorio
 # SU PROPIA DATA SI INCLUYE NOMBRES DE CANDIDATOS
 # es un compilado de todos los paises indiv
 # notese que para el dataset anterior, c_names es NA 
-
-Lat_update <- read.csv("~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/polls_corrected.csv",  fileEncoding="latin1")
+# en este archivo algunos nombres fueron corregidos respecto del original,
+# para poder matchearlos a los nombres en la base de datos propia 
+Lat_update <- read.csv("~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/polls_corrected.csv")#,  fileEncoding="latin1")
 
 # Keep the reliable data
 Lat_update <- Lat_update[Lat_update$reliable==1,]
@@ -152,3 +153,37 @@ data <- data %>% mutate(daysbeforeED = elecdate-polldate)
 # Consider the last 100 days before the election
 data <- data[data$daysbeforeED<=100,]
 
+
+# CHEQUEOS Y MODIFICACIONES PROPIAS. C FRANCO marzo 2024 ######
+
+# cheq de elecciones unicas disponibles
+
+unique_elections <- data %>% 
+  select(electionyr, country) %>% 
+  mutate(electionyr = round(electionyr)) %>% 
+  unique()
+
+# # Creo df con nombres unicos de candidatos para unificar formatos  # VIEJO CONTINUADO EN "limpieza_unique_candidates.R"
+# 
+# unique_candidates <- data %>% 
+#   select(electionyr, country, candidateid, c_names) %>% 
+#   arrange(country, electionyr) %>% 
+#   unique()
+# 
+# # creo dos bases para completear y chequear datos. SON ARCHIVOS TEMPORARIOS creados a marzo 2024
+# 
+# setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023/")
+# 
+# unique_candidates_complete <- unique_candidates %>% 
+#   subset(!is.na(c_names)) %>% 
+#   arrange(country, electionyr, c_names) %>% 
+#   mutate(source = "CantuCarreras")
+# 
+# unique_candidates_complete %>% writexl::write_xlsx("unique_candidates_tomerge_completos_chequear.xlsx")
+# 
+# unique_candidates_incomplete <- unique_candidates %>% 
+#   subset(is.na(c_names)) 
+# 
+# unique_candidates_incomplete %>% writexl::write_xlsx("unique_candidates_tomerge_incompletos_chequear.xlsx")
+# 
+#
