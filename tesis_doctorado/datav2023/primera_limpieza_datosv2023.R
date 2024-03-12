@@ -42,8 +42,8 @@ data_base_limpia <- data_base_limpia %>% rowid_to_column("id_debate")
 data_base_limpia <- data_base_limpia %>%
   # formateo de fechas y horas
   dplyr::rename("n_duracion" = n_mins) %>% 
-  mutate(t_fecha =  openxlsx::convertToDate(t_fecha),
-         t_hora =  openxlsx::convertToDateTime(t_hora))  %>% 
+  #mutate(t_fecha =  openxlsx::convertToDate(t_fecha),
+  #       t_hora =  openxlsx::convertToDateTime(t_hora))  %>% 
   # formateo de variable dico_analytics 
   mutate(dico_analytics = ifelse(str_detect(tolower(longstr_formato), "analytics")|dico_analytics==1,
                                  1,
