@@ -1,0 +1,197 @@
+# Este script crea base de datos cuya U de A son las elecciones, a partir de datos prestados por cantu carreras
+# marzo 2024
+
+
+
+# PRIMERA PARTE: EXTRACCION DE CANDIDATOS DE BASE CANTU CARRERAS #################
+
+# Importo y formateo data original de los autores.###########
+
+# Importing Jennings and Wlezien (2018) dataset
+# en esta data NO hay nombres de candidatos pero si un candidate id
+Dataset.20180111 <- read.delim("~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Jennings and Wlezien (2018)/Dataset-20180111.tab")
+
+# Selecting cases by country and only considering those observations within the last 100 days before the election
+paises <- c("Argentina", "Brazil", "Chile", "Colombia", "Ecuador", "Mexico", "Paraguay", "Peru", "Venezuela")
+Lat_data <- Dataset.20180111 %>%
+  filter(country %in% paises & daysbeforeED<120)
+
+# We add variables that exist in our dataset (this allows us to do the merging)
+Lat_data$source<-"Jennings and Wlezien (2018)"
+Lat_data$c_names<-NA
+Lat_data$reliable<-1
+Lat_data$url<-NA
+
+# We eliminate interpolations # importante
+Lat_data <- Lat_data[is.na(Lat_data$poll_)==FALSE,]
+
+rm(Dataset.20180111 ) # limpiamos escritorio
+
+# IMPORT DE SU PROPIA DATA, LUEGO HACEN MERGE. 
+# SU PROPIA DATA SI INCLUYE NOMBRES DE CANDIDATOS
+# es un compilado de todos los paises indiv
+# notese que para el dataset anterior, c_names es NA 
+# en este archivo algunos nombres fueron corregidos respecto del original,
+# para poder matchearlos a los nombres en la base de datos propia 
+Lat_update <- read.csv("~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/polls_corrected.csv")#,  fileEncoding="latin1")
+
+# Keep the reliable data
+Lat_update <- Lat_update[Lat_update$reliable==1,]
+Lat_update$npolls<-1
+
+# Fixing the date format
+Lat_update$polldate<-as.Date(Lat_update$polldate, "%m/%d/%y")
+Lat_update$elecdate<-as.Date(Lat_update$elecdate, "%m/%d/%y")
+
+# Estimating the days before the election
+Lat_update$daysbeforeED <- Lat_update$elecdate-Lat_update$polldate
+Lat_update <- Lat_update[Lat_update$daysbeforeED>0,]
+
+# Eliminating missing values
+Lat_update <- Lat_update[is.na(Lat_update$poll_)==FALSE,]
+
+# Modify the date format before merging
+Lat_update$polldate<-as.character(Lat_update$polldate)
+Lat_update$elecdate<-as.character(Lat_update$elecdate)
+Lat_data$polldate<-as.character(Lat_data$polldate)
+Lat_data$elecdate<-as.character(Lat_data$elecdate)
+
+# Merging the databases
+data<-rbind(Lat_data, Lat_update)
+
+# Modify the date format after merging
+data$polldate<-as.Date(data$polldate)
+data$elecdate<-as.Date(data$elecdate)
+
+# Renaming candidateid for partyyid
+data <- rename(data, candidateid=partyid)
+
+# Recoding electionid
+data$electionid<-paste(data$country,data$elecdate)
+
+# Omit missing values
+data$poll_<-as.numeric(data$poll_)
+data <- data[is.na(data$poll_)==FALSE,]
+
+# Estimating the days before the election
+data <- data %>% mutate(daysbeforeED = elecdate-polldate)
+
+# Consider the last 100 days before the election
+data <- data[data$daysbeforeED<=120,]
+
+rm(Lat_data, Lat_update)
+
+# cargo data con nombres de candidatos
+# esta base fue creada en limpieza_unique_candidates y luego completada manualmente
+
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
+missing_names <-  readxl::read_xlsx("unique_candidates_tomerge_incompletos_completado.xlsx")
+
+# Uno
+data <- data %>% 
+  dplyr::rename("nombres_candidatos" = c_names) %>% # hago este paso ahora para no pisar data justamente
+  left_join(missing_names)
+
+data <- data %>% 
+  mutate(nombres_candidatos = ifelse(is.na(nombres_candidatos),
+                                     c_names,
+                                     nombres_candidatos)) %>% 
+  mutate(id_polldatapoint = row_number())
+
+rm(missing_names)
+
+# chequeo. deberiamos tener al menos 32 elecciones (con debates) + otras sin debates
+
+u_elect <- data$electionid %>% unique() # por ahora tenemos 64 elecciones, generales y ballotage
+
+
+# PRIMERA MITAD DE LA BASE: LADO CANTU ###########
+
+data_candidatos <- data %>% 
+  # primero agrupamos por todas las variables que correspondan al nivel "candidatos", perdiendo el nivel de "polls"
+  # tengo ademas que seleccionar todas las variables que quiero retener del nivel electoral 
+  group_by(electionid, electionyr, country, round, enpp, turnout, espv, regime, nombres_candidatos, gov_, inc_) %>% 
+  summarise(mean_encuestas_candidato = mean(poll_),
+         sd_encuestas_candidato = sd(poll_),
+         vote_ = mean(vote_)) %>% # esta es porque habia unas inconsistencias menores en data de brasil (0.01 diferencia entre filas)
+  ungroup() 
+  
+
+# ahora agrupamos por todas las variables que corresponden al nivel "elecciones"
+# tenemos que usar algunos indicadores del nivel "candidatos" para construir indicadores de nivel superior, de "elecciones"
+data_competencia <- data_candidatos %>% 
+  select(electionid, electionyr, country, round, enpp, turnout, espv, regime, mean_encuestas_candidato, vote_, gov_) %>%
+  unique() %>% 
+  group_by(electionid, country, round) %>% 
+  mutate(rank_polls = rank(100-mean_encuestas_candidato),
+         rank_elections = rank(100-vote_)) 
+
+data_candidatos <- data_candidatos %>% 
+  left_join(data_competencia) %>% 
+  mutate(frontrunner = ifelse(rank_polls==1,1,0),
+         winner = ifelse(rank_elections==1,1,0),
+         incumbent = ifelse(gov_==1,1,0))
+
+data_incumbents <- data_candidatos %>% 
+  subset(incumbent==1) %>% 
+  select(electionid, country, round, nombres_candidatos) %>% 
+  dplyr::rename("incumbente" = nombres_candidatos)
+
+data_frontrunner <- data_candidatos %>% 
+  subset(frontrunner==1) %>% 
+  select(electionid, country, round, nombres_candidatos) %>% 
+  dplyr::rename("frontrunner" = nombres_candidatos)
+
+data_winner <- data_candidatos %>% 
+  subset(winner==1) %>% 
+  select(electionid, country, round, nombres_candidatos) %>% 
+  dplyr::rename("winner" = nombres_candidatos)
+
+
+data_elecciones <- data_candidatos %>% 
+  group_by(electionid, electionyr, country, round, enpp, turnout, espv, regime) %>% 
+  summarise(sd_mean_encuestas_candidato = sd(mean_encuestas_candidato),
+            sd_vote_ = sd(vote_)) %>% 
+  left_join(data_incumbents) %>% 
+  left_join(data_frontrunner) %>% 
+  left_join(data_winner) 
+
+# PENDIENTES 13 MARZO 2024 ####
+# todavía hay algunas inconsistencias a resolver luego:
+# data brasil 2014 o alguna otra parece estar otra vez replicada.
+# varios missing en incumbencia. tiene sentido, dado que tenemos 399 incumbentes y 64 elecciones. Esta variable me deja dudando
+# aunque conociendo inestabilidad latam, tb puede ser
+# ademas pendiente pensar indicadores estado de competencia. Revisar variable enpp  Effective number of political parties at election
+# abajo dejo apuntes Celeste
+
+# sugerencias de indices de celeste Ratto
+
+# En cuanto a las dimensiones del voto o del sistema de partidos: 
+#   • Indices de fragmentación electoral y parlamentaria de Rae. 
+# 
+# • Indices del número efectivo de partidos, electorales y parlamentarios: 
+#   ◦ Indices (electoral y parlamentario) sugeridos por Laakso y Taagepera y Taagepera y Shugart. 
+# ◦ Indices de hiperfraccionamiento (electoral y parlamentario) de Kesselman y Wildgen. 
+# ◦ Indices (electoral y parlamentario) de Molinar. 
+# 
+# • Indices de concentración electoral y parlamentaria. 
+# 
+# • Indices de competitividad electoral y parlamentaria. 
+# 
+# • Indice de polarización de Sartori. 
+# • Indices de polarización ponderada (electoral y parlamentaria). 
+# 
+# • Indices de volatilidad (electoral y parlamentaria) total, entre bloques e intrabloques, propuestos por Pedersen y Bartolini y Mair (caben distintas aplicaciones, según la dimensión que resulte relevante: izquierda-derecha, centro- periferia, etc.). 
+# 
+# • Indice de voto dual, de Arian y Weiss. 
+# 
+# • Indice de voto regionalista. 
+# • Indice de voto regionalista diferenciado. 
+# • Indice de voto regional diferenciado, de Lee. 
+
+
+# SEGUNDA MITAD DE LA BASE: LADO CAROLINA
+# Nos interesa indicador de: elecciones con debate Y elecciones con debate con winner presente
+# eventualmente, elecciones con dos ppales, (facil, crear variable challenger como arriba)
+# eventualmente, elecciones con debates org por medios. 
+# (no se si vale la pena. a HOY 13 MARZO 2024 este proceso esta en pausa, falta seguir segunda_limpieza_datos completando por los tipos de organizadores, no deberia ser mucho trabajo)

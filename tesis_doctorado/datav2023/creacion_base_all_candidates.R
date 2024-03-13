@@ -218,4 +218,26 @@ base_candidatos_matcheados <- base_candidatos_matcheados %>%
 # obvio que despues puedo querer otros datos de la base original, como sea el margen de error u otros
 # parece que tengo data para 150 debates, 450 candidatos
  
-  
+# Agregamos variables pendientes de interés por candidato al dataset guardado
+# pendiente matchear variable gov_ Party in government/governing coalition y vote_, vote share
+rm(base_candidatos_propios)
+# abro data
+base_candidatos_matcheados <- read.csv("base_candidatos_matcheados2023.csv")
+
+# extraigo data de interes por candidato / eleccion
+base_candidatos_cantu_agrupada <- base_candidatos_cantu %>% 
+  mutate(vote_ = vote_ %>% round(1)) %>% 
+  select(electionid, electionyr, country, round, c_names, gov_, vote_) %>% 
+  unique()
+
+base_candidatos_cantu_agrupada <- base_candidatos_cantu_agrupada  %>% 
+  mutate(electionyr = electionyr %>% round()) %>% 
+  dplyr::rename("cat_pais" = country, "ncat_eleccion" = electionyr, "ncat_ronda" = round, "nombres_candidatos" = c_names) %>% 
+  mutate(cat_pais = ifelse(cat_pais=="Brazil", "Brasil", cat_pais))
+
+base_candidatos_matcheados_expandida <- base_candidatos_matcheados %>% 
+  left_join(base_candidatos_cantu_agrupada)
+
+# Guardo nuevamente
+#base_candidatos_matcheados_expandida %>% write_csv("base_candidatos_matcheados2023.csv")
+#test <- read.csv("base_candidatos_matcheados2023.csv")
