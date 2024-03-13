@@ -110,7 +110,11 @@ base_candidatos_cantu <- base_candidatos_cantu %>%
   mutate(nombres_candidatos = ifelse(is.na(nombres_candidatos),
                                      c_names,
                                      nombres_candidatos)) %>% 
-  mutate(id_polldatapoint = row_number())
+  mutate(electionyr = ifelse(country=="Chile"&round(electionyr)==2009, 2010, electionyr)) %>% # para hacer luego compatible con base carolina
+  subset(electionid!="Argentina 2011-08-14") %>%  # eliminamos elecciones primarias argentina
+  mutate(round = ifelse(country=="Argentina"&round(electionyr)==2011,1,round)) %>% # corregimos
+  subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) %>%  # eliminamos base mas incompleta dupilcada de brasil para esta eleccion  
+  mutate(id_polldatapoint = row_number()) 
 
 # borro data que no voy a usar
 rm(Lat_data, Lat_update, data, missing_names)
@@ -198,8 +202,8 @@ for (i in 1:nrow(base_candidatos_matcheados)){
 }
 
 # ahora trato de extraer data relevante de esta lista de polls
-#reserva <- base_candidatos_matcheados # para mientras pienso codigo
-base_candidatos_matcheados <- reserva
+# reserva <- base_candidatos_matcheados # para mientras pienso codigo
+# base_candidatos_matcheados <- reserva
 
 # manualmente observamos que el maximo de puntos de dato por candidato son 16 encuestas
 base_candidatos_matcheados <- base_candidatos_matcheados %>% 

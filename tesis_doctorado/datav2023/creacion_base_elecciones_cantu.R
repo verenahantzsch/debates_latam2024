@@ -95,8 +95,12 @@ data <- data %>%
 data <- data %>% 
   mutate(nombres_candidatos = ifelse(is.na(nombres_candidatos),
                                      c_names,
-                                     nombres_candidatos)) %>% 
-  mutate(id_polldatapoint = row_number())
+                                     nombres_candidatos))  %>% 
+  mutate(electionyr = ifelse(country=="Chile"&round(electionyr)==2009, 2010, electionyr)) %>% # para hacer luego compatible con base carolina
+  subset(electionid!="Argentina 2011-08-14") %>%  # eliminamos elecciones primarias argentina
+  mutate(round = ifelse(country=="Argentina"&round(electionyr)==2011,1,round)) %>% 
+  subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) %>%  # eliminamos base mas incompleta dupilcada de brasil para esta eleccion  
+  mutate(id_polldatapoint = row_number()) 
 
 rm(missing_names)
 
@@ -154,7 +158,8 @@ data_elecciones <- data_candidatos %>%
             sd_vote_ = sd(vote_)) %>% 
   left_join(data_incumbents) %>% 
   left_join(data_frontrunner) %>% 
-  left_join(data_winner) 
+  left_join(data_winner) %>% 
+  ungroup()
 
 # PENDIENTES 13 MARZO 2024 ####
 # todavía hay algunas inconsistencias a resolver luego:
@@ -195,3 +200,97 @@ data_elecciones <- data_candidatos %>%
 # eventualmente, elecciones con dos ppales, (facil, crear variable challenger como arriba)
 # eventualmente, elecciones con debates org por medios. 
 # (no se si vale la pena. a HOY 13 MARZO 2024 este proceso esta en pausa, falta seguir segunda_limpieza_datos completando por los tipos de organizadores, no deberia ser mucho trabajo)
+
+
+base <- readxl::read_xlsx("base_final1v2023.xlsx") # ATENTI base con datos por debate. REEMPLAZAR POR ULTIMA VERSION LIMPIA QUE CORRESPONDA
+data_elecciones_carolina <-  readxl::read_xlsx("base_eleccionesv2023.xlsx") # base auxiliar: años que hubo elecciones por país # IDEM
+
+# check de compatibilidad de años / nombres de pais SE PUEDE SALTEAR ######
+
+# data_elecciones_cantu <- data_elecciones %>% 
+#   select(electionyr, country, round) %>% 
+#   unique() %>% 
+#   mutate(electionyr = round(electionyr)) %>% 
+#   group_by(electionyr, country) %>% 
+#   summarise(cat_ballotage = n()) %>% 
+#   ungroup() %>% 
+#   dplyr::rename("ncat_eleccion" = electionyr, "cat_pais" = country) %>% 
+#   mutate( cat_pais = ifelse(cat_pais=="Brazil", "Brasil", cat_pais))
+# 
+# data_elecciones_carolina2 <- data_elecciones_carolina %>% 
+#   select(-n_candidaturas)
+# 
+# # Check for matching rows
+# matching_rows <- data_elecciones_cantu %>%
+#   semi_join(data_elecciones_carolina2)
+# 
+# # Check for non-matching rows
+# nonmatching_rows_df1 <- data_elecciones_cantu %>%
+#   anti_join(data_elecciones_carolina2)
+# 
+# # Check for non-matching rows
+# nonmatching_rows_df2 <- data_elecciones_carolina2 %>%
+#   anti_join(data_elecciones_cantu)
+
+# REVISO MANUALMENTE
+# Cantu tiene 3 entradas para Brasil 2010. Me viene generando problemas en varios lugares. ESTA DUPLICDO
+# OJO parece que está contando primarias como ronda? eso explicaria diferencias tb para Argentina 2011
+# Chile problema de nomenclatura. Carolina pone 2010, Cantu 2009 , ballotage y primera vuelta respectivamente
+# Chile 2013: Cantu no tiene datos para alguna de las vueltas , pero esta bien
+# Idem para Colombia 2014
+# Idem para Guatemala 2015
+# Idem para Ecuador 2017
+# Carolina tiene error en cat_ballotage Colombia 2018. Deberia decir "2", dice "1"
+# PASAMOS A CORREGIR MANUALMENTE LOS QUE SE PUEDEN y CHEQUEAR si no hay problemas en los "missing"
+# ELIMINAMOS UNA DE Brazil 2010-10-03 # DUPLICADO CON MISSING, OJO ELIMINAR TB DE BASE DE CANDIDATOS! previo a los joins. 
+# ELIMINAMOS Argentina 2011-08-14 PRIMARIAS y MODIFICAMOS ANOTACIONES
+# MODIFICAR CHILE 2009 por CHILE 2010 en base elecciones cantu
+# MODIFICAR COLOMBIA 2018 en base elecciones carolina
+# algunos de estos pasos fueron hechos manualmente sobre base original,
+# otros mas arriba en este script
+# chequeos sobre data de arriba, cambios automaticos agregados arriba
+# data_missing_chile <- data  %>%   
+#   subset((country=="Chile"&round(electionyr)==2013)) # efectivamente falta segunda vuelta, 15 de diciembre de 2013
+# data_missing_Colombia <- data  %>%   
+#   subset((country=="Colombia"&round(electionyr)==2014)) # efectivamente falta primera vuelta, 	Domingo 25 de mayo de 2014 hay encuestas en: https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Colombia_de_2014
+# data_missing_Guatemala <- data  %>%   
+#   subset((country=="Guatemala"&round(electionyr)==2015)) # efectivamente falta segunda vuelta, Domingo 25 de octubre de 2015 (2.ª vuelta) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2015
+# data_missing_Ecuador <- data  %>%   
+#   subset((country=="Ecuador"&round(electionyr)==2017)) # efectivamente falta segunda vuelta, Domingo 2 de abril de 2017 (Segunda vuelta) https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Ecuador_de_2017
+
+# AHORA SI HACEMOS JOIN ########
+
+# primero creamos base anual relevante
+# tengo que separar ronda 1 de 2. PENDIENTE 
+
+# creamos loop para agregar rondas faltantes cuando corresponda
+for (i in 1:nrow(data_elecciones_carolina)) {
+  new_rows <- data_elecciones_carolina[i, ]
+  new_rows$cat_ballotage <- 1
+  if (data_elecciones_carolina$cat_ballotage[i]>1){
+    data_elecciones_carolina <- rbind(data_elecciones_carolina, new_rows)
+  }
+}
+
+# identifico elecciones con debates
+base_elecciones_con_debates <- base %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(n_debates_eleccion = n()) 
+
+data_elecciones_carolina2 <- data_elecciones_carolina %>% 
+  dplyr::rename("ncat_ronda" = cat_ballotage) %>% 
+  left_join(base_elecciones_con_debates ) %>% 
+  mutate(n_debates_eleccion = ifelse(is.na(n_debates_eleccion), 0, n_debates_eleccion))
+
+data_agregada <- data_elecciones %>% 
+  mutate(electionyr = round(electionyr)) %>% 
+  dplyr::rename("ncat_eleccion" = electionyr, "cat_pais" = country, "ncat_ronda" = round) %>% 
+  mutate( cat_pais = ifelse(cat_pais=="Brazil", "Brasil", cat_pais)) %>% 
+  left_join(data_elecciones_carolina2)
+
+# problemas con esta base: otra vez tengo desbalance en 1/ 0 
+# PENDIENTE: CREAR VARIABLE C DICO DEBATE C/ LEAD Y C CHALLENGER. VA A HABER QUE HACER VARIOS JOINS CRUZADOS
+# TB variable de debates en años previos
+# Tb pensar indicadores adecuados para competitividad
+
+  
