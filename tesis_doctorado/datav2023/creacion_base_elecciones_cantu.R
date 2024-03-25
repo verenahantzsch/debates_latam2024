@@ -64,7 +64,7 @@ data$polldate<-as.Date(data$polldate)
 data$elecdate<-as.Date(data$elecdate)
 
 # Renaming candidateid for partyyid
-data <- rename(data, candidateid=partyid)
+data <- dplyr::rename(data, candidateid=partyid)
 
 # Recoding electionid
 data$electionid<-paste(data$country,data$elecdate)
@@ -80,7 +80,8 @@ data <- data %>% mutate(daysbeforeED = elecdate-polldate)
 data <- data[data$daysbeforeED<=120,]
 
 rm(Lat_data, Lat_update)
-
+reserva <- data 
+#data <- reserva
 # algunas limpiezas necesarias
 
 data <- data %>% 
@@ -88,8 +89,7 @@ data <- data %>%
   mutate(round = ifelse(country=="Argentina"&round(electionyr)==2011,1,round)) %>% 
   mutate(turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==1, 80.61, turnout),
          turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==2, 78.90, turnout)) %>% # habia problemas con decimales en el reporte de este numero para distintos items de esta eleccion
-  subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) %>%  # eliminamos base mas incompleta dupilcada de brasil para esta eleccion  
-  mutate(id_polldatapoint = row_number()) 
+  subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) ## eliminamos base mas incompleta dupilcada de brasil para esta eleccion
 
 reserva <- data 
 # cargo data con nombres de candidatos
@@ -121,19 +121,61 @@ rm(missing_names)
 
 u_elect <- data$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
 
+# ahora agrego update de elecciones y nuevas encuestas
+data_update_march2024 <- read.csv('/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv')
 
-# PRIMERA MITAD DE LA BASE: LADO CANTU ###########
+# algunos ajustes para hacer data compatible
+differing_colnames <- setdiff(names(data_con_nombres), names(data_update_march2024))
 
-data_candidatos <- data_con_nombres %>% 
+data_update_march2024 <- data_update_march2024 %>% 
+  subset(!is.na(poll_)) %>% 
+  select(-X) %>% 
+  mutate(inc_ = "NA", 
+         enpp = "NA",
+         reliable = "NA",
+         pollcycle = "NA",
+         npolls = "NA",
+         comentarios_nombres_candidatos = "NA",
+         reliable = "NA", 
+         ipoll_ = "NA" ,
+         candidateid = "NA") %>% 
+  mutate(electionid = paste0(country, " ", elecdate)) %>% 
+  dplyr::rename("url" = source_url) 
+  
+u_elect <- data_update_march2024$electionid %>% unique() # sumamos 35 elecciones
+u_elect <- data_con_nombres$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
+
+# reordenamos columnas
+data_update_march2024 <- data_update_march2024[, match(names(data_con_nombres), names(data_update_march2024))]
+
+# unimos
+full_dataset <- data_con_nombres %>% 
+  rbind(data_update_march2024)
+
+# agregamos id de encuesta
+full_dataset <- full_dataset %>% 
+  dplyr::mutate(id_polldatapoint = row_number()) 
+
+u_elect <- full_dataset$electionid %>% unique() # tenemos 97 elecciones cuando deberiamos tener 998
+
+# guardamos esta data 
+
+full_dataset %>% 
+  write.csv("/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv")
+########### ACA ME QUEDE PENDIENTE #######################
+
+# PRIMERA MITAD DE LA BASE AGREGADA POR ELECCION: LADO CANTU ###########
+
+data_candidatos <- full_dataset %>% 
   # primero agrupamos por todas las variables que correspondan al nivel "candidatos", perdiendo el nivel de "polls"
   # tengo ademas que seleccionar todas las variables que quiero retener del nivel electoral 
-  group_by(electionid, electionyr, country, round, enpp, turnout, espv, regime, nombres_candidatos, gov_, inc_) %>% 
+  group_by(electionid, electionyr, country, round, enpp, turnout, espv, regime, nombres_candidatos, gov_) %>% 
   summarise(mean_encuestas_candidato = mean(poll_),
          sd_encuestas_candidato = sd(poll_),
          vote_ = mean(vote_)) %>% # esta es porque habia unas inconsistencias menores en data de brasil (0.01 diferencia entre filas)
   ungroup() 
   
-u_elect <- data_candidatos$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
+u_elect <- data_update_march2024$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
 
 # ahora agrupamos por todas las variables que corresponden al nivel "elecciones"
 # tenemos que usar algunos indicadores del nivel "candidatos" para construir indicadores de nivel superior, de "elecciones"
