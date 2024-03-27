@@ -1,18 +1,16 @@
 # Este script crea base de datos cuya U de A son las elecciones, a partir de datos prestados por cantu carreras
 # marzo 2024
+# CUANTO MAS ALTO EL NUMERO, POSTERIOR LA VERSION DEL CODIGO, EL MAS ALTO VIGENTE
 
 library(tidyverse)
 
-# PENDIENTE IMPORTANTE : RE RUN ESTA PRIMERA PARTE EN TU PC PARA OBTENER DATASET AJUSTADO MEJOR EN YR EN LUGAR DE ELECTIONYR ##################
-# PRIMERA PARTE: EXTRACCION DE CANDIDATOS DE BASE CANTU CARRERAS #################
+########################## PRIMERA PARTE DEL SCRIPT: CREO BASE DE ENCUESTAS UNIFICADA #############################
 
 # Importo y formateo data original de los autores.###########
 
 # Importing Jennings and Wlezien (2018) dataset
 # en esta data NO hay nombres de candidatos pero si un candidate id
-#path <- "~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Jennings and Wlezien (2018)/Dataset-20180111.tab"
-path <- "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/Jennings and Wlezien (2018)/Dataset-20180111.tab"
-Dataset.20180111 <- read.delim(path)
+Dataset.20180111 <- read.delim("~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Jennings and Wlezien (2018)/Dataset-20180111.tab")
 
 # Selecting cases by country and only considering those observations within the last 100 days before the election
 paises <- c("Argentina", "Brazil", "Chile", "Colombia", "Ecuador", "Mexico", "Paraguay", "Peru", "Venezuela")
@@ -36,9 +34,7 @@ rm(Dataset.20180111 ) # limpiamos escritorio
 # notese que para el dataset anterior, c_names es NA 
 # en este archivo algunos nombres fueron corregidos respecto del original,
 # para poder matchearlos a los nombres en la base de datos propia 
-#path <- ~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/polls_corrected.csv
-path <- "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/Working data/polls_corrected.csv"
-Lat_update <- read.csv(path)#,  fileEncoding="latin1")
+Lat_update <- read.csv("~/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/polls_corrected.csv")#,  fileEncoding="latin1")
 
 # Keep the reliable data
 Lat_update <- Lat_update[Lat_update$reliable==1,]
@@ -97,11 +93,10 @@ data <- data %>%
   subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) ## eliminamos base mas incompleta dupilcada de brasil para esta eleccion
 
 reserva <- data 
-# cargo data con nombres de candidatos
+# cargo data con nombres de candidatos ##############
 # esta base fue creada en limpieza_unique_candidates y luego completada manualmente
 
-#setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
-setwd("/home/carolina/Documents/R PROJECTS/debates_latam2024/tesis_doctorado/datav2023")
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 missing_names <- readxl::read_xlsx("unique_candidates_tomerge_incompletos_completado.xlsx")
 
 # Uno
@@ -115,10 +110,11 @@ data_con_nombres <- data_con_nombres %>%
   mutate(nombres_candidatos = ifelse(is.na(nombres_candidatos),
                                      c_names,
                                      nombres_candidatos)) %>% 
-  mutate(nombres_candidatos = iconv(nombres_candidatos, to = "ASCII//TRANSLIT"),
-         nombres_candidatos = str_trim(nombres_candidatos, "both"))  %>% 
+  mutate(nombres_candidatos = str_trim(nombres_candidatos, "both"),
+         nombres_candidatos = iconv(nombres_candidatos, to = "ASCII//TRANSLIT"))  %>% 
   mutate(country = ifelse(country=="Brazil", "Brasil", country))  %>% # para hacer luego compatible con base carolina
-  mutate(electionyr = ifelse(country=="Chile"&round(electionyr)==2009, 2010, electionyr)) 
+  mutate(electionyr = ifelse(country=="Chile"&round(electionyr)==2009, 2010, electionyr))  # para hacer luego compatible con base carolina
+
 
 rm(missing_names)
 
@@ -126,10 +122,8 @@ rm(missing_names)
 
 u_elect <- data$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
 
-# ahora agrego update de elecciones y nuevas encuestas
-#path <- '/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv'
-path <-  "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv"
-data_update_march2024 <- read.csv(path)
+# ahora agrego update de elecciones y nuevas encuestas ##################
+data_update_march2024 <- read.csv('/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv')
 
 # algunos ajustes para hacer data compatible
 differing_colnames <- setdiff(names(data_con_nombres), names(data_update_march2024))
@@ -148,7 +142,7 @@ data_update_march2024 <- data_update_march2024 %>%
          candidateid = "NA") %>% 
   mutate(electionid = paste0(country, " ", elecdate)) %>% 
   dplyr::rename("url" = source_url) 
-  
+
 u_elect <- data_update_march2024$electionid %>% unique() # sumamos 35 elecciones
 u_elect <- data_con_nombres$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
 
@@ -156,43 +150,57 @@ u_elect <- data_con_nombres$electionid %>% unique() # por ahora tenemos 63 elecc
 data_update_march2024 <- data_update_march2024[, match(names(data_con_nombres), names(data_update_march2024))]
 
 # unimos
-data_encuestas <- data_con_nombres %>% 
+full_dataset <- data_con_nombres %>% 
   rbind(data_update_march2024)
 
 # agregamos id de encuesta
-data_encuestas <- data_encuestas %>% 
+full_dataset <- full_dataset %>% 
   dplyr::mutate(id_polldatapoint = row_number()) 
 
-u_elect <- data_encuestas$electionid %>% unique() # tenemos 97 elecciones cuando deberiamos tener 998
+u_elect <- full_dataset$electionid %>% unique() # tenemos 97 elecciones cuando deberiamos tener 998
 
 # guardamos esta data 
-#path <- "/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
-path <- "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
-# data_encuestas %>% 
-#   write.csv(path)
-########### ACA ME QUEDE PENDIENTE #####################################
-############ ESTE PUEDE SER UN NUEVO PUNTO DE PARTIDA O SE PUEDE CORRER LO DE MAS ATRAS PARA OBTENER LA DATA #######################3
+
+# full_dataset %>% 
+#   write.csv("/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv")
+
+
+
+########################## SEGUNDA PARTE DEL SCRIPT: UNO BASE ENCUESTAS CON BASE DEBATES #############################
+########################## PUNTO DE PARTIDA ES BASE GUARDADA EN PRIMERA PARTE DEL SCRIPT #############################
+
+# DATA DE PRIMERA PARTE ###############
 # vuelvo a gargar base ya completa, con una fila por encuesta/candidato/eleccion
 # ajustar PATH segun corresponda
 #path <- "/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
 path <- "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
 data_encuestas <- read.csv(path)
 
-# PENDIENTE SOLUCIONAR  #######
+# PENDIENTE PARA PROLIJIDAD PASAR A PARTE EN QUE CREAMOS ARCHIVO AGREGADO, POR AHORA DEJO ACA  #######
 # COLOMBIA 2014 esta dos veces, qitamos data de cantu. Una pista de a que se refiere con reliable
-
+# SOLUCIONAR EN ESTE ARCHIVO MAS ARRIBA PENDIENTE
 data_encuestas <- data_encuestas %>% 
   subset(!(electionid=="Colombia 2014-06-15"&!is.na(reliable)))
-
-# PRIMERA MITAD DE LA BASE AGREGADA POR ELECCION: LADO CANTU ###########
-
+# YA CAMBIADO ARCHIVO ORIGINAL
+data_encuestas <- data_encuestas %>% 
+  mutate(round = ifelse(electionid=="Chile 2006-01-12",2,round))
+# SOLUCIONAR EN ESTE ARCHIVO MAS ARRIBA PENDIENTE
+data_encuestas <- data_encuestas %>% 
+  mutate(vote_ = ifelse(electionid=="Brazil 2014-10-26"&nombres_candidatos=="Dilma Rousseff",51.64,vote_))
+# SOLUCIONAR EN ESTE ARCHIVO MAS ARRIBA PENDIENTE
+data_encuestas <- data_encuestas %>% 
+  mutate(nombres_candidatos = str_trim(nombres_candidatos, "both"),
+         nombres_candidatos = iconv(nombres_candidatos, to = "ASCII//TRANSLIT")) 
+# SOLUCIONAR EN ESTE ARCHIVO MAS ARRIBA PENDIENTE
 data_encuestas <- data_encuestas %>% 
   mutate(poll_ = str_trim(poll_, "both")) %>% 
   mutate(poll_ = str_replace(poll_, "\u00A0", "")) %>% 
   mutate(poll_ = as.numeric(poll_)) %>% 
   subset(!is.na(poll_) | poll_ == "NA")  
 
-#### BASE DE DATOS 1 CANDIDATO POR FILA ##########################
+
+#### AGREGO NIVEL DE BASE ENCUESTAS:  BASE DE DATOS 1 CANDIDATO POR FILA ##########################
+
 data_candidatos <- data_encuestas %>% 
   # primero agrupamos por todas las variables que correspondan al nivel "candidatos", perdiendo el nivel de "polls"
   # tengo ademas que seleccionar todas las variables que quiero retener del nivel electoral 
@@ -203,7 +211,6 @@ data_candidatos <- data_encuestas %>%
   ungroup() 
 
 #### CAMINO A CREAR UNA BASE DE DATOS 1 ELECCION POR FILA 
-# ahora agrupamos por todas las variables que corresponden al nivel "elecciones"
 # tenemos que usar algunos indicadores del nivel "candidatos" para construir indicadores de nivel superior, de "elecciones"
 
 competencia <- data_candidatos %>% 
@@ -258,25 +265,24 @@ data_elecciones <- data_candidatos %>%
 
 #rm(list=setdiff(ls(), c( "data_candidatos", "data_encuestas", "data_elecciones"))) # voy a usar de vuelta bases parciales sobre data_debates
 
-# SEGUNDA MITAD DE LA BASE: LADO CAROLINA #######################
+# SEGUNDA MITAD DE LA BASE: LADO DEBATES CAROLINA #######################
 
 # Nos interesa indicador de: elecciones con debate Y elecciones con debate con winner presente
 # eventualmente, elecciones con dos ppales, (facil, crear variable challenger como arriba)
 # eventualmente, elecciones con debates org por medios. 
 # (no se si vale la pena. a HOY 13 MARZO 2024 este proceso esta en pausa, falta seguir segunda_limpieza_datos completando por los tipos de organizadores, no deberia ser mucho trabajo)
-# pendiente: rear variable lagged ESTO LO PUEDO HACER AHORA SALTA #################
 
 # CARGO DATA #
 # ATENTI REEMPLAZAR CON BASE FINAL LIMPIA #####################
-#path <- "./tesis_doctorado/datav2023/base_final1v2023.xlsx"
-path <- "base_final1v2023.xlsx"
+path <- "./tesis_doctorado/datav2023/base_final1v2023.xlsx"
+#path <- "base_final1v2023.xlsx"
 data_debates_carolina <- readxl::read_xlsx(path) # ATENTI base con datos por debate. REEMPLAZAR POR ULTIMA VERSION LIMPIA QUE CORRESPONDA
-#path <- "./tesis_doctorado/datav2023/base_eleccionesv2023.xlsx"
-path <- "base_eleccionesv2023.xlsx"
+path <- "./tesis_doctorado/datav2023/base_eleccionesv2023.xlsx"
+#path <- "base_eleccionesv2023.xlsx"
 data_elecciones_carolina <-  readxl::read_xlsx(path) # base auxiliar: años que hubo elecciones por país # IDEM
 
-# CHECK MANUA DE COMPATIBILIDAD # 
-# check de compatibilidad de años / nombres de pais SE PUEDE SALTEAR ######
+# CHECK MANUA DE COMPATIBILIDAD, PUEDE SALTEARSE ################### 
+# check de compatibilidad de años / nombres de pais SE PUEDE SALTEAR 
 
 # data_elecciones_cantu <- data_elecciones %>% 
 #   select(electionyr, country, round) %>% 
@@ -330,11 +336,11 @@ data_elecciones_carolina <-  readxl::read_xlsx(path) # base auxiliar: años que 
 #   subset((country=="Ecuador"&round(electionyr)==2017)) # efectivamente falta segunda vuelta, Domingo 2 de abril de 2017 (Segunda vuelta) https://es.wikipedia.org/wiki/Elecciones_presidenciales_de_Ecuador_de_2017
 #data_duplicated_Brasil <- data  %>%   
 #     subset((country=="Brazil"&round(electionyr)==2014))  
-
+# 
 # OTRO CHECK DESPUES DE AMPLIAR BASE DE DATOS CON SCRAPPING DE WIKIPEDIA
 # VAMOS A TENER ALGUN PROBLEMA CON LOS AÑOS , ya que en una me base con variable electionyr, con la otra con variable yr
-# corrijo ahora arriba si puedo 
-# 
+# corrijo ahora arriba si puedo
+
 # data_elecciones_cantu <- data_elecciones %>%
 #      select(electionyr, country, round) %>%
 #      unique() %>%
@@ -359,6 +365,8 @@ data_elecciones_carolina <-  readxl::read_xlsx(path) # base auxiliar: años que 
 # # Check for non-matching rows
 # nonmatching_rows_df2 <- data_elecciones_carolina2 %>%
 #   anti_join(data_elecciones_cantu)
+# 
+# rm(data_elecciones_cantu,data_elecciones_carolina2,matching_rows,nonmatching_rows_df1,nonmatching_rows_df2)
 
 # EL "PROBLEMA" EN TODOS LOS CASOS SALVO GUATEMALA 1991/1990 EN EL QUE EL AÑO DIFIERE, OJOTA; HAY QUE RERUN EL COD USANDO YR EN LUGAR DE ELECYR PENDIENTE, ANOTADO ARRIBA ######
 # SON MISSING BALLOTAGES 
@@ -413,39 +421,91 @@ data_debates_carolina2 <- data_debates_carolina %>%
          incumbente_presente = ifelse(str_detect(str_presentes, incumbente),1,0),
          winner_presente = ifelse(str_detect(str_presentes, winner),1,0),
          challenger_presente = ifelse(str_detect(str_presentes, challenger),1,0),
-         frontycha_presentes = ifelse(str_detect(str_presentes, frontrunner)&str_detect(str_presentes, challenger),1,0))
-check  <- data_debates_carolina[60,] %>% left_join(incumbents) ######### ACA ME QUEDE MARTES 26 CON DUPLICADOSSS ############ PROBLEMA ####PENDIENTE#######
-incumbents[10,]
+         frontycha_presentes = ifelse(str_detect(str_presentes, frontrunner)&str_detect(str_presentes, challenger),1,0),
+         frontORcha_presentes = ifelse(str_detect(str_presentes, frontrunner)|str_detect(str_presentes, challenger),1,0))
+ 
 # identifico elecciones con debates
 base_elecciones_con_debates <- data_debates_carolina2 %>% 
   group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
   summarise(n_debates_eleccion = n(),
             n_debates_frontrunner_presente = sum(frontrunner_presente, na.rm=T),
-            n_debates_frontycha_presentes = sum(frontycha_presentes, na.rm=T)) %>% 
+            n_debates_frontycha_presentes = sum(frontycha_presentes, na.rm=T),
+            n_debates_frontORcha_presentes = sum(frontORcha_presentes, na.rm=T)) %>% 
   mutate(dico_debates_eleccion = ifelse(n_debates_eleccion>=1,1,0),
          dico_frontrunner_presente = ifelse(n_debates_frontrunner_presente>=1,1,0),
-         dico_frontycha_presentes = ifelse(n_debates_frontycha_presentes>=1,1,0))
+         dico_frontycha_presentes = ifelse(n_debates_frontycha_presentes>=1,1,0),
+         dico_frontORcha_presentes = ifelse(n_debates_frontORcha_presentes>=1,1,0)) %>% 
+  ungroup()  
+ 
 
-# uno base PROPIA de todas las elecciones con datos sobre debates 
-data_elecciones_carolina <- data_elecciones_carolina %>% 
+# uno base PROPIA de todas las elecciones , con datos sobre debates por eleccion
+data_elecciones_carolina2 <- data_elecciones_carolina %>% 
   dplyr::rename("ncat_ronda" = cat_ballotage) %>% 
   left_join(base_elecciones_con_debates ) %>% 
   mutate(n_debates_eleccion = ifelse(is.na(n_debates_eleccion), 0, n_debates_eleccion),
          n_debates_frontrunner_presente = ifelse(is.na(n_debates_frontrunner_presente), 0, n_debates_frontrunner_presente),
+         n_debates_frontycha_presentes = ifelse(is.na(n_debates_frontycha_presentes), 0, n_debates_frontycha_presentes),
+         n_debates_frontORcha_presentes = ifelse(is.na(n_debates_frontORcha_presentes), 0, n_debates_frontORcha_presentes),
          dico_debates_eleccion = ifelse(is.na(dico_debates_eleccion), 0, dico_debates_eleccion),
          dico_frontrunner_presente = ifelse(is.na(dico_frontrunner_presente), 0, dico_frontrunner_presente),
-         dico_frontycha_presentes = ifelse(is.na(dico_frontycha_presentes), 0, dico_frontycha_presentes))
+         dico_frontycha_presentes = ifelse(is.na(dico_frontycha_presentes), 0, dico_frontycha_presentes),
+         dico_frontORcha_presentes = ifelse(is.na(dico_frontORcha_presentes), 0, dico_frontORcha_presentes))   
+
+# creo variable lagged sobre debates 
+data_elecciones_lagged <- data_elecciones_carolina2 %>% 
+  group_by(cat_pais, ncat_eleccion) %>% 
+  summarise(n_debates_eleccion = sum(n_debates_eleccion),
+            n_debates_frontrunner_presente = sum(n_debates_frontrunner_presente),
+            n_debates_frontycha_presentes = sum(n_debates_frontycha_presentes),
+            n_debates_frontORcha_presentes = sum(n_debates_frontORcha_presentes),
+            dico_debates_eleccion =  max(dico_debates_eleccion),
+            dico_frontrunner_presente =  max(dico_frontrunner_presente),
+            dico_frontycha_presentes =  max(dico_frontycha_presentes),
+            dico_frontORcha_presentes =  max(dico_frontORcha_presentes) ) %>% 
+  group_by(cat_pais) %>% 
+  arrange(ncat_eleccion) %>% 
+  mutate(lagged_n_debates_eleccion = lag(n_debates_eleccion),
+         lagged_n_debates_frontrunner_presente = lag(n_debates_frontrunner_presente),
+         lagged_n_debates_frontycha_presentes = lag(n_debates_frontycha_presentes),
+         lagged_n_debates_frontORcha_presentes = lag(n_debates_frontORcha_presentes),
+         lagged_dico_debates_eleccion = lag(dico_debates_eleccion),
+         lagged_dico_frontrunner_presente =  lag(dico_frontrunner_presente),
+         lagged_dico_frontycha_presentes = lag(dico_frontycha_presentes),
+         lagged_dico_frontORcha_presentes = lag(dico_frontORcha_presentes)) %>% 
+  ungroup() %>% 
+  select(c(cat_pais, ncat_eleccion, starts_with("lagged_")))
+
+
+# uno est data lagged a la base
+
+data_elecciones_carolina3 <- data_elecciones_carolina2 %>% 
+  left_join(data_elecciones_lagged)
 
 # FINALMENTE UNO DATA ENCUESTAS CON DATA DEBATES
 data_agregada <- data_elecciones %>% 
   mutate(electionyr = round(electionyr)) %>% 
   dplyr::rename("ncat_eleccion" = electionyr, "cat_pais" = country, "ncat_ronda" = round) %>% 
-  left_join(data_elecciones_carolina2)
+  left_join(data_elecciones_carolina3)
 
-u_elec <- data_elecciones$electionid %>% unique()
+
+# GUARDAMOS FINALMENTE ###################
+
+path <- "./tesis_doctorado/datav2023/all_elections.csv"
+# data_agregada %>%
+#   write.csv(path)
+
+
 
 
 # PENDIENTE  !!!!! ######
+
+# table(data_agregada$dico_debates_eleccion)
+# table(data_agregada$dico_frontrunner_presente) # KII ESTO MEJORO UN MONTON 
+# table(data_agregada$dico_debates_eleccion)
+# 
+# elecs_sin_frontrunner <- data_agregada  %>% 
+#   subset(dico_frontrunner_presente==0&dico_debates_eleccion==1)
+
 # problemas con esta base: otra vez tengo desbalance en 1/ 0 
 # PENDIENTE: CREAR VARIABLE C DICO DEBATE C/ LEAD Y C CHALLENGER. VA A HABER QUE HACER VARIOS JOINS CRUZADOS
 # TB variable de debates en años previos
