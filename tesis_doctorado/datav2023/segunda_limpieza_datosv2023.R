@@ -117,7 +117,7 @@ all_candidates %>%
      writexl::write_xlsx("all_candidates.xlsx")
   
 
-# CREACION DE VARIABLES ORDINALES de NORMATIVA  ####
+# CREACION DE VARIABLES ORDINALES de NORMATIVA  PENDIENTE ####
 # vamos a crear tablas para asignar manualmente un numero a una categoria. 
 # son tablas de categorias distinct, digamos. de uniqe factors
 # luego usaremos joins con las tablas ya cargadas. 
