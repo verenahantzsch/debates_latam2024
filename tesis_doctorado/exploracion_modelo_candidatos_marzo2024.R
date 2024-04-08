@@ -39,7 +39,7 @@ summary(modelo_base)
 #predict_reg <- predict(modelo_base,
 #                       base_candidatos_matcheados, type = "response")
 
-# el signo es conforme a lo esperado 
+# el signo es conforme a lo esperado (negativo: mas puntaje, menos proba de asistir al debate)
 # si o si deberia incorporar si hubo debates anteriormente / si candidato asistio a debate anterior
 # para precisar estimacion, por ejemplo abajo, si agrego un efecto fijo por pais,
 # el mean_encuestas se vuelve estadisticamente sficativo y aumenta ligeramente en magnitud
@@ -70,7 +70,7 @@ summary(modelo_3)
 
 # MODELOS CON ORDEN DE LIDERAZGO DE CANDIDATO COMO BASE ##########
 
-# creamos variables
+# creamos variables # QUIZAS SERIA MEJOR IMPORTAR ESTAS VARIABLES DESDE EL DATASET COMPLETO 
 ranking <- data %>% 
   select(cat_pais, ncat_eleccion, nombres_candidatos, mean_encuestas) %>%
   unique() %>% 
@@ -83,12 +83,13 @@ data <- data %>%
          challenger = ifelse(rank==2,1,0),
          tail = ifelse(frontrunner==0&challenger==0,1,0))
 
-# nignuno de los modelos basicos que siguen da resultados significativos
+# este no da resultados significativos
 modelo_base <- glm(dico_candidato_presente ~ rank,
                    data = data,
                    family = "binomial")
 summary(modelo_base)
 
+# estos si 
 modelo_1 <- glm(dico_candidato_presente ~ frontrunner + challenger, # dejamos fuera tail como cat base
                    data = data,
                    family = "binomial")
@@ -97,7 +98,7 @@ summary(modelo_1)
 modelo_2 <- glm(dico_candidato_presente ~ frontrunner + challenger + cat_pais, # dejamos fuera tail como cat base
                 data = data,
                 family = "binomial")
-summary(modelo_2)
+summary(modelo_2) #curioso que en este modelo el challenger tb tiene menos proba de asistir 
 
 # MODELO CON DIFERENCIA O DISTANCIA EN LA COMPETENCIA ##########
 # pendiente pensar como construir indicador

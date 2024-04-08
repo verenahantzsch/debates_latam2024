@@ -123,7 +123,7 @@ for (i in 1:nrow(base_candidatos_matcheados)){
 
 # ahora trato de extraer data relevante de esta lista de polls
 #reserva <- base_candidatos_matcheados # para mientras pienso codigo
-base_candidatos_matcheados <- reserva
+#base_candidatos_matcheados <- reserva
 
 # manualmente observamos que el maximo de puntos de dato por candidato son 16 encuestas
 base_candidatos_matcheados <- base_candidatos_matcheados %>% 
@@ -142,7 +142,7 @@ base_candidatos_matcheados <- base_candidatos_matcheados %>%
   mutate(mean_encuestas = rowMeans(select(., paste0("intencion_voto", 2:n_cols)), na.rm=TRUE)) 
 
 # GUARDO ESTE DATASET 
-base_candidatos_matcheados %>% write_csv("base_candidatos_matcheados2023.csv")
+#base_candidatos_matcheados %>% write_csv("base_candidatos_matcheados2023.csv")
 #test <- read.csv("base_candidatos_matcheados2023.csv")
 # obvio que despues puedo querer otros datos de la base original, como sea el margen de error u otros
 # parece que tengo data para 150 debates, 450 candidatos
@@ -168,5 +168,5 @@ base_candidatos_matcheados_expandida <- base_candidatos_matcheados %>%
   left_join(base_candidatos_encuestas_agrupada)
 
 # Guardo nuevamente
-base_candidatos_matcheados_expandida %>% write_csv("base_candidatos_matcheados2023.csv")
+#base_candidatos_matcheados_expandida %>% write_csv("base_candidatos_matcheados2023.csv")
 #test <- read.csv("base_candidatos_matcheados2023.csv")
