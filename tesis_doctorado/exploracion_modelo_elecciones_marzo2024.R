@@ -91,6 +91,7 @@ modelo_22_0 <- glm(dico_debates_eleccion ~ competitividad + concentracion + lagg
 summary(modelo_22_0)
 
 # debate en eleccion anterior es por lejos mejor predictor, magnitud mucho mas grande y sficativo al 0.001
+# igual para pensar: magnitud tiene que ver con escalas. competitividad y concetrancion varian del 1 al 100 (hipoteticamente), lagged es dicotomica. 
 # interesante es que variables de competencia y concentracion se mantienen parecidas!
 
 # probamos con variables VD alternativas
@@ -124,6 +125,31 @@ summary(modelo_22_2)
 
 # VARIABLES LEGISLACION #############
 # pendiente 
+
+# VARIABLES CONFIANZA LATINOBAROMETRO (PENDIENTE! EMPROLIJAR) ############
+
+data_latinobarometro <- "/home/carolina/Documents/dataexterna/latinobarometro/grouped_filled_latinobarometro_2024.csv" %>%  read.csv()
+data_lapop <- "/home/carolina/Documents/dataexterna/lapop/confianza_medios_lapop_2024.csv" %>% read.csv()
+
+data_unida <- data_latinobarometro %>% 
+  select(-X) %>% 
+  left_join(data_lapop %>% mutate("ncat_eleccion" = as.integer(wave)))
+
+data_unida <- data_unida %>% 
+  mutate(new_average_confianza = ifelse(is.na(average_confianza_tv), average_confianza_medios_recat,average_confianza_tv) %>% as.integer(),
+         new_average_confianza = ifelse(is.na(new_average_confianza), int_average_confianza_tv, new_average_confianza))
+
+data_unida <- base_elecciones %>% 
+  left_join(data_unida %>% select(-X))
+
+# modelo sin interpolacion
+modelo_x <- glm(dico_frontrunner_presente ~ competitividad + concentracion + lagged_dico_debates_eleccion + new_average_confianza + int_average_confianza_ppols,
+                   data = data_unida,
+                   family = "binomial")
+summary(modelo_x) 
+# definitivamente sin resultados sficativos, en este modelo completo competitividad recupera sficancia aunque al 0.1, y aumenta en magnitud, mantiene signo esperado
+# coefs de confianza cambian mucho y son definitivamente no sficativos }
+# los resultados se mantienen similares para los distintos indicadores de confianza en medios utilizados
 
 # FIXED EFFECTS POR PAIS ######
 
