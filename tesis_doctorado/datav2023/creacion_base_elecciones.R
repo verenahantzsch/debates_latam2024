@@ -15,7 +15,7 @@ library(tidyverse)
 # ajustar PATH segun corresponda
 path <- "/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
 #path <- "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
-data_encuestas <- read.csv(path)
+data_encuestas <- read.csv(path) %>% select(-X)
 
 
 #### AGREGO NIVEL DE BASE ENCUESTAS:  BASE DE DATOS 1 CANDIDATO POR FILA ##########################
@@ -106,8 +106,8 @@ data_elecciones <- data_candidatos %>%
 # CARGO DATA #
 # ATENTI REEMPLAZAR CON BASE FINAL LIMPIA #####################
 #path <- "./tesis_doctorado/datav2023/base_final1v2023.xlsx"
-path <- "base_final1v2023.xlsx"
-data_debates_carolina <- readxl::read_xlsx(path) # ATENTI base con datos por debate. REEMPLAZAR POR ULTIMA VERSION LIMPIA QUE CORRESPONDA
+path <- "base_final3v2023.csv"
+data_debates_carolina <- read_csv(path) # ATENTI base con datos por debate. REEMPLAZAR POR ULTIMA VERSION LIMPIA QUE CORRESPONDA, ESTOY REEMPLAZANDO A ABRIL 2024
 #path <- "./tesis_doctorado/datav2023/base_eleccionesv2023.xlsx"
 path <- "base_eleccionesv2023.xlsx"
 data_elecciones_carolina <-  readxl::read_xlsx(path) # base auxiliar: años que hubo elecciones por país # IDEM
@@ -322,13 +322,71 @@ data_agregada <- data_elecciones %>%
 # GUARDAMOS FINALMENTE ###################
 
 #path <- "./tesis_doctorado/datav2023/all_elections.csv"
+#path <- "all_elections.csv"
+#data_agregada %>%
+  #write.csv(path)
+#test <- read.csv("all_elections.csv")
+
+################## POSTSCRIPTUM : AGREGO + DATA EXTERNA A ESTA BASE #########################
+######## AGREGO DATA LATINOBAROMETRO Y LAPOP ########################
+# SE PUEDE PARTIR DE ACA O SE PUEDE SEGUIR DIRECTO DESDE ARRIBA, DESMARCAR SEGUN CORRRESPONDA
+# setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
+# path <- "all_elections.csv" #comienzo abriendo data ya guardada
+# base_elecciones <- read.csv(path)
+base_elecciones <- data_agregada
+
+data_latinobarometro <- "/home/carolina/Documents/dataexterna/latinobarometro/grouped_filled_latinobarometro_2024.csv" %>%  read.csv() %>% select(-X)
+data_lapop <- "/home/carolina/Documents/dataexterna/lapop/confianza_medios_lapop_2024.csv" %>% read.csv() %>% select(-X)
+
+data_unida <- data_latinobarometro  %>% 
+  left_join(data_lapop %>% mutate("ncat_eleccion" = as.integer(wave)))
+
+data_unida <- data_unida %>% 
+  mutate(average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv), average_confianza_medios_recat, average_confianza_tv)) %>% #,
+  #new_average_confianza = ifelse(is.na(new_average_confianza), int_average_confianza_tv, new_average_confianza))
+  arrange(cat_pais, ncat_eleccion) %>% 
+  group_by(cat_pais) %>% 
+  mutate(int_average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv_medios_latin_lapop), approx(ncat_eleccion, average_confianza_tv_medios_latin_lapop, xout = ncat_eleccion)$y, average_confianza_tv_medios_latin_lapop)) 
+
+########## PROBLEMA PENDIENTE: LOS DOS INDICES DIFIEREN BASTANTE. CREO QUE LO ADECUADO SERIA ESTANDARIZAR LA VARIABLE? PREGUNTAR MAURICIO 
+
+data_unida <- base_elecciones %>% 
+  left_join(data_unida)
+
+# guardamos bajo mismo nombre. Guarde backup en carpeta en PC 
+
 path <- "all_elections.csv"
-data_agregada %>%
+#data_unida %>%
   #write.csv(path)
 
+  
+############## POSTSCRIPTUM 2: AGREGAMOS DATA NORMATIVA #####################
+# IDEM ANTERIOR, SE PUEDE PARTIR DE ACA O SEGUIR DE LARGO
+#path <- "all_elections.csv" # base creada previamente en este mismo script
+#data_unida <- read.csv(path)  %>% select(-X) 
+path <- "base_anual_fullv2023.xlsx" # base creada en "tercera_limpieza_datos.R"
+data_normativa <- readxl::read_xlsx(path) 
 
+# descartamos variables que pueden generar problemas
+data_normativa <- data_normativa %>% 
+  select(-dico_hubo_debates)
 
+# cambio menor para hacer data compatible 
+data_normativa <- data_normativa %>% 
+  mutate(ncat_eleccion = ifelse(cat_pais=="Guatemala"&ncat_eleccion==1990,1991,ncat_eleccion))
 
+# unimos data
+
+data_unida <- data_unida %>% 
+  left_join(data_normativa)
+
+# guardamos
+
+path <- "all_elections.csv"
+#data_unida %>% write.csv(path)
+
+#################################################################################################################
+#################################################################################################################
 # CHEQUEOS RANDOM, NO HACE FALTA CORRER, ESPACIO BORRADOR  !!!!! ######
 
 table(data_agregada$dico_debates_eleccion)

@@ -1,5 +1,6 @@
 ############ ESTE SCRIPT ES PARA CIERTOS TRABAJOS QUE REQUIEREN DE UN AGREGADO DE DATA MANUAL ###########
 ### SE EJECUTA LUEGO DE LA PRIMERA LIMPIEZA DE DATOS #######################
+# ACTUALIZADO A ABRIL 2024
 
 # LIBRERIAS #####
 
@@ -12,7 +13,10 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/da
 base <- readxl::read_xlsx("base_final1v2023.xlsx") # base con datos por debate
 elecciones <-  readxl::read_xlsx("base_eleccionesv2023.xlsx") # base auxiliar: años que hubo elecciones por país
 
+data_normativa_sucia <- readxl::read_xlsx("base_debates_limpiav2023.xlsx", sheet = "debates_normativo")
 
+
+# CREO INDICE DE AUSENCIAS #########################
 # ausencias ########
 
 # creo base con un nombre de ausente por fila
@@ -69,7 +73,7 @@ base <- base %>%
          n_porcentajeausentes = ifelse(n_ausentes==0, 0, n_porcentajeausentes))
 
 
-# presencias #######
+# PARENTESIS: presencias ESTO SOLO HAY QUE CORRERLO PARA CREAR BASE DE CANDIDATOS UNICOS #######
 
 # creo base con un nombre de presente por fila
 
@@ -92,9 +96,6 @@ all_candidates <- base_presentes %>%
   rbind(base_ausentes)
 
 # limpieza automatica 
-### ACA ME QUEDE SABADO 9 MARZO 2024 BORRAR ESTO #############
-# ESTOY REVISANDO MANUALMENTE BASE DE UNIQUE CANDIDATES GUARDADA ABAJO
-# PERO EN PPIO LA BASE A TRABAJAR ES ESA A LA QUE DEBERIAMOS AGREGAR DATOS DE ENCUESTAS EN 7 DIAS PREVIOS POR CANIDDATO, SI ES INCUMBENT, SI REELIGE Y ALGUNA OTRA CONSIDERADA PERTINENTE EJ LEGISLACION, EN OTRO NIVEL
 
 all_candidates <- all_candidates %>% 
   mutate(nombres_candidatos = str_replace(nombres_candidatos, ".*:", ""),
@@ -113,68 +114,51 @@ all_candidates <- all_candidates %>%
 
 # guardo base #VOLVER A GUARDAR DESPUES DE LIMPIAR  #########
 
-all_candidates %>% 
-     writexl::write_xlsx("all_candidates.xlsx")
+#all_candidates %>% 
+     #writexl::write_xlsx("all_candidates.xlsx")
   
 
-# CREACION DE VARIABLES ORDINALES de NORMATIVA  PENDIENTE ####
-# vamos a crear tablas para asignar manualmente un numero a una categoria. 
-# son tablas de categorias distinct, digamos. de uniqe factors
-# luego usaremos joins con las tablas ya cargadas. 
+# CREACION DE VARIABLES de NORMATIVA ####
 
-# normativa (tres variables diferentes)
-
-#1
-distinct_cat_regcandidatos <- base %>% 
-  select(cat_regcandidatos) %>% 
-  distinct()
-
-#distinct_cat_regcandidatos %>% 
-#  writexl::write_xlsx("distinct_cat_regcandidatos.xlsx")
-
-#2
-distinct_cat_regestado <- base %>% 
-  select(cat_regestado) %>% 
-  distinct()
-
-#distinct_cat_regestado %>% 
-#  writexl::write_xlsx("distinct_cat_regestado.xlsx")
-
-#3
-distinct_cat_regmedios <- base %>% 
-  select(cat_regmedios) %>% 
-  distinct()
-
-#distinct_cat_regmedios %>% 
-#  writexl::write_xlsx("distinct_cat_regmedios.xlsx")
-
+# agregamos variables normativas a la base
 
 base <- base %>% 
-  left_join(readxl::read_xlsx("distinct_cat_regmedios.xlsx")) %>% 
+  left_join(data_normativa_sucia %>% 
+              select(cat_pais, ncat_eleccion, cat_regmedios, cat_regestado, cat_regcandidatos))
+
+# creamos variables ordinales de la cuestión normativa 
+
+base <- base %>% 
+  left_join(readxl::read_xlsx("distinct_cat_regmedios.xlsx")) %>%  # agregamos tabla en la que se asigna manualmente un numero a una categoria. 
   left_join(readxl::read_xlsx("distinct_cat_regestado.xlsx")) %>% 
   left_join(readxl::read_xlsx("distinct_cat_regcandidatos.xlsx")) %>% 
   mutate(ncat_totreg = ncat_regmedios + ncat_regestado + ncat_regcandidatos )
 
-# SUBTIPOS DE ORGANIZADORES  #####
-#
-# creo base para completar manualmente ####
+# TIPOS Y SUBTIPOS DE ORGANIZADORES  #####
 
+######3 creo base para completar manualmente , saltear  
 
-base_organizadores <- base %>% 
-  select(id_debate,
-         ncat_eleccion, cat_pais, t_fecha, ncat_ronda, 
-         str_organizador, cat_organizador, cat_subtipoorg, 
-         n_strorganizador, n_catorganizador) %>%
-  mutate(nombres_organizadores = strsplit(str_organizador, ";")) %>% 
-  unnest(nombres_organizadores)
+# UN ORGANIZADOR POR FILA 
+# base_organizadores_actualizada_incompleta <- base %>% 
+#   select(id_debate,
+#          ncat_eleccion, cat_pais, t_fecha, ncat_ronda, 
+#          str_organizador, 
+#          n_strorganizador) %>%
+#   mutate(nombres_organizadores = strsplit(str_organizador, ";")) %>% 
+#   unnest(nombres_organizadores)
+# 
+# # leo base cargada manualmente para tesis de maestria y actualizacion de 2021 
+# base_organizadores_vieja <- readxl::read_xlsx("base_organizadores_distinct.xlsx")
+# 
+# # agrego data sin completar, para completar manualmente 
+# 
+# #base_a_completar <- anti_join(base_organizadores_actualizada_incompleta, base_organizadores_vieja)
+# base_a_completar <- base_organizadores_actualizada_incompleta %>% 
+#   left_join(base_organizadores_vieja)
 
-# guardo  # SOLO GUARDO NECESARIO PARA ACTUALIZAR DATA USADA PARA TESIS DE MAESTRIA
-
-base_organizadores_distinct <- base_organizadores %>% 
-  subset(str_detect(cat_pais, "Colombia|Costa|Chile|Brasil")) %>% 
-  subset(ncat_eleccion>2020) %>% 
-  distinct(nombres_organizadores, ncat_eleccion, cat_pais)
-
+##### guardo  # SOLO GUARDO NECESARIO PARA ACTUALIZAR DATA USADA PARA TESIS DE MAESTRIA
+# base_a_completar %>% 
+#   writexl::write_xlsx("base_organizadores_a_completar.xlsx")
 # las guardo
 
 #base_organizadores %>% 
@@ -183,24 +167,6 @@ base_organizadores_distinct <- base_organizadores %>%
 #base_organizadores_distinct %>% 
 # writexl::write_xlsx("base_organizadores_distinct.xlsx")
 
-# creo una base para categorizarsubtipos en tipos #####
-
-# primero leo base completa (incluyendo data tesis de maestria)
-
-base_organizadores_distinct <- readxl::read_xlsx("base_organizadores_distinct.xlsx")
-
-# crep df con subtipos unicos 
-base_subtipos_distinct <- base_organizadores_distinct %>% 
-  select(ncat_subtipov2) %>% 
-  unique()
-
-# uno data de tesis de maestria 
-
-categorizacion_tesis_maestria <-  readxl::read_xlsx("/home/carolina/Documents/Proyectos R/debates_latam/tesis_maestria/exploracion_base_finalv1/distinct_cat_subtipoorg.xlsx")
-
-base_subtipos_distinct <- base_subtipos_distinct %>% 
-  left_join(categorizacion_tesis_maestria)
-
 # guardo para completar faltantes
 
 #base_subtipos_distinct %>%  
@@ -208,52 +174,69 @@ base_subtipos_distinct <- base_subtipos_distinct %>%
 #  writexl::write_xlsx("distinct_cat_subtipoorg.xlsx")
 
 
-# leo y uno a la base general
+###### leo y uno a la base general
 
+# primero uno base de tipos y de subtipos de organizadores, ambas actualizadas a abril 2024
+
+# en la que sigue hay 1 organizador/año/pais y se matchea a su correspondiente subtipo
+base_organizadores_distinct <-  readxl::read_xlsx("base_organizadores_completa.xlsx")
+# en esta hay un subtipo y se matchea a su correspondiente tipo
 categorizacion_orgs <- readxl::read_xlsx("distinct_cat_subtipoorg.xlsx")
 
 base_organizadores_distinct_complete <- base_organizadores_distinct %>% 
   left_join(categorizacion_orgs)
 
-# creo variables dico buscando matches para cada categoria
+# unimos la base distinct, con 1 organizador / año , a una base de 1 organizador / debate 
 
-orgs_mmc <- base_organizadores_distinct_complete %>% 
+base_organizadores <- base %>% 
+    select(id_debate,
+           ncat_eleccion, cat_pais, t_fecha, ncat_ronda,
+           str_organizador,
+           n_strorganizador) %>%
+    mutate(nombres_organizadores = strsplit(str_organizador, ";")) %>%
+    unnest(nombres_organizadores) %>%
+  left_join(base_organizadores_distinct_complete)
+
+# creo variables dico buscando matches para cada categoria y las uno a la base general 
+
+orgs_mmc <- base_organizadores %>% 
   subset(cat_tipoorgv2=="mmc")
   
 base <- base %>% 
   mutate( dico_org_mmc = str_detect(str_organizador, 
   str_c( orgs_mmc$nombres_organizadores %>%  na.omit() %>% as_vector(), collapse = "|" )))
 
-orgs_osc <- base_organizadores_distinct_complete %>% 
+orgs_osc <- base_organizadores %>% 
   subset(cat_tipoorgv2=="osc")
 
 base <- base %>% 
   mutate( dico_org_osc = str_detect(str_organizador  %>% str_remove_all("[:punct:]"), 
                                         str_c( orgs_osc$nombres_organizadores  %>% str_remove_all("[:punct:]") %>%  na.omit() %>% as_vector(), collapse = "|" )))
 
-orgs_educ <- base_organizadores_distinct_complete %>% 
+orgs_educ <- base_organizadores %>% 
   subset(cat_tipoorgv2=="educ")
 
 base <- base %>% 
-  mutate( dico_org_educ = str_detect(str_organizador, 
+  mutate( dico_org_educ = str_detect(str_organizador %>% str_remove_all("[:punct:]"), 
                                         str_c( orgs_educ$nombres_organizadores %>%  na.omit() %>% as_vector(), collapse = "|" )))
 
-orgs_estado <- base_organizadores_distinct_complete %>% 
+orgs_estado <- base_organizadores %>% 
   subset(cat_tipoorgv2=="estado")
 
 base <- base %>% 
-  mutate( dico_org_estado = str_detect(str_organizador, 
+  mutate( dico_org_estado = str_detect(str_organizador %>% str_remove_all("[:punct:]"), 
                                      str_c( orgs_estado$nombres_organizadores %>%  na.omit() %>% as_vector(), collapse = "|" )))
 
 
-orgs_mmp <- base_organizadores_distinct_complete %>% 
+orgs_mmp <- base_organizadores %>% 
   subset(cat_tipoorgv2=="mmp")
 
 base <- base %>% 
-  mutate( dico_org_mmp = str_detect(str_organizador, 
+  mutate( dico_org_mmp = str_detect(str_organizador %>% str_remove_all("[:punct:]"), 
                                      str_c( orgs_mmp$nombres_organizadores %>%  na.omit() %>% as_vector(), collapse = "|" )))
+
 
 
 # GUARDO ESTA BASE ##########################
 
-base %>%  writexl::write_xlsx("base_final2v2023.xlsx")
+#base %>%  write.csv("base_final2v2023.csv")

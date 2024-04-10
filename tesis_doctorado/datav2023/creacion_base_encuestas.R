@@ -124,14 +124,20 @@ rm(missing_names)
 u_elect <- data$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
 
 # ahora agrego update de elecciones y nuevas encuestas ##################
-data_update_march2024 <- read.csv('/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv')
+data_update_march2024 <- read.csv('/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv') %>% select(-X)
+
 
 # algunos ajustes para hacer data compatible
+
+# ajuste para poner todo en español, ya lo hicimos arriba para la base de cantu
+data_update_march2024 <- data_update_march2024 %>% 
+  mutate(country = ifelse(country=="Brazil", "Brasil", country))
+
 differing_colnames <- setdiff(names(data_con_nombres), names(data_update_march2024))
 
 data_update_march2024 <- data_update_march2024 %>% 
   subset(!is.na(poll_)) %>% 
-  select(-X) %>% 
+ # select(-X) %>% 
   mutate(inc_ = "NA", 
          enpp = "NA",
          reliable = "NA",

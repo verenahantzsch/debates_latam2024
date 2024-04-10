@@ -1,15 +1,15 @@
 ### ESTE SCRIPT CREA LAS BASES CON LAS QUE FINALMENTE SE TRABAJARA (en trabajo_capitulosv2023.R) ############
 ### SE EJECUTA LUEGO DE PRIMERA Y SEGUNDA LIMPIEZAS #####
-
+# ACTUALIZADO A ABRIL 2024
 
 # LIBRERIAS #####
 library(tidyverse)
 
 #  WD #####
-setwd("/home/carolina/Documents/Proyectos R/debates_latam/tesis_doctorado/datav2023")
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
 # IMPORTO DATOS ###########
-base <- readxl::read_xlsx("./base_final2v2023.xlsx") # base con datos por debate
+base <- read_csv("./base_final2v2023.csv") # base con datos por debate
 
 
 # TUNEO BASE BASE ############
@@ -112,7 +112,7 @@ base_organizadores <- base %>% # BASE CON UN ORG POR FILA
 
 # UNO DATOS CARGADOS
 
-base_organizadores_distinct <-  readxl::read_xlsx("./base_organizadores_distinct.xlsx") %>% 
+base_organizadores_distinct <-  readxl::read_xlsx("./base_organizadores_completa.xlsx") %>% 
   left_join(readxl::read_xlsx("./distinct_cat_subtipoorg.xlsx"))
 
 base_organizadores <- base_organizadores %>%  
@@ -236,5 +236,6 @@ base <- base %>%
 
  
 # guardo v3 ######
+base %>%  write.csv("base_final3v2023.csv")
 
-base %>%  writexl::write_xlsx("./base_final3v2023.xlsx")
+#VEIJObase %>%  writexl::write_xlsx("./base_final3v2023.xlsx")

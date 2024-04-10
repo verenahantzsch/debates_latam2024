@@ -8,7 +8,7 @@ library(tidyverse)
 
 # DATA ###########
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
-base_elecciones <- read.csv("all_elections.csv")
+base_elecciones <- read.csv("all_elections.csv") %>% select(-X)
 
 # TRABAJO ########
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/")
@@ -123,34 +123,6 @@ summary(modelo_22_2)
 # simil comentarios anteriores, en este caso modelo si difiere de anteriores en coef concentracion, que pierde sficancia
 # en lo demas idem: modelo muy parecido a modelo_1, pero lagged emerge como mejor predictor 
 
-# VARIABLES LEGISLACION #############
-# pendiente 
-
-# VARIABLES CONFIANZA LATINOBAROMETRO (PENDIENTE! EMPROLIJAR) ############
-
-data_latinobarometro <- "/home/carolina/Documents/dataexterna/latinobarometro/grouped_filled_latinobarometro_2024.csv" %>%  read.csv()
-data_lapop <- "/home/carolina/Documents/dataexterna/lapop/confianza_medios_lapop_2024.csv" %>% read.csv()
-
-data_unida <- data_latinobarometro %>% 
-  select(-X) %>% 
-  left_join(data_lapop %>% mutate("ncat_eleccion" = as.integer(wave)))
-
-data_unida <- data_unida %>% 
-  mutate(new_average_confianza = ifelse(is.na(average_confianza_tv), average_confianza_medios_recat,average_confianza_tv) %>% as.integer(),
-         new_average_confianza = ifelse(is.na(new_average_confianza), int_average_confianza_tv, new_average_confianza))
-
-data_unida <- base_elecciones %>% 
-  left_join(data_unida %>% select(-X))
-
-# modelo sin interpolacion
-modelo_x <- glm(dico_frontrunner_presente ~ competitividad + concentracion + lagged_dico_debates_eleccion + new_average_confianza + int_average_confianza_ppols,
-                   data = data_unida,
-                   family = "binomial")
-summary(modelo_x) 
-# definitivamente sin resultados sficativos, en este modelo completo competitividad recupera sficancia aunque al 0.1, y aumenta en magnitud, mantiene signo esperado
-# coefs de confianza cambian mucho y son definitivamente no sficativos }
-# los resultados se mantienen similares para los distintos indicadores de confianza en medios utilizados
-
 # FIXED EFFECTS POR PAIS ######
 
 modelo_31_0 <- glm(dico_debates_eleccion ~ competitividad + cat_pais,
@@ -194,3 +166,116 @@ summary(modelo_32_2) # idem
 # el hecho de que competitividad aumente tanto su magnitud
 # parece ser indicativo de que hay otros factores estructurales que no estamos considerando y que diluyen su efecto
 # porque estarian correlacionados con esta variable (((para pensar: en que direccion???)))
+
+# VARIABLES CONFIANZA LATINOBAROMETRO (PENDIENTE! EMPROLIJAR) ############
+
+# modelo con interpolacion # pueden variarse los indicadores de confianza 
+# OJO ATENTI pendiente ver como homogenizar esta variable tomada de fuentes alternativas,
+# quizas sea mas adecuado estandarizar y recalcular
+
+modelo_4_0 <- glm(dico_debates_eleccion ~ competitividad + concentracion + lagged_dico_debates_eleccion + int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
+                data = base_elecciones,
+                family = "binomial")
+summary(modelo_4_0) 
+# definitivamente sin resultados sficativos, en este modelo completo competitividad recupera sficancia aunque al 0.1, y aumenta en magnitud, mantiene signo esperado
+# coefs de confianza cambian mucho y son definitivamente no sficativos }
+# los resultados se mantienen similares para los distintos indicadores de confianza en medios utilizados
+
+modelo_4_1 <- glm(dico_frontrunner_presente ~ competitividad + concentracion + lagged_dico_frontrunner_presente + int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
+                  data = base_elecciones,
+                  family = "binomial")
+summary(modelo_4_1) 
+
+# VARIABLES LEGISLACION #############
+# pendiente 
+modelo_5_0 <- glm(dico_debates_eleccion ~ competitividad + concentracion + 
+                    lagged_dico_debates_eleccion + 
+                    int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
+                    ncat_totreg,
+                  data = base_elecciones,
+                  family = "binomial")
+summary(modelo_5_0) 
+
+modelo_5_1 <- glm(dico_frontrunner_presente ~ competitividad + concentracion + 
+                    lagged_dico_frontrunner_presente + 
+                    #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
+                    ncat_totreg,
+                data = base_elecciones,
+                family = "binomial")
+summary(modelo_5_1) 
+# muy interesante la diferencia entre estos dos modelos!!! 
+# para probar mas detenidamente, apenas los mire
+# es decir que: alli donde NO hay tradicion NI regulacion, seguro importa la competencia,no?
+# probar con variables dico de legislacion
+
+# PENDIENTE: VER SI TIENE SENTIDO SELECCION DE CASOS COMO DEVIANT
+# IGUAL NO SE SI TENEMOS DATOS PARA ESAS INSTANCIAS
+
+# probamos con variable dico de normativa 
+
+base_elecciones <- base_elecciones %>% 
+  mutate(dico_obligatorio_candidato = ifelse(ncat_regcandidatos==3,1,0),
+         dico_derechos_candidato = ifelse(ncat_regcandidatos==2,1,0))
+
+modelo_51_0 <- glm(dico_debates_eleccion ~ competitividad + concentracion + 
+                    lagged_dico_debates_eleccion + 
+                    #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
+                     dico_obligatorio_candidato + dico_derechos_candidato,
+                  data = base_elecciones,
+                  family = "binomial")
+summary(modelo_51_0) 
+
+modelo_51_1 <- glm(dico_frontrunner_presente ~ competitividad + concentracion + 
+                    lagged_dico_frontrunner_presente + 
+                    #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
+                     dico_obligatorio_candidato + dico_derechos_candidato,
+                  data = base_elecciones,
+                  family = "binomial")
+summary(modelo_51_1) 
+# falsa de significancia en dico_obligatorio_candidatos ha de deberse a muy bajo n, pero tamaño (!) y signo del coeficiente son sugestivos
+
+
+####### INTERPRETACION #################################
+# buen enlace para leer output :  https://stats.stackexchange.com/questions/86351/interpretation-of-rs-output-for-binomial-regression 
+# otro https://stats.oarc.ucla.edu/r/dae/logit-regression/
+modelo_a_interpretar <- modelo_51_1 # ajustar segun deseado
+
+# interpretacion de coeficientes:
+
+# The logistic regression coefficients give the change in the log odds of the outcome for a one unit increase in the predictor variable.
+#We can use the confint function to obtain confidence intervals for the coefficient estimates. Note that for logistic models, confidence intervals are based on the profiled log-likelihood function. We can also get CIs based on just the standard errors by using the default method.
+confint(modelo_a_interpretar)
+#You can also exponentiate the coefficients and interpret them as odds-ratios. R will do this computation for you. To get the exponentiated coefficients, you tell R that you want to exponentiate (exp), and that the object you want to exponentiate is called coefficients and it is part of mylogit (coef(mylogit)). We can use the same logic to get odds ratios and their confidence intervals, by exponentiating the confidence intervals from before. To put it all in one table, we use cbind to bind the coefficients and confidence intervals column-wise.
+exp(coef(modelo_a_interpretar))
+exp(cbind(OR = coef(modelo_a_interpretar), confint(modelo_a_interpretar)))
+
+#You can also use predicted probabilities to help you understand the model. Predicted probabilities can be computed for both categorical and continuous predictor variables. In order to create predicted probabilities we first need to create a new data frame with the values we want the independent variables to take on to create our predictions.
+#We will start by calculating the predicted probability of ... at each value of ...., holding .. and .. at their means. First we create and view the data frame.
+
+# queremos comenzar para predicted proba de debate a cada valor de competitividad  para un pais con oblig = 0 y derechos = 0
+valores_posibles <- seq(range(base_elecciones$competitividad, na.rm=T)[1],range(base_elecciones$competitividad, na.rm=T)[2], 0.1)
+
+newdata1 <- with(base_elecciones, 
+                 data.frame(lagged_dico_frontrunner_presente = 0,
+                            dico_obligatorio_candidato = 0,
+                            dico_derechos_candidato = 0,
+                            concentracion = mean(concentracion, na.rm=T), 
+                            competitividad = valores_posibles))
+
+newdata1$predicted_proba <- predict(modelo_a_interpretar, newdata = newdata1, type = "response")
+
+
+newdata2 <- with(mydata, data.frame(gre = rep(seq(from = 200, to = 800, length.out = 100),
+                                              4), gpa = mean(gpa), rank = factor(rep(1:4, each = 100))))
+# ACA ME QUEDE #########The code to generate the predicted probabilities (the first line below) is the same as before, except we are also going to ask for standard errors so we can plot a confidence interval. We get the estimates on the link scale and back transform both the predicted values and confidence limits into probabilities.
+# https://stackoverflow.com/questions/47486589/what-is-the-difference-between-type-response-terms-and-link-in-predict-f
+newdata3 <- cbind(newdata2, predict(mylogit, newdata = newdata2, type = "link",
+                                    se = TRUE))
+newdata3 <- within(newdata3, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+
+## view first few rows of final dataset
+head(newdata
