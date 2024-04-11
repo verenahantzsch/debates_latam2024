@@ -168,5 +168,5 @@ base_candidatos_matcheados_expandida <- base_candidatos_matcheados %>%
   left_join(base_candidatos_encuestas_agrupada)
 
 # Guardo nuevamente
-#base_candidatos_matcheados_expandida %>% write_csv("base_candidatos_matcheados2023.csv")
+base_candidatos_matcheados_expandida %>% write_csv("base_candidatos_matcheados2023.csv")
 #test <- read.csv("base_candidatos_matcheados2023.csv")

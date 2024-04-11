@@ -88,13 +88,22 @@ reserva <- data
 
 data <- data %>% 
   subset(electionid!="Argentina 2011-08-14") %>%  # eliminamos elecciones primarias argentina
-  mutate(round = ifelse(country=="Argentina"&round(electionyr)==2011,1,round)) %>% 
+  mutate(round = ifelse(country=="Argentina"&round(electionyr)==2011,1,round)) %>%  # problemas en la codificacion de las rondas en estos paises, venian de data original
+ # mutate(round = ifelse(country=="Costa Rica"&round(electionyr)==2010,1,round)) %>% 
   mutate(turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==1, 80.61, turnout),
          turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==2, 78.90, turnout)) %>% # habia problemas con decimales en el reporte de este numero para distintos items de esta eleccion
   subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) ## eliminamos base mas incompleta dupilcada de brasil para esta eleccion
 
-reserva <- data 
 # cargo data con nombres de candidatos ##############
+reserva <- data 
+
+# check <- reserva %>% 
+#   subset(country=="Guatemala"&electionyr=="2019")
+# cabe una correccion, por algun motivo estan mal los nombres de la segunda vuelta de guatemala 2019, los de la primera estan bien
+# corregimos manualmente
+data <- data %>% 
+  mutate(c_names = ifelse(country=="Guatemala"&electionyr=="2019"&c_names=="Thelma Cabrera"&round==2, "Sandra Torres", c_names))
+
 # esta base fue creada en limpieza_unique_candidates y luego completada manualmente
 
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -125,7 +134,6 @@ u_elect <- data$electionid %>% unique() # por ahora tenemos 63 elecciones, gener
 
 # ahora agrego update de elecciones y nuevas encuestas ##################
 data_update_march2024 <- read.csv('/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv') %>% select(-X)
-
 
 # algunos ajustes para hacer data compatible
 
@@ -179,7 +187,7 @@ full_dataset <- full_dataset %>%
 full_dataset <- full_dataset %>% 
   dplyr::mutate(id_polldatapoint = row_number()) 
 
-u_elect <- full_dataset$electionid %>% unique() # tenemos 97 elecciones cuando deberiamos tener 998
+u_elect <- full_dataset$electionid %>% unique() # tenemos 95 elecciones  
 
 # guardamos esta data  #############
 

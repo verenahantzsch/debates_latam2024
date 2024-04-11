@@ -17,7 +17,6 @@ path <- "/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_comple
 #path <- "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
 data_encuestas <- read.csv(path) %>% select(-X)
 
-
 #### AGREGO NIVEL DE BASE ENCUESTAS:  BASE DE DATOS 1 CANDIDATO POR FILA ##########################
 
 data_candidatos <- data_encuestas %>% 
@@ -33,11 +32,20 @@ data_candidatos <- data_encuestas %>%
 # tenemos que usar algunos indicadores del nivel "candidatos" para construir indicadores de nivel superior, de "elecciones"
 
 competencia <- data_candidatos %>% 
-  select(electionid, electionyr,country, round, enpp, turnout, espv, regime, mean_encuestas_candidato, vote_, gov_) %>%
+  select(electionid, electionyr,country, round, enpp, turnout, espv, regime, mean_encuestas_candidato, vote_, gov_, nombres_candidatos) %>%
   unique() %>% 
   group_by(electionid, country, round) %>% 
   mutate(rank_polls = rank(100-mean_encuestas_candidato),
          rank_elections = rank(100-vote_)) 
+
+# en Guatemala 2019 primera ronda aparece un empate en el 2do puesto dadas las encuestas
+# pero si tomamos una muestra de encuestas mas amplia sabemos que Giammatei estaba mejor posicionado que su competidor ,
+# además asi lo avalan los resultados posteriores,
+# corregimos esto manualmente
+competencia <- competencia %>% 
+  mutate(rank_polls = ifelse(country=="Guatemala"&electionyr=="2019"&round==1&nombres_candidatos=="Alejandro Giammattei", 2, rank_polls))
+
+# ahora cargamos la data de competencia a la data sobre candidatos 
 
 data_candidatos <- data_candidatos %>% 
   left_join(competencia) %>% 
@@ -304,13 +312,20 @@ data_elecciones_lagged <- data_elecciones_carolina2 %>%
          lagged_dico_frontycha_presentes = lag(dico_frontycha_presentes),
          lagged_dico_frontORcha_presentes = lag(dico_frontORcha_presentes)) %>% 
   ungroup() %>% 
-  select(c(cat_pais, ncat_eleccion, starts_with("lagged_")))
+  select(c(cat_pais, ncat_eleccion, starts_with("lagged_"))) %>% 
+  # chequeamos manualmente que hay NAs SOLAMENTE en primeras elecciones en nos base de datos
+  # por definicion, estas elecciones no estuvieron precedidas por elecciones por debate, por lo que reemplazamos NAs por 0
+  replace(is.na(.),0)
 
 
 # uno est data lagged a la base
 
 data_elecciones_carolina3 <- data_elecciones_carolina2 %>% 
   left_join(data_elecciones_lagged)
+
+# ajustes para unir base de datos 
+data_elecciones_carolina3 <- data_elecciones_carolina3 %>% 
+  mutate(ncat_eleccion = ifelse(cat_pais=="Guatemala"&ncat_eleccion==1990,1991,ncat_eleccion))
 
 # FINALMENTE UNO DATA ENCUESTAS CON DATA DEBATES
 data_agregada <- data_elecciones %>% 
