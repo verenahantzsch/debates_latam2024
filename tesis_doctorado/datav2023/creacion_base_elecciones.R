@@ -3,7 +3,7 @@
 # CUANTO MAS ALTO EL NUMERO, POSTERIOR LA VERSION DEL CODIGO, EL MAS ALTO VIGENTE
 
 library(tidyverse)
-
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
 ########################## CREO BASE DE ELECCIONES UNO BASE ENCUESTAS CON BASE DEBATES  
 ########################## PUNTO DE PARTIDA ES BASE CON DATOS DE ENCUESTAS  #########
@@ -112,7 +112,6 @@ data_elecciones <- data_candidatos %>%
 # (no se si vale la pena. a HOY 13 MARZO 2024 este proceso esta en pausa, falta seguir segunda_limpieza_datos completando por los tipos de organizadores, no deberia ser mucho trabajo)
 
 # CARGO DATA #
-# ATENTI REEMPLAZAR CON BASE FINAL LIMPIA #####################
 #path <- "./tesis_doctorado/datav2023/base_final1v2023.xlsx"
 path <- "base_final3v2023.csv"
 data_debates_carolina <- read_csv(path) # ATENTI base con datos por debate. REEMPLAZAR POR ULTIMA VERSION LIMPIA QUE CORRESPONDA, ESTOY REEMPLAZANDO A ABRIL 2024
@@ -356,12 +355,18 @@ data_lapop <- "/home/carolina/Documents/dataexterna/lapop/confianza_medios_lapop
 data_unida <- data_latinobarometro  %>% 
   left_join(data_lapop %>% mutate("ncat_eleccion" = as.integer(wave)))
 
+# exploramos maneras alternativas de unificar la data 
 data_unida <- data_unida %>% 
-  mutate(average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv), average_confianza_medios_recat, average_confianza_tv)) %>% #,
+  mutate(average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv), average_confianza_medios_recat, average_confianza_tv),
+         average_scaled_confianza_tv_medios_latin_lapop = ifelse(is.na(average_scaled_confianza_tv), average_scaled_confianza_medios, average_scaled_confianza_tv)) %>% #,
   #new_average_confianza = ifelse(is.na(new_average_confianza), int_average_confianza_tv, new_average_confianza))
   arrange(cat_pais, ncat_eleccion) %>% 
   group_by(cat_pais) %>% 
-  mutate(int_average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv_medios_latin_lapop), approx(ncat_eleccion, average_confianza_tv_medios_latin_lapop, xout = ncat_eleccion)$y, average_confianza_tv_medios_latin_lapop)) 
+  mutate(int_average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv_medios_latin_lapop), approx(ncat_eleccion, average_confianza_tv_medios_latin_lapop, xout = ncat_eleccion)$y, average_confianza_tv_medios_latin_lapop),
+         int_average_scaled_confianza_tv_medios_latin_lapop = ifelse(is.na(average_scaled_confianza_tv_medios_latin_lapop), approx(ncat_eleccion, average_scaled_confianza_tv_medios_latin_lapop, xout = ncat_eleccion)$y, average_scaled_confianza_tv_medios_latin_lapop)) 
+
+#check_similitud <- data_unida %>% 
+#  select(average_scaled_confianza_medios, average_scaled_confianza_tv) # esto mejoro mucho, ver si hay manera de poner a prueba compatibiliad. PENDIENTE
 
 ########## PROBLEMA PENDIENTE: LOS DOS INDICES DIFIEREN BASTANTE. CREO QUE LO ADECUADO SERIA ESTANDARIZAR LA VARIABLE? PREGUNTAR MAURICIO 
 

@@ -45,11 +45,18 @@ base_elecciones <- base_elecciones %>%
 base_elecciones <- base_elecciones %>% 
   mutate(dico_any_normativa = ifelse(ncat_regcandidatos>=2,1,0))
 
+base_elecciones <- base_elecciones %>% 
+  mutate(log_competitividad = log(competitividad))
 
-# primero creamos variable recategorizada 
+# recategorizamos ballotage
 base_elecciones <- base_elecciones %>% 
   mutate(ballotage = ifelse(ncat_ronda==2,1,0))
 
+# base sin outlier competitividad # para probar modelos, comentar cuando aplique
+full_data <- base_elecciones 
+base_elecciones <- base_elecciones %>% 
+  subset(electionid!="El Salvador 2024-02-04")
+ 
 # EXPLORACION DESCRIPTIVA ###########
 
 # exploracion de VDs alternativas
@@ -68,6 +75,10 @@ mean_values <- aggregate(competitividad ~ dico_debates_eleccion, base_elecciones
 mean_values <- aggregate(competitividad ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
 # idem, hay mas competitividad (menos dif entre candidatos) cuando hay debates, la diferencia es ligeramente mas amplia
 
+# distrib
+hist(base_elecciones$competitividad) # ojo, hay un outlier que puede ser problematico, calculo que se trata de el salvador
+hist(base_elecciones$log_competitividad) # tiene mas sentido. otra alternativa sacar outlier?
+
 # CONCENTRACION #
 mean_values <- aggregate(concentracion ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
 # las elecciones estan mas concentradas cuando no hay debates, o mas dispersas cuando hay debates
@@ -75,12 +86,16 @@ mean_values <- aggregate(concentracion ~ dico_debates_eleccion, base_elecciones,
 mean_values <- aggregate(concentracion ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
 # idem, pero al diferencia se estrecha a casi la mitad (6 puntos versus 3 puntos de diferencia en la diferencia de promedios)
 
+hist(base_elecciones$concentracion)
+
 # TOTREG #
 mean_values <- aggregate(ncat_totreg ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
 # la regulacion es mas estricta cuando hay debates
 
 mean_values <- aggregate(ncat_totreg ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
 # idem, y la diferencia de medias se agranda para este caso
+
+hist(base_elecciones$ncat_totreg)
 
 # CONFIANZA EN MEDIOS # # PENDIENTE CORREGIR ESTE INDICADOR Y PROBAR ALTERNATIVOS 
 mean_values <- aggregate(int_average_confianza_tv_medios_latin_lapop ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -90,13 +105,26 @@ mean_values <- aggregate(int_average_confianza_tv_medios_latin_lapop ~ dico_fron
 # diferencia se reduce e invierte: hay mas confianza en medios cuando NO hay debates.
 # IGUAL CATEGORIZACION DEL INDICADOR PUEDE ESTAR GENERANDO PROBLEMAS
 
+hist(base_elecciones$int_average_confianza_tv_medios_latin_lapop)
+
+# probamos version escalada
+mean_values <- aggregate(int_average_scaled_confianza_tv_medios_latin_lapop ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
+# hay menos confianza alli donde no hay debates
+mean_values <- aggregate(int_average_scaled_confianza_tv_medios_latin_lapop ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+# casi no hay diferencia
+
+hist(base_elecciones$int_average_scaled_confianza_tv_medios_latin_lapop)
+
+
 # CONFIANZA EN PPOLS # 
 mean_values <- aggregate(int_average_confianza_ppols ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
 # hay ligeramente mas confianza en ppols cuando NO hay debates
 
 mean_values <- aggregate(int_average_confianza_ppols ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
 # idem, y distancia se agranda ligeramente
- 
+
+hist(base_elecciones$int_average_confianza_ppols)
+
 # VARIABLES DICO # # PENDIENTE: QUIZAS SE PUEDEN INTERPRETAR ESSTAS VARIABLES COMO CUASI NEC Y CUASI SUF , P PENSAR# 
 
 # RONDA # 
@@ -162,27 +190,74 @@ table(base_elecciones$dico_any_normativa, base_elecciones$dico_frontrunner_prese
 
 
 ### MULTICOLINEALIDAD CRUZADA PENDIENTE ## ACA ME QUEDE #####
+# Calculate the correlation matrix
+#full_data <- base_elecciones # reserva
+
+cor_base_elecciones <- base_elecciones %>% 
+  select(dico_debates_eleccion,
+         dico_frontrunner_presente,
+         dico_frontORcha_presentes,
+         log_competitividad,
+         competitividad,
+         concentracion,
+         int_average_confianza_ppols,
+         int_average_confianza_tv,
+         int_average_scaled_confianza_tv_medios_latin_lapop,
+         ncat_totreg,
+         dico_any_normativa,
+         dico_obligatorio_candidato,
+         dico_derechos_candidato,
+         lagged_dico_debates_eleccion,
+         lagged_dico_frontrunner_presente,
+         ballotage)
+
+correlation_matrix <- cor(cor_base_elecciones, use= "na.or.complete")
+
+# Print the correlation matrix
+print(correlation_matrix)
+
+# Install and load the corrplot package if you haven't already
+#install.packages("corrplot")
+library(corrplot)
+
+# Visualize the correlation matrix
+corrplot(correlation_matrix, method = "circle")
+
+# ballotage y concentracion efectivamente presentan un problema de multicolinealidad 
+# no se bien si/como abordar esto 
+# quizas lo que quiero capturar es justamente del ballotage su mayor concentracion y competitividad
+# por ende no tiene mucho sentido agregarlo
+# PENDIENTE PREG CELES
 
 ######################### MODELOS #########################
 
 # MODELOS CON VARIABLE COMPET COMO BADE ##########
 
 # vd original #####
-modelo_base0 <- glm(dico_debates_eleccion ~ competitividad,
+modelo_base0 <- glm(dico_debates_eleccion ~ 
+                      competitividad,
+                    #log_competitividad,
                       data = base_elecciones,
                       family = "binomial")
 summary(modelo_base0)
 
 # signo esperado, magnitud pequeña, soprrendentemente parecida a la de modelos candidato; significavito al 0.1
 # cuanto mas distancia entre 1 y 2, menos proba de debate
+# para version log: perdemos significancia. signo sigue igual al esperado
 
 # repetimos para otras VD: ####
-modelo_base1 <- glm(dico_frontrunner_presente ~ competitividad,
+modelo_base1 <- glm(dico_frontrunner_presente ~ 
+                      competitividad,
+                    #log_competitividad,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_base1)  # crece en magnitud, levemente, y en sginificancia. Signo sigue siendo el esperado
+# para version log, crece en magnitud, signo igual al esperado, pero sigue sin ser sficativo
+# para version normal pero sin outlier, es sficativa al 0.1. magnitud peq pero similar a version con outlier. signo esperado
 
-modelo_base2 <- glm(dico_frontORcha_presentes ~ competitividad,
+modelo_base2 <- glm(dico_frontORcha_presentes ~ 
+                      competitividad,
+                      #log_competitividad,
                    data = base_elecciones,
                    family = "binomial") # resultados similares a version original en todo sentido
 summary(modelo_base2)
@@ -191,7 +266,9 @@ summary(modelo_base2)
 # MAS VARIABLES SOBRE PARTIDOS #############
 
 modelo_1_0 <- glm(dico_debates_eleccion ~ 
-                    competitividad + concentracion,
+                    competitividad +
+                    #log_competitividad + 
+                    concentracion,
                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_1_0)
@@ -199,38 +276,49 @@ summary(modelo_1_0)
 # crece en magnitud, aunque lgieramente, coef competitividad. mejora sficancia al 0.05
 # concentracion es sficativo al 0.1. magnitud pequeña. (pendiente interpretar magnitudes en terminos sustantivos)
 # signo es el esperado: a mas concentracion, menos proba de debates, lo que abreva de mi idea de fragmentacion
+# para version log: no sficativo
 
 # probamos con VD alternativas 
 
 modelo_1_1 <- glm(dico_frontrunner_presente ~ 
-                    competitividad + concentracion,
+                    competitividad +
+                    #log_competitividad + 
+                    concentracion,
                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_1_1) 
 # coef competitividad parecido a modelo base, tb un poco mas grande que para modelo 1_0. concetracion signo esperado pero pierde sficancia
 # tiene sentido con idea de que fragmentacion aumenta proba de debates, pero no con candidato ppal presente
+# version log: simil anterior: crece en magnitud, signo esperado, pero sin significancia
+# idem version sin outlier, sficativa al 0.1
 
-
-modelo_1_2 <- glm(dico_frontORcha_presentes ~ competitividad + concentracion,
+modelo_1_2 <- glm(dico_frontORcha_presentes ~                     
+                    competitividad +
+                    #log_competitividad + 
+                    concentracion,
                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_1_2)
 # consistente con idea anterior, aqui concentracion vuelve a ser sficativo (igual su magnitud sigue siendo reducida),
 # indicando que hay oportunidades en las que fragmentacion ayuda a que haya debate, aunque sin necesariamente garantizar presencia de ppales contenedores
 # en este modelo competitividad tiene performance parecida al modelo base 
-
+# version log: simil comentarios anteriores. 
+# EN CASOS QUE SIGUEN SIGUE OCURRIENDO PARECIDO SALVO INDICACION EN CONTRARIO: VERSION LOG PIERDE SFICANCIA ESTADISTICA
 
 # VARIABLES LAGGED SOBRE DEBATES ##############
 
 modelo_21_0 <- glm(dico_debates_eleccion ~ 
                      competitividad + 
+                     #log_competitividad +
                      lagged_dico_debates_eleccion,
                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_21_0)
 
 modelo_22_0 <- glm(dico_debates_eleccion ~ 
-                     competitividad + concentracion + 
+                     competitividad + 
+                     #log_competitividad + 
+                     concentracion + 
                      lagged_dico_debates_eleccion,
                   data = base_elecciones,
                   family = "binomial")
@@ -243,13 +331,16 @@ summary(modelo_22_0)
 # probamos con variables VD alternativas
 modelo_21_1 <- glm(dico_frontrunner_presente ~ 
                      competitividad + 
+                     #log_competitividad + 
                      lagged_dico_frontrunner_presente,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_21_1)
 
 modelo_22_1 <- glm(dico_frontrunner_presente ~ 
-                     competitividad + concentracion + 
+                     competitividad + 
+                     #log_competitividad + 
+                     concentracion + 
                      lagged_dico_frontrunner_presente,
                    data = base_elecciones,
                    family = "binomial")
@@ -257,18 +348,27 @@ summary(modelo_22_1)
 # idem comentario modelo_2 de arriba: se mantiene muy parecido a modelo_1, pero lagged aparece claramente como un predictor mas pontente, todavia mas cierto para el caso de la asistencia del frontrunner
 # un peq parentesis, usando otra lagged con esta VD: 
 modelo_23_1 <- glm(dico_frontrunner_presente ~ 
-                     competitividad + concentracion + 
+                     competitividad + 
+                     #log_competitividad + 
+                     concentracion + 
                      lagged_dico_debates_eleccion,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_23_1) # coef sigue siendo muy grande, aunque magnitud disminuye muy ligeramente respecto de 21_1. Idem en linea con expectativas
 
-modelo_21_2 <- glm(dico_frontORcha_presentes ~ competitividad + lagged_dico_frontORcha_presentes,
+modelo_21_2 <- glm(dico_frontORcha_presentes ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     lagged_dico_frontORcha_presentes,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_21_2)
 
-modelo_22_2 <- glm(dico_frontORcha_presentes ~ competitividad + concentracion + lagged_dico_frontORcha_presentes,
+modelo_22_2 <- glm(dico_frontORcha_presentes ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     concentracion + 
+                     lagged_dico_frontORcha_presentes,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_22_2) 
@@ -279,6 +379,7 @@ summary(modelo_22_2)
 
 modelo_31_0 <- glm(dico_debates_eleccion ~ 
                      competitividad + 
+                     #log_competitividad +
                      cat_pais,
                    data = base_elecciones,
                    family = "binomial")
@@ -287,7 +388,9 @@ summary(modelo_31_0)
 # fixed effects muchos no son sficativos, pero pendiente ver como assess esto creo que prueba F
 
 modelo_32_0 <- glm(dico_debates_eleccion ~ 
-                     competitividad + concentracion + 
+                     competitividad + 
+                     #log_competitividad + 
+                     concentracion + 
                      lagged_dico_debates_eleccion + 
                      cat_pais,
                    data = base_elecciones,
@@ -295,19 +398,23 @@ modelo_32_0 <- glm(dico_debates_eleccion ~
 summary(modelo_32_0)
 # variable concentracion pierde sficancia, idem lagged, aunque mantienen su signo y en el caso de concentracion su magnitud
 # estas variables parecen mas estructurales (sobre todo lagged) , por lo que fixed effects parecen comerse su efecto
+# curioso, en modelo sin outlier competitivdad adquiere sficancia estadistica. lagged la manteiene pero reducida
 
 # VDs alternativas
 
 
 modelo_31_1 <- glm(dico_frontrunner_presente ~ 
                      competitividad + 
+                     #log_competitividad + 
                      cat_pais,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_31_1) # idem comentarios que para 31_0, notese que aqui competitividad aumenta bastante su magnitud (x3)
 
 modelo_32_1 <- glm(dico_frontrunner_presente ~ 
-                     competitividad + concentracion + 
+                     competitividad + 
+                     #log_competitividad + 
+                     concentracion + 
                      lagged_dico_frontrunner_presente + 
                      cat_pais,
                    data = base_elecciones,
@@ -315,12 +422,18 @@ modelo_32_1 <- glm(dico_frontrunner_presente ~
 summary(modelo_32_1) # idem
 
 
-modelo_31_2 <- glm(dico_frontORcha_presentes ~ competitividad + cat_pais,
+modelo_31_2 <- glm(dico_frontORcha_presentes ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     cat_pais,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_31_2) # idem comentarios anteriores
 
-modelo_32_2 <- glm(dico_frontORcha_presentes ~ competitividad + concentracion + lagged_dico_frontORcha_presentes + cat_pais,
+modelo_32_2 <- glm(dico_frontORcha_presentes ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     concentracion + lagged_dico_frontORcha_presentes + cat_pais,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_32_2) # idem
@@ -336,20 +449,27 @@ summary(modelo_32_2) # idem
 # quizas sea mas adecuado estandarizar y recalcular
 
 modelo_4_0 <- glm(dico_debates_eleccion ~ 
-                    competitividad + concentracion + 
-                    lagged_dico_debates_eleccion + 
-                    int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
+                    competitividad + 
+                    #log_competitividad +
+                    concentracion + 
+                    lagged_dico_debates_eleccion +
+                    int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
+                    #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
                 data = base_elecciones,
                 family = "binomial")
 summary(modelo_4_0) 
 # definitivamente sin resultados sficativos, en este modelo completo competitividad recupera sficancia aunque al 0.1, y aumenta en magnitud, mantiene signo esperado
 # coefs de confianza cambian mucho y son definitivamente no sficativos }
 # los resultados se mantienen similares para los distintos indicadores de confianza en medios utilizados
+# version log de competitividad no es sficativa
 
 modelo_4_1 <- glm(dico_frontrunner_presente ~ 
-                    competitividad + concentracion + 
+                    competitividad + 
+                    #log_competitividad +
+                    concentracion + 
                     lagged_dico_frontrunner_presente + 
-                    int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
+                    int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
+                    #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_4_1) 
@@ -357,8 +477,11 @@ summary(modelo_4_1)
 # VARIABLES LEGISLACION #############
 # pendiente 
 modelo_5_0 <- glm(dico_debates_eleccion ~ 
-                    competitividad + concentracion + 
+                    competitividad + 
+                    #log_competitividad +
+                    concentracion + 
                     lagged_dico_debates_eleccion + 
+                    int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     ncat_totreg,
                   data = base_elecciones,
@@ -366,8 +489,11 @@ modelo_5_0 <- glm(dico_debates_eleccion ~
 summary(modelo_5_0) 
 
 modelo_5_1 <- glm(dico_frontrunner_presente ~ 
-                    competitividad + concentracion + 
+                    competitividad + 
+                    #log_competitividad +
+                    concentracion + 
                     lagged_dico_frontrunner_presente + 
+                    int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     ncat_totreg,
                 data = base_elecciones,
@@ -383,16 +509,24 @@ summary(modelo_5_1)
 
 # probamos con variables dico de normativa 
 
-modelo_51_0 <- glm(dico_debates_eleccion ~ competitividad + concentracion + 
+modelo_51_0 <- glm(dico_debates_eleccion ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     concentracion + 
                     lagged_dico_debates_eleccion + 
+                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_obligatorio_candidato + dico_derechos_candidato,
                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_51_0) 
 
-modelo_51_1 <- glm(dico_frontrunner_presente ~ competitividad + concentracion + 
+modelo_51_1 <- glm(dico_frontrunner_presente ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     concentracion + 
                     lagged_dico_frontrunner_presente + 
+                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_obligatorio_candidato + dico_derechos_candidato,
                   data = base_elecciones,
@@ -403,28 +537,40 @@ summary(modelo_51_1)
 # probamos con variable dico de normativa pero mas general
 
 
-modelo_52_0 <- glm(dico_debates_eleccion ~ competitividad + concentracion + 
+modelo_52_0 <- glm(dico_debates_eleccion ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     concentracion + 
                      lagged_dico_debates_eleccion + 
+                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_any_normativa,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_52_0) 
 
-modelo_52_1 <- glm(dico_frontrunner_presente ~ competitividad + concentracion + 
+modelo_52_1 <- glm(dico_frontrunner_presente ~ 
+                     competitividad + 
+                     #log_competitividad +
+                     concentracion + 
                      lagged_dico_frontrunner_presente + 
+                     #int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_any_normativa,
                    data = base_elecciones,
                    family = "binomial")
-summary(modelo_52_1) # beautiful
+summary(modelo_52_1) 
+
 
 ######## AGREGAMOS VARIABLE RONDA #############################
 
 modelo_6_0 <- glm(dico_debates_eleccion ~ 
-                    competitividad + concentracion + 
+                    competitividad + 
+                    #log_competitividad +
+                    concentracion + 
                      ballotage + ballotage*concentracion +
-                     lagged_dico_debates_eleccion, + 
+                     lagged_dico_debates_eleccion + 
+                    int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_any_normativa,
                    data = base_elecciones,
@@ -433,10 +579,16 @@ summary(modelo_6_0)
 # no se bien como interpretar resultados de este modelo, todo pierde sficancia salvo lagged_ :( ???
 # igual notese que tamaño y signos de los coeficientes no cambian mucho, podemos estar simplemente teniendo un problema de poca precision, poca info para def parametros
 # quizas lo mejor es tener un mejor indicador de fragmentacion y punto
+# o quizas el problema es justamente la multicolinealidad entre variables!
+# en version log: seguimos sin tener sficancia estadistica
 
-modelo_6_1 <- glm(dico_frontrunner_presente ~ competitividad + concentracion + 
+modelo_6_1 <- glm(dico_frontrunner_presente ~ 
+                    competitividad + 
+                    #log_competitividad +
+                    concentracion + 
                     ballotage + ballotage*concentracion +
                      lagged_dico_frontrunner_presente + 
+                    int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_any_normativa,
                    data = base_elecciones,
@@ -451,6 +603,9 @@ summary(modelo_6_1)
 # buen enlace para leer output :  https://stats.stackexchange.com/questions/86351/interpretation-of-rs-output-for-binomial-regression 
 # otro https://stats.oarc.ucla.edu/r/dae/logit-regression/
 modelo_a_interpretar <- modelo_52_1 # ajustar segun deseado, por ahora (abr 2024), prefe es modelo_52_1
+# EN CUALQUIER CASO CREO QUE ES INTERESANTE COMPRAR MODELOS CON VD ALTERNATIVA
+# POR AHORA PARECE QUE VD CUALQ DEBATE ES MAS DEPENDIENTE DE LA CONCENTRACION, MIENTRAS QEU VD DEBATE CON CANDIDATO LIDER ES MAS DEPENIDENTE DE LA COMPETITIVIDAD
+# ESTE ES UN RESULTADO INTERESANTE QUE VA EN LA LINEA DE MIS SOSPECHAS PREVIAS
 
 # interpretacion de coeficientes:
 
@@ -465,7 +620,7 @@ exp(cbind(OR = coef(modelo_a_interpretar), confint(modelo_a_interpretar)))
 #We will start by calculating the predicted probability of ... at each value of ...., holding .. and .. at their means. First we create and view the data frame.
 
 # queremos comenzar para predicted proba de debate a cada valor de competitividad  para un pais con oblig = 0 y derechos = 0
-valores_posibles_competitividad <- seq(range(base_elecciones$competitividad, na.rm=T)[1],range(base_elecciones$competitividad, na.rm=T)[2], 0.1)
+valores_posibles_competitividad <- seq(range(log(base_elecciones$competitividad), na.rm=T)[1],range(base_elecciones$competitividad, na.rm=T)[2], 0.1)
 valores_posibles_dico <- c(1,0)
 
 # newdata1 <- with(base_elecciones, 
@@ -484,6 +639,40 @@ newdata2 <- with(base_elecciones,
                             #dico_obligatorio_candidato = 0,#c(0,1),
                             #dico_derechos_candidato = 0,#c(0,1),
                             dico_any_normativa = 0,
+                            concentracion = mean(concentracion, na.rm=T), 
+                            competitividad = rep(valores_posibles_competitividad, each = length(valores_posibles_dico))))
+
+#newdata2$predicted_proba <- predict(modelo_a_interpretar, newdata = newdata2, type = "response")
+
+# The code to generate the predicted probabilities (the first line below) is the same as before, except we are also going to ask for standard errors so we can plot a confidence interval. We get the estimates on the link scale and back transform both the predicted values and confidence limits into probabilities.
+
+newdata3 <- cbind(newdata2, 
+                  predict(modelo_a_interpretar, 
+                          newdata = newdata2, 
+                          type = "link",
+                          se = TRUE))
+
+newdata3 <- within(newdata3, {
+  PredictedProb <- plogis(fit)
+  LL <- plogis(fit - (1.96 * se.fit))
+  UL <- plogis(fit + (1.96 * se.fit))
+})
+
+# It can also be helpful to use graphs of predicted probabilities to understand and/or present the model. We will use the ggplot2 package for graphing. Below we make a plot with the predicted probabilities, and 95% confidence intervals.
+
+ggplot(newdata3 %>% 
+         mutate(lagged_dico_frontrunner_presente = as.factor(lagged_dico_frontrunner_presente)), 
+       aes(x = competitividad, y = PredictedProb)) + 
+  geom_ribbon(aes(ymin = LL, ymax = UL, fill= lagged_dico_frontrunner_presente), alpha = 0.2) + 
+  geom_line(aes(colour = lagged_dico_frontrunner_presente), size = 1)
+
+# aca calculamos predicted proba de debate a cada valor de competitividad  para unvarios valores de normativva / trad
+
+newdata2 <- with(base_elecciones, 
+                 data.frame(lagged_dico_frontrunner_presente = rep(valores_posibles_dico, times = length(valores_posibles_competitividad)),
+                            #dico_obligatorio_candidato = 0,#c(0,1),
+                            #dico_derechos_candidato = 0,#c(0,1),
+                            dico_any_normativa = 1,
                             concentracion = mean(concentracion, na.rm=T), 
                             competitividad = rep(valores_posibles_competitividad, each = length(valores_posibles_dico))))
 
@@ -579,3 +768,26 @@ ggplot(newdata3 %>%
   geom_ribbon(aes(ymin = LL, ymax = UL, fill= dico_any_normativa), alpha = 0.2) + 
   geom_line(aes(colour = dico_any_normativa), size = 1)
 # y cuando no hay tradicion tb? no se bien que hacer de esto
+
+# assesing fit: distancia entre data original y proba predicha ###############
+
+
+base_elecciones_predicted_outcome <- cbind(base_elecciones, 
+                  predict(modelo_a_interpretar, 
+                          newdata = base_elecciones, 
+                          type = "link",
+                          se = TRUE))
+
+base_elecciones_predicted_outcome$predicted_outcome <-  predict(modelo_a_interpretar, 
+                                                                        newdata = base_elecciones, 
+                                                                        type = "response")
+
+base_elecciones_predicted_outcome <- base_elecciones_predicted_outcome %>% 
+  mutate(diff_predicted_outcome = dico_frontrunner_presente - predicted_outcome) %>% 
+  mutate(abs_diff_predicted_outcome = diff_predicted_outcome %>% abs())
+
+check <- base_elecciones_predicted_outcome %>% 
+  select(abs_diff_predicted_outcome, diff_predicted_outcome, electionid, 
+         dico_debates_eleccion, dico_frontrunner_presente, predicted_outcome,
+         competitividad, concentracion, lagged_dico_frontrunner_presente, dico_any_normativa,
+         ballotage)

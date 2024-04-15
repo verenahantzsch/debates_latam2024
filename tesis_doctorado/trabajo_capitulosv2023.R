@@ -11,10 +11,10 @@ library(ggraph)
 library(igraph)
 #library(xlsx) #
 
-setwd("/home/carolina/Documents/Proyectos R/debates_latam/tesis_doctorado/")
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/")
 
 # datos
-base <- readxl::read_xlsx("./datav2023/base_final3v2023.xlsx")
+base <- read_csv("./datav2023/base_final3v2023.csv")
 elecciones <-  readxl::read_xlsx("./datav2023/base_eleccionesv2023.xlsx") # base auxiliar: años que hubo elecciones por país
 base_organizadores <- readxl::read_xlsx("./datav2023/base_organizadoresv2023.xlsx")
 base_formatos <- readxl::read_xlsx("./datav2023/base_formatos_longv2023.xlsx")
@@ -114,15 +114,16 @@ plot_point_anual2 <- base_años %>%
         axis.title.x = element_text(margin = margin(t = 10), size = 8, hjust = 0)) +  #,
   # axis.text.y = element_text(colour= text_colour$cols_18) ) + 
   scale_x_continuous(breaks = seq(1955,2025,10)) +
-  #scale_y_continuous(breaks = seq(0,24,3)) +
-  labs(x = "Año", y = "Cantidad de debates, en log",
+  scale_y_continuous(breaks = c(0,1,2,3) , labels = c(0, exp(1) %>% round(), exp(2) %>% round(), exp(3) %>% round())) +
+  labs(x = "Año", y = "Cantidad de debates",
        title = "Debates a través del tiempo",
        subtitle = "Cuántos se hicieron y cuándo, por país",
        caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
        
        Las x representan elecciones sin debates.
-       Para una mejor visualización, la cantidad de debates (eje vertical) está representada en su versión logarítmica.
-       El máximo real se ubica en 24 debates anuales (Costa Rica), el mínimo en 0.
+       Para una mejor visualización, la cantidad de debates (eje vertical) está representada en su versión logarítmica,
+       pero los valores señalados en el eje vertical indican la equivalencia traducida nuevamente a cantidad absoluta de debates.
+       El máximo real se ubica en 24 debates anuales (Costa Rica), que equivale a un log de 3.17, el mínimo en 0.
        
        *Rep. Dom. = República Dominicana.")
 
@@ -130,6 +131,13 @@ plotnumber <- plotnumber + 1
 filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
 ggsave(filename, width = 10, height = 7)
 
+
+# traduccion de log 
+
+n_debates_año_pais <- base_años$n_debates_año_pais %>% unique() 
+log <- base_años$n_debates_año_pais %>% unique() %>% log()
+conversion_log <- tibble(n_debates_año_pais = n_debates_año_pais, 
+                         log = log)
 # 1.2 GRAFICO DE CANTIDAD DE DEBATES / INDEX AUSENTES #####
 
 # quiero revisar la cantidad de debates con alguna ausencia
@@ -875,8 +883,8 @@ tipos_formatos_ev_anual <-  tipos_formatos_año %>%
  scale_y_discrete(labels = c("Público-presente", "Público-virtual", "Panel-Sectores", "Panel-Expertos", "Moderadores", "Periodistas", "Expositivo", "Duelo", "Libre")) +
   labs(x = "Año",
        y = "Tipo de intercambio",
-       title = "Tipo de formato de los debates ",
-       subtitle = "A través el tiempo, para la región en su conjunto",
+       title = "Patrones de interacción de los debates ",
+       subtitle = "Formatos preferidos a través el tiempo, para la región en su conjunto",
        caption = paste("Fuente: elaboración propia, con datos recopilados para la presente investigación. 
        
        El tamaño de los círculos es proporcional a la cantidad de debates hechos con cada patrón de interacción en un año dado.
@@ -1045,8 +1053,8 @@ plottipos_formatos_pais <- tipos_formatos_pais %>%
                      values=colorespais2$cols_18) +
   scale_y_discrete(labels = c("Público-presente", "Público-virtual", "Panel-Sectores", "Panel-Expertos", "Moderadores", "Periodistas", "Expositivo", "Duelo", "Libre")) +
   labs(x = "País",
-       y = "Tipo de intercambio",
-       title = "Tipo de intercambio durante los debates ",
+       y = "Tipo de intercambio promovido",
+       title = "Patrones de interacción de los debates ",
        subtitle = "Formatos preferidos por país",
        caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación. 
        
