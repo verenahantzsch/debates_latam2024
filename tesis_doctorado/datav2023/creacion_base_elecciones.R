@@ -310,6 +310,12 @@ data_elecciones_lagged <- data_elecciones_carolina2 %>%
          lagged_dico_frontrunner_presente =  lag(dico_frontrunner_presente),
          lagged_dico_frontycha_presentes = lag(dico_frontycha_presentes),
          lagged_dico_frontORcha_presentes = lag(dico_frontORcha_presentes)) %>% 
+  mutate(lagged_all_previous_elec = cumsum(dico_debates_eleccion) - dico_debates_eleccion,
+         lagged_all_previous_elec_frontrunner_presente = cumsum(dico_frontrunner_presente) - dico_frontrunner_presente,
+         lagged_all_previous_debates = cumsum(n_debates_eleccion) - n_debates_eleccion,
+         lagged_all_previous_debates_frontrunner_presente = cumsum(n_debates_frontrunner_presente) - n_debates_frontrunner_presente) %>% 
+  mutate(lagged_dico_any_previous_elec = ifelse(lagged_all_previous_elec>0,1,0),
+         lagged_dico_any_previous_elec_frontrunner_presente = ifelse(lagged_all_previous_elec_frontrunner_presente>0,1,0)) %>% 
   ungroup() %>% 
   select(c(cat_pais, ncat_eleccion, starts_with("lagged_"))) %>% 
   # chequeamos manualmente que hay NAs SOLAMENTE en primeras elecciones en nos base de datos

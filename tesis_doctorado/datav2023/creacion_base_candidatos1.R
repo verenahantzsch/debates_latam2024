@@ -15,11 +15,14 @@ library(tidyverse)
 
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 base_candidatos_debates <- readxl::read_xlsx("all_candidates.xlsx") # esta base fue creada en segunda_limpieza_datos
- 
+
+# base ya creada
+#test <- read.csv("base_candidatos_matcheados2023.csv")
+
 # DATOS DE ENCUESTAS, 
 # actualizada con: original + cantu + propia. La creacion de esta base se hace en "creacion_base_encuestas.R"
-
-base_encuestas <- read.csv("/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv")
+path <- "/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
+base_encuestas <- read.csv(path) %>% select(-X)
 
 # extraigo data de candidatos y encuestas 
 
@@ -30,6 +33,67 @@ base_candidatos_debates <- base_candidatos_debates %>%
   mutate(debate_date = as.Date(t_fecha),
          two_previous_weeks = debate_date - 21)  # pos ampliar periodo
 
+# check temporario de problema: elecciones que no estan siendo matcheadas. ########
+# EL PROBLEMA ES DE FECHAS. CON 45 DIAS SE LOGRAN MATCH EN CASI TODAS LAS ENCUESTAS. PARA TENER EN CUENTA
+# test <- test %>%  subset(ncat_ronda==1) 
+# elec_test <- test$electid %>% unique()
+# 
+# missing_elections <- c("Chile 1989" ,"Chile 2000","Costa Rica 2010", "Guatemala 2007","Mexico 1994","Mexico 2000" ,"Paraguay 2023")
+# 
+# missing_data_candidatos <- base_candidatos_debates %>% 
+#   mutate(electid = paste(cat_pais, ncat_eleccion)) %>% 
+#   subset(electid%in%missing_elections)
+# 
+# missing_data_encuestas <- base_encuestas %>% 
+#   mutate(electid = paste(country, round(electionyr))) %>% 
+#   subset(electid%in%missing_elections)
+# 
+# # tratamos de identificar la base del problema 
+# # sospechamos fechas, y candidatos en particular en el caso de paraguay pq fue un debate de candidatos menores
+# unique_candidates <- missing_data_encuestas$nombres_candidatos %>%  unique()
+# 
+# missing_data_candidatos_filtered <- missing_data_candidatos %>% 
+#   subset(nombres_candidatos%in%unique_candidates) %>% 
+#   subset(ncat_ronda==1) %>% 
+#   mutate(two_previous_weeks = debate_date - 45) 
+# 
+# #missing_data_filtered$debate_date %>% unique()
+# 
+# missing_data_encuestas <- missing_data_encuestas %>% 
+#   subset(!is.na(polldate))
+# 
+# missing_data_candidatos_filtered$matching_polls <- ""
+# 
+# # checks
+# i <- 1
+# j <- 18
+# 
+# # loop
+# for (i in 1:nrow(missing_data_candidatos_filtered)){
+#   for (j in 1:nrow(missing_data_encuestas)){
+#     #print( paste0( "iteracion entre ", i, " y ", j ))
+#     
+#     if (missing_data_candidatos_filtered$nombres_candidatos[i]==missing_data_encuestas$nombres_candidatos[j]&
+#         missing_data_candidatos_filtered$ncat_eleccion[i]==missing_data_encuestas$electionyr[j]){ 
+#         print( paste0("match de candidatos! ", i, " y ", j ))
+#        print(paste0("fecha debate:", missing_data_candidatos_filtered$debate_date[i])) 
+#        print(paste0("fecha encuesta:" , missing_data_encuestas$polldate[j]))
+#       }
+#       
+#     if (missing_data_candidatos_filtered$nombres_candidatos[i]==missing_data_encuestas$nombres_candidatos[j] &
+#         missing_data_candidatos_filtered$ncat_ronda[i]==missing_data_encuestas$round[j] &
+#         missing_data_candidatos_filtered$debate_date[i] > missing_data_encuestas$polldate[j] & # debate posterior a encuestas
+#         missing_data_candidatos_filtered$two_previous_weeks[i] < missing_data_encuestas$polldate[j]) {  # encuestas posteriores a x tiempo anterior a debate
+#       
+#       print( paste0( "eureka entre ", i, " y ", j ))
+#       missing_data_candidatos_filtered$matching_polls[i] <- paste0(missing_data_candidatos_filtered$matching_polls[i],";", missing_data_encuestas$id_polldatapoint[j])
+#     } else {
+#       #print( paste0( "no hay match entre ", i, " y ", j ))
+#     }
+#   }
+# }
+
+# AHORA SI, UNO DATA ###### 
 # 1era estrategia: intentamos matchear todas las encuestas disponibles en la semana previa, 
 # primero limpiamos un poco los datos
 
@@ -57,7 +121,7 @@ check2 <- base_encuestas_filtered$nombres_candidatos %>%  unique()
 # por ahora, nos interesan las encuestas obtenidas entre la fecha del debate y las dos semanas previas a su realizacion
 
 # en este vector vamos a colocar las id matcheables. 
-#### ACA ME QUEDE ######
+
 base_candidatos_debates_filtered$matching_polls <- ""
 
 # checks
@@ -169,4 +233,4 @@ base_candidatos_matcheados_expandida <- base_candidatos_matcheados %>%
 
 # Guardo nuevamente
 base_candidatos_matcheados_expandida %>% write_csv("base_candidatos_matcheados2023.csv")
-# test <- read.csv("base_candidatos_matcheados2023.csv")
+#test <- read.csv("base_candidatos_matcheados2023.csv")

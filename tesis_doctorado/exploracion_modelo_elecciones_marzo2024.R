@@ -79,6 +79,12 @@ mean_values <- aggregate(competitividad ~ dico_frontrunner_presente, base_elecci
 hist(base_elecciones$competitividad) # ojo, hay un outlier que puede ser problematico, calculo que se trata de el salvador
 hist(base_elecciones$log_competitividad) # tiene mas sentido. otra alternativa sacar outlier?
 
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), competitividad))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), competitividad))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), log_competitividad))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), log_competitividad))
+
 # CONCENTRACION #
 mean_values <- aggregate(concentracion ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
 # las elecciones estan mas concentradas cuando no hay debates, o mas dispersas cuando hay debates
@@ -86,7 +92,12 @@ mean_values <- aggregate(concentracion ~ dico_debates_eleccion, base_elecciones,
 mean_values <- aggregate(concentracion ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
 # idem, pero al diferencia se estrecha a casi la mitad (6 puntos versus 3 puntos de diferencia en la diferencia de promedios)
 
-hist(base_elecciones$concentracion)
+# distrib
+hist(base_elecciones$concentracion) 
+
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), concentracion))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), concentracion))
 
 # TOTREG #
 mean_values <- aggregate(ncat_totreg ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -95,7 +106,12 @@ mean_values <- aggregate(ncat_totreg ~ dico_debates_eleccion, base_elecciones, m
 mean_values <- aggregate(ncat_totreg ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
 # idem, y la diferencia de medias se agranda para este caso
 
-hist(base_elecciones$ncat_totreg)
+# distrib
+hist(base_elecciones$ncat_totreg) 
+
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), ncat_totreg))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), ncat_totreg))
 
 # CONFIANZA EN MEDIOS # # PENDIENTE CORREGIR ESTE INDICADOR Y PROBAR ALTERNATIVOS 
 mean_values <- aggregate(int_average_confianza_tv_medios_latin_lapop ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -107,6 +123,10 @@ mean_values <- aggregate(int_average_confianza_tv_medios_latin_lapop ~ dico_fron
 
 hist(base_elecciones$int_average_confianza_tv_medios_latin_lapop)
 
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), int_average_confianza_tv_medios_latin_lapop))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), int_average_confianza_tv_medios_latin_lapop))
+
 # probamos version escalada
 mean_values <- aggregate(int_average_scaled_confianza_tv_medios_latin_lapop ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
 # hay menos confianza alli donde no hay debates
@@ -115,6 +135,9 @@ mean_values <- aggregate(int_average_scaled_confianza_tv_medios_latin_lapop ~ di
 
 hist(base_elecciones$int_average_scaled_confianza_tv_medios_latin_lapop)
 
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), int_average_scaled_confianza_tv_medios_latin_lapop))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), int_average_scaled_confianza_tv_medios_latin_lapop))
 
 # CONFIANZA EN PPOLS # 
 mean_values <- aggregate(int_average_confianza_ppols ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -124,6 +147,43 @@ mean_values <- aggregate(int_average_confianza_ppols ~ dico_frontrunner_presente
 # idem, y distancia se agranda ligeramente
 
 hist(base_elecciones$int_average_confianza_ppols)
+
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), int_average_confianza_ppols))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), int_average_confianza_ppols))
+
+# TRADICION: N DEBATES / N ELECCIONES PREVIAS # 
+# cumsum pasadas elec con debates
+mean_values <- aggregate(lagged_all_previous_elec ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
+mean_values <- aggregate(lagged_all_previous_elec_frontrunner_presente ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+mean_values <- aggregate(lagged_all_previous_elec ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+
+hist(base_elecciones$lagged_all_previous_elec)
+hist(base_elecciones$lagged_all_previous_elec_frontrunner_presente)
+
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), lagged_all_previous_elec))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), lagged_all_previous_elec)) 
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), lagged_all_previous_elec_frontrunner_presente))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), lagged_all_previous_elec_frontrunner_presente))
+# las diferencias entre las outcome variables alternativas están para pensar.
+# either frontrunners sienten mas el peso de la trad / o son mas fuertes en marcar tendencia futura
+
+# n: tot debates en pasadas elec 
+mean_values <- aggregate(lagged_all_previous_debates ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
+mean_values <- aggregate(lagged_all_previous_debates_frontrunner_presente ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+mean_values <- aggregate(lagged_all_previous_debates ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+
+hist(base_elecciones$lagged_all_previous_debates)
+hist(base_elecciones$lagged_all_previous_debates_frontrunner_presente)
+
+# distrib bivariada
+# distrib bivariada
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), lagged_all_previous_debates))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), lagged_all_previous_debates)) 
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), lagged_all_previous_debates_frontrunner_presente))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), lagged_all_previous_debates_frontrunner_presente))
+
 
 # VARIABLES DICO # # PENDIENTE: QUIZAS SE PUEDEN INTERPRETAR ESSTAS VARIABLES COMO CUASI NEC Y CUASI SUF , P PENSAR# 
 
@@ -160,6 +220,14 @@ table(base_elecciones$lagged_dico_frontrunner_presente, base_elecciones$dico_fro
 # cuando frontrunner no asistio a ningun debate en elec anterior, es mas probable que no lo haga en actual eleccion (de hecho se espeja diferencia respecto de cuenta inmediata anterior)
 # cuando frontrunner si asistio a debate en elec anterior, es mucho mas probable que si asista en la que siga
 
+base_elecciones$lagged_dico_any_previous_elec %>% table()  
+table(base_elecciones$lagged_dico_any_previous_elec, base_elecciones$dico_debates_eleccion)
+table(base_elecciones$lagged_dico_any_previous_elec, base_elecciones$dico_frontrunner_presente)
+
+base_elecciones$lagged_dico_any_previous_elec_frontrunner_presente %>% table()  
+table(base_elecciones$lagged_dico_any_previous_elec_frontrunner_presente, base_elecciones$dico_debates_eleccion)
+table(base_elecciones$lagged_dico_any_previous_elec_frontrunner_presente, base_elecciones$dico_frontrunner_presente)
+
 # NOMRATIVA DICO # 
 base_elecciones$dico_obligatorio_candidato %>% table()   
 # ojo que esta variable tiene una distrib muy sesgada
@@ -189,7 +257,7 @@ table(base_elecciones$dico_any_normativa, base_elecciones$dico_frontrunner_prese
 # las chances se vuelven casi 50/50 para el caso de debates c asistencia de frontrunner (respecto de cualq debate) cuando NO hay normativa
 
 
-### MULTICOLINEALIDAD CRUZADA PENDIENTE ## ACA ME QUEDE #####
+### MULTICOLINEALIDAD CRUZADA ######
 # Calculate the correlation matrix
 #full_data <- base_elecciones # reserva
 
@@ -209,6 +277,10 @@ cor_base_elecciones <- base_elecciones %>%
          dico_derechos_candidato,
          lagged_dico_debates_eleccion,
          lagged_dico_frontrunner_presente,
+         lagged_all_previous_elec,
+         lagged_all_previous_debates_frontrunner_presente,
+         lagged_all_previous_debates,
+         lagged_all_previous_debates_frontrunner_presente,
          ballotage)
 
 correlation_matrix <- cor(cor_base_elecciones, use= "na.or.complete")
@@ -216,7 +288,6 @@ correlation_matrix <- cor(cor_base_elecciones, use= "na.or.complete")
 # Print the correlation matrix
 print(correlation_matrix)
 
-# Install and load the corrplot package if you haven't already
 #install.packages("corrplot")
 library(corrplot)
 
@@ -310,7 +381,8 @@ summary(modelo_1_2)
 modelo_21_0 <- glm(dico_debates_eleccion ~ 
                      competitividad + 
                      #log_competitividad +
-                     lagged_dico_debates_eleccion,
+                  #lagged_dico_debates_eleccion,
+                   lagged_all_previous_elec,
                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_21_0)
@@ -319,8 +391,9 @@ modelo_22_0 <- glm(dico_debates_eleccion ~
                      competitividad + 
                      #log_competitividad + 
                      concentracion + 
-                     lagged_dico_debates_eleccion,
-                  data = base_elecciones,
+                     #lagged_dico_debates_eleccion,
+                     lagged_all_previous_elec,
+                   data = base_elecciones,
                   family = "binomial")
 summary(modelo_22_0)
 
@@ -332,7 +405,8 @@ summary(modelo_22_0)
 modelo_21_1 <- glm(dico_frontrunner_presente ~ 
                      competitividad + 
                      #log_competitividad + 
-                     lagged_dico_frontrunner_presente,
+                     lagged_all_previous_elec_frontrunner_presente,
+                     #lagged_dico_frontrunner_presente,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_21_1)
@@ -341,17 +415,21 @@ modelo_22_1 <- glm(dico_frontrunner_presente ~
                      competitividad + 
                      #log_competitividad + 
                      concentracion + 
-                     lagged_dico_frontrunner_presente,
+                     lagged_all_previous_elec_frontrunner_presente,
+                   #lagged_dico_frontrunner_presente,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_22_1)
 # idem comentario modelo_2 de arriba: se mantiene muy parecido a modelo_1, pero lagged aparece claramente como un predictor mas pontente, todavia mas cierto para el caso de la asistencia del frontrunner
+# con variable lagged all elec, competitividad pierde sficancia
+
 # un peq parentesis, usando otra lagged con esta VD: 
 modelo_23_1 <- glm(dico_frontrunner_presente ~ 
                      competitividad + 
                      #log_competitividad + 
                      concentracion + 
-                     lagged_dico_debates_eleccion,
+                     lagged_all_previous_elec,
+                     #lagged_dico_debates_eleccion,
                    data = base_elecciones,
                    family = "binomial")
 summary(modelo_23_1) # coef sigue siendo muy grande, aunque magnitud disminuye muy ligeramente respecto de 21_1. Idem en linea con expectativas
@@ -391,7 +469,8 @@ modelo_32_0 <- glm(dico_debates_eleccion ~
                      competitividad + 
                      #log_competitividad + 
                      concentracion + 
-                     lagged_dico_debates_eleccion + 
+                     #lagged_dico_debates_eleccion + 
+                     lagged_all_previous_elec +
                      cat_pais,
                    data = base_elecciones,
                    family = "binomial")
@@ -415,7 +494,8 @@ modelo_32_1 <- glm(dico_frontrunner_presente ~
                      competitividad + 
                      #log_competitividad + 
                      concentracion + 
-                     lagged_dico_frontrunner_presente + 
+                     #lagged_dico_frontrunner_presente + 
+                     lagged_all_previous_elec_frontrunner_presente +
                      cat_pais,
                    data = base_elecciones,
                    family = "binomial")
@@ -452,7 +532,8 @@ modelo_4_0 <- glm(dico_debates_eleccion ~
                     competitividad + 
                     #log_competitividad +
                     concentracion + 
-                    lagged_dico_debates_eleccion +
+                    #lagged_dico_debates_eleccion +
+                    lagged_all_previous_elec +
                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
                 data = base_elecciones,
@@ -467,7 +548,8 @@ modelo_4_1 <- glm(dico_frontrunner_presente ~
                     competitividad + 
                     #log_competitividad +
                     concentracion + 
-                    lagged_dico_frontrunner_presente + 
+                    #lagged_dico_frontrunner_presente + 
+                    lagged_all_previous_elec_frontrunner_presente +
                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols,
                   data = base_elecciones,
@@ -480,7 +562,8 @@ modelo_5_0 <- glm(dico_debates_eleccion ~
                     competitividad + 
                     #log_competitividad +
                     concentracion + 
-                    lagged_dico_debates_eleccion + 
+                    #lagged_dico_debates_eleccion + 
+                    lagged_all_previous_elec +
                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     ncat_totreg,
@@ -492,7 +575,8 @@ modelo_5_1 <- glm(dico_frontrunner_presente ~
                     competitividad + 
                     #log_competitividad +
                     concentracion + 
-                    lagged_dico_frontrunner_presente + 
+                    #lagged_dico_frontrunner_presente + 
+                    lagged_all_previous_elec_frontrunner_presente +
                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     ncat_totreg,
@@ -513,7 +597,8 @@ modelo_51_0 <- glm(dico_debates_eleccion ~
                      competitividad + 
                      #log_competitividad +
                      concentracion + 
-                    lagged_dico_debates_eleccion + 
+                     lagged_all_previous_elec +
+                     #lagged_dico_debates_eleccion + 
                      int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_obligatorio_candidato + dico_derechos_candidato,
@@ -525,7 +610,8 @@ modelo_51_1 <- glm(dico_frontrunner_presente ~
                      competitividad + 
                      #log_competitividad +
                      concentracion + 
-                    lagged_dico_frontrunner_presente + 
+                     #lagged_dico_frontrunner_presente + 
+                     lagged_all_previous_elec_frontrunner_presente +
                      int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                     #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_obligatorio_candidato + dico_derechos_candidato,
@@ -541,7 +627,8 @@ modelo_52_0 <- glm(dico_debates_eleccion ~
                      competitividad + 
                      #log_competitividad +
                      concentracion + 
-                     lagged_dico_debates_eleccion + 
+                     #lagged_dico_debates_eleccion + 
+                     lagged_all_previous_elec +
                      int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_any_normativa,
@@ -553,8 +640,9 @@ modelo_52_1 <- glm(dico_frontrunner_presente ~
                      competitividad + 
                      #log_competitividad +
                      concentracion + 
-                     lagged_dico_frontrunner_presente + 
-                     #int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
+                     #lagged_dico_frontrunner_presente + 
+                     lagged_all_previous_elec_frontrunner_presente +
+                     int_average_scaled_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      #int_average_confianza_tv_medios_latin_lapop + int_average_confianza_ppols +
                      dico_any_normativa,
                    data = base_elecciones,
