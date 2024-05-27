@@ -32,6 +32,7 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/da
 base_elecciones <- read.csv("all_elections.csv") %>% select(-X)
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/")
 options(scipen=999)
+
 # TRABAJO ########
 
 # CREACION DE VARIABLES AUXILIARES ##########

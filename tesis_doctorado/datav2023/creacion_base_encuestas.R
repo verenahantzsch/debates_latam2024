@@ -132,7 +132,7 @@ rm(missing_names)
 
 u_elect <- data$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
 
-# ahora agrego update de elecciones y nuevas encuestas ##################
+# ahora agrego update de elecciones y nuevas encuestas DESCARGADAS POR CAROLINA ##################
 data_update_march2024 <- read.csv('/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/Working data/scrapping de wikipedia/new_countries/new_polls.csv') %>% select(-X)
 
 # algunos ajustes para hacer data compatible
@@ -161,6 +161,18 @@ data_update_march2024 <- data_update_march2024 %>%
 u_elect <- data_update_march2024$electionid %>% unique() # sumamos 35 elecciones
 u_elect <- data_con_nombres$electionid %>% unique() # por ahora tenemos 63 elecciones, generales y ballotage
 
+# ahora tengo que agregar columnas inexistentes en base original, idem, para compatibilizar (actualizado a mayo 2024)
+# hay 5 columnas distintas
+setdiff(names(data_update_march2024), names(data_con_nombres))
+data_con_nombres <- data_con_nombres %>% 
+  #subset(!is.na(poll_)) %>% 
+  # select(-X) %>% 
+  mutate(partyid = "NA",
+         n_candidatos = "NA", 
+         reference_id = "NA",
+         reference_url= "NA",
+         reference_validity= "NA")
+
 # reordenamos columnas
 data_update_march2024 <- data_update_march2024[, match(names(data_con_nombres), names(data_update_march2024))]
 
@@ -172,6 +184,10 @@ full_dataset <- data_con_nombres %>%
 
 full_dataset <- full_dataset %>% 
   subset(!(electionid=="Colombia 2014-06-15"&!is.na(reliable))) # COLOMBIA 2014 esta dos veces, qitamos data de cantu. Una pista de a que se refiere con reliable
+
+full_dataset <- full_dataset %>% 
+  dplyr::mutate(vote_ = ifelse(electionid == "Brazil 2014-10-26"&nombres_candidatos=="Aécio Neves",48.36000, vote_),
+                turnout = ifelse(electionid == "Brazil 2014-10-26",78.9, turnout)) # pequeña correcion que probablemente se perdio por redondeo
 
 full_dataset <- full_dataset %>% 
   mutate(nombres_candidatos = str_trim(nombres_candidatos, "both"),
@@ -193,6 +209,3 @@ u_elect <- full_dataset$electionid %>% unique() # tenemos 95 elecciones
 
 full_dataset %>% 
   #write.csv("/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv")
-  
-  
-  

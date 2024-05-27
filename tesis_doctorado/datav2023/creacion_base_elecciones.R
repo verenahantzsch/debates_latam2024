@@ -17,33 +17,65 @@ path <- "/home/carolina/Documents/dataexterna/Carrera_Cantu_datos_debates_comple
 #path <- "/home/carolina/Documents/R PROJECTS/Carrera_Cantu_datos_debates_completo/polls_completo_marzo2024_cantuYcarolina.csv"
 data_encuestas <- read.csv(path) %>% select(-X)
 
+
+# PASO PARA FILTRAR CALIDAD DE ENCUESTAS, agregado a mayo 2024
+data_encuestas <- data_encuestas %>% 
+  subset(reliable==1|reference_validity==T)
+
+u_elect <- data_encuestas$electionid %>% unique() # sigo teniendo 95 elecciones  
+
+
 #### AGREGO NIVEL DE BASE ENCUESTAS:  BASE DE DATOS 1 CANDIDATO POR FILA ##########################
 
 data_candidatos <- data_encuestas %>% 
   # primero agrupamos por todas las variables que correspondan al nivel "candidatos", perdiendo el nivel de "polls"
   # tengo ademas que seleccionar todas las variables que quiero retener del nivel electoral 
-  group_by(electionid, electionyr, country, round, enpp, turnout, espv, regime, nombres_candidatos, gov_) %>% 
-  summarise(mean_encuestas_candidato = mean(poll_),
+  group_by(electionid, electionyr, country, round, #enpp, espv, regime, 
+           turnout, nombres_candidatos, gov_) %>% 
+  dplyr::summarize(mean_encuestas_candidato = mean(poll_),
          sd_encuestas_candidato = sd(poll_),
          vote_ = mean(vote_)) %>% # esta es porque habia unas inconsistencias menores en data de brasil (0.01 diferencia entre filas)
   ungroup() 
+
+# a mayo 2024 agregue data sobre votos en blanco e indecisos, cuando habia.
+# tengo que pasarlas a formato columna para sacarmelas de encima en las cuentas que siguen
+
+data_blancos_indecisos <- data_candidatos %>% 
+  subset(nombres_candidatos=="Blanco"|nombres_candidatos=="Indeciso")
+
+# paso esta data a wider para poder agregarla mas adelante a data sobre elecciones
+data_blancos_indecisos <- data_blancos_indecisos %>% 
+  pivot_wider(names_from = "nombres_candidatos",
+              names_prefix = "expected_",
+              values_from = "mean_encuestas_candidato")
+
+# ahora necesito quedarme con una sola fila por eleccion
+data_blancos_indecisos <- data_blancos_indecisos %>% 
+  group_by(electionid, electionyr, country, round, #enpp, espv, regime, 
+           turnout) %>%
+  dplyr::summarise(expected_blanco = mean(expected_Blanco, na.rm=T),
+                   expected_indeciso = mean(expected_Indeciso, na.rm=T)) %>% 
+  ungroup()
+  
+data_candidatos <- data_candidatos %>% 
+  subset(!gov_==999)
 
 #### CAMINO A CREAR UNA BASE DE DATOS 1 ELECCION POR FILA 
 # tenemos que usar algunos indicadores del nivel "candidatos" para construir indicadores de nivel superior, de "elecciones"
 
 competencia <- data_candidatos %>% 
-  select(electionid, electionyr,country, round, enpp, turnout, espv, regime, mean_encuestas_candidato, vote_, gov_, nombres_candidatos) %>%
-  unique() %>% 
-  group_by(electionid, country, round) %>% 
-  mutate(rank_polls = rank(100-mean_encuestas_candidato),
-         rank_elections = rank(100-vote_)) 
+  # select(electionid, electionyr, country, round, turnout, mean_encuestas_candidato, vote_, gov_, nombres_candidatos) %>% # deje fuera por ahora  espv, enpp,regime,
+  # unique() %>% 
+  dplyr::group_by(electionid, electionyr, country, round, turnout  ) %>% 
+  dplyr::mutate(rank_polls = rank(100 - mean_encuestas_candidato),
+         rank_elections = rank(100 - vote_)) 
 
 # en Guatemala 2019 primera ronda aparece un empate en el 2do puesto dadas las encuestas
 # pero si tomamos una muestra de encuestas mas amplia sabemos que Giammatei estaba mejor posicionado que su competidor ,
 # además asi lo avalan los resultados posteriores,
 # corregimos esto manualmente
 competencia <- competencia %>% 
-  mutate(rank_polls = ifelse(country=="Guatemala"&electionyr=="2019"&round==1&nombres_candidatos=="Alejandro Giammattei", 2, rank_polls))
+   mutate(rank_polls = ifelse(country=="Guatemala"&electionyr=="2019"&round==1&nombres_candidatos=="Alejandro Giammattei", 2, rank_polls))
 
 # ahora cargamos la data de competencia a la data sobre candidatos 
 
@@ -87,12 +119,12 @@ challenger <- data_candidatos %>%
 primeros_dos_partidos <- data_candidatos %>% 
   subset(frontrunner==1|challenger==1) %>% 
   group_by(electionid, electionyr, country, round) %>% 
-  summarise(concentracion = sum(mean_encuestas_candidato),
+  dplyr::summarise(concentracion = sum(mean_encuestas_candidato),
             competitividad = abs(diff(mean_encuestas_candidato)))
 
 data_elecciones <- data_candidatos %>% 
-  group_by(electionid, electionyr, country, round, enpp, turnout, espv, regime) %>% 
-  summarise(sd_mean_encuestas_candidato = sd(mean_encuestas_candidato),
+  group_by(electionid, electionyr, country, round, turnout,) %>%  #  enpp, espv, regime
+  dplyr::summarise(sd_mean_encuestas_candidato = sd(mean_encuestas_candidato),
             sd_vote_ = sd(vote_)) %>% 
   left_join(primeros_dos_partidos) %>% 
  left_join(incumbents) %>% 
@@ -223,6 +255,23 @@ for (i in 1:nrow(data_elecciones_carolina)) {
   }
 }
 
+# parentesis: chequeo numeros #
+# 
+# # 253 años electorales cubiertos en total
+# u_electoinid <- data_candidatos$electionid %>% unique() # 95 elecciones con datos de encuestas
+# u_electoinid <- data_elecciones$electionid %>% unique() # 95 elecciones con datos de encuestas
+# data_debates_carolina <- data_debates_carolina %>% mutate(elecid = paste(ncat_eleccion, cat_pais, ncat_ronda)) 
+# u_elec <- data_debates_carolina$elecid %>% unique() # 140 elecciones con debates 
+# 
+# # chequeamos ahora de cuantos años CON debates TENEMOS datos de encuestas
+# u_match <- data_debates_carolina %>% 
+#   select(ncat_eleccion, cat_pais, ncat_ronda) %>% 
+#   left_join(data_elecciones %>% 
+#               dplyr::rename("cat_pais"="country", "ncat_ronda"="round", "ncat_eleccion"="electionyr") %>% 
+#               mutate(ncat_eleccion = round(ncat_eleccion)))
+# u_elec_ambas <- u_match$electionid %>% unique() # TENGO 71 ELECCIONES CON DEBATES Y DATOS 
+# # POR ENDE, 24 ELECCIONES CON DATOS Y SIN DEBATES
+
 # uno data sobre incumbentes etc a base de debates para poder identificar debates con frontrunner presente
 
 # primero tenemos que ajustar estas bases para el join
@@ -262,15 +311,22 @@ data_debates_carolina2 <- data_debates_carolina %>%
          frontycha_presentes = ifelse(str_detect(str_presentes, frontrunner)&str_detect(str_presentes, challenger),1,0),
          frontORcha_presentes = ifelse(str_detect(str_presentes, frontrunner)|str_detect(str_presentes, challenger),1,0))
  
-# identifico elecciones con debates
-base_elecciones_con_debates <- data_debates_carolina2 %>% 
+# identifico elecciones con debates.
+# hacemos pequeña distincion 
+# para poder diferenciar entre ausencia de debates y "na", 
+# ya que el ultimo ("na") solo aplica en el caso en el que los debates se identifican con base en datos de encuestas
+base_elecciones_con_debates_dico <- data_debates_carolina2 %>% 
   group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
-  summarise(n_debates_eleccion = n(),
-            n_debates_frontrunner_presente = sum(frontrunner_presente, na.rm=T),
-            n_debates_frontycha_presentes = sum(frontycha_presentes, na.rm=T),
-            n_debates_frontORcha_presentes = sum(frontORcha_presentes, na.rm=T)) %>% 
-  mutate(dico_debates_eleccion = ifelse(n_debates_eleccion>=1,1,0),
-         dico_frontrunner_presente = ifelse(n_debates_frontrunner_presente>=1,1,0),
+  dplyr::summarise(n_debates_eleccion = n()) %>% 
+  mutate(dico_debates_eleccion = ifelse(n_debates_eleccion>=1,1,0)) %>% 
+  ungroup() 
+
+base_elecciones_con_debates_otros <- data_debates_carolina2 %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  dplyr::summarise(n_debates_frontrunner_presente = sum(frontrunner_presente),
+            n_debates_frontycha_presentes = sum(frontycha_presentes ),
+            n_debates_frontORcha_presentes = sum(frontORcha_presentes )) %>% 
+  mutate(dico_frontrunner_presente = ifelse(n_debates_frontrunner_presente>=1,1,0),
          dico_frontycha_presentes = ifelse(n_debates_frontycha_presentes>=1,1,0),
          dico_frontORcha_presentes = ifelse(n_debates_frontORcha_presentes>=1,1,0)) %>% 
   ungroup()  
@@ -279,71 +335,149 @@ base_elecciones_con_debates <- data_debates_carolina2 %>%
 # uno base PROPIA de todas las elecciones , con datos sobre debates por eleccion
 data_elecciones_carolina2 <- data_elecciones_carolina %>% 
   dplyr::rename("ncat_ronda" = cat_ballotage) %>% 
-  left_join(base_elecciones_con_debates ) %>% 
+  left_join(base_elecciones_con_debates_dico ) %>% 
+  left_join(base_elecciones_con_debates_otros ) %>% 
   mutate(n_debates_eleccion = ifelse(is.na(n_debates_eleccion), 0, n_debates_eleccion),
-         n_debates_frontrunner_presente = ifelse(is.na(n_debates_frontrunner_presente), 0, n_debates_frontrunner_presente),
-         n_debates_frontycha_presentes = ifelse(is.na(n_debates_frontycha_presentes), 0, n_debates_frontycha_presentes),
-         n_debates_frontORcha_presentes = ifelse(is.na(n_debates_frontORcha_presentes), 0, n_debates_frontORcha_presentes),
+         n_debates_frontrunner_presente = ifelse(n_debates_eleccion==0, 0, n_debates_frontrunner_presente), #ESTA BIEN COMPLETAR ASI, PORQUE SI NO HUBO NINGUN DEBATE POR DEFINICION NO HUBO DEBATES CON FRONTRUNNER PRESENTE
+         n_debates_frontycha_presentes = ifelse(n_debates_eleccion==0, 0, n_debates_frontycha_presentes),
+         n_debates_frontORcha_presentes = ifelse(n_debates_eleccion==0, 0, n_debates_frontORcha_presentes),
          dico_debates_eleccion = ifelse(is.na(dico_debates_eleccion), 0, dico_debates_eleccion),
-         dico_frontrunner_presente = ifelse(is.na(dico_frontrunner_presente), 0, dico_frontrunner_presente),
-         dico_frontycha_presentes = ifelse(is.na(dico_frontycha_presentes), 0, dico_frontycha_presentes),
-         dico_frontORcha_presentes = ifelse(is.na(dico_frontORcha_presentes), 0, dico_frontORcha_presentes))   
+         dico_frontrunner_presente = ifelse(dico_debates_eleccion==0, 0, dico_frontrunner_presente),
+         dico_frontycha_presentes = ifelse(dico_debates_eleccion==0, 0, dico_frontycha_presentes),
+         dico_frontORcha_presentes = ifelse(dico_debates_eleccion==0, 0, dico_frontORcha_presentes))   
 
-# creo variable lagged sobre debates 
+# chequeo de control 
+# check <- data_elecciones_carolina2 %>% 
+#      subset(!is.na(n_debates_frontrunner_presente))
+# check <- check %>% 
+#   subset(n_debates_frontrunner_presente!=0)  # 196 observaciones con datos, 62 positivos
+# check <-base_elecciones_con_debates_otros %>% 
+#   subset(n_debates_frontrunner_presente!=0) # coincide ! , 71 con datos, 62 positivos. 
+
+######## creo variable lagged sobre debates   ##
+
 data_elecciones_lagged <- data_elecciones_carolina2 %>% 
-  group_by(cat_pais, ncat_eleccion) %>% 
-  summarise(n_debates_eleccion = sum(n_debates_eleccion),
-            n_debates_frontrunner_presente = sum(n_debates_frontrunner_presente),
-            n_debates_frontycha_presentes = sum(n_debates_frontycha_presentes),
-            n_debates_frontORcha_presentes = sum(n_debates_frontORcha_presentes),
-            dico_debates_eleccion =  max(dico_debates_eleccion),
-            dico_frontrunner_presente =  max(dico_frontrunner_presente),
-            dico_frontycha_presentes =  max(dico_frontycha_presentes),
-            dico_frontORcha_presentes =  max(dico_frontORcha_presentes) ) %>% 
+  group_by(cat_pais, ncat_eleccion) %>% # estas variables lagged las creo para la eleccion tomada como un todo.  
+  dplyr::summarise(n_debates_eleccion = sum(n_debates_eleccion),
+            n_debates_frontrunner_presente = sum(n_debates_frontrunner_presente),  
+            n_debates_frontORcha_presentes = sum(n_debates_frontORcha_presentes)) %>% 
+  ungroup() %>% 
+  # la correccion de abajo sucede porque en algunas elecciones de dos rondas tenemos datos positivos solo para una de ellas, 
+  #y en este caso estamos operando con el criterio de "al menos un debate"
+  dplyr::mutate(n_debates_frontrunner_presente = ifelse(cat_pais=="Guatemala"&ncat_eleccion>2010&ncat_eleccion<2016, 1,n_debates_frontrunner_presente)) %>% 
+  # siguiente correccion es porque por definicion si no hubo ningun debate, no hubo ninguno con el frontrunner presente 
+  dplyr::mutate(n_debates_frontrunner_presente = ifelse(n_debates_eleccion==0,0,n_debates_frontrunner_presente)) %>% 
+  dplyr::mutate(dico_debates_eleccion =  ifelse(n_debates_eleccion>0,1,0),
+            dico_frontrunner_presente =  ifelse(n_debates_frontrunner_presente>0,1,0),
+            #dico_frontycha_presentes =  ifelse(n_debates_frontycha_presentes>0,1,0),
+            dico_frontORcha_presentes =  ifelse(n_debates_frontORcha_presentes>0,1,0) ) %>% 
+  ungroup() %>% 
   group_by(cat_pais) %>% 
   arrange(ncat_eleccion) %>% 
-  mutate(lagged_n_debates_eleccion = lag(n_debates_eleccion),
+  dplyr::mutate(lagged_n_debates_eleccion = lag(n_debates_eleccion),
          lagged_n_debates_frontrunner_presente = lag(n_debates_frontrunner_presente),
-         lagged_n_debates_frontycha_presentes = lag(n_debates_frontycha_presentes),
+         #lagged_n_debates_frontycha_presentes = lag(n_debates_frontycha_presentes),
          lagged_n_debates_frontORcha_presentes = lag(n_debates_frontORcha_presentes),
          lagged_dico_debates_eleccion = lag(dico_debates_eleccion),
          lagged_dico_frontrunner_presente =  lag(dico_frontrunner_presente),
-         lagged_dico_frontycha_presentes = lag(dico_frontycha_presentes),
+         #lagged_dico_frontycha_presentes = lag(dico_frontycha_presentes),
          lagged_dico_frontORcha_presentes = lag(dico_frontORcha_presentes)) %>% 
-  mutate(lagged_all_previous_elec = cumsum(dico_debates_eleccion) - dico_debates_eleccion,
+  # completamos primeras elecciones en la base de datos (que ahora figuran como "nas") con "0"
+  dplyr::mutate(lagged_n_debates_frontrunner_presente = ifelse(is.na(lagged_n_debates_eleccion), 0, lagged_n_debates_frontrunner_presente),
+                lagged_n_debates_frontORcha_presentes = ifelse(is.na(lagged_n_debates_eleccion), 0, lagged_n_debates_frontORcha_presentes),
+                lagged_dico_frontrunner_presente = ifelse(is.na(lagged_n_debates_eleccion), 0, lagged_dico_frontrunner_presente),
+                lagged_dico_frontORcha_presentes = ifelse(is.na(lagged_n_debates_eleccion), 0, lagged_dico_frontORcha_presentes)  ) %>% 
+  dplyr::mutate(lagged_n_debates_eleccion = ifelse(is.na(lagged_n_debates_eleccion), 0, lagged_n_debates_eleccion),
+                lagged_dico_debates_eleccion = ifelse(is.na(lagged_dico_debates_eleccion), 0, lagged_dico_debates_eleccion) ) %>%
+  dplyr::mutate(lagged_all_previous_elec = cumsum(dico_debates_eleccion) - dico_debates_eleccion, # ACA 
          lagged_all_previous_elec_frontrunner_presente = cumsum(dico_frontrunner_presente) - dico_frontrunner_presente,
          lagged_all_previous_debates = cumsum(n_debates_eleccion) - n_debates_eleccion,
-         lagged_all_previous_debates_frontrunner_presente = cumsum(n_debates_frontrunner_presente) - n_debates_frontrunner_presente) %>% 
-  mutate(lagged_dico_any_previous_elec = ifelse(lagged_all_previous_elec>0,1,0),
+         lagged_all_previous_debates_frontrunner_presente = cumsum(n_debates_frontrunner_presente) - n_debates_frontrunner_presente) %>%   
+  dplyr::mutate(lagged_dico_any_previous_elec = ifelse(lagged_all_previous_elec>0,1,0),
          lagged_dico_any_previous_elec_frontrunner_presente = ifelse(lagged_all_previous_elec_frontrunner_presente>0,1,0)) %>% 
-  ungroup() %>% 
-  select(c(cat_pais, ncat_eleccion, starts_with("lagged_"))) %>% 
-  # chequeamos manualmente que hay NAs SOLAMENTE en primeras elecciones en nos base de datos
-  # por definicion, estas elecciones no estuvieron precedidas por elecciones por debate, por lo que reemplazamos NAs por 0
-  replace(is.na(.),0)
+  ungroup()  %>% 
+  select(c(cat_pais, ncat_eleccion, starts_with("lagged_")))
+  
 
+# PARENTESIS TEMPORARIO REVISION MANUAL DE NAS RESPECTO DE DEBATES CON FRONTRUNNER PRESENTE
+# Y RESPECTO DE PRIMERAS ELECCIONES
+# EN CUANTO A frontrunner presente, 
+# el problema es que estoy combinando dos rondas y en pocos casos tengo datos para una de ellas y para la otra no
+# hay un problema de criterios asimetricos ademas:
+# si se que en "al menos una" ronda hubo debate, la variable dicotomica que agrega ambas rondas deberia valer 1,
+# en cambio, si tengo el dato de que en una ronda NO hubo debate con el frontrunner presente, no puedo aseverar que en la otra no haya habido
+# por lo que debo dejar el NA y luego reemplazar con base en la variable dicotomica de si hubo debates mas en general
+# (como hice arriba, dado que por definicion si NO hubo NINGUN debate, tampoco lo hubo con frontrunner presente)
+# en cuanto al caso en los que tengo una ronda con 1 y otra con NA,
+# se trata de dos años electorales, los identifico manulamente para poner la solucion manual arriba
+# 
+# 
+ # check1 <- data_elecciones_lagged %>% 
+ #    subset(!is.na(n_debates_frontrunner_presente)) # 125 observaciones de 191. deberia tener 151 (-18 = 133), probablemente me estoy perdiendo datos por los NAs 
+ # table(check1$dico_frontrunner_presente)
+# check2 <- data_elecciones_carolina2  %>% 
+#   #subset(!is.na(dico_frontrunner_presente)) %>% 
+#   group_by(cat_pais, ncat_eleccion) %>% 
+#   dplyr::summarise(n = n(),
+#                   sum = sum(dico_frontrunner_presente, na.rm =T)) #%>% 
+#  # subset(!is.na(sum))
+# table(check2$sum)
+# # 18*2+26 bien! deberia tener 62 datos positivos
+# cuando_evito_nas <-  data_elecciones_carolina2  %>% 
+#   subset(!is.na(dico_frontrunner_presente)) %>% 
+#   group_by(cat_pais, ncat_eleccion) %>% 
+#   dplyr::summarise(n = n(),
+#                    sum = sum(dico_frontrunner_presente, na.rm =T)) %>% 
+#   subset(sum==1)
+# 
+# cuando_no_evito_nas <-  data_elecciones_carolina2  %>% 
+#   #subset(!is.na(dico_frontrunner_presente)) %>% 
+#   group_by(cat_pais, ncat_eleccion) %>% 
+#   dplyr::summarise(n = n(),
+#                    sum = sum(dico_frontrunner_presente)) %>% 
+#   subset(sum==1)
+# 
+# combined_df <- full_join(cuando_evito_nas, cuando_no_evito_nas, by = c("cat_pais", "ncat_eleccion"), suffix = c("_df1", "_df2"))
 
-# uno est data lagged a la base
+# problema son Guatemala 2011 y 2015
+
+#chequeamos manualmente que hay NAs SOLAMENTE en primeras elecciones en nos base de datos
+# por definicion, estas elecciones no estuvieron precedidas por elecciones por debate, por lo que reemplazamos NAs por 0
+#replace(is.na(.),0) # OJO NO, PORQUE HAY AUTENTICOS MISSING DATA. 
+
+######### uno est data lagged a la base ###
 
 data_elecciones_carolina3 <- data_elecciones_carolina2 %>% 
   left_join(data_elecciones_lagged)
 
-# ajustes para unir base de datos 
+###### ultimos ajustes para unir base de datos
+
 data_elecciones_carolina3 <- data_elecciones_carolina3 %>% 
   mutate(ncat_eleccion = ifelse(cat_pais=="Guatemala"&ncat_eleccion==1990,1991,ncat_eleccion))
 
-# FINALMENTE UNO DATA ENCUESTAS CON DATA DEBATES
-data_agregada <- data_elecciones %>% 
-  mutate(electionyr = round(electionyr)) %>% 
-  dplyr::rename("ncat_eleccion" = electionyr, "cat_pais" = country, "ncat_ronda" = round) %>% 
-  left_join(data_elecciones_carolina3)
+data_elecciones2 <-  data_elecciones %>% 
+     mutate(electionyr = round(electionyr)) %>% 
+     dplyr::rename("ncat_eleccion" = electionyr, "cat_pais" = country, "ncat_ronda" = round)
 
+# FINALMENTE UNO DATA ENCUESTAS CON DATA DEBATES
+# data_agregada <- data_elecciones %>% 
+#   mutate(electionyr = round(electionyr)) %>% 
+#   dplyr::rename("ncat_eleccion" = electionyr, "cat_pais" = country, "ncat_ronda" = round) %>% 
+#   left_join(data_elecciones_carolina3)
+
+# hacemos el join al reves, es mas prolijjo 
+
+data_agregada <- data_elecciones_carolina3 %>% 
+  left_join(data_elecciones2)
+
+# check
+#u_elec_data <- data_agregada$electionid %>% unique()
 
 # GUARDAMOS FINALMENTE ###################
 
 #path <- "./tesis_doctorado/datav2023/all_elections.csv"
 #path <- "all_elections.csv"
-#data_agregada %>%
+data_agregada %>%
   #write.csv(path)
 #test <- read.csv("all_elections.csv")
 
@@ -374,15 +508,13 @@ data_unida <- data_unida %>%
 #check_similitud <- data_unida %>% 
 #  select(average_scaled_confianza_medios, average_scaled_confianza_tv) # esto mejoro mucho, ver si hay manera de poner a prueba compatibiliad. PENDIENTE
 
-########## PROBLEMA PENDIENTE: LOS DOS INDICES DIFIEREN BASTANTE. CREO QUE LO ADECUADO SERIA ESTANDARIZAR LA VARIABLE? PREGUNTAR MAURICIO 
-
 data_unida <- base_elecciones %>% 
   left_join(data_unida)
 
 # guardamos bajo mismo nombre. Guarde backup en carpeta en PC 
 
-path <- "all_elections.csv"
-#data_unida %>%
+#path <- "all_elections.csv"
+data_unida %>%
   #write.csv(path)
 
   
@@ -408,8 +540,8 @@ data_unida <- data_unida %>%
 
 # guardamos
 
-path <- "all_elections.csv"
-#data_unida %>% write.csv(path)
+#path <- "all_elections.csv"
+#data_unida %>% write.csv(path) # YA FUE GUARDADA VERSION CORREGIDA AL 27 MAYO
 
 #################################################################################################################
 #################################################################################################################
