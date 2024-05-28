@@ -476,49 +476,101 @@ data_agregada <- data_elecciones_carolina3 %>%
 # GUARDAMOS FINALMENTE ###################
 
 #path <- "./tesis_doctorado/datav2023/all_elections.csv"
-#path <- "all_elections.csv"
-data_agregada %>%
+path <- "all_elections.csv"
+#data_agregada %>%
   #write.csv(path)
 #test <- read.csv("all_elections.csv")
 
-################## POSTSCRIPTUM : AGREGO + DATA EXTERNA A ESTA BASE #########################
-######## AGREGO DATA LATINOBAROMETRO Y LAPOP ########################
-# SE PUEDE PARTIR DE ACA O SE PUEDE SEGUIR DIRECTO DESDE ARRIBA, DESMARCAR SEGUN CORRRESPONDA
-# setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
-# path <- "all_elections.csv" #comienzo abriendo data ya guardada
-# base_elecciones <- read.csv(path)
-base_elecciones <- data_agregada
+############ CREO VARIABLE " REGION " ####################
+## SE PUEDE PARTIR DE ACA O SEGUIR DE LARGO
+path <- "all_elections.csv" # base creada previamente en este mismo script
+data_agregada <- read.csv(path)  %>% select(-X) 
+#reserva <- data_agregada
 
-data_latinobarometro <- "/home/carolina/Documents/dataexterna/latinobarometro/grouped_filled_latinobarometro_2024.csv" %>%  read.csv() %>% select(-X)
-data_lapop <- "/home/carolina/Documents/dataexterna/lapop/confianza_medios_lapop_2024.csv" %>% read.csv() %>% select(-X)
+# EN MAING Y PEREZ LIÑAN : 
+# In addition to global trends and hegemonic powers, changes in neighboring countries may affect the preferences and resources of domestic coalitions. We estimate the presence of a favorable regional environment using the average score in our democracy scale for the whole region (but excluding the country in question) during the previous year. The coding for this indicator is based on our trichotomous measure of democracy. The value of this variable can theoretically range from 0, if none of the other nineteen countries in the region were democratic in a given year, to 1 if all nineteen countries were democratic in that year. To compute this average, we gave semi-democratic countries a score of 0.5. We exclude the country in question and lag the variable to minimize problems of endogeneity. Therefore, the variable reflecting the regional environment is defined for any country i at time t as: (3.1) where Rit is the value of the regional indicator, Dt–1 is the proportion ofdemocracies in the region during the previous year, St–1 is the proportion of semi-democracies in the region during the previous year, and γit−1 is a correction term that acquires a value of 1/N if the country was democratic, and 1/(2N) if the country was semi-democratic during the previous year (i.e., excludes the country’s score if the regime was competitive during the past year). The second term (N / (N−1)) reweights the proportions to reflect the fact that the specific country was excluded from the denominator.
+# FORMULA ES
+# REGION = ( PROP ELECCIONES CON DEBATES AÑO ANTERIOR  - (DICO_DEBATES EN PAIS/N) ) * ( N / (N-1))
 
-data_unida <- data_latinobarometro  %>% 
-  left_join(data_lapop %>% mutate("ncat_eleccion" = as.integer(wave)))
+# necesito primero crear base anual para la region. para esta base anual, contar : cantidad de elecciones. cantidad de elecciones con debates. prop elecciones con debates
 
-# exploramos maneras alternativas de unificar la data 
-data_unida <- data_unida %>% 
-  mutate(average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv), average_confianza_medios_recat, average_confianza_tv),
-         average_scaled_confianza_tv_medios_latin_lapop = ifelse(is.na(average_scaled_confianza_tv), average_scaled_confianza_medios, average_scaled_confianza_tv)) %>% #,
-  #new_average_confianza = ifelse(is.na(new_average_confianza), int_average_confianza_tv, new_average_confianza))
-  arrange(cat_pais, ncat_eleccion) %>% 
+base_anual <- data_agregada %>% 
+  group_by(ncat_eleccion) %>% 
+  dplyr::summarise(n_elecciones_en_año_region = n(),
+                   n_elecciones_en_año_region_con_debates = sum(dico_debates_eleccion),
+                   n_elecciones_en_año_region_con_frontrunner = sum(dico_frontrunner_presente, na.rm=T)) %>% 
+  ungroup() %>% 
+  dplyr::mutate(prop_elecciones_en_año_region_con_debates = n_elecciones_en_año_region_con_debates/n_elecciones_en_año_region,
+                prop_elecciones_en_año_region_con_frontrunner = n_elecciones_en_año_region_con_frontrunner/n_elecciones_en_año_region)
+
+base_elecciones_reducida <- data_agregada %>% 
+  select(cat_pais, ncat_eleccion) %>% 
+  unique() %>% 
+  mutate(previous_year = ncat_eleccion -1 ) %>% 
   group_by(cat_pais) %>% 
-  mutate(int_average_confianza_tv_medios_latin_lapop = ifelse(is.na(average_confianza_tv_medios_latin_lapop), approx(ncat_eleccion, average_confianza_tv_medios_latin_lapop, xout = ncat_eleccion)$y, average_confianza_tv_medios_latin_lapop),
-         int_average_scaled_confianza_tv_medios_latin_lapop = ifelse(is.na(average_scaled_confianza_tv_medios_latin_lapop), approx(ncat_eleccion, average_scaled_confianza_tv_medios_latin_lapop, xout = ncat_eleccion)$y, average_scaled_confianza_tv_medios_latin_lapop)) 
+  arrange(ncat_eleccion) %>% 
+  mutate(start_year = lag(ncat_eleccion)) %>% 
+  ungroup() %>% 
+  mutate(start_year = ifelse(is.na(start_year), ncat_eleccion - 4, start_year)) 
 
-#check_similitud <- data_unida %>% 
-#  select(average_scaled_confianza_medios, average_scaled_confianza_tv) # esto mejoro mucho, ver si hay manera de poner a prueba compatibiliad. PENDIENTE
+base_elecciones_reducida_año_anterior <- base_elecciones_reducida %>% 
+  left_join(base_anual %>% dplyr::rename("previous_year" = "ncat_eleccion", # debe haber forma más automatizada de hacer esto pero no se me ocurre ahora 
+                                         "n_elecciones_año_anterior_region" = "n_elecciones_en_año_region",
+                                         "n_elecciones_año_anterior_region_con_debates" =  "n_elecciones_en_año_region_con_debates",
+                                         "n_elecciones_año_anterior_region_con_frontrunner" = "n_elecciones_en_año_region_con_frontrunner",
+                                         "prop_elecciones_año_anterior_region_con_debates" = "prop_elecciones_en_año_region_con_debates",
+                                         "prop_elecciones_año_anterior_region_con_frontrunner" = "prop_elecciones_en_año_region_con_frontrunner")) %>% 
+  # dplyr::rename(~ str_replace(., "en_año", "año_anterior"), .cols = starts_with("n_elecciones_en_año_region"))
+  mutate(n_elecciones_año_anterior_region = ifelse(is.na(n_elecciones_año_anterior_region),0, n_elecciones_año_anterior_region)) %>% 
+  mutate(n_elecciones_año_anterior_region_con_debates = ifelse( n_elecciones_año_anterior_region==0, 0, n_elecciones_año_anterior_region_con_debates),
+         n_elecciones_año_anterior_region_con_frontrunner = ifelse( n_elecciones_año_anterior_region==0, 0, n_elecciones_año_anterior_region_con_frontrunner),
+         prop_elecciones_año_anterior_region_con_debates  = ifelse( n_elecciones_año_anterior_region==0, 0, prop_elecciones_año_anterior_region_con_debates),
+        prop_elecciones_año_anterior_region_con_frontrunner = ifelse( n_elecciones_año_anterior_region==0, 0, prop_elecciones_año_anterior_region_con_frontrunner))
 
-data_unida <- base_elecciones %>% 
-  left_join(data_unida)
+# Calculate average values for periods between elections # CODIGO DE CHATGPT NO FUNCA
+df_avg_values <- base_elecciones_reducida %>%
+  arrange(cat_pais, ncat_eleccion) %>%
+  #group_by(cat_pais) %>%
+  #filter(row_number() > 1) %>%  # Remove the first row for each country
+  rowwise() %>%
+  mutate(
+    avg_prop = base_anual %>%
+      filter(ncat_eleccion >= start_year & ncat_eleccion <= previous_year) %>%
+      summarize(avg_prop = mean(prop_elecciones_en_año_region_con_debates, na.rm = TRUE)) %>%
+      pull(avg_prop)
+  ) %>%
+  select(cat_pais, ncat_eleccion, avg_prop) %>%
+  ungroup()
 
-# guardamos bajo mismo nombre. Guarde backup en carpeta en PC 
+# testeo de codigo, saltear 
+# start_year <- 2019
+# previous_year <- 2023
+# 
+# test_avg_prop = base_anual %>%
+#   filter(ncat_eleccion >= start_year & ncat_eleccion <= previous_year) %>%
+#   summarize(avg_prop = mean(prop_elecciones_en_año_region_con_debates, na.rm = TRUE)) %>%
+#   pull(avg_prop)
+# 
+# mean(test_avg_prop$prop_elecciones_en_año_region_con_debates)
 
-#path <- "all_elections.csv"
-data_unida %>%
-  #write.csv(path)
+base_elecciones_reducida2 <- base_elecciones_reducida %>%
+  left_join(df_avg_values, by = c("cat_pais", "ncat_eleccion")) %>% 
+  left_join(base_elecciones_reducida_año_anterior) 
 
-  
-############## POSTSCRIPTUM 2: AGREGAMOS DATA NORMATIVA #####################
+base_elecciones_reducida2 <- base_elecciones_reducida2 %>% 
+  dplyr::rename("mean_prop_elecciones_con_debates_periodo_previo" = "avg_prop") 
+
+data_agregada <- data_agregada %>% 
+  left_join(base_elecciones_reducida2)
+
+path <- "all_elections.csv"
+#data_agregada %>%
+#write.csv(path)
+
+# EVENTUALMENTE, PENDIENTE: PONDERAR REGION POR DISTANCIA DE CAPITALES. ##
+# n model 4.3.1 the indicators of regional and extra-regional diffusion are replaced by a spatial lag that weights the influence of Polity scores in all other countries in the world (including the Latin American neighbors), with similarresults. This spatial lags index was measured as Zit = (dij−1 / dij−1)*Pjt−1 where Zit is the value of the index for country i at time t, dij is the distance between the capital of country i and any other country j, and Pjt−1 is the Polity score for country j during the previous year. The expression (dij−1 / dij−1) weights Polity scores according to the inverse of the distance between the two countries.
+
+############## AGREGAMOS DATA NORMATIVA #####################
 # IDEM ANTERIOR, SE PUEDE PARTIR DE ACA O SEGUIR DE LARGO
 #path <- "all_elections.csv" # base creada previamente en este mismo script
 #data_unida <- read.csv(path)  %>% select(-X) 
@@ -535,22 +587,23 @@ data_normativa <- data_normativa %>%
 
 # unimos data
 
-data_unida <- data_unida %>% 
+data_agregada <- data_agregada %>% 
   left_join(data_normativa)
 
 # guardamos
 
-#path <- "all_elections.csv"
-#data_unida %>% write.csv(path) # YA FUE GUARDADA VERSION CORREGIDA AL 27 MAYO
+path <- "all_elections.csv"
+data_agregada %>% 
+  write.csv(path) # YA FUE GUARDADA VERSION CORREGIDA AL 27 MAYO
 
 #################################################################################################################
 #################################################################################################################
 # CHEQUEOS RANDOM, NO HACE FALTA CORRER, ESPACIO BORRADOR  !!!!! ######
-
-table(data_agregada$dico_debates_eleccion)
-result <- t.test( competitividad ~ dico_debates_eleccion, data = data_agregada) # las elecciones son mas estrechamente competidas cuando hay debates
-result <- t.test( concentracion ~ dico_debates_eleccion, data = data_agregada) # las elecciones estan ligeramente mas concentradas cuando hay debates que cuando no hay debates # esto deberia interacturse con RONDA supongo
-table(data_agregada$dico_frontrunner_presente) # KII ESTO MEJORO UN MONTON 
+# 
+# table(data_agregada$dico_debates_eleccion)
+# result <- t.test( competitividad ~ dico_debates_eleccion, data = data_agregada) # las elecciones son mas estrechamente competidas cuando hay debates
+# result <- t.test( concentracion ~ dico_debates_eleccion, data = data_agregada) # las elecciones estan ligeramente mas concentradas cuando hay debates que cuando no hay debates # esto deberia interacturse con RONDA supongo
+# table(data_agregada$dico_frontrunner_presente) # KII ESTO MEJORO UN MONTON 
 # table(data_agregada$dico_debates_eleccion)
 # 
 # elecs_sin_frontrunner <- data_agregada  %>% 
@@ -591,51 +644,51 @@ table(data_agregada$dico_frontrunner_presente) # KII ESTO MEJORO UN MONTON
 # 
 # • Indice de voto regionalista. 
 # • Indice de voto regionalista diferenciado. 
-# • Indice de voto regional diferenciado, de Lee. 
-
-
-# CHECK DE DUPLICADOS ################## 
-check_agrupamiento <- data_agregada %>%
-  # mutate(electionyr = ifelse(country=="Chile"&round(electionyr)==2009, 2010, electionyr)) %>% # para hacer luego compatible con base carolina
-  # subset(electionid!="Argentina 2011-08-14") %>%  # eliminamos elecciones primarias argentina
-  # mutate(round = ifelse(country=="Argentina"&round(electionyr)==2011,1,round)) %>%
-  # mutate(turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==1, 80.61, turnout),
-  #        turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==2, 78.90, turnout)) %>% # habia problemas con decimales en el reporte de este numero para distintos items de esta eleccion
-  # subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) %>%  # eliminamos base mas incompleta dupilcada de brasil para esta eleccion
-  # mutate(id_polldatapoint = row_number())  %>%
-  #select(electionid, electionyr, country, round, enpp, turnout, espv, regime) %>%
-  select(electionid, ncat_eleccion, cat_pais, ncat_ronda, enpp, turnout, espv, regime) %>%
-  unique()
-u_elect <- check_agrupamiento$electionid %>% unique()
-
-#Find duplicated rows in column A
-duplicated_rows <- data_incumbents[duplicated(data_incumbents$electionid) | duplicated(data_incumbents$electionid, fromLast = TRUE), ]
-
-# Print the duplicated rows
-print(duplicated_rows)
-# Function to identify columns where two rows differ
-identify_differing_columns <- function(df) {
-  # Initialize an empty vector to store column indices
-  differing_columns <- c()
-  
-  # Loop through each column of the dataframe
-  for (col in 1:ncol(df)) {
-    # Check if the values in the column are different between the two rows
-    if (!identical(df[1, col], df[2, col])) {
-      differing_columns <- c(differing_columns, col)
-    }
-  }
-  
-  return(differing_columns)
-}
-
-# Identify columns where two rows differ
-differing_columns <- identify_differing_columns(duplicated_rows)
-
-# Print the column indices
-print("Columns where two rows differ:")
-print(differing_columns)
-
-# Print the column names
-print("Column names where two rows differ:")
-print(colnames(duplicated_rows)[differing_columns])
+# # • Indice de voto regional diferenciado, de Lee. 
+# 
+# 
+# # CHECK DE DUPLICADOS ################## 
+# check_agrupamiento <- data_agregada %>%
+#   # mutate(electionyr = ifelse(country=="Chile"&round(electionyr)==2009, 2010, electionyr)) %>% # para hacer luego compatible con base carolina
+#   # subset(electionid!="Argentina 2011-08-14") %>%  # eliminamos elecciones primarias argentina
+#   # mutate(round = ifelse(country=="Argentina"&round(electionyr)==2011,1,round)) %>%
+#   # mutate(turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==1, 80.61, turnout),
+#   #        turnout = ifelse(country=="Brazil"&round(electionyr)==2014&round==2, 78.90, turnout)) %>% # habia problemas con decimales en el reporte de este numero para distintos items de esta eleccion
+#   # subset(!(country=="Brazil"&round(electionyr)==2010&turnout==81.90)) %>%  # eliminamos base mas incompleta dupilcada de brasil para esta eleccion
+#   # mutate(id_polldatapoint = row_number())  %>%
+#   #select(electionid, electionyr, country, round, enpp, turnout, espv, regime) %>%
+#   select(electionid, ncat_eleccion, cat_pais, ncat_ronda, enpp, turnout, espv, regime) %>%
+#   unique()
+# u_elect <- check_agrupamiento$electionid %>% unique()
+# 
+# #Find duplicated rows in column A
+# duplicated_rows <- data_incumbents[duplicated(data_incumbents$electionid) | duplicated(data_incumbents$electionid, fromLast = TRUE), ]
+# 
+# # Print the duplicated rows
+# print(duplicated_rows)
+# # Function to identify columns where two rows differ
+# identify_differing_columns <- function(df) {
+#   # Initialize an empty vector to store column indices
+#   differing_columns <- c()
+#   
+#   # Loop through each column of the dataframe
+#   for (col in 1:ncol(df)) {
+#     # Check if the values in the column are different between the two rows
+#     if (!identical(df[1, col], df[2, col])) {
+#       differing_columns <- c(differing_columns, col)
+#     }
+#   }
+#   
+#   return(differing_columns)
+# }
+# 
+# # Identify columns where two rows differ
+# differing_columns <- identify_differing_columns(duplicated_rows)
+# 
+# # Print the column indices
+# print("Columns where two rows differ:")
+# print(differing_columns)
+# 
+# # Print the column names
+# print("Column names where two rows differ:")
+# print(colnames(duplicated_rows)[differing_columns])
