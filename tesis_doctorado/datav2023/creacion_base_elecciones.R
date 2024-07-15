@@ -245,8 +245,8 @@ data_elecciones_carolina <-  readxl::read_xlsx(path) # base auxiliar: años que 
 
 # primero creamos base anual relevante
 # tengo que separar ronda 1 de 2.  
-
-# creamos loop para agregar *rondas* faltantes cuando corresponda
+i <- 17
+# creamos loop para agregar *rondas* faltantes cuando corresponda # KE CREO QUE ESTOY HACIENDO ESTO MAL REVISAR ###################
 for (i in 1:nrow(data_elecciones_carolina)) {
   new_rows <- data_elecciones_carolina[i, ]
   new_rows$cat_ballotage <- 1
@@ -254,6 +254,10 @@ for (i in 1:nrow(data_elecciones_carolina)) {
     data_elecciones_carolina <- rbind(data_elecciones_carolina, new_rows)
   }
 }
+
+# parentesis: creo excel para rellenar manualmente y construir base de datos alternativa
+
+#data_elecciones_carolina %>% write_excel_csv("elections_to_fill_mayo2024.xlsx")
 
 # parentesis: chequeo numeros #
 # 

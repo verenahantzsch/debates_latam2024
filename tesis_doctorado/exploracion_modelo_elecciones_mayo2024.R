@@ -5,12 +5,18 @@
 # LIBRERIAS #####
 
 library(tidyverse)
+library(plm) # para datos de panel
 
 # DATA ###########
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 base_elecciones <- read.csv("all_elections_full_dataset.csv") %>% select(-X)
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/")
 options(scipen=999)
+
+# para trabajar con summary statistics de manera facil 
+
+pdata <- pdata.frame(base_elecciones, index = c("cat_pais", "ncat_eleccion"))
+
 
 # TRABAJO ########
 
@@ -42,18 +48,39 @@ base_elecciones <- base_elecciones %>%
 # base_elecciones <- base_elecciones %>% 
 #   subset(electionid!="El Salvador 2024-02-04")
 
+# EXPERIMENTAL : PRUEBO DIVIDIR LA BASE DE DATOS ########
+
+democracias <- base_elecciones %>% 
+  subset(dico_debates_eleccion==1)
+
+no_democracias <- base_elecciones %>% 
+  subset(dico_debates_eleccion==0)
+
+transitions <- democracias %>% 
+  subset(lagged_dico_debates_eleccion==0)
+
+breakdowns <- no_democracias %>% 
+  subset(lagged_dico_debates_eleccion==1)
+
+proba_breakdown <- nrow(breakdowns)/ nrow(democracias) # creo que estoy calculando bien pero no se si el denominador no deberia ir al reves
+proba_transitions <- nrow(transitions) / nrow(no_democracias)
+
 # EXPLORACION DESCRIPTIVA ###########
 
 # VARIABLE DEPENDIENTE ######################
 # exploracion de VDs alternativas
 table(base_elecciones$dico_debates_eleccion)
 sum(is.na(base_elecciones$dico_debates_eleccion))
+summary(pdata$dico_debates_eleccion) # mas variabilidad en tiempo que entre paises #The variance decomposition tells us that the variability in dico_debates_eleccion is more due to differences over time within the same individual units (time variance) than due to differences between different individual units (cross-sectional variance).
+#ggplot(base_elecciones) + geom_point(aes(ncat_eleccion, dico_debates_eleccion, colour = cat_pais))
 
 table(base_elecciones$dico_frontrunner_presente) 
 sum(is.na(base_elecciones$dico_frontrunner_presente))# tengo muchos NAs, y estan desigualmente distribuidos, creeria. 
+summary(pdata$dico_frontrunner_presente) # menos diferencia que la anterior . 
 
 table(base_elecciones$dico_frontORcha_presentes)
 sum(is.na(base_elecciones$dico_frontORcha_presentes)) # tengo muchos NAs, y estan desigualmente distribuidos, creeria. 
+summary(pdata$dico_frontORcha_presentes)
 
 # VARIABLES INDEPENDIENTES ##########################
  
@@ -65,6 +92,13 @@ hist(base_elecciones$gol_enpres)
 # la variable esta ligeramente sesgada a la izquierda , 
 # quizas conviene transformar para realzar diferencias en valores mas bajos de la escala
 sum(is.na(base_elecciones$gol_enpres))
+summary(pdata$gol_enpres) # mas variabilidad entre casos que dentro de casos
+ggplot(base_elecciones) + 
+  geom_line(aes(ncat_eleccion, gol_enpres, colour = cat_pais)) + 
+  geom_text(aes(ncat_eleccion, gol_enpres, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + 
+  geom_point(aes(ncat_eleccion, gol_enpres, colour = cat_pais, shape = as.factor(dico_debates_eleccion)), size = 4) +
+  scale_shape_manual(breaks = c(0,1), values = c(4,0)) +
+  theme_bw()
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(gol_enpres ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -77,7 +111,7 @@ summary(modelo) # para ver si diferencia es significativa
 
 # CRUCE CON DICO FRONTRUNNER
 mean_values <- aggregate(gol_enpres ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
-ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), gol_enpres))
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), gol_enpres)) 
 # idem anterior, pero tengo muchos missing 
 modelo <- glm(dico_frontrunner_presente ~ gol_enpres,
               data = base_elecciones,
@@ -87,6 +121,7 @@ summary(modelo)
 # en version LOG 
 hist(base_elecciones$log_gol_enpres)
 sum(is.na(base_elecciones$log_gol_enpres))
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, log_gol_enpres, colour = cat_pais)) + geom_text(aes(ncat_eleccion, log_gol_enpres, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
 # cruce LOG con DICO DEBATES
 mean_values <- aggregate(log_gol_enpres ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -113,6 +148,10 @@ hist(base_elecciones$log_competitividad) # tiene mas sentido.
 # OJO: otra alternativa sacar outlier?
 sum(is.na(base_elecciones$competitividad))
 sum(is.na(base_elecciones$log_competitividad))
+summary(pdata$competitividad) # mas variabilidad dentro de casos que entre casos. muchisimos nas. 
+summary(pdata$log_competitividad)
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, competitividad, colour = cat_pais)) + geom_text(aes(ncat_eleccion, competitividad, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# se nota que hay corr entre NAS y el tiempo y que el salvador es un outlier
 
 # cruce con DICO_DEBATES
 mean_values <- aggregate(competitividad ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -147,7 +186,10 @@ summary(modelo)
 
 # distrib
 hist(base_elecciones$concentracion)
-sum(is.na(base_elecciones$concentracion))
+sum(is.na(base_elecciones$concentracion)) # muchisimos nas
+summary(pdata$concentracion) # ligeramente mas variabilidad en el tiempo dentro de unidades que entre undidades, menos variabilidad que variables anteriores
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, concentracion, colour = cat_pais)) + geom_text(aes(ncat_eleccion, concentracion, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# es menos parecida a gol_enpres de lo que esperaba
 
 # cruce con DICO_DEBATES 
 mean_values <- aggregate(concentracion ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -174,6 +216,9 @@ summary(modelo)
 hist(base_elecciones$ncat_totreg) 
 # idem, variable sesgada, pero no creo que convenga hacer log ya que se trata de valores discretos, suena medio artificioso
 sum(is.na(base_elecciones$ncat_totreg))
+summary(pdata$ncat_totreg) # casi tanta variabilidad en el tiempo como entre paises, mucha variabilidad en ambas
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, ncat_totreg, colour = cat_pais)) + geom_text(aes(ncat_eleccion, ncat_totreg, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(ncat_totreg ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -203,6 +248,9 @@ summary(modelo)
 hist(base_elecciones$int_average_confianza_tv_medios_latin_lapop)
 # ojo, categorizacion del indicador puede estar generando problemas 
 sum(is.na(base_elecciones$int_average_confianza_tv_medios_latin_lapop))
+summary(pdata$int_average_confianza_tv_medios_latin_lapop) # mas variabilidad within que entre casos
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, int_average_confianza_tv_medios_latin_lapop, colour = cat_pais)) + geom_text(aes(ncat_eleccion, int_average_confianza_tv_medios_latin_lapop, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(int_average_confianza_tv_medios_latin_lapop ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -225,6 +273,9 @@ summary(modelo)
 # VERSION ESCALADA LAPOP / LATINOBAROMETRO 
 hist(base_elecciones$int_average_scaled_confianza_tv_medios_latin_lapop)
 sum(is.na(base_elecciones$int_average_scaled_confianza_tv_medios_latin_lapop))
+summary(pdata$int_average_scaled_confianza_tv_medios_latin_lapop) # mas variabilidad within que entre casos
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, int_average_scaled_confianza_tv_medios_latin_lapop, colour = cat_pais)) + geom_text(aes(ncat_eleccion, int_average_scaled_confianza_tv_medios_latin_lapop, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# interesante. pensar si otras maneras de escalar y/ o comaprar con otras variables de confianza dentro del pais son necesarias
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(int_average_scaled_confianza_tv_medios_latin_lapop ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -247,6 +298,9 @@ summary(modelo)
 # CONFIANZA EN MEDIOS SEGUN QofG : EN PRENSA
 hist(base_elecciones$wvs_confpr)
 sum(is.na(base_elecciones$wvs_confpr)) # demasiados nas, medio inutil. 
+summary(pdata$wvs_confpr)  # mas variabilidad entre casos que en el tiemmpo, muchisimos Nas
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, wvs_confpr, colour = cat_pais)) + geom_text(aes(ncat_eleccion, wvs_confpr, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# la distrib de estos datos es muy caprichosa
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(wvs_confpr ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -267,6 +321,10 @@ summary(modelo) # idem
 # CONFIANZA EN MEDIOS SEGUN QofG : EN TELEVISION 
 hist(base_elecciones$wvs_conftv)
 sum(is.na(base_elecciones$wvs_conftv)) # demasiados nas, medio inutil. 
+summary(pdata$wvs_conftv) # mucha variabilidad en el tiempo y entre casos
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, wvs_conftv, colour = cat_pais)) + geom_text(aes(ncat_eleccion, wvs_conftv, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# idem. ojo quizas esta variable viene en "waves" y tb se puede rellenar
+
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(wvs_conftv ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -289,6 +347,9 @@ summary(modelo) # idem
 # CONFIANZA SEGUN LATINOBAROMETRO / LAPOP
 hist(base_elecciones$int_average_confianza_ppols)
 sum(is.na(base_elecciones$int_average_confianza_ppols)) 
+summary(pdata$int_average_confianza_ppols) # mas variabilidad within en el tiempo que entre paises. bastantes nas. 
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, int_average_confianza_ppols, colour = cat_pais)) + geom_text(aes(ncat_eleccion, int_average_confianza_ppols, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# OJO: tanto para esta como para anterior, quizas conviene proporciones
 
 mean_values <- aggregate(int_average_confianza_ppols ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
 # hay ligeramente mas confianza en ppols cuando NO hay debates
@@ -311,9 +372,13 @@ summary(modelo)
 # CUMSUM DE ELEC DEBATES pasadas elec con debates, 2 versiones, multiples cruces 
 hist(base_elecciones$lagged_all_previous_elec)
 sum(is.na(base_elecciones$lagged_all_previous_elec)) 
+summary(pdata$lagged_all_previous_elec)  # mucha mas variabilidad en el t, obviamente
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, lagged_all_previous_elec, colour = cat_pais)) + geom_text(aes(ncat_eleccion, lagged_all_previous_elec, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
 hist(base_elecciones$lagged_all_previous_elec_frontrunner_presente)
 sum(is.na(base_elecciones$lagged_all_previous_elec_frontrunner_presente)) # muchos NAS
+summary(pdata$lagged_all_previous_elec_frontrunner_presente) # idem
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, lagged_all_previous_elec_frontrunner_presente, colour = cat_pais)) + geom_text(aes(ncat_eleccion, lagged_all_previous_elec_frontrunner_presente, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(lagged_all_previous_elec ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -351,9 +416,14 @@ summary(modelo)
 
 hist(base_elecciones$lagged_all_previous_debates) # variable muy sesgada a la izquierda, si se usa mejor construir log !
 sum(is.na(base_elecciones$lagged_all_previous_debates)) 
+summary(pdata$lagged_all_previous_debates) 
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, lagged_all_previous_debates, colour = cat_pais)) + geom_text(aes(ncat_eleccion, lagged_all_previous_debates, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
 hist(base_elecciones$lagged_all_previous_debates_frontrunner_presente) # idem, variable sesgada, si se usa usar log 
 sum(is.na(base_elecciones$lagged_all_previous_debates_frontrunner_presente))  # muchos nas
+summary(pdata$lagged_all_previous_debates_frontrunner_presente) 
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, lagged_all_previous_debates_frontrunner_presente, colour = cat_pais)) + geom_text(aes(ncat_eleccion, lagged_all_previous_debates_frontrunner_presente, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# QUE RARO que brasil no este en este grafico!
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(lagged_all_previous_debates ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -389,9 +459,13 @@ summary(modelo)
 # PROP AÑO ANTERIOR en dos versiones #
 hist(base_elecciones$prop_elecciones_año_anterior_region_con_debates)
 sum(is.na(base_elecciones$prop_elecciones_año_anterior_region_con_debates)) 
+summary(pdata$prop_elecciones_año_anterior_region_con_debates) # obviamente por definicion varia mas en el tiempo
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, prop_elecciones_año_anterior_region_con_debates, colour = cat_pais)) + geom_text(aes(ncat_eleccion, prop_elecciones_año_anterior_region_con_debates, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
 hist(base_elecciones$prop_elecciones_año_anterior_region_con_frontrunner) # OJO variable sesgada a la izquierda quizas por culpa de arrastre de la distirb de missing. problema
 sum(is.na(base_elecciones$prop_elecciones_año_anterior_region_con_frontrunner)) 
+summary(pdata$prop_elecciones_año_anterior_region_con_frontrunner) 
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, prop_elecciones_año_anterior_region_con_frontrunner, colour = cat_pais)) + geom_text(aes(ncat_eleccion, prop_elecciones_año_anterior_region_con_frontrunner, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(prop_elecciones_año_anterior_region_con_debates ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -423,6 +497,8 @@ summary(modelo)
 # PROP ELEC CON DEBATES EN PERIODO ENTRE ELECCIONES #
 hist(base_elecciones$mean_prop_elecciones_con_debates_periodo_previo)
 sum(is.na(base_elecciones$mean_prop_elecciones_con_debates_periodo_previo)) # que raroq ue haya UN missing
+summary(pdata$mean_prop_elecciones_con_debates_periodo_previo) # idem, obviamente varia mucho en el tiempo por definicion, al ser una variable regional
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, mean_prop_elecciones_con_debates_periodo_previo, colour = cat_pais)) + geom_text(aes(ncat_eleccion, mean_prop_elecciones_con_debates_periodo_previo, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
 mean_values <- aggregate(mean_prop_elecciones_con_debates_periodo_previo ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
 ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), mean_prop_elecciones_con_debates_periodo_previo))
@@ -444,6 +520,9 @@ summary(modelo) # crece todavia mas coeficiente, de nuevo ojo que hay missing
 
 hist(base_elecciones$bmr_demdur) # variable super sesgada a la izquierda 
 sum(is.na(base_elecciones$bmr_demdur))  
+summary(pdata$bmr_demdur) # varia mas entre casos que dentro de un caso
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, bmr_demdur, colour = cat_pais)) + geom_text(aes(ncat_eleccion, bmr_demdur, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# OJO!! que los quiebres me sugieren que estoy contando regimenes semidemocraticos muy viejos y me pueden estar sesgando la variable
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(bmr_demdur ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -465,6 +544,9 @@ summary(modelo) # idem anterior
 
 hist(base_elecciones$p_durable) # variable super sesgada a la izquierda , parece haber outlier
 sum(is.na(base_elecciones$p_durable))  
+summary(pdata$p_durable) # esta al reves, probablemente por la codificacion usada o la cobertura?
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, p_durable, colour = cat_pais)) + geom_text(aes(ncat_eleccion, p_durable, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# resultado muy diferente. ver definicion teorica y evaluar. OJO CON ECUADOR 
 
 # cruce con DICO DEBATES
 mean_values <- aggregate(p_durable ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
@@ -482,15 +564,115 @@ modelo <- glm(dico_frontrunner_presente ~  p_durable ,
               family = "binomial")
 summary(modelo) # idem anterior 
 
-# VARIABLES DE CONTROL : DESARROLLO PER CAPITA ########### ACA ME QUEDE PENDIENTE ##############
+# VARIABLES DE CONTROL : DESARROLLO PER CAPITA ###########  
+
+# 4.104.98 GDP per capita, PPP (constant 2017 international dollar) (wdi_gdpcappppcon2017) 
+hist(base_elecciones$wdi_gdpcappppcon2017 )  
+sum(is.na(base_elecciones$wdi_gdpcappppcon2017)) 
+summary(pdata$wdi_gdpcappppcon2017) # mucha mas variabilidad en el tiempo dentro de un caso que entre casos
+# ver si se pueden solucionar estos missing y/o usar alguno de los alternativos disponibles PENDIENTE  
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, wdi_gdpcappppcon2017, colour = cat_pais)) + geom_text(aes(ncat_eleccion, wdi_gdpcappppcon2017, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# quizas haya alguno con data mas vieja disponible ! por lo menos hasta los 80
+
+# cruce con DICO DEBATES
+mean_values <- aggregate(wdi_gdpcappppcon2017 ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), wdi_gdpcappppcon2017)) # outlier es del caso sin debates
+modelo <- glm(dico_debates_eleccion ~ wdi_gdpcappppcon2017,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo) # mas desarrollo mas proba de debates  
+
+# # cruce con DICO FRONTRUNNER
+mean_values <- aggregate(wdi_gdpcappppcon2017 ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), wdi_gdpcappppcon2017))
+modelo <- glm(dico_frontrunner_presente ~  wdi_gdpcappppcon2017 ,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo) # idem
 
 # VARIABLES DE CONTROL: NIVEL DE DEMOCRACIA PPOLITY ################
+# ! 4.77.2 Revised Combined Polity Score (p_polity2)
+hist(base_elecciones$p_polity2 )  # variable sesgada a la derecha. ver si conviene dejar asi, dicotomizar, estandarizar o que 
+sum(is.na(base_elecciones$p_polity2))  # 30 missing que quizas se pueden rellenar
+summary(pdata$p_polity2) # ligeramente mas variabildiad en el t dentro de un caso que entre casos 
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, p_polity2, colour = cat_pais)) + geom_text(aes(ncat_eleccion, p_polity2, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+# ojo con elec debajo del 0. me llama atencion primer dato de uruguay? 
+
+# cruce con DICO DEBATES
+mean_values <- aggregate(p_polity2 ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), p_polity2)) # outlier es del caso sin debates
+modelo <- glm(dico_debates_eleccion ~ p_polity2,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo) # mas democracia mas proba de debates   PENDIENTE OJO QUIZAS MEJOR USAR UNA VERSION LAGGED PARA EVITAR ENDOGENEIDAD
+# plotbox parece confirmar sospecha: hay democracias sin debates, pero no hay no democracias con debates
+# cond "nec", scope condition
+
+# # cruce con DICO FRONTRUNNER
+mean_values <- aggregate(p_polity2 ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), p_polity2))
+modelo <- glm(dico_frontrunner_presente ~  p_polity2 ,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo) # idem
 
 # VARIABLES DE CONTROL :  #########
+# EDCUCACION , POBLAC URBANA U OTRO
+# 4.28.3 Human Capital Index (egov_hci) # mas de 190 missings
+# 4.98.1 Human Development Index (undp_hdi)  # 75 missings
+# 4.11.3 Average Schooling Years, Female and Male (bl_asymf) # no la cargue
+# 4.104.181 Literacy rate, adult total (% of people ages 15 and above) (wdi_litrad) # 199 missings
+# 4.104.222 Urban population (% of total population) (wdi_popurb) # 9 missings
+# 4.62.6 Life Expectancy, Both sexes, Age 1-4 years (ihme_lifexp_0104t) # no la cargue
+# 4.62.3 Healthy Life Years, Both sexes, Age 1-4 years (ihme_hle_0104t)  # 83 nas
+# post materialist index son casi todos missings
+# pruebo por ahora con urban pop, ver si hay otra de educacion que puedas usar. 
+hist(base_elecciones$wdi_popurb )   
+sum(is.na(base_elecciones$wdi_popurb))   
+summary(pdata$wdi_popurb)  
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, wdi_popurb, colour = cat_pais)) + geom_text(aes(ncat_eleccion, wdi_popurb, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
+ 
+# cruce con DICO DEBATES
+mean_values <- aggregate(wdi_popurb ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), wdi_popurb)) # outlier es del caso sin debates
+modelo <- glm(dico_debates_eleccion ~ wdi_popurb,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo)  
+
+# # cruce con DICO FRONTRUNNER
+mean_values <- aggregate(wdi_popurb ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), wdi_popurb))
+modelo <- glm(dico_frontrunner_presente ~  wdi_popurb ,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo) # mas urbana mas proba debates 
 
 
+# CONSUMO INTERNET
+# 4.104.150 Individuals using the Internet (% of population) (wdi_internet) # 70 missings, sesgada a la izq
+# 4.104.189 Mobile cellular subscriptions (per 100 people) (wdi_mobile) # no la cargue
+# 4.28.5 Telecommunication Infrastructure Index (egov_tii) # 192 missing, no tiene sentido
+hist(base_elecciones$wdi_internet )   
+sum(is.na(base_elecciones$wdi_internet))   
+summary(pdata$wdi_internet)  # como es de esperar varia mas en el t within que between 
+ggplot(base_elecciones) + geom_line(aes(ncat_eleccion, wdi_internet, colour = cat_pais)) + geom_text(aes(ncat_eleccion, wdi_internet, colour = cat_pais, label = str_sub(cat_pais, 1, 4))) + theme_bw()
 
+# cruce con DICO DEBATES
+mean_values <- aggregate(wdi_internet ~ dico_debates_eleccion, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_debates_eleccion), wdi_internet)) # outlier es del caso sin debates
+modelo <- glm(dico_debates_eleccion ~ wdi_internet,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo)  # mas conexion, mas proba debates (efecto tiempo claramente pero demuestra al menos que no "reemplazo")
 
+# # cruce con DICO FRONTRUNNER
+mean_values <- aggregate(wdi_internet ~ dico_frontrunner_presente, base_elecciones, mean, na.rm = TRUE)
+ggplot(base_elecciones) + geom_boxplot(aes(as.factor(dico_frontrunner_presente), wdi_internet))
+modelo <- glm(dico_frontrunner_presente ~  wdi_internet ,
+              data = base_elecciones,
+              family = "binomial")
+summary(modelo) 
 
 # VARIABLES DICO # # PENDIENTE: QUIZAS SE PUEDEN INTERPRETAR ESSTAS VARIABLES COMO CUASI NEC Y CUASI SUF , P PENSAR# 
 

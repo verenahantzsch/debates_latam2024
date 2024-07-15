@@ -1,0 +1,254 @@
+﻿"cat_pais","ncat_eleccion","cat_ballotage","n_candidaturas"
+"Brasil",1989,2,22
+"Brasil",1994,1,8
+"Brasil",1998,2,12
+"Brasil",2002,2,6
+"Brasil",2006,2,7
+"Brasil",2010,2,9
+"Brasil",2014,2,11
+"Brasil",2018,2,13
+"Brasil",2022,2,11
+"Argentina",1983,1,12
+"Argentina",1989,1,11
+"Argentina",1995,1,14
+"Argentina",1999,1,10
+"Argentina",2003,1,18
+"Argentina",2007,1,14
+"Argentina",2011,1,7
+"Argentina",2015,2,6
+"Argentina",2019,1,6
+"Argentina",2023,2,5
+"Chile",1989,1,3
+"Chile",1993,1,4
+"Chile",2000,2,6
+"Chile",2006,2,4
+"Chile",2010,2,4
+"Chile",2013,2,9
+"Chile",2017,2,8
+"Chile",2021,2,7
+"Peru",1980,1,15
+"Peru",1985,1,9
+"Peru",1990,2,9
+"Peru",1995,1,14
+"Peru",2000,2,9
+"Peru",2001,2,8
+"Peru",2006,2,20
+"Peru",2011,2,11
+"Peru",2016,2,10
+"Peru",2021,2,18
+"Paraguay",1989,1,7
+"Paraguay",1993,1,9
+"Paraguay",1998,1,4
+"Paraguay",2003,1,9
+"Paraguay",2008,1,7
+"Paraguay",2013,1,11
+"Paraguay",2018,1,10
+"Paraguay",2023,1,13
+"Ecuador",1960,1,4
+"Ecuador",1966,1,3
+"Ecuador",1968,1,5
+"Ecuador",1979,2,6
+"Ecuador",1984,2,9
+"Ecuador",1988,2,10
+"Ecuador",1992,2,12
+"Ecuador",1996,2,9
+"Ecuador",1998,2,6
+"Ecuador",2002,2,11
+"Ecuador",2006,2,13
+"Ecuador",2009,1,8
+"Ecuador",2013,1,8
+"Ecuador",2017,2,8
+"Ecuador",2021,2,16
+"Ecuador",2023,2,8
+"Uruguay",1984,1,7
+"Uruguay",1989,1,8
+"Uruguay",1994,1,15
+"Uruguay",1999,2,5
+"Uruguay",2004,1,8
+"Uruguay",2009,2,5
+"Uruguay",2014,2,7
+"Uruguay",2019,2,11
+"Nicaragua",1984,1,7
+"Nicaragua",1990,1,10
+"Nicaragua",1997,1,23
+"Nicaragua",2001,1,3
+"Nicaragua",2006,1,5
+"Nicaragua",2011,1,5
+"Nicaragua",2016,1,6
+"Panama",1994,1,7
+"Panama",1999,1,3
+"Panama",2004,1,4
+"Panama",2009,1,3
+"Panama",2014,1,7
+"Panama",2019,1,7
+"Venezuela",1958,1,3
+"Venezuela",1963,1,7
+"Venezuela",1968,1,6
+"Venezuela",1973,1,12
+"Venezuela",1978,1,10
+"Venezuela",1983,1,13
+"Venezuela",1988,1,24
+"Venezuela",1993,1,18
+"Venezuela",1998,1,11
+"Venezuela",2000,1,3
+"Venezuela",2006,1,14
+"Venezuela",2012,1,6
+"Venezuela",2013,1,6
+"Venezuela",2018,1,4
+"Bolivia",1978,1,9
+"Bolivia",1979,1,8
+"Bolivia",1980,1,13
+"Bolivia",1985,1,18
+"Bolivia",1989,1,10
+"Bolivia",1993,1,14
+"Bolivia",1997,1,10
+"Bolivia",2002,1,11
+"Bolivia",2005,1,8
+"Bolivia",2009,1,8
+"Bolivia",2014,1,5
+"Bolivia",2019,1,9
+"Bolivia",2020,1,5
+"Mexico",1982,1,7
+"Mexico",1988,1,5
+"Mexico",1994,1,9
+"Mexico",2000,1,6
+"Mexico",2006,1,5
+"Mexico",2012,1,4
+"Mexico",2018,1,5
+"Guatemala",1966,1,3
+"Guatemala",1970,1,3
+"Guatemala",1974,1,3
+"Guatemala",1978,1,3
+"Guatemala",1982,1,4
+"Guatemala",1985,2,8
+"Guatemala",1990,2,12
+"Guatemala",1995,2,19
+"Guatemala",1999,2,11
+"Guatemala",2003,2,11
+"Guatemala",2007,2,14
+"Guatemala",2011,2,10
+"Guatemala",2015,2,14
+"Guatemala",2019,2,19
+"Guatemala",2023,2,22
+"Honduras",1981,1,4
+"Honduras",1985,1,9
+"Honduras",1989,1,4
+"Honduras",1993,1,4
+"Honduras",1997,1,5
+"Honduras",2001,1,5
+"Honduras",2005,1,5
+"Honduras",2009,1,2
+"Honduras",2013,1,8
+"Honduras",2017,1,9
+"Colombia",1974,1,5
+"Colombia",1978,1,9
+"Colombia",1982,1,5
+"Colombia",1986,1,6
+"Colombia",1990,1,12
+"Colombia",1994,2,18
+"Colombia",1998,2,13
+"Colombia",2002,1,11
+"Colombia",2006,1,7
+"Colombia",2010,2,9
+"Colombia",2014,2,5
+"Colombia",2018,2,6
+"Colombia",2022,2,8
+"Costa Rica",1962,1,4
+"Costa Rica",1966,1,2
+"Costa Rica",1970,1,5
+"Costa Rica",1974,1,8
+"Costa Rica",1978,1,8
+"Costa Rica",1982,1,6
+"Costa Rica",1986,1,6
+"Costa Rica",1990,1,8
+"Costa Rica",1994,1,7
+"Costa Rica",1998,1,13
+"Costa Rica",2002,2,12
+"Costa Rica",2006,1,14
+"Costa Rica",2010,1,9
+"Costa Rica",2014,2,13
+"Costa Rica",2018,2,13
+"Costa Rica",2022,2,25
+"Republica Dominicana",1978,1,8
+"Republica Dominicana",1982,1,9
+"Republica Dominicana",1986,1,6
+"Republica Dominicana",1990,1,9
+"Republica Dominicana",1994,1,5
+"Republica Dominicana",1996,2,4
+"Republica Dominicana",2000,1,7
+"Republica Dominicana",2004,1,11
+"Republica Dominicana",2008,1,7
+"Republica Dominicana",2012,1,6
+"Republica Dominicana",2016,1,8
+"Republica Dominicana",2020,1,6
+"El Salvador",1984,2,8
+"El Salvador",1989,1,7
+"El Salvador",1994,2,7
+"El Salvador",1999,1,7
+"El Salvador",2004,1,4
+"El Salvador",2009,1,2
+"El Salvador",2014,2,5
+"El Salvador",2019,1,4
+"El Salvador",2024,1,6
+"Brasil",1989,1,22
+"Brasil",1998,1,12
+"Brasil",2002,1,6
+"Brasil",2006,1,7
+"Brasil",2010,1,9
+"Brasil",2014,1,11
+"Brasil",2018,1,13
+"Brasil",2022,1,11
+"Argentina",2015,1,6
+"Argentina",2023,1,5
+"Chile",2000,1,6
+"Chile",2006,1,4
+"Chile",2010,1,4
+"Chile",2013,1,9
+"Chile",2017,1,8
+"Chile",2021,1,7
+"Peru",1990,1,9
+"Peru",2000,1,9
+"Peru",2001,1,8
+"Peru",2006,1,20
+"Peru",2011,1,11
+"Peru",2016,1,10
+"Peru",2021,1,18
+"Ecuador",1979,1,6
+"Ecuador",1984,1,9
+"Ecuador",1988,1,10
+"Ecuador",1992,1,12
+"Ecuador",1996,1,9
+"Ecuador",1998,1,6
+"Ecuador",2002,1,11
+"Ecuador",2006,1,13
+"Ecuador",2017,1,8
+"Ecuador",2021,1,16
+"Ecuador",2023,1,8
+"Uruguay",1999,1,5
+"Uruguay",2009,1,5
+"Uruguay",2014,1,7
+"Uruguay",2019,1,11
+"Guatemala",1985,1,8
+"Guatemala",1990,1,12
+"Guatemala",1995,1,19
+"Guatemala",1999,1,11
+"Guatemala",2003,1,11
+"Guatemala",2007,1,14
+"Guatemala",2011,1,10
+"Guatemala",2015,1,14
+"Guatemala",2019,1,19
+"Guatemala",2023,1,22
+"Colombia",1994,1,18
+"Colombia",1998,1,13
+"Colombia",2010,1,9
+"Colombia",2014,1,5
+"Colombia",2018,1,6
+"Colombia",2022,1,8
+"Costa Rica",2002,1,12
+"Costa Rica",2014,1,13
+"Costa Rica",2018,1,13
+"Costa Rica",2022,1,25
+"Republica Dominicana",1996,1,4
+"El Salvador",1984,1,8
+"El Salvador",1994,1,7
+"El Salvador",2014,1,5
