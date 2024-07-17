@@ -149,10 +149,12 @@ base_años <- elecciones %>%
 plot_point_anual <- base_años %>% 
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
   ggplot()  +
-  geom_point(aes(ncat_eleccion,as.factor(cat_pais) %>% 
-                   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
-                               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), 
+  geom_point(aes(ncat_eleccion,as.factor(cat_pais) 
+                 # %>% 
+                 #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+                 #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+                 #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+                 , 
                  size= n_debates_año_pais, colour = cols_18, shape = debates_dico, alpha= debates_dico)) + 
   scale_shape_manual(values=c("FALSE" = 4, "TRUE" = 19)) +
   scale_alpha_manual(values=c("FALSE" = 0.4, "TRUE" = 1)) +
@@ -182,10 +184,12 @@ plot_point_anual2 <- base_años %>%
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.*")) %>% 
   ggplot(aes(ncat_eleccion, 
              log(n_debates_año_pais),
-             colour = as.factor(cat_pais) %>% 
-               fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                           "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
-                           "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")))  +
+             colour = as.factor(cat_pais) 
+             # %>% 
+             #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+             #               "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
+             #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"))
+         ))  +
   geom_line() + 
   geom_point(aes(#size= n_debates_año_pais, 
                  shape = debates_dico, alpha= debates_dico)) +
@@ -193,10 +197,12 @@ plot_point_anual2 <- base_años %>%
                      values=colorespais2$cols_18) +
   scale_shape_manual(values=c("FALSE" = 4, "TRUE" = 19)) +
   scale_alpha_manual(values=c("FALSE" = 0.4, "TRUE" = 1)) +
-  facet_wrap( ~ as.factor(cat_pais) %>% 
-                fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                            "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
-                            "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), 
+  facet_wrap( ~ as.factor(cat_pais) 
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              , 
               ncol = 6) +
   theme_minimal() +
   theme(legend.position = "none",
@@ -345,6 +351,9 @@ cuenta_tipos <- base_organizadores %>%
   arrange(desc(pr_debates_en_participaron))
 
 n_distinct(base_organizadores$id_debate)
+cuenta_tipos$n_individuos %>% sum(na.rm=T)
+n_distinct(base_organizadores$nombres_organizadores)
+
 
 # 2.0 cuentas de subtipos, para anexo ##########
 
@@ -724,6 +733,79 @@ plotnumber <- plotnumber + 1
 filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
 ggsave(filename, width = 10, height = 7)
 
+
+## CUENTAS  EN EL TIEMPO #####
+
+cuenta_tipos_por_decada <- base_organizadores %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(cat_tipoorgv2, decada) %>% 
+  summarise(n_individuos = n(),
+            n_debates_en_participaron = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(decada) %>% 
+  mutate(pr_n_individuos = n_individuos/sum(n_individuos)*100,
+         pr_debates_en_participaron = n_debates_en_participaron/sum(n_debates_en_participaron)*100) %>% 
+  arrange(desc(pr_debates_en_participaron))
+
+# pendiente pasar a un anexo
+tabla_cuenta_tipos_por_decada_individuos <- cuenta_tipos_por_decada %>% 
+  select(cat_tipoorgv2, decada, pr_n_individuos) %>% 
+  arrange(decada) %>% 
+  pivot_wider(names_from = decada, values_from = pr_n_individuos)
+
+tabla_cuenta_tipos_por_decada_debates <- cuenta_tipos_por_decada %>% 
+  select(cat_tipoorgv2, decada, pr_debates_en_participaron) %>% 
+  arrange(decada) %>% 
+  pivot_wider(names_from = decada, values_from = pr_debates_en_participaron)
+
+# distribuciones de las varibales por año, para ver numericamente variablidad 
+# prop de orgs 
+cuenta_tipos_por_ncat_eleccion <- base_organizadores %>% 
+  group_by(cat_tipoorgv2, ncat_eleccion) %>% 
+  summarise(n_individuos = n(),
+            n_debates_en_participaron = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(ncat_eleccion) %>% 
+  mutate(pr_n_individuos = n_individuos/sum(n_individuos)*100,
+         pr_debates_en_participaron = n_debates_en_participaron/sum(n_debates_en_participaron)*100) %>% 
+  arrange(desc(pr_debates_en_participaron))
+
+tabla_cuenta_tipos_por_ncat_eleccion_individuos <- cuenta_tipos_por_ncat_eleccion %>% 
+  select(cat_tipoorgv2, ncat_eleccion, pr_n_individuos) %>% 
+  arrange(ncat_eleccion) %>% 
+  pivot_wider(names_from = cat_tipoorgv2, values_from = pr_n_individuos)
+
+summary(tabla_cuenta_tipos_por_ncat_eleccion_individuos$estado)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_individuos$osc)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_individuos$mmc)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_individuos$mmp)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_individuos$educ)
+
+sd(tabla_cuenta_tipos_por_ncat_eleccion_individuos$estado, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_individuos$osc, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_individuos$mmc, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_individuos$mmp, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_individuos$educ, na.rm = T)
+
+tabla_cuenta_tipos_por_ncat_eleccion_debate <- cuenta_tipos_por_ncat_eleccion %>% 
+  select(cat_tipoorgv2, ncat_eleccion, pr_debates_en_participaron) %>% 
+  arrange(ncat_eleccion) %>% 
+  pivot_wider(names_from = cat_tipoorgv2, values_from = pr_debates_en_participaron)
+
+
+summary(tabla_cuenta_tipos_por_ncat_eleccion_debate$estado)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_debate$osc)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_debate$mmc)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_debate$mmp)
+summary(tabla_cuenta_tipos_por_ncat_eleccion_debate$educ)
+
+sd(tabla_cuenta_tipos_por_ncat_eleccion_debate$estado, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_debate$osc, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_debate$mmc, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_debate$mmp, na.rm = T)
+sd(tabla_cuenta_tipos_por_ncat_eleccion_debate$educ, na.rm = T)
+
+
 # 2.5 para comparar TIPOS DE ORG POR PAIS, FACET ######
 #
 tipos_organizadores_ev_anual_paisv2 <- base_tipos_countryear %>% 
@@ -736,10 +818,12 @@ tipos_organizadores_ev_anual_paisv2 <- base_tipos_countryear %>%
              shape= as.factor(cat_tipoorgv2) %>% 
                fct_relevel("estado", "mmp","osc", "educ", "mmc", "S/ Datos")))  +
   geom_point() +
-  facet_wrap( ~ as.factor(cat_pais) %>% 
-                fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                            "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
-                            "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), ncol = 6) +
+  facet_wrap( ~ as.factor(cat_pais) 
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              , ncol = 6) +
   theme_minimal() +
   theme(legend.position = "none",
         plot.title = element_text(hjust = 0.5),
@@ -772,6 +856,83 @@ tipos_organizadores_ev_anual_paisv2 <- base_tipos_countryear %>%
 plotnumber <- plotnumber + 1
 filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
 ggsave(filename, width = 10, height = 7)
+
+
+## CUENTAS POR PAIS #####
+
+cuenta_tipos_por_cat_pais <- base_organizadores %>% 
+  group_by(cat_tipoorgv2, cat_pais) %>% 
+  summarise(n_individuos = n(),
+            n_debates_en_participaron = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(cat_pais) %>% 
+  mutate(pr_n_individuos = n_individuos/sum(n_individuos)*100,
+         pr_debates_en_participaron = n_debates_en_participaron/sum(n_debates_en_participaron)*100) %>% 
+  arrange(desc(pr_debates_en_participaron))
+
+# pendiente pasar a un anexo
+tabla_cuenta_tipos_por_pais_individuos <- cuenta_tipos_por_cat_pais %>% 
+  select(cat_tipoorgv2, cat_pais, pr_n_individuos) %>% 
+  arrange(cat_pais) %>% 
+  pivot_wider(names_from = cat_tipoorgv2, values_from = pr_n_individuos)
+
+n_por_pais_individuos <- cuenta_tipos_por_cat_pais %>% 
+  group_by(cat_pais) %>% 
+  summarise(n_entidades_total_pais = sum(n_individuos)) %>% 
+  arrange(cat_pais)
+
+tabla_cuenta_tipos_por_pais_individuos <- tabla_cuenta_tipos_por_pais_individuos %>% 
+  left_join(n_por_pais_individuos) %>% 
+  #arrange(desc(mmc))
+ # arrange(desc(estado))
+  arrange(desc(osc))
+
+tabla_cuenta_tipos_por_pais_debates <- cuenta_tipos_por_cat_pais %>% 
+  select(cat_tipoorgv2, cat_pais, pr_debates_en_participaron) %>% 
+  arrange(cat_pais) %>% 
+  pivot_wider(names_from = cat_tipoorgv2, values_from = pr_debates_en_participaron)
+
+n_por_pais_debates <- cuenta_tipos_por_cat_pais %>% 
+  group_by(cat_pais) %>% 
+  summarise(n_debates_total_pais = sum(n_debates_en_participaron)) %>% 
+  arrange(cat_pais)
+
+tabla_cuenta_tipos_por_pais_debates <- tabla_cuenta_tipos_por_pais_debates %>% 
+  left_join(n_por_pais_debates) %>% 
+  #arrange(desc(n_debates_total_pais))
+  #arrange(cat_pais)
+  arrange(desc(mmc))
+  #arrange(desc(estado))
+  arrange(desc(osc))
+
+
+# distribuciones de las varibales por pais
+# prop de orgs 
+summary(tabla_cuenta_tipos_por_pais_debates$estado)
+summary(tabla_cuenta_tipos_por_pais_debates$osc)
+summary(tabla_cuenta_tipos_por_pais_debates$mmc)
+summary(tabla_cuenta_tipos_por_pais_debates$mmp)
+summary(tabla_cuenta_tipos_por_pais_debates$educ)
+
+sd(tabla_cuenta_tipos_por_pais_debates$estado, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_debates$osc, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_debates$mmc, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_debates$mmp, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_debates$educ, na.rm = T)
+
+summary(tabla_cuenta_tipos_por_pais_individuos$estado)
+summary(tabla_cuenta_tipos_por_pais_individuos$osc)
+summary(tabla_cuenta_tipos_por_pais_individuos$mmc)
+summary(tabla_cuenta_tipos_por_pais_individuos$mmp)
+summary(tabla_cuenta_tipos_por_pais_individuos$educ)
+
+sd(tabla_cuenta_tipos_por_pais_individuos$estado, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_individuos$osc, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_individuos$mmc, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_individuos$mmp, na.rm = T)
+sd(tabla_cuenta_tipos_por_pais_individuos$educ, na.rm = T)
+
+ 
 
 # 2.6 cuentas de osc , subtipos, por paises. no usado. mandar a anexo ##############
 
@@ -1121,10 +1282,12 @@ tipos_formatos_pais <- base_formatos %>%
 
 plottipos_formatos_pais <- tipos_formatos_pais %>% 
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.*")) %>% 
-  ggplot(aes(as.factor(cat_pais) %>% 
-               fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                           "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
-                           "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"),
+  ggplot(aes(as.factor(cat_pais) 
+             # %>% 
+             #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+             #               "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
+             #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+             ,
              #  fct_relevel(
              #    "Brasil", "Colombia", "Costa Rica", "Mexico", "Peru", "Chile",
              #    "Guatemala", "Panama", "Ecuador", "Uruguay", "Argentina", "Bolivia", 
@@ -1204,10 +1367,12 @@ tipos_temas_pais <- base_temas %>%
 
 plottipos_tema_pais <- tipos_temas_pais %>% 
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.*")) %>% 
-  ggplot(aes(as.factor(cat_pais) %>% 
-               fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                           "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
-                           "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), cat_tipo_tema, 
+  ggplot(aes(as.factor(cat_pais)
+             # %>% 
+             #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+             #               "Guatemala",  "Paraguay", "Rep. Dom.*",  "Honduras", "El Salvador",  "Nicaragua", 
+             #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+             , cat_tipo_tema, 
              colour = cat_pais, size= n_peso_tema_xdebate))  +
   geom_point() +
   theme_minimal() +
@@ -1240,11 +1405,13 @@ ggsave(filename, width = 10, height = 7)
 plot_formatos_cuanti <- base %>% 
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
   ggplot() +
-  geom_boxplot(aes(as.factor(cat_pais) %>% 
-                     fct_relevel(
-                       "Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                        "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
-                        "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), 
+  geom_boxplot(aes(as.factor(cat_pais) 
+                   # %>% 
+                   #   fct_relevel(
+                   #     "Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+                   #      "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+                   #      "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+                   , 
                    as.numeric(ncat_competencia), fill = cols_18)) +
   theme_minimal() +
   theme(legend.position = "none",
@@ -1271,10 +1438,12 @@ ggsave(filename, width = 10, height = 7)
 plot_formatos_cuanti2 <- base %>% 
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
   ggplot() +
-  geom_boxplot(aes(as.factor(cat_pais) %>% 
-                     fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                                 "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
-                                 "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), 
+  geom_boxplot(aes(as.factor(cat_pais) 
+                   # %>% 
+                   #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+                   #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+                   #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+                   , 
                    as.numeric(ncat_ppac), fill = cols_18)) +
   theme_minimal() +
   theme(legend.position = "none",
@@ -1312,10 +1481,12 @@ plot_normativa1 <- base_normativa %>%
                  fct_relevel(cat_regcandidatos,
                              "NADA", "POSIBILIDAD", "GARANTÍAS", "OBLIGACION"),
                  colour = cat_regcandidatos)) +
-  facet_wrap( ~ as.factor(cat_pais) %>% 
-                fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                            "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
-                            "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), 
+  facet_wrap( ~ as.factor(cat_pais) 
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              , 
               ncol = 6) +
   theme_minimal() +
   theme(legend.position = "none",
@@ -1342,10 +1513,12 @@ plot_normativa2 <- base_normativa %>%
   geom_point(aes(ncat_eleccion,
                  fct_relevel(cat_regestado, "NADA", "POSIBILIDAD", "FISCALIZAR", "GARANTIZAR", "ORGANIZAR"),
                  colour = cat_regestado)) +
-  facet_wrap( ~ as.factor(cat_pais) %>% 
-                fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                            "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
-                            "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"), 
+  facet_wrap( ~ as.factor(cat_pais) 
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              , 
               ncol = 6) +
   theme_minimal() +
   theme(legend.position = "none",
@@ -1373,10 +1546,12 @@ plot_normativa3 <- base_normativa %>%
                  fct_relevel(cat_regmedios,
                              "NADA", "POSIBILIDAD", "OPORTUNIDAD", "LIMITACIONES", "OBLIGACIONES"),
                  colour = cat_regmedios)) +
-  facet_wrap( ~ as.factor(cat_pais) %>% 
-                fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
-                            "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
-                            "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina"),
+  facet_wrap( ~ as.factor(cat_pais)
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              ,
               ncol = 6) +
   theme_minimal() +
   theme(legend.position = "none",
