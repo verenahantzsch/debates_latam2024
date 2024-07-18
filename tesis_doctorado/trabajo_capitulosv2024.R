@@ -1020,7 +1020,8 @@ length(base$id_debate)-length(unique(base_temas$id_debate))
 
 cuenta_temas_2 <-base_temas %>%
   group_by(cat_tipo_tema) %>% 
-  summarise(n_tema = n())  
+  summarise(n_tema = n()) %>% 
+  mutate(pr_debates_con_tema = n_tema / length(base$id_debate) * 100)
 
 plot_cuenta_temas_2 <- cuenta_temas_2 %>% 
  # na.omit() %>% 
@@ -1063,7 +1064,8 @@ length(base$id_debate)-length(unique(base_formatos$id_debate))
 
 cuenta_formatos_2 <-base_formatos %>%
   group_by(cat_tipo_formato) %>% 
-  summarise(n_formato = n())  
+  summarise(n_formato = n()) %>% 
+  mutate(pr_debates_con_formato = n_formato / length(base$id_debate) * 100)
 
 plot_cuenta_formatos_2 <- cuenta_formatos_2 %>% 
   subset(!str_detect(cat_tipo_formato,"apertura")) %>% 
@@ -1115,8 +1117,70 @@ tipos_formatos_año <- base_formatos %>%
  #fct_collapse(cat_tipo_formato,
  #             pr_formatomoderadores = "pr_formatomoderadores",
  #                                             "pr_formatoapertura") %>% 
-  group_by(ncat_eleccion, cat_tipo_formato) %>% 
-  summarise(n_peso_formato_xdebate = sum(n_peso_formato_xdebate, na.rm=TRUE) )
+  group_by(ncat_eleccion) %>% 
+  mutate(n_debates_en_año = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(ncat_eleccion, n_debates_en_año, cat_tipo_formato) %>% 
+  summarise(n_peso_formato_xdebate = sum(n_peso_formato_xdebate, na.rm=TRUE),
+            n_formato_en_año = n()) %>% 
+  mutate(pr_formato_en_año = n_formato_en_año/ n_debates_en_año )
+
+# tabla de distribucion por año, para calcular
+
+tipos_formatos_año_wide <- tipos_formatos_año %>% 
+  pivot_wider(names_from=cat_tipo_formato, values_from = pr_formato_en_año) %>% 
+  mutate(across(starts_with("pr_formato"), ~ifelse(is.na(.),0,.))) %>% 
+  mutate(across(starts_with("pr_formato"), ~.*100))  
+
+summary(tipos_formatos_año_wide$pr_formatoduelo)
+sd(tipos_formatos_año_wide$pr_formatoduelo)
+summary(tipos_formatos_año_wide$pr_formatoperiodistas)
+sd(tipos_formatos_año_wide$pr_formatoperiodistas)
+summary(tipos_formatos_año_wide$pr_formatomoderadores)
+sd(tipos_formatos_año_wide$pr_formatomoderadores)
+summary(tipos_formatos_año_wide$pr_formatopresentes)
+sd(tipos_formatos_año_wide$pr_formatopresentes)
+summary(tipos_formatos_año_wide$pr_formatosectores)
+sd(tipos_formatos_año_wide$pr_formatosectores)
+summary(tipos_formatos_año_wide$pr_formatovirtuales)
+sd(tipos_formatos_año_wide$pr_formatovirtuales)
+summary(tipos_formatos_año_wide$pr_formatolibre)
+sd(tipos_formatos_año_wide$pr_formatolibre)
+summary(tipos_formatos_año_wide$pr_formatoexpertos)
+sd(tipos_formatos_año_wide$pr_formatoexpertos)
+summary(tipos_formatos_año_wide$pr_formatoexpositivo)
+sd(tipos_formatos_año_wide$pr_formatoexpositivo)
+
+# tabla de distribucion por decada, para mostrar
+
+tipos_formatos_decada <- base_formatos %>% 
+  subset(!str_detect(cat_tipo_formato,"apertura")) %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  mutate(n_debates_en_decada = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(cat_tipo_formato, decada, n_debates_en_decada) %>% 
+  summarise(n_formato_en_decada = n()) %>% 
+  ungroup() %>% 
+  mutate(pr_formato_en_decada = n_formato_en_decada/ n_debates_en_decada *100)  
+
+tipos_formatos_decada_wide <- tipos_formatos_decada %>% 
+  select(-n_formato_en_decada) %>% 
+  pivot_wider(names_from=cat_tipo_formato, values_from = pr_formato_en_decada) %>% 
+  arrange(decada)# %>% 
+  # mutate(across(starts_with("pr_formato"), ~ifelse(is.na(.),0,.))) %>% 
+  # mutate(across(starts_with("pr_formato"), ~.*100))  
+
+tipos_formatos_decada_wide_n <- tipos_formatos_decada %>% 
+  select(-pr_formato_en_decada) %>% 
+  pivot_wider(names_from=cat_tipo_formato, values_from = n_formato_en_decada) %>% 
+  arrange(decada)# %>% 
+# mutate(across(starts_with("pr_formato"), ~ifelse(is.na(.),0,.))) %>% 
+# mutate(across(starts_with("pr_formato"), ~.*100)) 
+
+
+# grafico original
+
 
 tipos_formatos_ev_anual <-  tipos_formatos_año %>% 
   ggplot(aes(ncat_eleccion, fct_relevel(cat_tipo_formato, "pr_formatopresentes", "pr_formatovirtuales", "pr_formatosectores",
@@ -1153,6 +1217,60 @@ filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
 ggsave(filename, width = 10, height = 7)
 
 # 3.2 Temas en el tiempo ############
+
+tipos_temas_año <- base_temas %>% 
+  group_by(ncat_eleccion) %>% 
+  mutate(n_debates_en_año = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(ncat_eleccion, n_debates_en_año, cat_tipo_tema) %>% 
+  summarise(n_peso_temas_xdebate = sum(n_peso_tema_xdebate, na.rm=TRUE),
+            n_temas_en_año = n())  %>% 
+  mutate(pr_temas_en_año = n_temas_en_año/ n_debates_en_año )
+
+# tabla de distribucion por año, para calcular TEMAS
+
+tipos_temas_año_wide <- tipos_temas_año %>% 
+  pivot_wider(names_from=cat_tipo_tema, values_from = pr_temas_en_año) %>% 
+  mutate(across(starts_with("pr_tema"), ~ifelse(is.na(.),0,.))) %>% 
+  mutate(across(starts_with("pr_tema"), ~.*100))  
+
+summary(tipos_temas_año_wide$pr_temabloques)
+sd(tipos_temas_año_wide$pr_temabloques)
+summary(tipos_temas_año_wide$pr_temalibre)
+sd(tipos_temas_año_wide$pr_temalibre)
+summary(tipos_temas_año_wide$pr_temamonotema)
+sd(tipos_temas_año_wide$pr_temamonotema)
+summary(tipos_temas_año_wide$pr_temapuntuales)
+sd(tipos_temas_año_wide$pr_temapuntuales)
+# OJO PARA COMPARAR CREO QUE CONVIENE ESTANDARIZAR ESTAS MEDIDAS, LO MISMO APLICARIA A TIPO DE ORGA
+
+# tabla de distribucion por decada, para mostrar
+
+tipos_temas_decada <- base_temas %>%  
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  mutate(n_debates_en_decada = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(cat_tipo_tema, decada, n_debates_en_decada) %>% 
+  summarise(n_tema_en_decada = n()) %>% 
+  ungroup() %>% 
+  mutate(pr_tema_en_decada = n_tema_en_decada/ n_debates_en_decada *100)  
+
+tipos_temas_decada_wide <- tipos_temas_decada %>% 
+  select(-n_tema_en_decada) %>% 
+  pivot_wider(names_from=cat_tipo_tema, values_from = pr_tema_en_decada) %>% 
+  arrange(decada)# %>% 
+# mutate(across(starts_with("pr_formato"), ~ifelse(is.na(.),0,.))) %>% 
+# mutate(across(starts_with("pr_formato"), ~.*100))  
+
+tipos_formatos_decada_wide_n <- tipos_temas_decada %>% 
+  select(-pr_tema_en_decada) %>% 
+  pivot_wider(names_from=cat_tipo_tema, values_from = n_tema_en_decada) %>% 
+  arrange(decada)# %>% 
+# mutate(across(starts_with("pr_formato"), ~ifelse(is.na(.),0,.))) %>% 
+# mutate(across(starts_with("pr_formato"), ~.*100)) 
+
+# grafico original 
 
 tipos_temas_año <- base_temas %>% 
   group_by(ncat_eleccion, cat_tipo_tema) %>% 
@@ -1271,6 +1389,58 @@ plot_diversidad_formatos <- base %>%
                   size = n_n_catformatos)))
 
 # 3.3 Formatos por paises ########
+
+tipos_formatos_pais <- base_formatos %>% 
+  subset(!str_detect(cat_tipo_formato,"apertura")) %>% 
+  #fct_collapse(cat_tipo_formato,
+  #             pr_formatomoderadores = "pr_formatomoderadores",
+  #                                             "pr_formatoapertura") %>% 
+  group_by(cat_pais) %>% 
+  mutate(n_debates_en_pais = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(cat_pais, n_debates_en_pais, cat_tipo_formato) %>% 
+  summarise(n_peso_formato_xdebate = sum(n_peso_formato_xdebate, na.rm=TRUE),
+            n_formato_en_pais = n()) %>% 
+  mutate(pr_formato_en_pais = n_formato_en_pais/ n_debates_en_pais )
+
+# tabla de distribucion por año, para calcular
+
+tipos_formatos_pais_wide <- tipos_formatos_pais %>% 
+  select(-c(n_peso_formato_xdebate, n_formato_en_pais)) %>% 
+  pivot_wider(names_from=cat_tipo_formato, values_from = pr_formato_en_pais) %>% 
+  mutate(across(starts_with("pr_formato"), ~ifelse(is.na(.),0,.))) %>% 
+  mutate(across(starts_with("pr_formato"), ~.*100)) %>% 
+  arrange(n_debates_en_pais)
+
+summary(tipos_formatos_pais_wide$pr_formatoduelo)
+sd(tipos_formatos_pais_wide$pr_formatoduelo)
+summary(tipos_formatos_pais_wide$pr_formatoperiodistas)
+sd(tipos_formatos_pais_wide$pr_formatoperiodistas)
+summary(tipos_formatos_pais_wide$pr_formatomoderadores)
+sd(tipos_formatos_pais_wide$pr_formatomoderadores)
+summary(tipos_formatos_pais_wide$pr_formatopresentes)
+sd(tipos_formatos_pais_wide$pr_formatopresentes)
+summary(tipos_formatos_pais_wide$pr_formatosectores)
+sd(tipos_formatos_pais_wide$pr_formatosectores)
+summary(tipos_formatos_pais_wide$pr_formatovirtuales)
+sd(tipos_formatos_pais_wide$pr_formatovirtuales)
+summary(tipos_formatos_pais_wide$pr_formatolibre)
+sd(tipos_formatos_pais_wide$pr_formatolibre)
+summary(tipos_formatos_pais_wide$pr_formatoexpertos)
+sd(tipos_formatos_pais_wide$pr_formatoexpertos)
+summary(tipos_formatos_pais_wide$pr_formatoexpositivo)
+sd(tipos_formatos_pais_wide$pr_formatoexpositivo)
+
+tipos_formatos_pais_wide_n <- tipos_formatos_pais %>% 
+  select(-c(n_peso_formato_xdebate, pr_formato_en_pais)) %>% 
+  pivot_wider(names_from=cat_tipo_formato, values_from = n_formato_en_pais) %>% 
+  mutate(across(starts_with("pr_formato"), ~ifelse(is.na(.),0,.)))# %>% 
+ # mutate(across(starts_with("pr_formato"), ~.*100))  
+
+
+
+# grafico original 
+
 
 tipos_formatos_pais <- base_formatos %>% 
   subset(!str_detect(cat_tipo_formato,"apertura")) %>% 
