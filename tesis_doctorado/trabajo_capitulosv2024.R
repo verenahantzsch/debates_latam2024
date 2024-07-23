@@ -112,7 +112,7 @@ n_debates_año_pais <- base %>%
   summarise(n_debates_año_pais = n()) 
 
 base_anual_full <- base_anual_full %>% 
-  left_join(debates_año_pais) %>% 
+  left_join(n_debates_año_pais) %>% 
   mutate(n_debates_año_pais = ifelse(is.na(n_debates_año_pais),0,n_debates_año_pais))  
 
 # cuentas
@@ -167,7 +167,7 @@ plot_n_debates_año <- n_debates_pais %>%
 
 # ev anual, debates en t por pais ######
 
-plot_point_anual2 <- base_años %>% 
+plot_point_anual2 <- base_anual_full %>% 
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.*")) %>% 
   ggplot(aes(ncat_eleccion, 
              log(n_debates_año_pais),
@@ -179,7 +179,7 @@ plot_point_anual2 <- base_años %>%
   ))  +
   geom_line() + 
   geom_point(aes(#size= n_debates_año_pais, 
-    shape = debates_dico, alpha= debates_dico)) +
+    shape = as.factor(dico_hubo_debates), alpha= as.factor(dico_hubo_debates))) + # corregir, no esta saliendo esto
   scale_color_manual(breaks= colorespais2$cat_pais,
                      values=colorespais2$cols_18) +
   scale_shape_manual(values=c("FALSE" = 4, "TRUE" = 19)) +
@@ -220,8 +220,8 @@ ggsave(filename, width = 10, height = 7)
 
 # traduccion de log 
 
-n_debates_año_pais <- base_años$n_debates_año_pais %>% unique() 
-log <- base_años$n_debates_año_pais %>% unique() %>% log()
+n_debates_año_pais <- base_anual_full$n_debates_año_pais %>% unique() 
+log <- base_anual_full$n_debates_año_pais %>% unique() %>% log()
 conversion_log <- tibble(n_debates_año_pais = n_debates_año_pais, 
                          log = log)
 
@@ -474,7 +474,7 @@ n_por_pais_individuos <- cuenta_tipos_por_cat_pais %>%
   arrange(cat_pais)
 
 tabla_cuenta_tipos_por_pais_individuos <- tabla_cuenta_tipos_por_pais_individuos %>% 
-  left_join(n_por_pais_individuos) %>% 
+  left_join(n_por_pais_individuos) #%>% 
   #arrange(desc(mmc))
  # arrange(desc(estado))
   #arrange(desc(osc))
@@ -991,8 +991,8 @@ tipos_temas_pais_wide %>% write_csv("anexos/tipos_temas_pais_wide.csv")
 
 hist(base$n_invitados)
 summary(base$n_invitados)
-max(base$n_invitados)
-min(base$n_invitados)
+max(base$n_invitados, na.rm = T)
+min(base$n_invitados, na.rm = T)
 
 #PENDIENTE: REVISAR MISSING DATA: #
 
@@ -1017,6 +1017,9 @@ base_n_candidatos_año_pais <- base_n_candidatos_año_pais  %>%
   left_join(base_anual_full) %>% 
   mutate(n_debates_año_pais = ifelse(is.na(n_debates_año_pais),0,n_debates_año_pais))
 
+base_n_candidatos_año_pais <- base_anual_full  %>% 
+  left_join(base_n_candidatos_año_pais) %>% 
+  mutate(n_debates_año_pais = ifelse(is.na(n_debates_año_pais),0,n_debates_año_pais))
 
 ev_t_n_candidatos <- base_n_candidatos_año_pais %>% 
   group_by(ncat_eleccion) %>% 
@@ -1039,7 +1042,7 @@ ev_e_n_candidatos <- base_n_candidatos_año_pais %>%
             mean_n_invitados = mean(mean_n_invitados, na.rm = T),
             mean_n_ausentes = mean(mean_n_ausentes, na.rm=T),
             mean_n_presentes = mean(mean_n_presentes, na.rm=T)) %>% 
-  arrange(mean_n_invitados)
+  arrange(n_debates_pais)
 
 
 plot_ev_t_n_candidatos <- ev_t_n_candidatos %>% 
@@ -1117,7 +1120,7 @@ missing_n_candidaturas <- base %>% subset(is.na(n_candidaturas))
 
 base_prop_candidatos_año_pais <- base %>% 
   subset(n_invitados!=42) %>%  # descartamos un outlier
-  subset(ncat_ronda==1) %>%  # descartamos ballotages
+ # subset(ncat_ronda==1) %>%  # descartamos ballotages
   group_by(ncat_eleccion, cat_pais) %>% 
   summarise(n_debates_año_pais = n_distinct(id_debate),
             n_candidaturas_año_pais = mean(n_candidaturas, na.rm=T),
@@ -1136,26 +1139,26 @@ ev_t_prop_candidaturas <- base_prop_candidatos_año_pais %>%
             mean_prop_invitados = mean(prop_invitados, na.rm = T),
             mean_prop_presentes = mean(prop_presentes, na.rm = T))
 
-ev_t_prop_candidaturas_decada <- ev_t_prop_candidaturas %>% 
+ev_t_prop_candidaturas_decada <- base_prop_candidatos_año_pais %>% 
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
   group_by(decada) %>% 
-  summarise(n_debates_decada = sum(n_debates_año),
-            mean_prop_invitados = mean(mean_prop_invitados, na.rm = T),
-            mean_prop_presentes = mean(mean_prop_presentes, na.rm = T))
+  summarise(n_debates_decada = sum(n_debates_año_pais),
+            mean_prop_invitados = mean(prop_invitados, na.rm = T),
+            mean_prop_presentes = mean(prop_presentes, na.rm = T))
 
-ev_t_candidaturas <- base_prop_candidatos_año_pais %>% 
+ev_t_prop_candidaturas <- base_prop_candidatos_año_pais %>% 
   group_by(ncat_eleccion) %>% 
   summarise(n_debates_año = sum(n_debates_año_pais),
-            mean_candidaturas = mean(n_candidaturas_año_pais, na.rm = T),
-            mean_invitados = mean(mean_n_invitados, na.rm = T),
-            mean_presentes = mean(mean_n_presentes, na.rm = T))
+            mean_prop_invitados = mean(prop_invitados, na.rm = T),
+            mean_prop_presentes = mean(prop_presentes, na.rm = T))
 
-ev_e_candidaturas <- base_prop_candidatos_año_pais %>% 
+ev_e_prop_candidaturas <- base_prop_candidatos_año_pais %>% 
   group_by(cat_pais) %>% 
-  summarise(n_debates_año = sum(n_debates_año_pais),
+  summarise(n_debates_año_pais = sum(n_debates_año_pais),
             mean_candidaturas = mean(n_candidaturas_año_pais, na.rm = T),
-            mean_invitados = mean(mean_n_invitados, na.rm = T),
-            mean_presentes = mean(mean_n_presentes, na.rm = T))
+            mean_prop_invitados = mean(prop_invitados, na.rm = T),
+            mean_prop_presentes = mean(prop_presentes, na.rm = T)) %>% 
+  arrange(n_debates_año_pais)
 
 
 plot_ev_t_ev_t_prop_candidaturas <- ev_t_prop_candidaturas %>% 
@@ -1185,16 +1188,135 @@ check <- base %>%
 
 
 
+# considerando N CANDIDATURAS, importante chequear data
+
+ 
+base_prop_candidatos_año_pais1 <- base %>% 
+  subset(n_invitados!=42) %>%  # descartamos un outlier
+  subset(ncat_ronda==1) %>%  # descartamos ballotages
+  group_by(ncat_eleccion, cat_pais) %>% 
+  summarise(n_debates_año_pais = n_distinct(id_debate),
+            n_candidaturas_año_pais = mean(n_candidaturas, na.rm=T),
+            mean_n_invitados = mean(n_invitados, na.rm = T),
+            prop_invitados = mean_n_invitados / n_candidaturas_año_pais,
+            mean_n_presentes = mean(n_presentes, na.rm=T),
+            prop_presentes = mean_n_presentes / n_candidaturas_año_pais)
+
+base_prop_candidatos_año_pais1 <- base_prop_candidatos_año_pais1  %>% 
+  left_join(base_anual_full) %>% 
+  mutate(n_debates_año_pais = ifelse(is.na(n_debates_año_pais),0,n_debates_año_pais))
+
+ev_t_prop_candidaturas1 <- base_prop_candidatos_año_pais1 %>% 
+  group_by(ncat_eleccion) %>% 
+  summarise(n_debates_año = sum(n_debates_año_pais),
+            mean_prop_invitados = mean(prop_invitados, na.rm = T),
+            mean_prop_presentes = mean(prop_presentes, na.rm = T))
+
+ev_t_prop_candidaturas_decada1 <- base_prop_candidatos_año_pais1 %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  summarise(n_debates_decada = sum(n_debates_año_pais),
+            mean_prop_invitados = mean(prop_invitados, na.rm = T),
+            mean_prop_presentes = mean(prop_presentes, na.rm = T))
+
+ev_t_prop_candidaturas1 <- base_prop_candidatos_año_pais1 %>% 
+  group_by(ncat_eleccion) %>% 
+  summarise(n_debates_año = sum(n_debates_año_pais),
+            mean_prop_invitados = mean(prop_invitados, na.rm = T),
+            mean_prop_presentes = mean(prop_presentes, na.rm = T))
+
+ev_e_prop_candidaturas1 <- base_prop_candidatos_año_pais1 %>% 
+  group_by(cat_pais) %>% 
+  summarise(n_debates_año = sum(n_debates_año_pais),
+            mean_candidaturas = mean(n_candidaturas_año_pais, na.rm = T),
+            mean_prop_invitados = mean(prop_invitados, na.rm = T),
+            mean_prop_presentes = mean(prop_presentes, na.rm = T)) %>% 
+  arrange(n_debates_año)
+
+
+plot_ev_t_ev_t_prop_candidaturas1 <- ev_t_prop_candidaturas1 %>% 
+  select(ncat_eleccion, mean_prop_invitados, mean_prop_presentes) %>% 
+  pivot_longer( cols = c(mean_prop_invitados, mean_prop_presentes) , 
+                names_to = "categoria_asistencia", values_to =  "mean_prop") %>% 
+  ggplot() +
+  geom_line(aes(ncat_eleccion, mean_prop, colour = categoria_asistencia)) +
+  #geom_smooth(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
+  theme_minimal()
+
+# plot_ev_t_candidaturas1 <- ev_t_prop_candidaturas1 %>% 
+#   select(ncat_eleccion, mean_candidaturas, mean_invitados, mean_presentes) %>% 
+#   pivot_longer( cols = c(mean_candidaturas, mean_invitados, mean_presentes) , 
+#                 names_to = "categoria_asistencia", values_to =  "mean") %>% 
+#   ggplot() +
+#   geom_line(aes(ncat_eleccion, mean, colour = categoria_asistencia)) +
+#   #geom_smooth(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
+#   theme_minimal()
+
+
+plot_n_invitados_pais <- base %>% 
+  subset(n_invitados!=42) %>%
+  mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
+  ggplot() +
+  geom_boxplot(aes(as.factor(cat_pais),  as.numeric(n_invitados), fill = cols_18)) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90),
+        axis.title.y = element_text(margin = margin(r = 5),size = 8))  +
+  labs(x = "", y = "Cantidad de candidatos invitados",
+       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
+
+       *Rep. Dom. = República Dominicana.",
+       title = "N invitados",
+       subtitle = "por país")
+
+plotnumber <- plotnumber + 1
+filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+
+plot_prop_invitados_pais <- base %>% 
+  subset(n_invitados!=42) %>%
+  left_join(base_anual_full) %>% 
+  mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
+  ggplot() +
+  geom_boxplot(aes(as.factor(cat_pais),  as.numeric(n_invitados)/n_candidaturas, fill = cols_18)) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90),
+        axis.title.y = element_text(margin = margin(r = 5),size = 8))  +
+  labs(x = "", y = "Proporción de candidatos invitados",
+       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
+
+       *Rep. Dom. = República Dominicana.",
+       title = "Prop invitados",
+       subtitle = "por país")
+
+plotnumber <- plotnumber + 1
+filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+ 
 ######################################################################
 ######################################################################
 # CRUCES ENTRE VARIABLES ###############
 
 # formatos por organizadores
 
-matriz_cor_patrones_interaccion <- base %>% 
+matriz_cor_patrones_interaccion <-  base %>% 
+  left_join(base_anual_full %>% 
+              group_by(cat_pais) %>%
+              arrange(ncat_eleccion, .by_group=T) %>% 
+              mutate(lagged_n_elecs_debates = cumsum(dico_hubo_debates))) %>% 
+  mutate(prop_invitados = n_invitados/n_candidaturas) %>%  
   select(ncat_eleccion,
          ncat_ronda,
+         lagged_n_elecs_debates,
+         prop_invitados,
          n_presentes,
+         n_ausentes,
          dico_org_mmc,
          dico_org_mmp,
          dico_org_estado,
@@ -1213,13 +1335,21 @@ matriz_cor_patrones_interaccion <- base %>%
 data_clean <- na.omit(matriz_cor_patrones_interaccion)
 cor_matrix <- cor(data_clean)
 # Visualize the correlation matrix
-corrplot::corrplot(cor_matrix, method = "circle", type = "upper", 
-         tl.col = "black", tl.srt = 45)
+corrplot::corrplot(cor_matrix, method = "square", type = "upper", 
+         tl.col = "black", tl.srt = 45, addCoef.col = "black")
 
-matriz_cor_temas <- base %>% 
+matriz_cor_temas <-  base %>% 
+  left_join(base_anual_full %>% 
+              group_by(cat_pais) %>%
+              arrange(ncat_eleccion, .by_group=T) %>% 
+              mutate(lagged_n_elecs_debates = cumsum(dico_hubo_debates))) %>% 
+  mutate(prop_invitados = n_invitados/n_candidaturas) %>% 
   select(ncat_eleccion,
          ncat_ronda,
+         lagged_n_elecs_debates,
+         prop_invitados,
          n_presentes,
+         n_ausentes,
          dico_org_mmc,
          dico_org_mmp,
          dico_org_estado,
@@ -1233,8 +1363,47 @@ matriz_cor_temas <- base %>%
 data_clean <- na.omit(matriz_cor_temas)
 cor_matrix <- cor(data_clean)
 # Visualize the correlation matrix
-corrplot::corrplot(cor_matrix, method = "circle", type = "upper", 
-         tl.col = "black", tl.srt = 45)
+corrplot::corrplot(cor_matrix, method = "square", type = "upper", 
+         tl.col = "black", tl.srt = 45, addCoef.col = "black")
+
+
+matriz_cor_todo <- base %>% 
+  left_join(base_anual_full %>% 
+              group_by(cat_pais) %>%
+              arrange(ncat_eleccion, .by_group=T) %>% 
+              mutate(lagged_n_elecs_debates = cumsum(dico_hubo_debates))) %>% 
+  mutate(prop_invitados = n_invitados/n_candidaturas) %>% 
+  ungroup() %>% 
+  select(ncat_eleccion,
+         ncat_ronda,
+         prop_invitados,
+         lagged_n_elecs_debates,
+         # n_presentes,
+         # n_ausentes,
+         # dico_org_mmc,
+         # dico_org_mmp,
+         # dico_org_estado,
+         # dico_org_osc,
+         # dico_org_educ,
+         dico_temas_libre,
+         dico_temas_bloques,
+         dico_temas_puntuales,
+         dico_temas_monotema,
+         dico_formato_libre,
+         dico_formato_duelo,
+         dico_formato_expositivo,
+         dico_formato_moderadores,
+         dico_formato_periodistas,
+         dico_formato_expertos,
+         dico_formato_sectores,
+         dico_formato_presentes,
+         dico_formato_virtuales)
+
+data_clean <- na.omit(matriz_cor_todo)
+cor_matrix <- cor(data_clean)
+corrplot::corrplot(cor_matrix, method = "square", type = "upper", 
+         tl.col = "black", tl.srt = 45, addCoef.col = "black")
+
 
 ######################################################################
 ######################################################################

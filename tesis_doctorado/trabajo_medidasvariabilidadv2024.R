@@ -1,5 +1,5 @@
 
-
+##### PREPARACION ###############
 ## librerias
 library(tidyverse)
 library(xtsum)
@@ -378,12 +378,15 @@ xtsum::xtsum(tabla_agregada_tipos_tema_año_pais_wide,
 
 
 n_candidatos_año_pais <- base %>% 
+  left_join(base_anual_full) %>% 
   group_by(ncat_eleccion, cat_pais) %>% 
   summarise(mean_n_invitados = mean(n_invitados, na.rm=T),
-            mean_n_presentes = mean(n_presentes, na.rm=T))
+            mean_n_presentes = mean(n_presentes, na.rm=T),
+            mean_n_ausentes = mean(n_ausentes, na.rm=T),
+            prop_n_invitados = mean_n_invitados/mean(n_candidaturas))
 
 xtsum::xtsum(n_candidatos_año_pais,
-             variables = c("mean_n_invitados", "mean_n_presentes"),
+             variables = c("mean_n_invitados", "mean_n_presentes","mean_n_ausentes","prop_n_invitados"),
              id = "cat_pais",
              t = "ncat_eleccion",
              na.rm=T)
