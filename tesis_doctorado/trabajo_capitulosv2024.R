@@ -34,6 +34,10 @@ colorespais2 <- base %>%
 
 plotnumber <- 0 # para guardar con numeracion ascendente
 
+base <- base %>% mutate(id_elec = paste0(cat_pais,ncat_eleccion,ncat_ronda)) 
+u_elec <- base$id_elec %>% unique()
+
+
 ###############################################################################
 ######################################################################
 
