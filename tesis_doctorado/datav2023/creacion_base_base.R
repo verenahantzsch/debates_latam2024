@@ -8,7 +8,7 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/da
 base_elecciones <- read.csv("all_elections_full_dataset.csv") %>% select(-X)
 
 c_elects <- base_elecciones %>% 
-  select(cat_pais, ncat_eleccion, ncat_ronda)
+  select(cat_pais, ncat_eleccion, ncat_ronda, dico_debates_eleccion)
 
 trad_pais <- tibble(
   cat_pais = c("Brasil", "Chile", "Argentina", "Peru", "Paraguay", "Ecuador", "Uruguay", "Nicaragua", "Panama", "Venezuela", "Bolivia", "Mexico", "Guatemala", "Honduras", "Colombia", "Costa Rica", "Republica Dominicana", "El Salvador"),
@@ -35,3 +35,4 @@ c_years <- c_years %>%
   left_join(trad_pais)
 
 c_years %>% write_csv("base_base.csv")
+c_elects %>% arrange(cat_pais,ncat_eleccion,ncat_ronda) %>% write_csv("base_base_elecs.csv")

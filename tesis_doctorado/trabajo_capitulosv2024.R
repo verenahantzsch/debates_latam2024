@@ -3,12 +3,12 @@
 ## librerias
 library(tidyverse)
 #library(hrbrthemes) #
-library(RColorBrewer)
-library(amap)
-library(ape)
-library(dendextend)
-library(ggraph)
-library(igraph)
+# library(RColorBrewer)
+# library(amap)
+# library(ape)
+# library(dendextend)
+# library(ggraph)
+# library(igraph)
 #library(xlsx) #
 
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/")
@@ -36,7 +36,6 @@ plotnumber <- 0 # para guardar con numeracion ascendente
 
 base <- base %>% mutate(id_elec = paste0(cat_pais,ncat_eleccion,ncat_ronda)) 
 u_elec <- base$id_elec %>% unique()
-
 
 ###############################################################################
 ######################################################################

@@ -1,0 +1,254 @@
+cat_pais,ncat_eleccion,ncat_ronda,dico_debates_eleccion,eng_cat_pais
+Argentina,1983,1,0,Argentina
+Argentina,1989,1,0,Argentina
+Argentina,1995,1,0,Argentina
+Argentina,1999,1,0,Argentina
+Argentina,2003,1,0,Argentina
+Argentina,2007,1,0,Argentina
+Argentina,2011,1,0,Argentina
+Argentina,2015,1,1,Argentina
+Argentina,2015,2,1,Argentina
+Argentina,2019,1,1,Argentina
+Argentina,2023,1,1,Argentina
+Argentina,2023,2,1,Argentina
+Bolivia,1978,1,0,Bolivia
+Bolivia,1979,1,0,Bolivia
+Bolivia,1980,1,0,Bolivia
+Bolivia,1985,1,0,Bolivia
+Bolivia,1989,1,1,Bolivia
+Bolivia,1993,1,1,Bolivia
+Bolivia,1997,1,1,Bolivia
+Bolivia,2002,1,1,Bolivia
+Bolivia,2005,1,1,Bolivia
+Bolivia,2009,1,0,Bolivia
+Bolivia,2014,1,1,Bolivia
+Bolivia,2019,1,0,Bolivia
+Bolivia,2020,1,1,Bolivia
+Brasil,1989,1,1,Brazil
+Brasil,1989,2,1,Brazil
+Brasil,1994,1,1,Brazil
+Brasil,1998,1,0,Brazil
+Brasil,1998,2,0,Brazil
+Brasil,2002,1,1,Brazil
+Brasil,2002,2,1,Brazil
+Brasil,2006,1,1,Brazil
+Brasil,2006,2,1,Brazil
+Brasil,2010,1,1,Brazil
+Brasil,2010,2,1,Brazil
+Brasil,2014,1,1,Brazil
+Brasil,2014,2,1,Brazil
+Brasil,2018,1,1,Brazil
+Brasil,2018,2,0,Brazil
+Brasil,2022,1,1,Brazil
+Brasil,2022,2,1,Brazil
+Chile,1989,1,1,Chile
+Chile,1993,1,1,Chile
+Chile,2000,1,1,Chile
+Chile,2000,2,0,Chile
+Chile,2006,1,1,Chile
+Chile,2006,2,1,Chile
+Chile,2010,1,1,Chile
+Chile,2010,2,1,Chile
+Chile,2013,1,1,Chile
+Chile,2013,2,1,Chile
+Chile,2017,1,1,Chile
+Chile,2017,2,1,Chile
+Chile,2021,1,1,Chile
+Chile,2021,2,1,Chile
+Colombia,1974,1,0,Colombia
+Colombia,1978,1,0,Colombia
+Colombia,1982,1,0,Colombia
+Colombia,1986,1,1,Colombia
+Colombia,1990,1,0,Colombia
+Colombia,1994,1,1,Colombia
+Colombia,1994,2,0,Colombia
+Colombia,1998,1,0,Colombia
+Colombia,1998,2,1,Colombia
+Colombia,2002,1,1,Colombia
+Colombia,2006,1,1,Colombia
+Colombia,2010,1,1,Colombia
+Colombia,2010,2,1,Colombia
+Colombia,2014,1,1,Colombia
+Colombia,2014,2,1,Colombia
+Colombia,2018,1,1,Colombia
+Colombia,2018,2,0,Colombia
+Colombia,2022,1,1,Colombia
+Colombia,2022,2,0,Colombia
+Costa Rica,1962,1,0,Costa Rica
+Costa Rica,1966,1,0,Costa Rica
+Costa Rica,1970,1,0,Costa Rica
+Costa Rica,1974,1,0,Costa Rica
+Costa Rica,1978,1,0,Costa Rica
+Costa Rica,1982,1,0,Costa Rica
+Costa Rica,1986,1,0,Costa Rica
+Costa Rica,1990,1,0,Costa Rica
+Costa Rica,1994,1,0,Costa Rica
+Costa Rica,1998,1,1,Costa Rica
+Costa Rica,2002,1,1,Costa Rica
+Costa Rica,2002,2,1,Costa Rica
+Costa Rica,2006,1,1,Costa Rica
+Costa Rica,2010,1,1,Costa Rica
+Costa Rica,2014,1,1,Costa Rica
+Costa Rica,2014,2,0,Costa Rica
+Costa Rica,2018,1,1,Costa Rica
+Costa Rica,2018,2,1,Costa Rica
+Costa Rica,2022,1,1,Costa Rica
+Costa Rica,2022,2,1,Costa Rica
+Ecuador,1960,1,0,Ecuador
+Ecuador,1966,1,0,Ecuador
+Ecuador,1968,1,0,Ecuador
+Ecuador,1979,1,1,Ecuador
+Ecuador,1979,2,1,Ecuador
+Ecuador,1984,1,0,Ecuador
+Ecuador,1984,2,1,Ecuador
+Ecuador,1988,1,0,Ecuador
+Ecuador,1988,2,0,Ecuador
+Ecuador,1992,1,1,Ecuador
+Ecuador,1992,2,0,Ecuador
+Ecuador,1996,1,0,Ecuador
+Ecuador,1996,2,0,Ecuador
+Ecuador,1998,1,0,Ecuador
+Ecuador,1998,2,0,Ecuador
+Ecuador,2002,1,0,Ecuador
+Ecuador,2002,2,0,Ecuador
+Ecuador,2006,1,1,Ecuador
+Ecuador,2006,2,0,Ecuador
+Ecuador,2009,1,0,Ecuador
+Ecuador,2013,1,1,Ecuador
+Ecuador,2017,1,1,Ecuador
+Ecuador,2017,2,0,Ecuador
+Ecuador,2021,1,1,Ecuador
+Ecuador,2021,2,1,Ecuador
+Ecuador,2023,1,1,Ecuador
+Ecuador,2023,2,1,Ecuador
+El Salvador,1984,1,0,El Salvador
+El Salvador,1984,2,0,El Salvador
+El Salvador,1989,1,0,El Salvador
+El Salvador,1994,1,0,El Salvador
+El Salvador,1994,2,0,El Salvador
+El Salvador,1999,1,1,El Salvador
+El Salvador,2004,1,0,El Salvador
+El Salvador,2009,1,0,El Salvador
+El Salvador,2014,1,1,El Salvador
+El Salvador,2014,2,0,El Salvador
+El Salvador,2019,1,1,El Salvador
+El Salvador,2024,1,0,El Salvador
+Guatemala,1966,1,0,Guatemala
+Guatemala,1970,1,0,Guatemala
+Guatemala,1974,1,0,Guatemala
+Guatemala,1978,1,0,Guatemala
+Guatemala,1982,1,0,Guatemala
+Guatemala,1985,1,0,Guatemala
+Guatemala,1985,2,0,Guatemala
+Guatemala,1991,1,0,Guatemala
+Guatemala,1991,2,0,Guatemala
+Guatemala,1995,1,0,Guatemala
+Guatemala,1995,2,1,Guatemala
+Guatemala,1999,1,0,Guatemala
+Guatemala,1999,2,0,Guatemala
+Guatemala,2003,1,1,Guatemala
+Guatemala,2003,2,1,Guatemala
+Guatemala,2007,1,1,Guatemala
+Guatemala,2007,2,0,Guatemala
+Guatemala,2011,1,1,Guatemala
+Guatemala,2011,2,1,Guatemala
+Guatemala,2015,1,1,Guatemala
+Guatemala,2015,2,1,Guatemala
+Guatemala,2019,1,1,Guatemala
+Guatemala,2019,2,0,Guatemala
+Guatemala,2023,1,1,Guatemala
+Guatemala,2023,2,1,Guatemala
+Honduras,1981,1,0,Honduras
+Honduras,1985,1,0,Honduras
+Honduras,1989,1,0,Honduras
+Honduras,1993,1,1,Honduras
+Honduras,1997,1,0,Honduras
+Honduras,2001,1,0,Honduras
+Honduras,2005,1,0,Honduras
+Honduras,2009,1,0,Honduras
+Honduras,2013,1,1,Honduras
+Honduras,2017,1,1,Honduras
+Mexico,1982,1,0,Mexico
+Mexico,1988,1,0,Mexico
+Mexico,1994,1,1,Mexico
+Mexico,2000,1,1,Mexico
+Mexico,2006,1,1,Mexico
+Mexico,2012,1,1,Mexico
+Mexico,2018,1,1,Mexico
+Nicaragua,1984,1,0,Nicaragua
+Nicaragua,1990,1,1,Nicaragua
+Nicaragua,1997,1,0,Nicaragua
+Nicaragua,2001,1,0,Nicaragua
+Nicaragua,2006,1,1,Nicaragua
+Nicaragua,2011,1,0,Nicaragua
+Nicaragua,2016,1,0,Nicaragua
+Panama,1994,1,1,Panama
+Panama,1999,1,0,Panama
+Panama,2004,1,1,Panama
+Panama,2009,1,1,Panama
+Panama,2014,1,1,Panama
+Panama,2019,1,1,Panama
+Paraguay,1989,1,0,Paraguay
+Paraguay,1993,1,1,Paraguay
+Paraguay,1998,1,1,Paraguay
+Paraguay,2003,1,1,Paraguay
+Paraguay,2008,1,1,Paraguay
+Paraguay,2013,1,1,Paraguay
+Paraguay,2018,1,1,Paraguay
+Paraguay,2023,1,1,Paraguay
+Peru,1980,1,0,Peru
+Peru,1985,1,0,Peru
+Peru,1990,1,0,Peru
+Peru,1990,2,1,Peru
+Peru,1995,1,0,Peru
+Peru,2000,1,0,Peru
+Peru,2000,2,0,Peru
+Peru,2001,1,0,Peru
+Peru,2001,2,1,Peru
+Peru,2006,1,0,Peru
+Peru,2006,2,1,Peru
+Peru,2011,1,1,Peru
+Peru,2011,2,1,Peru
+Peru,2016,1,1,Peru
+Peru,2016,2,1,Peru
+Peru,2021,1,1,Peru
+Peru,2021,2,1,Peru
+Republica Dominicana,1978,1,0,Dominican Republic
+Republica Dominicana,1982,1,0,Dominican Republic
+Republica Dominicana,1986,1,0,Dominican Republic
+Republica Dominicana,1990,1,0,Dominican Republic
+Republica Dominicana,1994,1,0,Dominican Republic
+Republica Dominicana,1996,1,0,Dominican Republic
+Republica Dominicana,1996,2,0,Dominican Republic
+Republica Dominicana,2000,1,0,Dominican Republic
+Republica Dominicana,2004,1,0,Dominican Republic
+Republica Dominicana,2008,1,0,Dominican Republic
+Republica Dominicana,2012,1,0,Dominican Republic
+Republica Dominicana,2016,1,1,Dominican Republic
+Republica Dominicana,2020,1,0,Dominican Republic
+Uruguay,1984,1,1,Uruguay
+Uruguay,1989,1,1,Uruguay
+Uruguay,1994,1,1,Uruguay
+Uruguay,1999,1,0,Uruguay
+Uruguay,1999,2,0,Uruguay
+Uruguay,2004,1,0,Uruguay
+Uruguay,2009,1,1,Uruguay
+Uruguay,2009,2,0,Uruguay
+Uruguay,2014,1,1,Uruguay
+Uruguay,2014,2,0,Uruguay
+Uruguay,2019,1,1,Uruguay
+Uruguay,2019,2,1,Uruguay
+Venezuela,1958,1,0,Venezuela
+Venezuela,1963,1,1,Venezuela
+Venezuela,1968,1,1,Venezuela
+Venezuela,1973,1,0,Venezuela
+Venezuela,1978,1,0,Venezuela
+Venezuela,1983,1,1,Venezuela
+Venezuela,1988,1,0,Venezuela
+Venezuela,1993,1,0,Venezuela
+Venezuela,1998,1,1,Venezuela
+Venezuela,2000,1,0,Venezuela
+Venezuela,2006,1,0,Venezuela
+Venezuela,2012,1,0,Venezuela
+Venezuela,2013,1,0,Venezuela
+Venezuela,2018,1,0,Venezuela
