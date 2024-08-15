@@ -43,7 +43,7 @@ mi_data2 <- mi_data %>%
 ################################################## CARGO DATA FRIEDENBERG #################################################
 # PENDIENTE: FRIEDENBERG TIENE DATOS DE VOLATILIDAD ELECTORAL EN OTRA BASE ##############
 # cargo data
-data_friedenberg <- "/home/carolina/Documents/dataexterna/reformaspoliticas/filled_friedenberg_2024.csv" %>%  read.csv() %>% select(-X)
+data_friedenberg <- "/home/carolina/Documents/dataexterna/OBSREF/filled_friedenberg_2024.csv" %>%  read.csv() %>% select(-X)
 
 # selecciono variables de interes 
 
@@ -60,8 +60,8 @@ data_friedenberg$distribucion_tiempos %>% unique()
 data_friedenberg <- data_friedenberg %>%
   mutate(prohibicion_propaganda = str_remove_all(prohibicion_propaganda, "[^0-9]") %>% as.numeric(),
          acceso_gratuito = str_remove_all(acceso_gratuito, "[^0-9]") %>% as.numeric() )#,
-         #distribucion_tiempos = str_remove_all(prohibicion_propaganda, "[^0-9]") %>% as.numeric(),
-         #franja_presidente = str_remove_all(prohibicion_propaganda, "[^0-9]") %>% as.numeric() )
+#distribucion_tiempos = str_remove_all(prohibicion_propaganda, "[^0-9]") %>% as.numeric(),
+#franja_presidente = str_remove_all(prohibicion_propaganda, "[^0-9]") %>% as.numeric() )
 
 # modifico para unir
 

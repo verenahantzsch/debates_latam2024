@@ -481,14 +481,14 @@ data_agregada <- data_elecciones_carolina3 %>%
 
 #path <- "./tesis_doctorado/datav2023/all_elections.csv"
 path <- "all_elections.csv"
-#data_agregada %>%
-  #write.csv(path)
+# data_agregada %>%
+#   write.csv(path)
 #test <- read.csv("all_elections.csv")
 
 ############ CREO VARIABLE " REGION " ####################
 ## SE PUEDE PARTIR DE ACA O SEGUIR DE LARGO
 path <- "all_elections.csv" # base creada previamente en este mismo script
-data_agregada <- read.csv(path)  %>% select(-X) 
+#data_agregada <- read.csv(path)  %>% select(-X) 
 #reserva <- data_agregada
 
 # EN MAING Y PEREZ LIÑAN : 

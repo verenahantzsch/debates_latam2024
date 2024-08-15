@@ -28,7 +28,6 @@ Brasil,1989,1,1,Brazil
 Brasil,1989,2,1,Brazil
 Brasil,1994,1,1,Brazil
 Brasil,1998,1,0,Brazil
-Brasil,1998,2,0,Brazil
 Brasil,2002,1,1,Brazil
 Brasil,2002,2,1,Brazil
 Brasil,2006,1,1,Brazil
@@ -95,7 +94,6 @@ Costa Rica,2018,2,1,Costa Rica
 Costa Rica,2022,1,1,Costa Rica
 Costa Rica,2022,2,1,Costa Rica
 Ecuador,1960,1,0,Ecuador
-Ecuador,1966,1,0,Ecuador
 Ecuador,1968,1,0,Ecuador
 Ecuador,1979,1,1,Ecuador
 Ecuador,1979,2,1,Ecuador
@@ -177,7 +175,7 @@ Mexico,2012,1,1,Mexico
 Mexico,2018,1,1,Mexico
 Nicaragua,1984,1,0,Nicaragua
 Nicaragua,1990,1,1,Nicaragua
-Nicaragua,1997,1,0,Nicaragua
+Nicaragua,1996,1,0,Nicaragua
 Nicaragua,2001,1,0,Nicaragua
 Nicaragua,2006,1,1,Nicaragua
 Nicaragua,2011,1,0,Nicaragua

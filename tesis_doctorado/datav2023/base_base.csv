@@ -40,7 +40,6 @@ Brasil,1994,1,1,Brazil
 Brasil,1995,0,NA,Brazil
 Brasil,1996,0,NA,Brazil
 Brasil,1997,0,NA,Brazil
-Brasil,1998,2,0,Brazil
 Brasil,1998,1,0,Brazil
 Brasil,1999,0,NA,Brazil
 Brasil,2000,0,NA,Brazil
@@ -365,7 +364,7 @@ Ecuador,1962,0,NA,Ecuador
 Ecuador,1963,0,NA,Ecuador
 Ecuador,1964,0,NA,Ecuador
 Ecuador,1965,0,NA,Ecuador
-Ecuador,1966,1,0,Ecuador
+Ecuador,1966,0,NA,Ecuador
 Ecuador,1967,0,NA,Ecuador
 Ecuador,1968,1,0,Ecuador
 Ecuador,1969,0,NA,Ecuador
@@ -544,8 +543,8 @@ Nicaragua,1992,0,NA,Nicaragua
 Nicaragua,1993,0,NA,Nicaragua
 Nicaragua,1994,0,NA,Nicaragua
 Nicaragua,1995,0,NA,Nicaragua
-Nicaragua,1996,0,NA,Nicaragua
-Nicaragua,1997,1,0,Nicaragua
+Nicaragua,1996,1,0,Nicaragua
+Nicaragua,1997,0,NA,Nicaragua
 Nicaragua,1998,0,NA,Nicaragua
 Nicaragua,1999,0,NA,Nicaragua
 Nicaragua,2000,0,NA,Nicaragua
