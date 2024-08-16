@@ -1,0 +1,718 @@
+"","cat_pais","ncat_eleccion","ncat_ronda","nombres_candidatos","anio","vote_share","vs_vote_share","party_name","vs_party_name","status","vs_status","source_str_vote_share","source_url_vote_share"
+"1","Brasil",1989,1,"Leonel Brizola",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"2","Brasil",1989,1,"Luiz Inacio Lula da Silva",1989,"17,2","16,08","Partido de los Trabajadores","PT",NA,NA,"Friedenberg (2016a)",""
+"3","Brasil",1989,1,"Mario Covas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"4","Brasil",1989,1,"Paulo Maluf",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"5","Brasil",1989,1,"Aureliano Chaves",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"6","Brasil",1989,1,"Guilherme Afif Domingos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"7","Brasil",1989,1,"Roberto Freire",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"8","Brasil",1989,1,"Ronaldo Caiado",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"9","Brasil",1989,1,"Affonso Camargo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"10","Brasil",1989,1,"Ulysses Guimaraes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"11","Brasil",1989,2,"Fernando Collor de Mello",1989,"53,03",NA,"PRN",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"12","Brasil",1989,2,"Luiz Inacio Lula da Silva",1989,"46,97",NA,"Partido de los Trabajadores",NA,NA,NA,"Friedenberg (2016a)",""
+"13","Brasil",1994,1,"Fernando Henrique Cardoso",1994,"54,27","54,28","Unión Trabajo y Progreso (PSDB)","PSDB","Desafiante",NA,"Friedenberg (2016a)",""
+"14","Brasil",1994,1,"Leonel Brizola",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"15","Brasil",1994,1,"Eneas Ferreira Carneiro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"16","Brasil",1994,1,"Esperidiao Amin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"17","Brasil",1994,1,"Flavio Gurgel Rocha",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"18","Brasil",1994,1,"Hernani Goulart Fortuna",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"19","Brasil",1994,1,"Luiz Inacio Lula da Silva",1994,"27,04","27,04","Partido de los Trabajadores","PT","Desafiante","Desafiante","Friedenberg (2016a)",""
+"20","Brasil",1994,1,"Orestes Quercia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"21","Brasil",1994,1,"Eneas Carneiro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"22","Brasil",2002,1,"Luiz Inacio Lula da Silva",2002,"46,44","46,4","Partido de los Trabajadores","PT","Desafiante","Desafiante","Friedenberg (2016a)",""
+"23","Brasil",2002,1,"Jose Serra",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"24","Brasil",2002,1,"Ciro Gomes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"25","Brasil",2002,1,"Anthony Garotinho",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"26","Brasil",2002,2,"Luiz Inacio Lula da Silva",2002,"61,27",NA,"Partido de los Trabajadores",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"27","Brasil",2002,2,"Jose Serra",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"28","Brasil",2006,1,"Geraldo Alckmin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"29","Brasil",2006,1,"Jose Maria Eymael",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"30","Brasil",2006,1,"Luciano Bivar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"31","Brasil",2006,1,"Cristovam Buarque",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"32","Brasil",2006,1,"Heloisa Helena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"33","Brasil",2006,2,"Geraldo Alckmin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"34","Brasil",2006,2,"Luiz Inacio Lula da Silva",2006,"60,83",NA,"Partido de los Trabajadores",NA,"Incumbent",NA,"Friedenberg (2016a)",""
+"35","Brasil",2010,1,"Marina Silva",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"36","Brasil",2010,1,"Jose Serra",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"37","Brasil",2010,1,"Dilma Rousseff",2010,"46,91",NA,"Que Brasil siga cambiando (PT)","PT","Incumbent",NA,"Friedenberg (2016a)",""
+"38","Brasil",2010,1,"Plinio Sampaio",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"39","Brasil",2010,2,"Jose Serra",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"40","Brasil",2010,2,"Dilma Rousseff",2010,"56,05",NA,"Que Brasil siga cambiando (PT)","PT","Incumbent",NA,"Friedenberg (2016a)",""
+"41","Brasil",2014,1,"Dilma Rousseff",2014,"41,59",NA,"Que Brasil siga cambiando (PT)","PT","Incumbent",NA,"Friedenberg (2016a)",""
+"42","Brasil",2014,1,"Aecio Neves",2014,"33,55",NA,"PSDB","PSDB","Desafiante",NA,"Friedenberg (2016a)",""
+"43","Brasil",2014,1,"Marina Silva",2014,"21,3","","PSB","PSB","Desafiante","","Friedenberg (2016a)",""
+"44","Brasil",2014,1,"Luciana Genro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"45","Brasil",2014,1,"Pastor Everaldo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"46","Brasil",2014,1,"Levy Fidelix",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"47","Brasil",2014,1,"Eduardo Jorge",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"48","Brasil",2014,1,"Jose Maria Eymael",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"49","Brasil",2014,2,"Dilma Rousseff",2014,"51,64",NA,"Con la Fuerza del Pueblo (PT)",NA,"Incumbent",NA,"Friedenberg (2016a)",""
+"50","Brasil",2014,2,"Aecio Neves",2014,"48,36",NA,"PSDB","PSDB","Desafiante",NA,"Friedenberg (2016a)",""
+"51","Brasil",2018,1,"Alvaro Dias",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"52","Brasil",2018,1,"Geraldo Alckmin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"53","Brasil",2018,1,"Marina Silva",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"54","Brasil",2018,1,"Henrique Meirelles",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"55","Brasil",2018,1,"Guilherme Boulos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"56","Brasil",2018,1,"Ciro Gomes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"57","Brasil",2018,1,"Cabo Daciolo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"58","Brasil",2018,1,"Jair Bolsonaro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"59","Brasil",2018,1,"Fernando Haddad",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"60","Brasil",2022,1,"Jair Bolsonaro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"61","Brasil",2022,1,"Luiz Inacio Lula da Silva",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"62","Brasil",2022,1,"Luiz Felipe d'Avila",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"63","Brasil",2022,1,"Ciro Gomes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"64","Brasil",2022,1,"Simone Tebet",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"65","Brasil",2022,1,"Soraya Thronicke",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"66","Brasil",2022,1,"Kelmon Souza",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"67","Brasil",2022,2,"Jair Bolsonaro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"68","Brasil",2022,2,"Luiz Inacio Lula da Silva",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"69","Chile",1989,1,"Hernan Buchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"70","Chile",1989,1,"Patricio Aylwin Azocar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"71","Chile",1993,1,"Eduardo Frei Ruiz-Tagle",1993,"57,98","58","Concertación (PDC)","PDC/PS","Incumbent","Incumbente","Friedenberg (2016a)",""
+"72","Chile",1993,1,"Arturo Alessandri Besa",1993,"24,41","24,4",NA,"RD","Desafiante","Desafiante","Friedenberg (2016a)",""
+"73","Chile",2000,1,"Joaquin Lavin Infante",1999,"47,51","47,51",NA,"RD","Desafiante","Desafiante","Friedenberg (2016a)",""
+"74","Chile",2000,1,"Ricardo Lagos Escobar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"75","Chile",2006,1,"Michelle Bachelet",2005,"45,96",NA,"Concertación (PS)",NA,"Incumbent",NA,"Friedenberg (2016a)",""
+"76","Chile",2006,1,"Tomas Hirsch Goldschmidt",2005,"5,4","","","","Desafiante","","Friedenberg (2016a)",""
+"77","Chile",2006,1,"Joaquin Lavin Infante",2005,"23,23","","","","Desafiante","","Friedenberg (2016a)",""
+"78","Chile",2006,1,"Sebastian Pinera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"79","Chile",2006,2,"Sebastian Pinera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"80","Chile",2006,2,"Michelle Bachelet",2006,"53,5",NA,"Concertación (PS)",NA,"Incumbent",NA,"Friedenberg (2016a)",""
+"81","Chile",2010,1,"Jorge Arrate Mac Niven",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"82","Chile",2010,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"83","Chile",2010,1,"Sebastian Pinera",2009,"44,06",NA,"Coalición por el cambio (RN)",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"84","Chile",2010,1,"Eduardo Frei Ruiz-Tagle",2009,"29,6",NA,NA,NA,"Incumbent",NA,"Friedenberg (2016a)",""
+"85","Chile",2010,2,"Sebastian Pinera",2010,"51,61",NA,"Coalición por el cambio (RN)",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"86","Chile",2010,2,"Eduardo Frei Ruiz-Tagle",2010,"48,39",NA,NA,NA,"Incumbent",NA,"Friedenberg (2016a)",""
+"87","Chile",2013,1,"Franco Parisi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"88","Chile",2013,1,"Marcel Claude",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"89","Chile",2013,1,"Ricardo Israel",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"90","Chile",2013,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"91","Chile",2013,1,"Roxana Miranda",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"92","Chile",2013,1,"Evelyn Matthei",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"93","Chile",2013,1,"Alfredo Sfeir",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"94","Chile",2013,1,"Tomas Jocelyn-Holt",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"95","Chile",2013,1,"Michelle Bachelet",2013,"46,7",NA,"Nueva Mayoría (PS)",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"96","Chile",2013,2,"Michelle Bachelet",2013,"62,17",NA,"Nueva Mayoría (PS)",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"97","Chile",2013,2,"Evelyn Matthei",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"98","Chile",2017,1,"Sebastian Pinera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"99","Chile",2017,1,"Beatriz Sanchez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"100","Chile",2017,1,"Jose Antonio Kast",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"101","Chile",2017,1,"Alejandro Guillier",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"102","Chile",2017,1,"Carolina Goic",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"103","Chile",2017,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"104","Chile",2017,1,"Eduardo Artes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"105","Chile",2017,1,"Alejandro Navarro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"106","Chile",2017,2,"Sebastian Pinera",2017,"54,58",NA,"Chile Vamos (Independiente)",NA,"Desafiante",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034"
+"107","Chile",2017,2,"Alejandro Guillier",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"108","Chile",2021,1,"Gabriel Boric",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"109","Chile",2021,1,"Sebastian Sichel",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"110","Chile",2021,1,"Jose Antonio Kast",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"111","Chile",2021,1,"Yasna Provoste",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"112","Chile",2021,1,"Eduardo Artes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"113","Chile",2021,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"114","Chile",2021,1,"Franco Parisi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"115","Chile",2021,2,"Gabriel Boric",2021,"55,87",NA,"Apruebo Dignidad (CS)",NA,"Desafiante",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034"
+"116","Chile",2021,2,"Jose Antonio Kast",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"117","Argentina",2015,1,"Nicolas del Cano",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"118","Argentina",2015,1,"Adolfo Rodriguez Saa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"119","Argentina",2015,1,"Sergio Massa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"120","Argentina",2015,1,"Margarita Stolbizer",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"121","Argentina",2015,1,"Mauricio Macri",2015,"34,15",NA,"Cambiemos","PRO","Desafiante",NA,"Friedenberg (2016a)",""
+"122","Argentina",2015,2,"Daniel Scioli",2015,"48,66",NA,"Frente para la Victoria","PJ","Incumbent",NA,"Friedenberg (2016a)",""
+"123","Argentina",2015,2,"Mauricio Macri",2015,"51,34",NA,"Cambiemos","PRO","Desafiante",NA,"Friedenberg (2016a)",""
+"124","Argentina",2019,1,"Juan Jose Gomez Centurion",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"125","Argentina",2019,1,"Mauricio Macri",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"126","Argentina",2019,1,"Alberto Fernandez",2019,"48,24",NA,"Frente de Todos",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"127","Argentina",2019,1,"Jose Luis Espert",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"128","Argentina",2019,1,"Roberto Lavagna",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"129","Argentina",2019,1,"Nicolas del Cano",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"130","Argentina",2023,1,"Sergio Massa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"131","Argentina",2023,1,"Javier Milei",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"132","Argentina",2023,1,"Myriam Bregman",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"133","Argentina",2023,1,"Juan Schiaretti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"134","Argentina",2023,1,"Patricia Bullrich",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"135","Argentina",2023,2,"Sergio Massa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"136","Argentina",2023,2,"Javier Milei",2023,"55,69",NA,"La Liberad Avanza",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"137","Peru",1990,2,"Alberto Fujimori",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"138","Peru",1990,2,"Mario Vargas Llosa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"139","Peru",2001,2,"Alejandro Toledo Manrique",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"140","Peru",2001,2,"Alan Garcia Perez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"141","Peru",2006,2,"Alan Garcia Perez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"142","Peru",2006,2,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"143","Peru",2011,1,"Keiko Fujimori Higuchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"144","Peru",2011,1,"Oscar Luis Castaneda Lossio",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"145","Peru",2011,1,"Pedro Pablo Kuczynski",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"146","Peru",2011,1,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"147","Peru",2011,1,"Alejandro Toledo Manrique",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"148","Peru",2011,1,"Juliana Reymer Rodriguez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"149","Peru",2011,1,"Humberto Pinazo Bella",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"150","Peru",2011,1,"Rafael Belaunde Aubry",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"151","Peru",2011,1,"Jose Manuel Rodriguez Cuadros",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"152","Peru",2011,1,"Ricardo Noriega Salaverry",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"153","Peru",2011,1,"Jose Antonio Nique de la Puente",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"154","Peru",2011,1,"Manuel Rodriguez Cuadros",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"155","Peru",2011,1,"Jose Nique de la Puente",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"156","Peru",2011,2,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"157","Peru",2011,2,"Keiko Fujimori Higuchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"158","Peru",2016,1,"Antero Flores Araoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"159","Peru",2016,1,"Hernando Guerra Garcia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"160","Peru",2016,1,"Francisco Diez Canseco",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"161","Peru",2016,1,"Yehude Simon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"162","Peru",2016,1,"Fernando Olivera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"163","Peru",2016,1,"Julio Guzman",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"164","Peru",2016,1,"Veronika Mendoza",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"165","Peru",2016,1,"Vladimir Cerron",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"166","Peru",2016,1,"Gregorio Santos Guerrero",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"167","Peru",2016,1,"Alan Garcia Perez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"168","Peru",2016,1,"Alejandro Toledo Manrique",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"169","Peru",2016,1,"Isaac Alfredo Barnechea Garcia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"170","Peru",2016,1,"Keiko Fujimori Higuchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"171","Peru",2016,1,"Luis Fernando Oliver Vega",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"172","Peru",2016,1,"Miguel Hilario",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"173","Peru",2016,1,"Pedro Pablo Kuczynski",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"174","Peru",2016,2,"Keiko Fujimori Higuchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"175","Peru",2016,2,"Pedro Pablo Kuczynski",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"176","Peru",2021,1,"Yonhy Lescano",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"177","Peru",2021,1,"George Forsyth",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"178","Peru",2021,1,"Veronika Mendoza",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"179","Peru",2021,1,"Keiko Fujimori Higuchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"180","Peru",2021,1,"Daniel Urresti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"181","Peru",2021,1,"Cesar Acuna",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"182","Peru",2021,1,"Marco Arana",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"183","Peru",2021,1,"Alberto Beingolea",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"184","Peru",2021,1,"Hernando de Soto",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"185","Peru",2021,1,"Andres Alcantara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"186","Peru",2021,1,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"187","Peru",2021,1,"Jose Castillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"188","Peru",2021,1,"Jose Vega",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"189","Peru",2021,1,"Julio Guzman",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"190","Peru",2021,1,"Rafael Santos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"191","Peru",2021,1,"Ciro Galvez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"192","Peru",2021,1,"Rafael Lopez Aliaga",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"193","Peru",2021,1,"Daniel Salaverry",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"194","Peru",2021,2,"Keiko Fujimori Higuchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"195","Peru",2021,2,"Pedro Castillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"196","Paraguay",2003,1,"Nicanor Duarte Frutos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"197","Paraguay",2003,1,"Julio Cesar Franco",2003,"24,03",NA,"Partido Liberal Radical Auténtico","PLRA","Desafiante",NA,"Friedenberg (2016a)",""
+"198","Paraguay",2003,1,"Pedro Fadul",2003,"21,3","","Patria Querida","","Desafiante","","Friedenberg (2016a)",""
+"199","Paraguay",2003,1,"Guillermo Sanchez Guffanti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"200","Paraguay",2003,1,"Diego Abente",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"201","Paraguay",2008,1,"Lino Oviedo",2008,"22","","UNACE","UNACE","Desafiante","","Friedenberg (2016a)",""
+"202","Paraguay",2008,1,"Blanca Odelard",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"203","Paraguay",2008,1,"Pedro Fadul",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"204","Paraguay",2008,1,"Fernando Lugo",2008,"41,19",NA,"PDC-APC","","Desafiante",NA,"Friedenberg (2016a)",""
+"205","Paraguay",2013,1,"Horacio Cartes",2013,"45,68",NA,"ANR-PC","ANR","Desafiante",NA,"Friedenberg (2016a)",""
+"206","Paraguay",2013,1,"Efrain Alegre",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"207","Paraguay",2013,1,"Miguel Carrizosa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"208","Paraguay",2013,1,"Mario Ferreiro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"209","Paraguay",2013,1,"Lino Oviedo",2013,"0,81","","UNACE","UNACE","","","Friedenberg (2016a)",""
+"210","Paraguay",2013,1,"Anibal Carrillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"211","Paraguay",2018,1,"Efrain Alegre",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"212","Paraguay",2018,1,"Mario Abdo Benitez",2018,"46,42",NA,"ANR-PC",NA,"Incumbent",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067"
+"213","Paraguay",2023,1,"Paraguayo Cubas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"214","Paraguay",2023,1,"Euclides Acevedo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"215","Paraguay",2023,1,"Jorge Gomez Otano",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"216","Paraguay",2023,1,"Luis Talavera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"217","Paraguay",2023,1,"Alfredo Luis Machuca Doldan",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"218","Ecuador",1979,1,"Jaime Roldos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"219","Ecuador",1979,1,"Sixto Duran Ballen",1979,"23,86",NA,"Partido Social Cristiano (PSC)","PSC",NA,NA,"Friedenberg (2016a)",""
+"220","Ecuador",1979,1,"Raul Clemente Huerta",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"221","Ecuador",1979,1,"Rodrigo Borja",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"222","Ecuador",1979,1,"Abdon Calderon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"223","Ecuador",1979,1,"Rene Mauge",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"224","Ecuador",1979,2,"Sixto Duran Ballen",1979,"31,51",NA,"Partido Social Cristiano (PSC)","PSC",NA,NA,"Friedenberg (2016a)",""
+"225","Ecuador",1979,2,"Jaime Roldos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"226","Ecuador",1984,2,"Rodrigo Borja",1984,"48,46",NA,"Izquierda Democrática","ID",NA,NA,"Friedenberg (2016a)",""
+"227","Ecuador",1984,2,"Leon Febres Cordero",1984,"51,54",NA,"Partido Social Cristiano (PSC)","PSC","Desafiante",NA,"Friedenberg (2016a)",""
+"228","Ecuador",2006,1,"Rafael Correa",2006,"22,84",NA,"ALIANZA PAIS","ALIANZA PAIS","Desafiante",NA,"Friedenberg (2016a)",""
+"229","Ecuador",2006,1,"Cynthia Viteri",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"230","Ecuador",2006,1,"Leon Roldos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"231","Ecuador",2006,1,"Fernando Rosero",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"232","Ecuador",2006,1,"Alvaro Noboa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"233","Ecuador",2013,1,"Lucio Gutierrez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"234","Ecuador",2013,1,"Alvaro Noboa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"235","Ecuador",2013,1,"Nelson Zavala",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"236","Ecuador",2013,1,"Guillermo Lasso",2013,"22,68",NA,"Creo","Creo","Desafiante",NA,"Friedenberg (2016a)",""
+"237","Ecuador",2013,1,"Mauricio Rodas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"238","Ecuador",2013,1,"Norman Wray",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"239","Ecuador",2017,1,"Abdala Bucaram",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"240","Ecuador",2017,1,"Guillermo Lasso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"241","Ecuador",2017,1,"Washington Besantes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"242","Ecuador",2017,1,"Patricio Zuquilanda",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"243","Ecuador",2017,1,"Ivan Espinel",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"244","Ecuador",2017,1,"Paco Moncayo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"245","Ecuador",2017,1,"Cynthia Viteri",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"246","Ecuador",2021,1,"Abdala Bucaram",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"247","Ecuador",2021,1,"Guillermo Lasso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"248","Ecuador",2021,1,"Washington Besantes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"249","Ecuador",2021,1,"Patricio Zuquilanda",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"250","Ecuador",2021,1,"Ivan Espinel",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"251","Ecuador",2021,1,"Paco Moncayo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"252","Ecuador",2021,1,"Cynthia Viteri",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"253","Ecuador",2021,1,"Lenin Moreno",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"254","Ecuador",2021,1,"Andres Arauz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"255","Ecuador",2021,1,"Yaku Perez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"256","Ecuador",2021,1,"Isidro Romero",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"257","Ecuador",2021,1,"Gustavo Larrea",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"258","Ecuador",2021,1,"Carlos Sagnay",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"259","Ecuador",2021,1,"Giovanny Andrade",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"260","Ecuador",2021,1,"Paul Carrasco",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"261","Ecuador",2021,1,"Ximena Pena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"262","Ecuador",2021,1,"Guillermo Celi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"263","Ecuador",2021,1,"Lucio Gutierrez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"264","Ecuador",2021,1,"Xavier Hervas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"265","Ecuador",2021,1,"Cesar Montufar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"266","Ecuador",2021,1,"Gerson Almeida",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"267","Ecuador",2021,1,"Juan Fernando Velasco",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"268","Ecuador",2021,1,"Pedro Freile",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"269","Ecuador",2021,2,"Andres Arauz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"270","Ecuador",2021,2,"Guillermo Lasso",2021,"52,36",NA,"CREO",NA,"Desafiante",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062"
+"271","Ecuador",2023,1,"Yaku Perez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"272","Ecuador",2023,1,"Bolivar Armijos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"273","Ecuador",2023,1,"Luisa Gonzalez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"274","Ecuador",2023,1,"Xavier Hervas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"275","Ecuador",2023,1,"Daniel Noboa Azin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"276","Ecuador",2023,1,"Otto Sonnenholzner",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"277","Ecuador",2023,1,"Jan Topic",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"278","Ecuador",2023,2,"Luisa Gonzalez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"279","Ecuador",2023,2,"Daniel Noboa Azin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"280","Uruguay",1984,1,"Julio Maria Sanguinetti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"281","Uruguay",1984,1,"Alberto Zumaran",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"282","Uruguay",1989,1,"Jorge Batlle",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"283","Uruguay",1989,1,"Luis Alberto Lacalle Herrera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"284","Uruguay",1989,1,"Carlos Julio Pereyra",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"285","Uruguay",1989,1,"Alberto Zumaran",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"286","Uruguay",1989,1,"Liber Seregni",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"287","Uruguay",1989,1,"Hugo Batalla",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"288","Uruguay",1994,1,"Julio Maria Sanguinetti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"289","Uruguay",1994,1,"Tabare Vazquez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"290","Uruguay",1994,1,"Juan Andres Ramirez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"291","Uruguay",2009,1,"Pedro Bordaberry",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"292","Uruguay",2009,1,"Pablo Mieres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"293","Uruguay",2009,1,"Raul Rodriguez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"294","Uruguay",2014,1,"Luis Alberto Lacalle Pou",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"295","Uruguay",2014,1,"Pedro Bordaberry",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"296","Uruguay",2014,1,"Pablo Mieres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"297","Uruguay",2014,1,"Cesar Vega",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"298","Uruguay",2014,1,"Gonzalo Abella",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"299","Uruguay",2014,1,"Rafael Fernandez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"300","Uruguay",2019,1,"Luis Alberto Lacalle Pou",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"301","Uruguay",2019,1,"Daniel Martinez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"302","Uruguay",2019,2,"Luis Alberto Lacalle Pou",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"303","Uruguay",2019,2,"Daniel Martinez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"304","Nicaragua",2006,1,"Eduardo Montealegre",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"305","Nicaragua",2006,1,"Edmundo Jarquin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"306","Nicaragua",2006,1,"Jose Rizo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"307","Nicaragua",2006,1,"Eden Pastora",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"308","Panama",1994,1,"Jose Salvador Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"309","Panama",1994,1,"Samuel Lewis Galindo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"310","Panama",1994,1,"Ernesto Perez Balladares",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"311","Panama",1994,1,"Ruben Blades",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"312","Panama",1994,1,"Eduardo Vallarino Arjona",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"313","Panama",1994,1,"Ruben Dario Carles",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"314","Panama",2004,1,"Guillermo Endara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"315","Panama",2004,1,"Jose Miguel Aleman",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"316","Panama",2004,1,"Ricardo Martinelli",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"317","Panama",2004,1,"Martin Torrijos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"318","Panama",2009,1,"Ricardo Martinelli",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"319","Panama",2009,1,"Balbina Herrara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"320","Panama",2014,1,"Juan Carlos Navarro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"321","Panama",2014,1,"Juan Carlos Varela",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"322","Panama",2014,1,"Genaro Lopez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"323","Panama",2014,1,"Jose Domingo Arias",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"324","Panama",2014,1,"Juan Jovane",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"325","Panama",2014,1,"Gerardo Barroso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"326","Panama",2014,1,"Esteban Rodriguez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"327","Panama",2019,1,"Ana Matilde Gomez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"328","Panama",2019,1,"Ricardo Lombana",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"329","Panama",2019,1,"Marco Ameglio",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"330","Panama",2019,1,"Jose Isabel Blandon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"331","Panama",2019,1,"Saul Mendez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"332","Panama",2019,1,"Romulo Roux",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"333","Panama",2019,1,"Laurentino Cortizo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"334","Venezuela",1963,1,"Rafael Caldera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"335","Venezuela",1963,1,"Arturo Uslar Pietri",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"336","Venezuela",1968,1,"Gonzalo Barrios",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"337","Venezuela",1968,1,"German Borregales",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"338","Venezuela",1968,1,"Luis Beltran Prieto",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"339","Venezuela",1968,1,"Rafael Caldera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"340","Venezuela",1968,1,"Alejandro Hernandez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"341","Venezuela",1983,1,"Jaime Lusinchi",1983,"56,72","57,67","Acción Democrática (AD)","AD","Desafiante","Desafiante","Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231093"
+"342","Venezuela",1983,1,"Rafael Caldera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"343","Venezuela",1998,1,"Claudio Fermin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"344","Venezuela",1998,1,"Hugo Chavez",1998,"56,2","56,2","Polo Patriótico (MVR)","MVR","Desafiante",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231099"
+"345","Bolivia",1989,1,"Carlos Palenque",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"346","Bolivia",1989,1,"Genaro Flores",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"347","Bolivia",1989,1,"Luis Sandoval Moron",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"348","Bolivia",1989,1,"Antonio Aranibar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"349","Bolivia",1989,1,"Roger Cortez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"350","Bolivia",1989,1,"Victor Hugo Cardena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"351","Bolivia",1989,1,"Gonzalo Sanchez de Lozada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"352","Bolivia",1989,1,"Jaime Paz Zamora",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"353","Bolivia",1989,1,"Hugo Banzer",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"354","Bolivia",1993,1,"Felix Cardenas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"355","Bolivia",1993,1,"Jerjes Justiniano",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"356","Bolivia",1993,1,"Mario Serrate",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"357","Bolivia",1993,1,"Fernando Untoja",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"358","Bolivia",1993,1,"Antonio Aranibar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"359","Bolivia",1993,1,"Ramiro Velasco",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"360","Bolivia",1993,1,"Gonzalo Sanchez de Lozada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"361","Bolivia",1993,1,"Hugo Banzer",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"362","Bolivia",1993,1,"Max Fernandez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"363","Bolivia",1997,1,"Juan Carlos Duran",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"364","Bolivia",1997,1,"Miguel Urioste",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"365","Bolivia",1997,1,"Remedios Loza",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"366","Bolivia",1997,1,"Jaime Paz Zamora",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"367","Bolivia",1997,1,"Ivo Kuljis",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"368","Bolivia",2002,1,"Gonzalo Sanchez de Lozada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"369","Bolivia",2002,1,"Manfred Reyes Villa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"370","Bolivia",2002,1,"Evo Morales",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"371","Bolivia",2002,1,"Felipe Quispe",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"372","Bolivia",2002,1,"Jaime Paz Zamora",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"373","Bolivia",2005,1,"Jorge Quiroga",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"374","Bolivia",2005,1,"Samuel Doria Medina",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"375","Bolivia",2005,1,"Michiaki Nagatani",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"376","Bolivia",2014,1,"Samuel Doria Medina",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"377","Bolivia",2014,1,"Juan del Granado",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"378","Bolivia",2014,1,"Jorge Tuto Quiroga",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"379","Bolivia",2014,1,"Fernando Vargas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"380","Bolivia",2020,1,"Luis Arce",2020,"55,11",NA,"MAS-IPSP",NA,"Incumbent",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231032"
+"381","Bolivia",2020,1,"Carlos Mesa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"382","Bolivia",2020,1,"Luis Fernando Camacho",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"383","Bolivia",2020,1,"Chi Hyun Chung",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"384","Bolivia",2020,1,"Jorge Tuto Quiroga",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"385","Bolivia",2020,1,"Maria de la Cruz Baya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"386","Bolivia",2020,1,"Feliciano Mamani",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"387","Mexico",1994,1,"Cuauhtemoc Cardenas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"388","Mexico",1994,1,"Diego Fernandez de Cevallos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"389","Mexico",1994,1,"Ernesto Zedillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"390","Mexico",2000,1,"Francisco Labastida",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"391","Mexico",2000,1,"Cuauhtemoc Cardenas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"392","Mexico",2000,1,"Vicente Fox",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"393","Mexico",2000,1,"Gilberto Rincon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"394","Mexico",2000,1,"Porfirio Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"395","Mexico",2000,1,"Manuel Camacho",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"396","Mexico",2006,1,"Roberto Campa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"397","Mexico",2006,1,"Patricia Mercado",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"398","Mexico",2006,1,"Roberto Madrazo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"399","Mexico",2006,1,"Felipe Calderon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"400","Mexico",2006,1,"Andres Manuel Lopez Obrador",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"401","Mexico",2012,1,"Enrique Pena Nieto",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"402","Mexico",2012,1,"Andres Manuel Lopez Obrador",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"403","Mexico",2012,1,"Josefina Vazquez Mota",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"404","Mexico",2012,1,"Gabriel Quadri",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"405","Mexico",2018,1,"Andres Manuel Lopez Obrador",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"406","Mexico",2018,1,"Ricardo Anaya Cortes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"407","Mexico",2018,1,"Margarita Zavala",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"408","Mexico",2018,1,"Jose Antonio Meade Kuribrena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"409","Mexico",2018,1,"Jaime Rodriguez Calderon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"410","Guatemala",1995,2,"Alvaro Arzu",1995,"51,2",NA,"PAN",NA,"-",NA,"Friedenberg (2016b)",""
+"411","Guatemala",1995,2,"Alfonso Portillo",1995,"48,7",NA,"FRG",NA,NA,NA,"Friedenberg (2016b)",""
+"412","Guatemala",2003,1,"Eduardo Suger",2003,"2,23","","DIA","DIA","","","Friedenberg (2016b)",""
+"413","Guatemala",2003,1,"Fritz Garcia-Gallont",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"414","Guatemala",2003,1,"Alvaro Colom",2003,"26,4",NA,"UNE","UNE",NA,NA,"Friedenberg (2016b)",""
+"415","Guatemala",2003,1,"Manuel Conde Orellana",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"416","Guatemala",2003,1,"Leonel Lopez Rodas",2003,"8,35","","PAN","PAN","","","Friedenberg (2016b)",""
+"417","Guatemala",2003,2,"Oscar Berger",2003,"54,12",NA,"GANA","GANA","Desafiante",NA,"Friedenberg (2016b)",""
+"418","Guatemala",2003,2,"Alvaro Colom",2003,"45,88",NA,"UNE","UNE",NA,NA,"Friedenberg (2016b)",""
+"419","Guatemala",2007,1,"Alvaro Colom",2007,"28,23",NA,"UNE","UNE","Desafiante",NA,"Friedenberg (2016b)",""
+"420","Guatemala",2007,1,"Rigoberta Menchu",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"421","Guatemala",2007,1,"Eduardo Suger",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"422","Guatemala",2007,1,"Otto Perez Molina",2007,"23,51",NA,"PP","PP","Desafiante",NA,"Friedenberg (2016b)",""
+"423","Guatemala",2007,1,"Alejandro Giammattei",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"424","Guatemala",2011,1,"Manuel Baldizon",2011,"22,68",NA,"LIDER","LIDER",NA,NA,"Friedenberg (2016b)",""
+"425","Guatemala",2011,1,"Harold Caballeros",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"426","Guatemala",2011,1,"Otto Perez Molina",2011,"36,1",NA,"PP","PP","Desafiante",NA,"Friedenberg (2016b)",""
+"427","Guatemala",2011,1,"Eduardo Suger",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"428","Guatemala",2011,1,"Sandra Torres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"429","Guatemala",2011,1,"Juan Gutierrez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"430","Guatemala",2011,1,"Adela de Torre",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"431","Guatemala",2011,1,"Alejandro Giammattei",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"432","Guatemala",2011,1,"Patricia de Arzu",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"433","Guatemala",2011,1,"Rigoberta Menchu",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"434","Guatemala",2011,2,"Otto Perez Molina",2011,"53,74",NA,"PP","PP","Desafiante",NA,"Friedenberg (2016b)",""
+"435","Guatemala",2011,2,"Manuel Baldizon",2011,"46,26",NA,"LIDER","LIDER",NA,NA,"Friedenberg (2016b)",""
+"436","Guatemala",2015,1,"Zury Rios",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"437","Guatemala",2015,1,"Alejandro Giammattei",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"438","Guatemala",2015,1,"Jose Angel Lopez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"439","Guatemala",2015,1,"Miguel Angel Sandoval",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"440","Guatemala",2015,1,"Lizardo Sosa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"441","Guatemala",2015,1,"Juan Gutierrez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"442","Guatemala",2015,1,"Luis Fernando Perez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"443","Guatemala",2015,1,"Mario David Garcia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"444","Guatemala",2015,1,"Sandra Torres",2015,"19,76",NA,"UNE",NA,NA,NA,"Friedenberg (2016b)",""
+"445","Guatemala",2015,1,"Roberto Gonzalez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"446","Guatemala",2015,1,"Jimmy Morales",2015,"23,85",NA,"FCN Nación","FCN Nación",NA,NA,"Friedenberg (2016b)",""
+"447","Guatemala",2015,1,"Manuel Baldizon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"448","Guatemala",2015,1,"Anibal Garcia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"449","Guatemala",2015,1,"Mario Estrada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"450","Guatemala",2015,2,"Sandra Torres",2015,"32,56",NA,"UNE",NA,NA,NA,"Friedenberg (2016b)",""
+"451","Guatemala",2015,2,"Jimmy Morales",2015,"67,44",NA,"FCN Nación","FCN Nación","Desafiante",NA,"Friedenberg (2016b)",""
+"452","Guatemala",2019,1,"Roberto Arzu",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"453","Guatemala",2019,1,"Edwin Escobar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"454","Guatemala",2019,1,"Hector Estrada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"455","Guatemala",2019,1,"Alejandro Giammattei",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"456","Guatemala",2019,1,"Edmond Mulet",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"457","Guatemala",2019,1,"Sandra Torres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"458","Guatemala",2019,1,"Estuardo Galdamez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"459","Guatemala",2019,1,"Amilcar Rivera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"460","Guatemala",2019,1,"Julio Hector Estrada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"461","Guatemala",2019,1,"Isaac Farchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"462","Guatemala",2019,1,"Manfredo Marroquin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"463","Guatemala",2019,1,"Benito Morales",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"464","Guatemala",2019,1,"Manuel Villacorta",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"465","Guatemala",2019,1,"Pablo Ignacio Ceto",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"466","Guatemala",2019,1,"Pablo Duarte",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"467","Guatemala",2019,1,"Fredy Cabrera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"468","Guatemala",2019,1,"Anibal Garcia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"469","Guatemala",2019,1,"Danilo Roca",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"470","Guatemala",2019,1,"Jose Luis Chea Urruela",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"471","Guatemala",2019,1,"Luis Velasquez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"472","Guatemala",2023,1,"Ricardo Sagastume",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"473","Guatemala",2023,1,"Armando Castillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"474","Guatemala",2023,1,"Giulio Talamonti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"475","Guatemala",2023,1,"Francisco Arredondo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"476","Guatemala",2023,1,"Sandra Torres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"477","Guatemala",2023,1,"Zury Rios",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"478","Guatemala",2023,1,"Edmond Mulet",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"479","Guatemala",2023,1,"Manuel Conde Orellana",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"480","Guatemala",2023,1,"Amilcar Pop",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"481","Guatemala",2023,1,"Alvaro Trujillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"482","Guatemala",2023,1,"Giovanni Reyes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"483","Guatemala",2023,1,"Rudio Lecsan Merida",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"484","Guatemala",2023,1,"Luis Lam",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"485","Guatemala",2023,1,"Julio Rivera Claveria",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"486","Guatemala",2023,1,"Amilcar Rivera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"487","Guatemala",2023,1,"Manuel Villacorta",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"488","Guatemala",2023,1,"Rudy Guzman",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"489","Guatemala",2023,1,"Bernardo Arevalo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"490","Guatemala",2023,1,"Hugo Pena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"491","Guatemala",2023,2,"Bernardo Arevalo",2023,"60,9",NA,"Movimiento Semilla",NA,"Desafiante",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067"
+"492","Guatemala",2023,2,"Sandra Torres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"493","Guatemala",2023,1,"Samuel Morales",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"494","Guatemala",2023,1,"Carlos Pineda",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"495","Guatemala",2023,1,"Rafael Espada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"496","Honduras",1993,1,"Jose Oswaldo Ramos Soto",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"497","Honduras",1993,1,"Marco Orlando Iriarte",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"498","Honduras",1993,1,"Olban Valladares",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"499","Honduras",1993,1,"Carlos Roberto Reina",1993,"53,01","53,01","Partido Liberal PL","PLH","Desafiante","","Friedenberg (2016b)",""
+"500","Honduras",2013,1,"Orle Anibal Solis",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"501","Honduras",2013,1,"Romeo Vasquez Velasquez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"502","Honduras",2013,1,"Mauricio Villeda Bermudez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"503","Honduras",2013,1,"Salvador Nasralla",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"504","Honduras",2013,1,"Iris Xiomara Castro de Zelaya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"505","Honduras",2013,1,"Jorge Rafael Aguilar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"506","Honduras",2013,1,"Andres Pavon Murillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"507","Honduras",2013,1,"Juan Orlando Hernandez",2013,"36,89",NA,"Partido Nacional","PNH","Incumbent",NA,"Friedenberg (2016b)",""
+"508","Honduras",2017,1,"Jose Alfonso Diaz Narvaez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"509","Honduras",2017,1,"Salvador Nasralla",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"510","Honduras",2017,1,"Eliseo Vallecillo Reyes",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"511","Honduras",2017,1,"Lucas Evangelisto Aguilera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"512","Honduras",2017,1,"Luis Orlando Zelaya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"513","Honduras",2017,1,"Romeo Vasquez Velasquez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"514","Honduras",2017,1,"Isaias Fonseca Aguilar",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"515","Colombia",1986,1,"Alvaro Gomez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"516","Colombia",1986,1,"Luis Carlos Galin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"517","Colombia",1994,1,"Andres Pastrana",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"518","Colombia",1994,1,"Ernesto Samper",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"519","Colombia",1998,2,"Andres Pastrana",1998,"50,39",NA,"Partido Conservador","Conservador","Desafiante",NA,"Friedenberg (2016a)",""
+"520","Colombia",1998,2,"Horacio Serpa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"521","Colombia",2002,1,"Alvaro Uribe Velez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"522","Colombia",2002,1,"Noemi Sanin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"523","Colombia",2002,1,"Luis Eduardo Garzon",2002,"6,1","","Coalición de siete partidos","","","","Friedenberg (2016a)",""
+"524","Colombia",2002,1,"Horacio Serpa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"525","Colombia",2002,1,"Harold Bedoy",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"526","Colombia",2006,1,"Antanas Mockus",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"527","Colombia",2006,1,"Horacio Serpa",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"528","Colombia",2006,1,"Enrique Parejo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"529","Colombia",2006,1,"Carlos Gaviria",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"530","Colombia",2006,1,"Alvaro Leyva",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"531","Colombia",2010,1,"Antanas Mockus",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"532","Colombia",2010,1,"Noemi Sanin",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"533","Colombia",2010,1,"Gustavo Petro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"534","Colombia",2010,1,"German Vargas Lleras",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"535","Colombia",2010,1,"Rafael Pardo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"536","Colombia",2010,1,"Juan Manuel Santos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"537","Colombia",2010,1,"Sergio Fajardo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"538","Colombia",2010,2,"Antanas Mockus",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"539","Colombia",2010,2,"Juan Manuel Santos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"540","Colombia",2014,1,"Clara Lopez",2014,"15,2","","Polo Democrático Alternativo","","Desafiante","","Friedenberg (2016a)",""
+"541","Colombia",2014,1,"Marta Lucia Ramirez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"542","Colombia",2014,1,"Oscar Ivan Zuluaga",2014,"29,28",NA,"Centro Democrático",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"543","Colombia",2014,1,"Enrique Penalosa",2014,"8,3","","Alianza Verde","","Desafiante","","Friedenberg (2016a)",""
+"544","Colombia",2014,1,"Juan Manuel Santos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"545","Colombia",2014,2,"Juan Manuel Santos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"546","Colombia",2014,2,"Oscar Ivan Zuluaga",2014,"45",NA,"Centro Democrático",NA,"Desafiante",NA,"Friedenberg (2016a)",""
+"547","Colombia",2018,1,"Sergio Fajardo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"548","Colombia",2018,1,"Humberto de la Calle",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"549","Colombia",2018,1,"Ivan Duque",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"550","Colombia",2018,1,"Gustavo Petro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"551","Colombia",2018,1,"German Vargas Lleras",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"552","Colombia",2018,1,"Viviane Morales",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"553","Colombia",2022,1,"Gustavo Petro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"554","Colombia",2022,1,"Ingrid Betancourt",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"555","Colombia",2022,1,"Federico Gutierrez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"556","Colombia",2022,1,"Sergio Fajardo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"557","Colombia",2022,1,"Enrique Gomez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"558","Colombia",2022,1,"John Milton Rodriguez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"559","Colombia",2022,1,"Luis Perez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"560","Colombia",2022,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"561","Costa Rica",1986,NA,"Arias Sanchez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"562","Costa Rica",1986,NA,"Calderon Fournier",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"563","Costa Rica",1998,1,"Jose Miguel Corrales Bolanos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"564","Costa Rica",1998,1,"Miguel Angel Rodriguez Echeverria",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"565","Costa Rica",2002,1,"Rolando Araya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"566","Costa Rica",2002,1,"Otto Guevara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"567","Costa Rica",2002,1,"Abel Pacheco de la Espriella",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"568","Costa Rica",2002,1,"Otton Solis",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"569","Costa Rica",2002,2,"Abel Pacheco de la Espriella",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"570","Costa Rica",2002,2,"Rolando Araya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"571","Costa Rica",2006,1,"Humberto Arce",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"572","Costa Rica",2006,1,"Otton Solis",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"573","Costa Rica",2006,1,"Otto Guevara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"574","Costa Rica",2006,1,"Abel Pacheco de la Espriella",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"575","Costa Rica",2006,1,"Alvaro Montero",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"576","Costa Rica",2006,1,"Ricardo Toledo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"577","Costa Rica",2006,1,"Vladimir de la Cruz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"578","Costa Rica",2006,1,"Bolivar Serrano Hidalgo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"579","Costa Rica",2006,1,"Jose Manuel Echandi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"580","Costa Rica",2006,1,"Antonio Alvarez Desanti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"581","Costa Rica",2006,1,"Walter Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"582","Costa Rica",2006,1,"Juan Jose Vargas Fallas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"583","Costa Rica",2006,1,"Jose Miguel Villalobos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"584","Costa Rica",2006,1,"Humberto Vargas",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"585","Costa Rica",2006,1,"Oscar Arias",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"586","Costa Rica",2018,1,"Carlos Alvarado Quesada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"587","Costa Rica",2018,1,"Otto Guevara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"588","Costa Rica",2018,1,"Edgardo Araya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"589","Costa Rica",2018,1,"Mario Redondo Poveda",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"590","Costa Rica",2018,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"591","Costa Rica",2018,1,"Antonio Alvarez Desanti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"592","Costa Rica",2018,1,"Fabricio Alvarado Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"593","Costa Rica",2018,1,"Oscar Lopez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"594","Costa Rica",2018,1,"Sergio Mena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"595","Costa Rica",2018,1,"Jhon Vega",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"596","Costa Rica",2010,1,"Laura Chinchilla",2010,"46,91",NA,"Partido Liberación Nacional (PLN)",NA,"Incumbent",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231051"
+"597","Costa Rica",2010,1,"Otton Solis",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"598","Costa Rica",2010,1,"Otto Guevara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"599","Costa Rica",2010,1,"Luis Fishman",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"600","Costa Rica",2010,1,"Walter Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"601","Costa Rica",2010,1,"Mayra Gonzalez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"602","Costa Rica",2010,1,"Eugenio Trejos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"603","Costa Rica",2010,1,"Oscar Lopez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"604","Costa Rica",2010,1,"Rolando Araya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"605","Costa Rica",2014,1,"Johnny Araya Monge",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"606","Costa Rica",2014,1,"Jose Miguel Corrales Bolanos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"607","Costa Rica",2014,1,"Otto Guevara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"608","Costa Rica",2014,1,"Rodolfo Piza",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"609","Costa Rica",2014,1,"Luis Guillermo Solis",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"610","Costa Rica",2014,1,"Jose Maria Villalta",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"611","Costa Rica",2014,1,"Jose Manuel Echandi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"612","Costa Rica",2014,1,"Hector Monestel Herrera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"613","Costa Rica",2014,1,"Sergio Mena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"614","Costa Rica",2014,1,"Oscar Lopez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"615","Costa Rica",2014,1,"Carlos Avendano",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"616","Costa Rica",2014,1,"Walter Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"617","Costa Rica",2014,1,"Justo Orozco",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"618","Costa Rica",2014,1,"Rodolfo Jhonny Araya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"619","Costa Rica",2018,1,"Stephanie Campos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"620","Costa Rica",2018,2,"Fabricio Alvarado Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"621","Costa Rica",2018,2,"Carlos Alvarado Quesada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"622","Costa Rica",2018,1,"Juan Diego Castro",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"623","Costa Rica",2018,1,"Rodolfo Piza",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"624","Costa Rica",2022,1,"Rodrigo Chaves",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"625","Costa Rica",2022,1,"Fabricio Alvarado Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"626","Costa Rica",2022,1,"Rolando Araya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"627","Costa Rica",2022,1,"Welmer Ramos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"628","Costa Rica",2022,1,"Jose Maria Villalta",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"629","Costa Rica",2022,1,"Eliecer Feinzaig",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"630","Costa Rica",2022,1,"Jose Maria Figueres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"631","Costa Rica",2022,1,"Lineth Saborio",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"632","Costa Rica",2022,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"633","Costa Rica",2022,1,"Rodolfo Piza",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"634","Costa Rica",2022,1,"Federico Malavassi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"635","Costa Rica",2022,1,"Carmen Quesada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"636","Costa Rica",2022,1,"Greivin Moya",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"637","Costa Rica",2022,1,"Martin Chinchilla",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"638","Costa Rica",2022,1,"Luis Alberto Cordero",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"639","Costa Rica",2022,1,"Eduardo Cruickshank",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"640","Costa Rica",2022,1,"Christian Rivera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"641","Costa Rica",2022,1,"Maricela Morales",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"642","Costa Rica",2022,1,"Roulan Jimenez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"643","Costa Rica",2022,1,"Sergio Mena",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"644","Costa Rica",2022,1,"Oscar Lopez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"645","Costa Rica",2022,1,"Natalia Diaz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"646","Costa Rica",2022,1,"Oscar Campos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"647","Costa Rica",2022,1,"Walter Munoz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"648","Costa Rica",2022,1,"Jhon Vega",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"649","Costa Rica",2022,2,"Rodrigo Chaves",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"650","Costa Rica",2022,2,"Jose Maria Figueres",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"651","Republica Dominicana",2016,1,"Luis Rodolfo Abinader",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"652","Republica Dominicana",2016,1,"Guillermo Moreno",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"653","Republica Dominicana",2016,1,"Minerva Tavarez Mirabal",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"654","Republica Dominicana",2016,1,"Soraya Aquino",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"655","Republica Dominicana",2016,1,"Pelegrin Castillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"656","Republica Dominicana",2016,1,"Elias Wessin Chavez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"657","Republica Dominicana",2016,1,"Hatuey De Camps",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"658","El Salvador",1999,1,"Rodolfo Parker",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"659","El Salvador",1999,1,"Facundo Guardado",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"660","El Salvador",1999,1,"Ruben Zamora",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"661","El Salvador",1999,1,"Salvador Nestor Garcia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"662","El Salvador",2014,1,"Salvador Sanchez Ceren",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"663","El Salvador",2014,1,"Norman Quijano",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"664","El Salvador",2014,1,"Elias Antonio Saca",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"665","El Salvador",2014,1,"Rene Rodriguez Hurtado",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"666","El Salvador",2014,1,"Oscar Lemu",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"667","El Salvador",2019,1,"Carlos Calleja",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"668","El Salvador",2019,1,"Hugo Martinez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"669","El Salvador",2019,1,"Josue Alvarado",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"670","Brasil",1989,1,"Fernando Collor de Mello",1989,"30,5","28,52","PRN","PRN",NA,NA,"Friedenberg (2016a)",""
+"671","Brasil",1989,1,"Silvio Santos",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"672","Brasil",1994,1,"Walter Queiroz",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"673","Brasil",2006,1,"Luiz Inacio Lula da Silva",2006,"48,61",NA,"Partido de los Trabajadores","PT","Incumbente",NA,"Friedenberg (2016a)",""
+"674","Brasil",2018,1,"Luiz Inacio Lula da Silva",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"675","Argentina",2015,1,"Daniel Scioli",2015,"37,08",NA,"Frente para la Victoria","PJ","Incumbent",NA,"Friedenberg (2016a)",""
+"676","Peru",2016,1,"Cesar Acuna",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"677","Peru",2016,1,"Daniel Urresti",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"678","Peru",2016,1,"Renzo Reggiardo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"679","Peru",2016,1,"Alfredo Barnechea",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"680","Ecuador",2006,1,"Luis Macas Ambuludi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"681","Ecuador",2013,1,"Rafael Correa",2013,"57,17",NA,"ALIANZA PAIS","ALIANZA PAIS","Incumbent",NA,"Friedenberg (2016a)",""
+"682","Ecuador",2013,1,"Alberto Acosta",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"683","Ecuador",2017,1,"Lenin Moreno",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"684","Uruguay",2009,1,"Luis Alberto Lacalle Herrera",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"685","Uruguay",2009,1,"Jose Mujica",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"686","Uruguay",2014,1,"Tabare Vazquez",2014,"47,81",NA,"Frente Amplio (Partido Socialista)",NA,"Incumbent",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231083"
+"687","Nicaragua",2006,1,"Daniel Ortega",2006,"38","","FSLN","FSLN","Desafiante","","Friedenberg (2016b)",""
+"688","Panama",1994,1,"Mireya Moscoso",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"689","Panama",2009,1,"Guillermo Endara",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"690","Venezuela",1963,1,"Raul Leoni",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"691","Venezuela",1998,1,"Irene Saez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"692","Bolivia",1993,1,"Carlos Palenque",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"693","Bolivia",1997,1,"Hugo Banzer",1997,"22,26","22,3","ADN","ADN","Desafiante","Desafiante","Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231029"
+"694","Bolivia",2002,1,"Rene Blattmann",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"695","Bolivia",2002,1,"Nicolas Valdivia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"696","Bolivia",2002,1,"Costa Obregon",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"697","Bolivia",2002,1,"Rolando Morales",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"698","Bolivia",2002,1,"Johnny Fernandez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"699","Bolivia",2005,1,"Evo Morales",2005,"53,72",NA,"MAS-IPSP","MAS","Desafiante",NA,"Friedenberg (2016a)",""
+"700","Bolivia",2005,1,"Felipe Quispe",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"701","Bolivia",2005,1,"Gildo Angulo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"702","Bolivia",2005,1,"Nestor Garcia",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"703","Bolivia",2005,1,"Eliseo Rodriguez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"704","Bolivia",2014,1,"Evo Morales",2014,"61,36",NA,"MAS-IPSP","MAS","Incumbent",NA,"Friedenberg (2016a)",""
+"705","Guatemala",2003,1,"Oscar Berger",2003,"34,3",NA,"PP-MR-PSN GANA","GANA",NA,NA,"Friedenberg (2016b)",""
+"706","Guatemala",2011,1,"Mario Estrada",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"707","Guatemala",2019,1,"Zury Rios",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"708","Guatemala",2023,1,"Isaac Farchi",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"709","Honduras",2017,1,"Juan Orlando Hernandez",2017,"42,95",NA,"Partido Nacional",NA,"Incumbent",NA,"Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067"
+"710","Honduras",2017,1,"Marlene Alvarenga",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"711","Colombia",1986,1,"Virgilio Barco",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"712","Colombia",2002,1,"Ingrid Betancourt",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"713","Colombia",2006,1,"Alvaro Uribe Velez",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"714","Colombia",2018,1,"Jorge Antonio Trujillo",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"715","Republica Dominicana",2016,1,"Danilo Medina",NA,NA,NA,NA,NA,NA,NA,NA,NA
+"716","El Salvador",1999,1,"Francisco Flores",1999,"51,96","51,96","ARENA","ARENA","Incumbent","Incumbente","Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067"
+"717","El Salvador",2019,1,"Nayib Bukele",2019,"53,1",NA,"GANA",NA,"Desafiante","Desafiante","Freidenberg (2024)","https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231077"

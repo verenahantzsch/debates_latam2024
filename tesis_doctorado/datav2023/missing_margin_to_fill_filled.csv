@@ -1,43 +1,39 @@
-,cat_pais,ncat_eleccion,ncat_ronda,dico_debates_eleccion,eng_cat_pais,candidate_name,vote_share,party_name,status,author,source
-1,Bolivia,1978,1,0,NA,,NA,,,,
-2,Bolivia,1978,1,0,NA,,NA,,,,
-3,Bolivia,1979,1,0,NA,,NA,,,,
-4,Bolivia,1979,1,0,NA,,NA,,,,
-5,Brasil,1998,2,0,NA,,NA,,,,
-6,Brasil,1998,2,0,NA,,NA,,,,
-7,Costa Rica,1962,1,0,NA,,NA,,,,
-8,Costa Rica,1962,1,0,NA,,NA,,,,
-9,Costa Rica,1966,1,0,NA,,NA,,,,
-10,Costa Rica,1966,1,0,NA,,NA,,,,
-11,Costa Rica,1970,1,0,NA,,NA,,,,
-12,Costa Rica,1970,1,0,NA,,NA,,,,
-13,Costa Rica,1974,1,0,NA,,NA,,,,
-14,Costa Rica,1974,1,0,NA,,NA,,,,
-15,Ecuador,1960,1,0,NA,,NA,,,,
-16,Ecuador,1960,1,0,NA,,NA,,,,
-17,Ecuador,1966,1,0,NA,,NA,,,,
-18,Ecuador,1966,1,0,NA,,NA,,,,
-19,Ecuador,1968,1,0,NA,,NA,,,,
-20,Ecuador,1968,1,0,NA,,NA,,,,
-21,El Salvador,1984,2,0,NA,,NA,,,,
-22,El Salvador,1984,2,0,NA,,NA,,,,
-23,Guatemala,1966,1,0,NA,,NA,,,,
-24,Guatemala,1966,1,0,NA,,NA,,,,
-25,Guatemala,1970,1,0,NA,,NA,,,,
-26,Guatemala,1970,1,0,NA,,NA,,,,
-27,Guatemala,1974,1,0,NA,,NA,,,,
-28,Guatemala,1974,1,0,NA,,NA,,,,
-29,Guatemala,1978,1,0,NA,,NA,,,,
-30,Guatemala,1978,1,0,NA,,NA,,,,
-31,Guatemala,1982,1,0,NA,,NA,,,,
-32,Guatemala,1982,1,0,NA,,NA,,,,
-33,Nicaragua,2016,1,0,NA,,NA,,,,
-34,Nicaragua,2016,1,0,NA,,NA,,,,
-35,Venezuela,1958,1,0,NA,,NA,,,,
-36,Venezuela,1958,1,0,NA,,NA,,,,
-37,Venezuela,1963,1,1,NA,,NA,,,,
-38,Venezuela,1963,1,1,NA,,NA,,,,
-39,Venezuela,1968,1,1,NA,,NA,,,,
-40,Venezuela,1968,1,1,NA,,NA,,,,
-41,Venezuela,1973,1,0,NA,,NA,,,,
-42,Venezuela,1973,1,0,NA,,NA,,,,
+cat_pais,ncat_eleccion,ncat_ronda,dico_debates_eleccion,candidate_name,vote_share,party_name,status,compilador_vote_share,source_url_vote_share,source_str_vote_share
+Bolivia,1978,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Bolivia,1978,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Bolivia,1979,1,0,Víctor Paz Estenssoro,"35,9",MNR,,Carolina Franco,https://www.oep.org.bo/wp-content/uploads/2017/03/Atlas_Electoral_tomo-I_Cap_I-II.pdf,"Atlas Electoral de Bolivia, Tomo I, p.29"
+Bolivia,1979,1,0,Hernán Siles Zuazo,36,UDP,,Carolina Franco,https://www.oep.org.bo/wp-content/uploads/2017/03/Atlas_Electoral_tomo-I_Cap_I-II.pdf,"Atlas Electoral de Bolivia, Tomo I, p.29"
+Costa Rica,1962,1,0,Francisco José Orlich Bolmarcich,"50,29",LN Liberacion Nacional,,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres62.htm,Political Database of the Americas
+Costa Rica,1962,1,0,	Rafael Ángel Calderón,"35,34",R Republicano,,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres62.htm,Political Database of the Americas
+Costa Rica,1966,1,0,	Daniel Oduber Quirós,"49,52",LN Liberacion Nacional,Incumbente,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres66.htm,Political Database of the Americas
+Costa Rica,1966,1,0,	José Joaquín Trejos Fernández,"50,48",UN Unificacion Nacional,Desafiante,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres66.htm,Political Database of the Americas
+Costa Rica,1970,1,0,José Figueres Ferrer,"54,79",LN Liberacion Nacional,Desafiante,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres70.htm,Political Database of the Americas
+Costa Rica,1970,1,0,	Mario Echandi Jiménez,"41,18",UN Unificacion Nacional,Incumbente,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres70.htm,Political Database of the Americas
+Costa Rica,1974,1,0,Daniel Oduber Quirós ,"43,44",LN Liberacion Nacional,Incumbente,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres74.htm,Political Database of the Americas
+Costa Rica,1974,1,0,	Fernando Trejos Escalante,"30,4",UN Unificacion Nacional,Desafiante,Carolina Franco,https://pdba.georgetown.edu/Elecdata/CR/costpres74.htm,Political Database of the Americas
+Ecuador,1960,1,0,Jose Maria Velasco Ibarra,"48,7",Frente Nacional Velasquista y Liberales ,,Carolina Franco,https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf,"Libro Presidentes, Instituto Democracia, p. 61"
+Ecuador,1960,1,0,Galo Plaza,"22,8",coalición del Partido Liberal Radical Ecuatoriano y el Partido Socialista,,Carolina Franco,https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf,"Libro Presidentes, Instituto Democracia, p. 61"
+Ecuador,1968,1,0,José María Velasco Ibarra,"32,8",Federación Nacional Velasquista,,Carolina Franco,https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf,"Libro Presidentes, Instituto Democracia, p. 80"
+Ecuador,1968,1,0, Andrés F. Córdova,31,Partido Liberal Radical Ecuatoriano,,Carolina Franco,https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf,"Libro Presidentes, Instituto Democracia, p. 80"
+El Salvador,1984,2,0,José Napoleón Duarte,"53,6",PDC,,Carolina Franco,https://pdba.georgetown.edu/Elecdata/ElSal/salpres84.html,Political Database of the Americas
+El Salvador,1984,2,0,Roberto d'Aubuisson,"46,4",ARENA,,Carolina Franco,https://pdba.georgetown.edu/Elecdata/ElSal/salpres84.html,Political Database of the Americas
+Guatemala,1966,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1966,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1970,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1970,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1974,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1974,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1978,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1978,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1982,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Guatemala,1982,1,0,,,,,Carolina Franco,,MANUAL NOHLEN
+Nicaragua,2016,1,0,Daniel Ortega,"72,44",FSLN,Incumbente,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CSE
+Nicaragua,2016,1,0,Maximino Rodríguez,"15,03",PLC,Desafiante,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CSE
+Venezuela,1958,1,0,Rómulo Betancourt,"49,18",AD,,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
+Venezuela,1958,1,0,Wolfgang Larrazabal,"34,61",URD - PCV - MENI,,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
+Venezuela,1963,1,1,Raúl Leoni,"32,81",AD,Incumbente,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
+Venezuela,1963,1,1,Rafael Caldera,"20,19",COPEI,Desafiante,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
+Venezuela,1968,1,1,Rafael Caldera,"29,13",COPEI - MDI,Desafiante,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
+Venezuela,1968,1,1,Gonzalo Barrios,"28,24",AD - API - PRIVO - AIR - OPIR,Incumbente,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
+Venezuela,1973,1,0,Carlos Andrés Pérez,"48,7",AD - PRN - VTV,Desafiante,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
+Venezuela,1973,1,0,Lorenzo Fernández,"36,7",COPEI - FDP - IP - MPJ - VTV,Incumbente,Carolina Franco,https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php,Archivo del CNE
