@@ -36,3 +36,20 @@ c_years <- c_years %>%
 
 c_years %>% write_csv("base_base.csv")
 c_elects %>% arrange(cat_pais,ncat_eleccion,ncat_ronda) %>% write_csv("base_base_elecs.csv")
+
+
+# creacion de breve base que diferencia entre cat ciclo electoral y cat año electoral
+
+electyears <- base_elecciones %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  mutate(ncat_election_year = ncat_eleccion) %>% 
+  mutate(ncat_election_year = 
+           ifelse(cat_pais=="Chile" & ncat_ronda==1 & ncat_eleccion>1999 & ncat_eleccion<2012,
+                  ncat_election_year - 1,
+                  ncat_election_year)) %>% 
+  mutate(ncat_election_year = 
+           ifelse(cat_pais=="Guatemala" & ncat_ronda==1 & ncat_eleccion==1991,
+                  ncat_election_year - 1,
+                  ncat_election_year)) 
+
+electyears %>% write.csv("electyears.csv")

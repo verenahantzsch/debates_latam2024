@@ -114,8 +114,8 @@ all_candidates <- all_candidates %>%
 
 # guardo base #VOLVER A GUARDAR DESPUES DE LIMPIAR  #########
 
-#all_candidates %>% 
-     #writexl::write_xlsx("all_candidates.xlsx")
+all_candidates %>% 
+     writexl::write_xlsx("all_candidates.xlsx")
   
 
 # CREACION DE VARIABLES de NORMATIVA ####
@@ -239,4 +239,4 @@ base <- base %>%
 
 # GUARDO ESTA BASE ##########################
 
-#base %>%  write.csv("base_final2v2023.csv")
+base %>%  write.csv("base_final2v2023.csv")

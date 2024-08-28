@@ -1,6 +1,3 @@
-# CHEQUEO DE DATA DISPONIBLE A AGOSTO 2024 #################################
-
-
 
 # librereias ######################
 
@@ -18,24 +15,30 @@ data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_ba
 data_base_candidatos <- readxl::read_xlsx("all_candidates.xlsx") # esta base fue creada en segunda_limpieza_datos y es usada en creacion_base_candidatos1
 
 # data auxiliar
-setwd("/home/carolina/Documents/dataexterna")
-countrynames <- read.csv("countrynames.csv") %>% 
-  mutate(cat_pais =  iconv(cat_pais, to = "ASCII//TRANSLIT") %>%  str_trim())
 
-# data para ir viendo que tenemos. APARTE durante la primera parte de este año fuimos trabajando con datos de encuestas. los cargo abajo pero no son la prioridad ahora
-#url_fried_seaw_caro_candidatos <- "https://docs.google.com/spreadsheets/d/1PvNGVC8qYMGTcAVrEHtBaO1Ccv-kTZO58ALNBv95p6U/edit?gid=0#gid=0" # versiones originales y backups de esta data en dataexterna
-#data_fried_seaw_caro_candidatos <- read_sheet(url_fried_seaw_caro_candidatos)
-# versiones originales y backups de esta data en dataexterna
+countrynames <- read.csv("countrynames.csv") %>% 
+  mutate(cat_pais =  iconv(cat_pais, to = "ASCII//TRANSLIT") %>%  str_trim()) %>% 
+  mutate(mayus_eng_cat_pais = toupper(eng_cat_pais)) %>% 
+  mutate(mayus_eng_cat_pais = str_replace(mayus_eng_cat_pais, 
+                                          "DOMINICAN REPUB", 
+                                          "DOMINICAN REPUBLIC"))
+         
+electyears <- read.csv("electyears.csv")
+
+# data desagregada a nivel de candidatos
 setwd("/home/carolina/Documents/dataexterna")
-data_fried_seaw_caro_candidatos <- read.csv("combined_candidates_presdata_friedenberg_seawright_caro.csv")
+data_fried_seaw_caro_candidatos <- read.csv("combined_candidates_presdata_friedenberg_seawright_caro2.csv")
 data_fried_seaw_caro_candidatos <- data_fried_seaw_caro_candidatos %>% 
   left_join(countrynames)  
 
-#url_dlujan_elecciones <- "https://docs.google.com/spreadsheets/d/1h_IMQ7o9vUqL97gGSLEXN83tykmOEfuBASikBKWrtHs/edit?gid=730500075#gid=730500075" # versiones originales y backups de esta data en dataexterna 
-#data_dlujan_elecciones <- read_sheet(url_dlujan_elecciones)
+data_fried_seaw_caro_candidatos <- data_fried_seaw_caro_candidatos %>% 
+  mutate(vote_share = as.numeric(gsub(",", ".", vote_share)))
+
+# data a nivel de eleccciones
 # versiones originales y backups de esta data en dataexterna
 setwd("/home/carolina/Documents/dataexterna")
 data_dlujan_elecciones <- read.csv("Base_elecciones_presidenciales_AL_Luján.csv")
+data_mainw_elecciones <- haven::read_dta("VOLATILITY/LAEVD_presidential_dataset.dta")
 
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -67,41 +70,168 @@ check_elecciones <- check_elecciones %>%
   mutate(ntc = ifelse(ncat_ronda==2,2,ntc))
 
 
-# vemos si hay data de la base original que por algun motivo NO se unio y eventualmente corregimos manualmente
-# queremos ver si hay tantos puntos de datos como filas en base original 
-# por lo menos en los que respecta a las variables de id de la base original
-# corregimos problema usual de elecciones chile y guatemala. y corregimos tema de acentos para unir
+# # vemos si hay data de la base original que por algun motivo NO se unio y eventualmente corregimos manualmente
+# # queremos ver si hay tantos puntos de datos como filas en base original 
+# # por lo menos en los que respecta a las variables de id de la base original
+# # corregimos problema usual de elecciones chile y guatemala. y corregimos tema de acentos para unir
 table(data_dlujan_elecciones$pais)
 table(check_elecciones$pais %>% ifelse(is.na(.), "MISSING", .))
 table(check_elecciones$cat_pais)
-nrow(check_elecciones) - 120 == nrow(data_dlujan_elecciones)  
-desunidos_dlujan <- data_dlujan_elecciones_tojoin %>% 
+nrow(check_elecciones) - 120 == nrow(data_dlujan_elecciones)
+desunidos_dlujan <- data_dlujan_elecciones_tojoin %>%
   anti_join(data_base_elecciones)
+summary(check_elecciones)
 
 
-# chequeo anual con base en otra fuente: margen de victoria
+# vamos a ir viendo en indicador por indicador que tenemos 
+
+#### fragmentacion #######################
+
+data_nefcandidatos <- check_elecciones %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, nec )
+
+data_nefcandidatos <- data_nefcandidatos %>% 
+  mutate(source_nec = ifelse(is.na(nec), NA, "Lujan (2020)"))
+
+# . The formula consists on dividing one over the sum of the squares of the proportions (votes or seats) that the parties obtain in an electoral instance.
+calculo_nec_propio <- data_fried_seaw_caro_candidatos %>% 
+  subset(ncat_ronda==2|dico_debates_eleccion==1) %>%  # solo para estas recogimos datos completos por ahora
+  mutate(proportions = vote_share/100) %>% 
+  mutate(squared_proportions = proportions*proportions) %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(nec_caro = 1 / sum(squared_proportions)) %>% 
+  ungroup()
+
+# unimos calculo propio a base con calculo lujan
+data_nefcandidatos <- data_nefcandidatos %>% 
+  left_join(calculo_nec_propio) #%>% 
+  #mutate(check_diff = format(nec - nec_caro , scientific = FALSE) )
+
+data_nefcandidatos <- data_nefcandidatos %>% 
+  mutate(nec_lujan = nec) %>% 
+  mutate(nec = nec_caro) %>% 
+  mutate(source_nec = ifelse(!is.na(nec_caro), 
+                             "Calculo propio con base en datos de candidatos", 
+                             source_nec)) %>% 
+  mutate(nec = ifelse(is.na(nec), nec_lujan,nec)) 
+
+indicador_nec <- data_nefcandidatos %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, nec, source_nec)
+
+
+# sepramos missing para seguir buscando data
+
+missing_nefcandidatos <- data_nefcandidatos %>% 
+  subset(is.na(nec))  
+
+
+###### n total de candidatos ####################
+
+# habria que repetir procedimiento parecido al de recien
+
+
+##### volatilidad #####################
+
+# chequeamos primero como se une la data de mainw. 
+
+data_mainw_elecciones_tojoin <- data_mainw_elecciones %>% 
+  dplyr::rename( "mayus_eng_cat_pais" = "country", 
+                 "ncat_election_year" = "election_year" ) #%>% 
+  # left_join(countrynames) %>% 
+  # select(-c(mayus_eng_cat_pais))
+
+data_base_elecciones_tojoin <- data_base_elecciones %>% 
+  left_join(electyears) %>% 
+  select(-eng_cat_pais) %>% 
+  mutate(cat_pais = str_replace(cat_pais, "Republica Dominicana","Rep. Dominicana")) %>% 
+  left_join(countrynames) 
+
+data_mainw_elecciones_tojoin$mayus_eng_cat_pais %>% unique()
+data_base_elecciones_tojoin$mayus_eng_cat_pais %>% unique()
+
+check_elecciones3 <- data_base_elecciones_tojoin %>% 
+  subset(ncat_ronda ==1) %>% 
+  left_join(data_mainw_elecciones_tojoin)
+
+desunidos_mainw <- data_mainw_elecciones_tojoin %>%
+  anti_join(data_base_elecciones_tojoin) %>% 
+  subset(ncat_election_year > 1963)
+
+summary(check_elecciones3)
+
+indicador_volatility <- check_elecciones3 %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, volatility, newparties, withinsv) %>% 
+  mutate(source_volatility = ifelse(!is.na(volatility),"Mainwaring & Su (2021)",NA))
+  
+
+# unir d lujan para pispear
+
+## NO APORTA NINGUNA DATA EXTRA
+# data_volatility_lujan <- check_elecciones %>% 
+#   select(cat_pais, ncat_eleccion, volatilidad)
+# 
+# data_volatility <- data_volatility %>% 
+#   left_join(data_volatility_lujan)
+# 
+# summary(data_volatility)
+# 
+# data_volatility <- data_volatility %>% 
+#   mutate(volatility = ifelse(is.na(volatility), volatilidad, volatility)) %>% 
+#   mutate(source_volatility = ifelse(is.na(source_volatility)&!is.na(volatility), 
+#                                     "Luján (2020)", 
+#                                     source_volatility))
+# 
+# summary(data_volatility)
+
+##### competitividad o margen de victoria  ######################
+
 # con base en data fried_seaw_caro de candidatos, hago el calculo
 
 data_margen_victoria <- data_fried_seaw_caro_candidatos %>% 
-  mutate(vote_share = as.numeric(gsub(",", ".", vote_share))) %>% 
-  group_by(eng_cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
   arrange(desc(vote_share)) %>% 
   slice(1:2) %>% 
   summarise(marginvic = diff(vote_share)) %>% 
   ungroup() %>% 
-  left_join(countrynames) %>%  # acomodo algunas cuestiones para poder unir
-  mutate(cat_pais = iconv(cat_pais, to = "ASCII//TRANSLIT") %>%  str_trim() %>% str_replace("Rep. Dominicana", "Republica Dominicana"))
+  mutate(cat_pais = iconv(cat_pais, to = "ASCII//TRANSLIT") %>%  str_trim() %>% str_replace("Republica Dominicana","Rep. Dominicana")) %>% 
+  left_join(countrynames)  
 
 
 # join
 check_elecciones2 <- data_base_elecciones %>% 
   select(-eng_cat_pais) %>% 
-  left_join(data_margen_victoria, by = join_by(cat_pais, ncat_eleccion, ncat_ronda))
+  left_join(data_margen_victoria  %>% 
+              mutate(cat_pais = iconv(cat_pais, to = "ASCII//TRANSLIT") %>%  
+                       str_trim() %>% 
+                       str_replace("Rep. Dominicana","Republica Dominicana")), 
+            by = join_by(cat_pais, ncat_eleccion, ncat_ronda))
 
-desunidos_margen <- data_margen_victoria %>% 
-  select(-eng_cat_pais) %>% 
-  anti_join(data_base_elecciones, by = join_by(cat_pais, ncat_eleccion, ncat_ronda))
+# desunidos_margen <- data_margen_victoria %>% 
+#   mutate(cat_pais = iconv(cat_pais, to = "ASCII//TRANSLIT") %>%  
+#            str_trim() %>% 
+#            str_replace("Rep. Dominicana","Republica Dominicana")) %>% 
+#   select(-eng_cat_pais) %>% 
+#   anti_join(data_base_elecciones, by = join_by(cat_pais, ncat_eleccion, ncat_ronda))
+summary(check_elecciones2)
 
+indicador_competitividad <- check_elecciones2 %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, marginvic) %>% 
+  mutate(source_marginvic = "Caluclo propio con base en datos desagregados por candidato")
+
+
+### chequeo y guardo lo disponible hasta ahora
+
+summary(indicador_nec)
+indicador_nec %>% write.csv("indicador_nec.csv")
+
+summary(indicador_volatility)
+indicador_nec %>% write.csv("indicador_volatility.csv")
+
+summary(indicador_competitividad)
+indicador_nec %>% write.csv("indicador_competitividad.csv")
+
+#############################################################################
+#VIEJO ##################################################3
 ##### CHEQUEO DE MISSINGS ########################################
 
 # vemos qué data esta missing y tendremos que buscar por nuestra cuenta
