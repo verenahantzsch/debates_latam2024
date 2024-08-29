@@ -85,7 +85,7 @@ summary(check_elecciones)
 
 # vamos a ir viendo en indicador por indicador que tenemos 
 
-#### fragmentacion #######################
+###### fragmentacion #######################
 
 data_nefcandidatos <- check_elecciones %>% 
   select(cat_pais, ncat_eleccion, ncat_ronda, nec )
@@ -99,7 +99,7 @@ calculo_nec_propio <- data_fried_seaw_caro_candidatos %>%
   mutate(proportions = vote_share/100) %>% 
   mutate(squared_proportions = proportions*proportions) %>% 
   group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
-  summarise(nec_caro = 1 / sum(squared_proportions)) %>% 
+  summarise(nec_caro = 1 / sum(squared_proportions, na.rm=T)) %>% 
   ungroup()
 
 # unimos calculo propio a base con calculo lujan
@@ -124,10 +124,115 @@ indicador_nec <- data_nefcandidatos %>%
 missing_nefcandidatos <- data_nefcandidatos %>% 
   subset(is.na(nec))  
 
+calculo_nec_propio_missings <- data_fried_seaw_caro_candidatos %>% 
+  mutate(proportions = vote_share/100) %>% 
+  mutate(squared_proportions = proportions*proportions) %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(nec_caro = 1 / sum(squared_proportions)) %>% 
+  ungroup()
+
+missing_nefcandidatos <- missing_nefcandidatos %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  left_join(calculo_nec_propio_missings)
+
+indicador_nec <-indicador_nec %>% 
+  left_join(missing_nefcandidatos %>% 
+              dplyr::rename("nec_caro_missing" = "nec_caro"))
+
+indicador_nec <- indicador_nec %>% 
+  mutate(nec = ifelse(is.na(nec), nec_caro_missing, nec)) %>% 
+  mutate(source_nec = ifelse(!is.na(nec_caro_missing), 
+                             "Calculo propio con base en datos de candidatos",
+                             source_nec))
+
+indicador_nec <- indicador_nec %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, nec, source_nec)
+ 
 
 ###### n total de candidatos ####################
 
 # habria que repetir procedimiento parecido al de recien
+data_ntcandidatos <- check_elecciones %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, ntc )
+
+data_ntcandidatos <- data_ntcandidatos %>% 
+  mutate(source_ntc = ifelse(is.na(ntc), NA, "Lujan (2020)"))
+
+# calculo propio
+calculo_all_ntc_propio <- data_fried_seaw_caro_candidatos %>% 
+  subset(ncat_ronda==2|dico_debates_eleccion==1) %>%  # comenzamos por esta, mas abajo agregamos los missings
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(all_ntc_caro = n()) %>% # ACA INCLUIMOS CANDIDATOS QUE LUEGO SE RETIRARON, unos pocos que registramos participando en debates
+  ungroup()
+
+calculo_ntc_propio <- data_fried_seaw_caro_candidatos %>% 
+  subset(ncat_ronda==2|dico_debates_eleccion==1) %>%  # comenzamos por esta, mas abajo agregamos los missings
+  mutate(vote_share = as.numeric(vote_share)) %>% 
+  subset(!is.na(vote_share)) %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(ntc_caro = n()) %>% # ACA CONTAMOS SOLO LA LISTA FINAL DE CANDIDATOS
+  ungroup()
+
+calculo_ntc_propio <- calculo_ntc_propio %>% 
+  left_join(calculo_all_ntc_propio)
+
+# unimos calculo propio a base con calculo lujan
+data_ntcandidatos <- data_ntcandidatos %>% 
+  left_join(calculo_ntc_propio) #%>% 
+  #mutate(check_diff = format(ntc - ntc_caro , scientific = FALSE) )
+
+data_ntcandidatos <- data_ntcandidatos %>% 
+  mutate(ntc_lujan = ntc) %>% 
+  mutate(ntc = ntc_caro) %>% 
+  mutate(source_ntc = ifelse(!is.na(ntc_caro), 
+                             "Calculo propio con base en datos de candidatos", 
+                             source_ntc)) %>% 
+  mutate(ntc = ifelse(is.na(ntc), ntc_lujan, ntc)) 
+
+indicador_ntc <- data_ntcandidatos %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, ntc, all_ntc_caro, source_ntc)
+
+
+# sepramos missing para seguir buscando data
+
+missing_ntcandidatos <- data_ntcandidatos %>% 
+  subset(is.na(ntc))  
+
+calculo_all_ntc_propio_missings <- data_fried_seaw_caro_candidatos %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(all_ntc_caro = n()) %>% # ACA INCLUIMOS CANDIDATOS QUE LUEGO SE RETIRARON, unos pocos que registramos participando en debates
+  ungroup()
+
+calculo_ntc_propio_missings <- data_fried_seaw_caro_candidatos %>% 
+  mutate(vote_share = as.numeric(vote_share)) %>% 
+  subset(!is.na(vote_share)) %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(ntc_caro = n()) %>% # ACA CONTAMOS SOLO LA LISTA FINAL DE CANDIDATOS
+  ungroup()
+
+calculo_ntc_propio_missings <- calculo_ntc_propio_missings %>% 
+  left_join(calculo_all_ntc_propio_missings)
+
+# unimos a la lista de missings # ALGO ESTA FUNCIONANDO MAL ACA Y NO SE QUE ES
+missing_ntcandidatos <- missing_ntcandidatos %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  left_join(calculo_ntc_propio_missings)
+
+# uno al indicador
+indicador_ntc <-indicador_ntc %>% 
+  left_join(missing_ntcandidatos %>% 
+              dplyr::rename("ntc_caro_missing" = "ntc_caro",
+                            "all_ntc_caro_missing" = "all_ntc_caro"))
+
+indicador_ntc <- indicador_ntc %>% 
+  mutate(ntc = ifelse(is.na(ntc), ntc_caro_missing, ntc)) %>% 
+  mutate(all_ntc_caro = ifelse(is.na(all_ntc_caro), all_ntc_caro_missing, all_ntc_caro)) %>%
+  mutate(source_ntc = ifelse(!is.na(ntc_caro_missing), 
+                             "Calculo propio con base en datos de candidatos",
+                             source_ntc))
+
+indicador_ntc <- indicador_ntc %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, ntc, source_ntc, all_ntc_caro)
 
 
 ##### volatilidad #####################
@@ -230,8 +335,27 @@ indicador_nec %>% write.csv("indicador_volatility.csv")
 summary(indicador_competitividad)
 indicador_nec %>% write.csv("indicador_competitividad.csv")
 
+summary(indicador_ntc)
+indicador_ntc %>% write.csv("indicador_ntc.csv")
+
+
+
+############# auxiliares para llenar incumbencia ##############
+
+WINNERS <- data_fried_seaw_caro_candidatos %>%
+  mutate(vote_share= as.numeric(vote_share)) %>% 
+  group_by(cat_pais,ncat_eleccion,ncat_ronda) %>%
+  filter(vote_share == max(vote_share, na.rm=T)) %>%
+  ungroup() %>% 
+  select(cat_pais,ncat_eleccion,ncat_ronda,candidate_name,party_name)
+
+INCUMBENTS <- data_fried_seaw_caro_candidatos %>%
+  filter(status == "Incumbent") %>% 
+  select(cat_pais,ncat_eleccion,ncat_ronda,candidate_name,party_name)
+
+
 #############################################################################
-#VIEJO ##################################################3
+##### VIEJO ################################################ 
 ##### CHEQUEO DE MISSINGS ########################################
 
 # vemos qué data esta missing y tendremos que buscar por nuestra cuenta
