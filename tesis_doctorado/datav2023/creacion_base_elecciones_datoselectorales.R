@@ -39,7 +39,9 @@ data_fried_seaw_caro_candidatos <- data_fried_seaw_caro_candidatos %>%
 setwd("/home/carolina/Documents/dataexterna")
 data_dlujan_elecciones <- read.csv("Base_elecciones_presidenciales_AL_Luján.csv")
 data_mainw_elecciones <- haven::read_dta("VOLATILITY/LAEVD_presidential_dataset.dta")
-
+data_incumbentes <-  read.csv("base_incumbentes_oficialistas.csv")
+  
+  
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
@@ -323,8 +325,39 @@ indicador_competitividad <- check_elecciones2 %>%
   select(cat_pais, ncat_eleccion, ncat_ronda, marginvic) %>% 
   mutate(source_marginvic = "Caluclo propio con base en datos desagregados por candidato")
 
+############ indicador de incumbencias ####
 
-### chequeo y guardo lo disponible hasta ahora
+data_incumbentes_tojoin <- data_incumbentes %>% 
+  subset(ncat_ronda==1) %>% 
+  select(-ncat_ronda) %>% 
+  select(-dico_debates_eleccion) %>% 
+  select(-eng_cat_pais) %>% 
+  select(-X)
+
+indicador_incumbentes <- data_base_elecciones %>% 
+  left_join(data_incumbentes_tojoin) # hacemos esto porque en la base de incumbentes solo registramos las primeras rondas
+# vamos a tener que ajustar manualmente el unico caso para el que contamos info sobre segunda ronda
+
+data_incumbentes_excepcion <- data_incumbentes %>% 
+  subset(ncat_ronda==2) %>% 
+  select(-X)
+
+indicador_incumbentes <- indicador_incumbentes %>% 
+  mutate(filtrar = ifelse(cat_pais=="Chile"&ncat_eleccion==2017&ncat_ronda==2, 1,0)) %>%
+  subset(filtrar==0) %>% 
+  select(-filtrar) %>% 
+  rbind(data_incumbentes_excepcion)
+
+
+indicador_incumbentes <- indicador_incumbentes %>% 
+  select(c(cat_pais, ncat_eleccion, ncat_ronda, nombre_presidente, nombre_oficialista)) %>% 
+  mutate(dico_reeleccion = ifelse(nombre_presidente==nombre_oficialista, 1,0)) %>% 
+  mutate(dico_oficialista = ifelse(nombre_oficialista=="No hay un claro oficialista",0,1))
+  
+indicador_incumbentes <- indicador_incumbentes %>% 
+  select(c(cat_pais, ncat_eleccion, ncat_ronda, dico_reeleccion, dico_oficialista))
+  
+### chequeo y guardo lo disponible hasta ahora  #########################
 
 summary(indicador_nec)
 indicador_nec %>% write.csv("indicador_nec.csv")
@@ -338,6 +371,8 @@ indicador_nec %>% write.csv("indicador_competitividad.csv")
 summary(indicador_ntc)
 indicador_ntc %>% write.csv("indicador_ntc.csv")
 
+summary(indicador_incumbentes)
+indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 
 
 ############# auxiliares para llenar incumbencia ##############
