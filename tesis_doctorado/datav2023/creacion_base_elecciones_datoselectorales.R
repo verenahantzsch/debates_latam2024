@@ -40,7 +40,7 @@ setwd("/home/carolina/Documents/dataexterna")
 data_dlujan_elecciones <- read.csv("Base_elecciones_presidenciales_AL_Luján.csv")
 data_mainw_elecciones <- haven::read_dta("VOLATILITY/LAEVD_presidential_dataset.dta")
 data_incumbentes <-  read.csv("base_incumbentes_oficialistas.csv")
-  
+data_idpart <- read.csv("idpart_lapop/idpart_lapop.csv")  
   
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -290,6 +290,22 @@ indicador_volatility <- check_elecciones3 %>%
 # 
 # summary(data_volatility)
 
+### indicador partyid  o alineamiento #######
+
+indicador_alineamiento <- data_idpart %>% 
+  select(-X) %>% 
+  left_join(check_elecciones3 %>%  select(-ncat_ronda)) %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, party_id, idpart_lapop) %>% 
+  mutate(alineamiento = ifelse(is.na(idpart_lapop), party_id, idpart_lapop)) %>% 
+  mutate(source_alineamiento = ifelse(!is.na(idpart_lapop), "LAPOP", 
+                                      ifelse(!is.na(party_id), 
+                                             "Mainwaring & Su (2021)",
+                                             NA)))
+
+indicador_alineamiento <- indicador_alineamiento %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, alineamiento, source_alineamiento)
+
+
 ##### competitividad o margen de victoria  ######################
 
 # con base en data fried_seaw_caro de candidatos, hago el calculo
@@ -325,37 +341,66 @@ indicador_competitividad <- check_elecciones2 %>%
   select(cat_pais, ncat_eleccion, ncat_ronda, marginvic) %>% 
   mutate(source_marginvic = "Caluclo propio con base en datos desagregados por candidato")
 
-############ indicador de incumbencias ####
+###### indicador de incumbencias ####
 
-data_incumbentes_tojoin <- data_incumbentes %>% 
+data_incumbentes_firstround_tojoin <- data_incumbentes %>% 
   subset(ncat_ronda==1) %>% 
-  select(-ncat_ronda) %>% 
+  #select(-ncat_ronda) %>% 
   select(-dico_debates_eleccion) %>% 
-  select(-eng_cat_pais) %>% 
-  select(-X)
+  select(-eng_cat_pais) #%>% 
+  #select(-X)
 
-indicador_incumbentes <- data_base_elecciones %>% 
-  left_join(data_incumbentes_tojoin) # hacemos esto porque en la base de incumbentes solo registramos las primeras rondas
-# vamos a tener que ajustar manualmente el unico caso para el que contamos info sobre segunda ronda
+indicador_incumbentes_firstround <- data_base_elecciones %>% 
+  subset(ncat_ronda==1) %>% 
+  left_join(data_incumbentes_firstround_tojoin) # hacemos esto porque en la base de incumbentes solo registramos las primeras rondas
 
-data_incumbentes_excepcion <- data_incumbentes %>% 
-  subset(ncat_ronda==2) %>% 
-  select(-X)
-
-indicador_incumbentes <- indicador_incumbentes %>% 
-  mutate(filtrar = ifelse(cat_pais=="Chile"&ncat_eleccion==2017&ncat_ronda==2, 1,0)) %>%
-  subset(filtrar==0) %>% 
-  select(-filtrar) %>% 
-  rbind(data_incumbentes_excepcion)
-
-
-indicador_incumbentes <- indicador_incumbentes %>% 
+indicador_incumbentes_firstround <- indicador_incumbentes_firstround %>% 
   select(c(cat_pais, ncat_eleccion, ncat_ronda, nombre_presidente, nombre_oficialista)) %>% 
   mutate(dico_reeleccion = ifelse(nombre_presidente==nombre_oficialista, 1,0)) %>% 
   mutate(dico_oficialista = ifelse(nombre_oficialista=="No hay un claro oficialista",0,1))
-  
-indicador_incumbentes <- indicador_incumbentes %>% 
+
+indicador_incumbentes_firstround <- indicador_incumbentes_firstround %>% 
   select(c(cat_pais, ncat_eleccion, ncat_ronda, dico_reeleccion, dico_oficialista))
+
+# ahora agregamos segundas rondas
+data_incumbentes_secondround_tojoin <- data_incumbentes %>% 
+  subset(!(cat_pais=="Chile"&ncat_eleccion==2017&ncat_ronda==1)) %>% 
+  select(-ncat_ronda) %>% 
+  select(-dico_debates_eleccion) %>% 
+  select(-eng_cat_pais)# %>% 
+  #select(-X)
+
+data_incumbentes_secondround <- data_fried_seaw_caro_candidatos %>% 
+  subset(ncat_ronda==2) %>% 
+  left_join(data_incumbentes_secondround_tojoin)  
+
+indicador_incumbentes_secondround <- data_incumbentes_secondround %>% 
+  select(c(cat_pais, ncat_eleccion, ncat_ronda, candidate_name, nombre_presidente, nombre_oficialista)) %>% 
+  mutate(is_reeleccion = ifelse(nombre_presidente==candidate_name, 1,0)) %>% 
+  mutate(is_oficialista = ifelse(nombre_oficialista==candidate_name,1,0)) %>% 
+  group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  summarise(dico_reeleccion = sum(is_reeleccion, na.rm=T),
+            dico_oficialista = sum(is_oficialista, na.rm=T))
+  
+indicador_incumbentes <- indicador_incumbentes_firstround %>% 
+  rbind(indicador_incumbentes_secondround)
+  
+  # vamos a tener que ajustar manualmente el unico caso para el que contamos info sobre segunda ronda
+# VIEJO
+# data_incumbentes_excepcion <- data_incumbentes %>% 
+#   subset(ncat_ronda==2) %>% 
+#   select(-X)
+
+# indicador_incumbentes <- indicador_incumbentes %>% 
+#   mutate(filtrar = ifelse(cat_pais=="Chile"&ncat_eleccion==2017&ncat_ronda==2, 1,0)) %>%
+#   subset(filtrar==0) %>% 
+#   select(-filtrar) %>% 
+#   rbind(data_incumbentes_excepcion)
+
+
+
+
+
   
 ### chequeo y guardo lo disponible hasta ahora  #########################
 
@@ -364,6 +409,9 @@ indicador_nec %>% write.csv("indicador_nec.csv")
 
 summary(indicador_volatility)
 indicador_nec %>% write.csv("indicador_volatility.csv")
+
+summary(indicador_alineamiento)
+indicador_alineamiento %>% write.csv("indicador_alineamiento.csv")
 
 summary(indicador_competitividad)
 indicador_nec %>% write.csv("indicador_competitividad.csv")
@@ -375,6 +423,9 @@ summary(indicador_incumbentes)
 indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 
 
+
+########################################################################
+##########################################################################
 ############# auxiliares para llenar incumbencia ##############
 
 WINNERS <- data_fried_seaw_caro_candidatos %>%

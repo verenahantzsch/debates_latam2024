@@ -11,9 +11,9 @@
 "10","Argentina",2019,1,2.50178308334808,"Calculo propio con base en datos de candidatos"
 "11","Argentina",2023,1,3.48229730635598,"Calculo propio con base en datos de candidatos"
 "12","Argentina",2023,2,1.97443025939157,"Calculo propio con base en datos de candidatos"
-"13","Bolivia",1978,1,NA,NA
-"14","Bolivia",1979,1,NA,NA
-"15","Bolivia",1980,1,NA,NA
+"13","Bolivia",1978,1,2.92530291657966,"Calculo propio con base en datos de candidatos"
+"14","Bolivia",1979,1,3.50870114024015,"Calculo propio con base en datos de candidatos"
+"15","Bolivia",1980,1,4.35400100690627,"Calculo propio con base en datos de candidatos"
 "16","Bolivia",1985,1,4.53,"Lujan (2020)"
 "17","Bolivia",1989,1,5.00554288791693,"Calculo propio con base en datos de candidatos"
 "18","Bolivia",1993,1,4.69646665557987,"Calculo propio con base en datos de candidatos"
@@ -22,7 +22,7 @@
 "21","Bolivia",2005,1,2.6237220735286,"Calculo propio con base en datos de candidatos"
 "22","Bolivia",2009,1,2.056723995,"Lujan (2020)"
 "23","Bolivia",2014,1,2.24836895446752,"Calculo propio con base en datos de candidatos"
-"24","Bolivia",2019,1,NA,NA
+"24","Bolivia",2019,1,2.74171373229545,"Calculo propio con base en datos de candidatos"
 "25","Bolivia",2020,1,2.45884272255951,"Calculo propio con base en datos de candidatos"
 "26","Brasil",1989,1,6.49853737419319,"Calculo propio con base en datos de candidatos"
 "27","Brasil",1989,2,1.9926821537658,"Calculo propio con base en datos de candidatos"
@@ -34,9 +34,9 @@
 "33","Brasil",2006,2,1.91037374590172,"Calculo propio con base en datos de candidatos"
 "34","Brasil",2010,1,2.749307174592,"Calculo propio con base en datos de candidatos"
 "35","Brasil",2010,2,1.97114053147862,"Calculo propio con base en datos de candidatos"
-"36","Brasil",2014,1,3.01881648754072,"Calculo propio con base en datos de candidatos"
+"36","Brasil",2014,1,3.01881606924246,"Calculo propio con base en datos de candidatos"
 "37","Brasil",2014,2,1.99785063237567,"Calculo propio con base en datos de candidatos"
-"38","Brasil",2018,1,3.15931260208432,"Calculo propio con base en datos de candidatos"
+"38","Brasil",2018,1,3.15931060683248,"Calculo propio con base en datos de candidatos"
 "39","Brasil",2018,2,1.97916579665837,"Calculo propio con base en datos de candidatos"
 "40","Brasil",2022,1,2.35919019947095,"Calculo propio con base en datos de candidatos"
 "41","Brasil",2022,2,1.999352209884,"Calculo propio con base en datos de candidatos"
@@ -54,8 +54,8 @@
 "53","Chile",2017,2,1.98335851140852,"Calculo propio con base en datos de candidatos"
 "54","Chile",2021,1,5.08055525185125,"Calculo propio con base en datos de candidatos"
 "55","Chile",2021,2,1.97280924366873,"Calculo propio con base en datos de candidatos"
-"56","Colombia",1974,1,NA,NA
-"57","Colombia",1978,1,NA,NA
+"56","Colombia",1974,1,2.3471651068933,"Calculo propio con base en datos de candidatos"
+"57","Colombia",1978,1,2.16143666718224,"Calculo propio con base en datos de candidatos"
 "58","Colombia",1982,1,2.5,"Lujan (2020)"
 "59","Colombia",1986,1,2.09423096959229,"Calculo propio con base en datos de candidatos"
 "60","Colombia",1990,1,3.04,"Lujan (2020)"
@@ -73,11 +73,11 @@
 "72","Colombia",2018,2,2.14409437720255,"Calculo propio con base en datos de candidatos"
 "73","Colombia",2022,1,3.32065176424568,"Calculo propio con base en datos de candidatos"
 "74","Colombia",2022,2,2.09098734896197,"Calculo propio con base en datos de candidatos"
-"75","Costa Rica",1962,1,NA,NA
-"76","Costa Rica",1966,1,NA,NA
-"77","Costa Rica",1970,1,NA,NA
-"78","Costa Rica",1974,1,NA,NA
-"79","Costa Rica",1978,1,NA,NA
+"75","Costa Rica",1962,1,2.52478282638682,"Calculo propio con base en datos de candidatos"
+"76","Costa Rica",1966,1,1.99981569698537,"Calculo propio con base en datos de candidatos"
+"77","Costa Rica",1970,1,2.1260628108264,"Calculo propio con base en datos de candidatos"
+"78","Costa Rica",1974,1,3.30403993553422,"Calculo propio con base en datos de candidatos"
+"79","Costa Rica",1978,1,2.23065792608639,"Calculo propio con base en datos de candidatos"
 "80","Costa Rica",1982,1,2.17,"Lujan (2020)"
 "81","Costa Rica",1986,1,2.07,"Lujan (2020)"
 "82","Costa Rica",1990,1,2.05,"Lujan (2020)"
@@ -93,8 +93,8 @@
 "92","Costa Rica",2018,2,1.91413342911147,"Calculo propio con base en datos de candidatos"
 "93","Costa Rica",2022,1,6.11405101857644,"Calculo propio con base en datos de candidatos"
 "94","Costa Rica",2022,2,1.99365825284403,"Calculo propio con base en datos de candidatos"
-"95","Ecuador",1960,1,NA,NA
-"96","Ecuador",1968,1,NA,NA
+"95","Ecuador",1960,1,2.93466410568312,"Calculo propio con base en datos de candidatos"
+"96","Ecuador",1968,1,3.35242033853076,"Calculo propio con base en datos de candidatos"
 "97","Ecuador",1979,1,4.76424241685063,"Calculo propio con base en datos de candidatos"
 "98","Ecuador",1979,2,1.75939864598791,"Calculo propio con base en datos de candidatos"
 "99","Ecuador",1984,1,5.17,"Lujan (2020)"
@@ -130,12 +130,12 @@
 "129","El Salvador",2014,1,2.47380249343954,"Calculo propio con base en datos de candidatos"
 "130","El Salvador",2014,2,1.99999032004685,"Calculo propio con base en datos de candidatos"
 "131","El Salvador",2019,1,2.47873665336643,"Calculo propio con base en datos de candidatos"
-"132","El Salvador",2024,1,NA,NA
-"133","Guatemala",1966,1,NA,NA
-"134","Guatemala",1970,1,NA,NA
-"135","Guatemala",1974,1,NA,NA
-"136","Guatemala",1978,1,NA,NA
-"137","Guatemala",1982,1,NA,NA
+"132","El Salvador",2024,1,1.38070502830404,"Calculo propio con base en datos de candidatos"
+"133","Guatemala",1966,1,2.80662174125956,"Calculo propio con base en datos de candidatos"
+"134","Guatemala",1970,1,2.80068253753713,"Calculo propio con base en datos de candidatos"
+"135","Guatemala",1974,1,2.77443104326431,"Calculo propio con base en datos de candidatos"
+"136","Guatemala",1978,1,2.90628709239723,"Calculo propio con base en datos de candidatos"
+"137","Guatemala",1982,1,3.41561866093198,"Calculo propio con base en datos de candidatos"
 "138","Guatemala",1985,1,4.317086926,"Lujan (2020)"
 "139","Guatemala",1985,2,1.76214130336218,"Calculo propio con base en datos de candidatos"
 "140","Guatemala",1991,1,5.273181102,"Lujan (2020)"
@@ -166,15 +166,15 @@
 "165","Honduras",2009,1,2.125398512,"Lujan (2020)"
 "166","Honduras",2013,1,3.59490600381297,"Calculo propio con base en datos de candidatos"
 "167","Honduras",2017,1,2.64709300217141,"Calculo propio con base en datos de candidatos"
-"168","Honduras",2021,1,NA,NA
-"169","Mexico",1982,1,NA,NA
-"170","Mexico",1988,1,NA,NA
+"168","Honduras",2021,1,2.45253167855462,"Calculo propio con base en datos de candidatos"
+"169","Mexico",1982,1,1.71985791634604,"Calculo propio con base en datos de candidatos"
+"170","Mexico",1988,1,2.61574720623812,"Calculo propio con base en datos de candidatos"
 "171","Mexico",1994,1,2.99020394237458,"Calculo propio con base en datos de candidatos"
 "172","Mexico",2000,1,2.82485524594263,"Calculo propio con base en datos de candidatos"
 "173","Mexico",2006,1,3.29027677150146,"Calculo propio con base en datos de candidatos"
 "174","Mexico",2012,1,3.21662671777114,"Calculo propio con base en datos de candidatos"
-"175","Mexico",2018,1,NA,NA
-"176","Nicaragua",1984,1,NA,NA
+"175","Mexico",2018,1,2.76107816347217,"Calculo propio con base en datos de candidatos"
+"176","Nicaragua",1984,1,2.07882298040684,"Calculo propio con base en datos de candidatos"
 "177","Nicaragua",1990,1,2.14469658784349,"Calculo propio con base en datos de candidatos"
 "178","Nicaragua",1996,1,2.467033449,"Lujan (2020)"
 "179","Nicaragua",2001,1,2.015470246,"Lujan (2020)"
@@ -187,7 +187,7 @@
 "186","Panama",2009,1,1.98945358821629,"Calculo propio con base en datos de candidatos"
 "187","Panama",2014,1,3.03322917729877,"Calculo propio con base en datos de candidatos"
 "188","Panama",2019,1,3.89589908312353,"Calculo propio con base en datos de candidatos"
-"189","Paraguay",1989,1,NA,NA
+"189","Paraguay",1989,1,1.68606219886824,"Calculo propio con base en datos de candidatos"
 "190","Paraguay",1993,1,2.93287952692888,"Calculo propio con base en datos de candidatos"
 "191","Paraguay",1998,1,2.00425519411753,"Calculo propio con base en datos de candidatos"
 "192","Paraguay",2003,1,3.85180681709718,"Calculo propio con base en datos de candidatos"
@@ -195,12 +195,12 @@
 "194","Paraguay",2013,1,2.84796111188845,"Calculo propio con base en datos de candidatos"
 "195","Paraguay",2018,1,2.50441189721874,"Calculo propio con base en datos de candidatos"
 "196","Paraguay",2023,1,3.21509892762947,"Calculo propio con base en datos de candidatos"
-"197","Peru",1980,1,NA,NA
-"198","Peru",1985,1,NA,NA
-"199","Peru",1990,1,NA,NA
+"197","Peru",1980,1,3.44596053306942,"Calculo propio con base en datos de candidatos"
+"198","Peru",1985,1,2.75761379927594,"Calculo propio con base en datos de candidatos"
+"199","Peru",1990,1,3.98684548306554,"Calculo propio con base en datos de candidatos"
 "200","Peru",1990,2,1.88552424210976,"Calculo propio con base en datos de candidatos"
 "201","Peru",1995,1,2.14409424,"Lujan (2020)"
-"202","Peru",2000,1,NA,NA
+"202","Peru",2000,1,2.42354003827497,"Calculo propio con base en datos de candidatos"
 "203","Peru",2000,2,1.61710305108859,"Calculo propio con base en datos de candidatos"
 "204","Peru",2001,1,3.717954718,"Lujan (2020)"
 "205","Peru",2001,2,1.99243956851091,"Calculo propio con base en datos de candidatos"
@@ -208,14 +208,14 @@
 "207","Peru",2006,2,1.99448174767979,"Calculo propio con base en datos de candidatos"
 "208","Peru",2011,1,4.45799695331572,"Calculo propio con base en datos de candidatos"
 "209","Peru",2011,2,1.99834249480111,"Calculo propio con base en datos de candidatos"
-"210","Peru",2016,1,4.023275615,"Lujan (2020)"
+"210","Peru",2016,1,4.02327561501903,"Calculo propio con base en datos de candidatos"
 "211","Peru",2016,2,1.99998848006635,"Calculo propio con base en datos de candidatos"
 "212","Peru",2021,1,9.33559155069217,"Calculo propio con base en datos de candidatos"
 "213","Peru",2021,2,1.99998648009139,"Calculo propio con base en datos de candidatos"
-"214","Republica Dominicana",1978,1,NA,NA
-"215","Republica Dominicana",1982,1,NA,NA
-"216","Republica Dominicana",1986,1,NA,NA
-"217","Republica Dominicana",1990,1,NA,NA
+"214","Republica Dominicana",1978,1,2.17648678641813,"Calculo propio con base en datos de candidatos"
+"215","Republica Dominicana",1982,1,2.64923196513484,"Calculo propio con base en datos de candidatos"
+"216","Republica Dominicana",1986,1,2.79051936672065,"Calculo propio con base en datos de candidatos"
+"217","Republica Dominicana",1990,1,3.37928987332259,"Calculo propio con base en datos de candidatos"
 "218","Republica Dominicana",1994,1,2.866182046,"Lujan (2020)"
 "219","Republica Dominicana",1996,1,2.912724209,"Lujan (2020)"
 "220","Republica Dominicana",1996,2,1.99864891333459,"Calculo propio con base en datos de candidatos"
@@ -224,7 +224,7 @@
 "223","Republica Dominicana",2008,1,2.194038096,"Lujan (2020)"
 "224","Republica Dominicana",2012,1,2.070942496,"Lujan (2020)"
 "225","Republica Dominicana",2016,1,1.98441744141796,"Calculo propio con base en datos de candidatos"
-"226","Republica Dominicana",2020,1,NA,NA
+"226","Republica Dominicana",2020,1,2.35751953487837,"Calculo propio con base en datos de candidatos"
 "227","Uruguay",1984,1,4.16076981564544,"Calculo propio con base en datos de candidatos"
 "228","Uruguay",1989,1,6.14896293128442,"Calculo propio con base en datos de candidatos"
 "229","Uruguay",1994,1,4.9810498449175,"Calculo propio con base en datos de candidatos"
@@ -237,17 +237,17 @@
 "236","Uruguay",2014,2,1.9667617268168,"Calculo propio con base en datos de candidatos"
 "237","Uruguay",2019,1,3.54296828678458,"Calculo propio con base en datos de candidatos"
 "238","Uruguay",2019,2,1.99950084460915,"Calculo propio con base en datos de candidatos"
-"239","Venezuela",1958,1,NA,NA
+"239","Venezuela",1958,1,2.57779222716247,"Calculo propio con base en datos de candidatos"
 "240","Venezuela",1963,1,4.55727819658658,"Calculo propio con base en datos de candidatos"
 "241","Venezuela",1968,1,3.98094797916133,"Calculo propio con base en datos de candidatos"
-"242","Venezuela",1973,1,NA,NA
-"243","Venezuela",1978,1,NA,NA
+"242","Venezuela",1973,1,2.64975501160089,"Calculo propio con base en datos de candidatos"
+"243","Venezuela",1978,1,2.44896551778184,"Calculo propio con base en datos de candidatos"
 "244","Venezuela",1983,1,2.19184562848773,"Calculo propio con base en datos de candidatos"
-"245","Venezuela",1988,1,NA,NA
+"245","Venezuela",1988,1,2.25066426667833,"Calculo propio con base en datos de candidatos"
 "246","Venezuela",1993,1,4.03,"Lujan (2020)"
-"247","Venezuela",1998,1,2.099039268,"Lujan (2020)"
+"247","Venezuela",1998,1,2.09895396739976,"Calculo propio con base en datos de candidatos"
 "248","Venezuela",2000,1,2.01,"Lujan (2020)"
 "249","Venezuela",2006,1,1.883068383,"Lujan (2020)"
 "250","Venezuela",2012,1,2.001478532,"Lujan (2020)"
 "251","Venezuela",2013,1,2.010304919,"Lujan (2020)"
-"252","Venezuela",2018,1,NA,NA
+"252","Venezuela",2018,1,1.93890322061519,"Calculo propio con base en datos de candidatos"
