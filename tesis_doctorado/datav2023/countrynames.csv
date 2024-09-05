@@ -1,19 +1,19 @@
-cat_pais,eng_cat_pais
-Argentina,Argentina
-Bolivia,Bolivia
-Brasil,Brazil
-Chile,Chile
-Colombia,Colombia
-Costa Rica,Costa Rica
-Ecuador,Ecuador
-El Salvador,El Salvador
-Guatemala,Guatemala
-Honduras,Honduras
-México,Mexico
-Panamá,Panama
-Paraguay,Paraguay
-Perú,Peru
-Rep. Dominicana,Dominican Repub
-Uruguay,Uruguay
-Venezuela,Venezuela
-Nicaragua,Nicaragua
+cat_pais,eng_cat_pais,ISO
+Argentina,Argentina,ARG
+Bolivia,Bolivia,BOL
+Brasil,Brazil,BRA
+Chile,Chile,CHL
+Colombia,Colombia,COL
+Costa Rica,Costa Rica,CRI
+Ecuador,Ecuador,ECU
+El Salvador,El Salvador,SLV
+Guatemala,Guatemala,GTM
+Honduras,Honduras,HND
+México,Mexico,MEX
+Panamá,Panama,PAN
+Paraguay,Paraguay,PRY
+Perú,Peru,PER
+Rep. Dominicana,Dominican Repub,DOM
+Uruguay,Uruguay,URY
+Venezuela,Venezuela,VEN
+Nicaragua,Nicaragua,NIC

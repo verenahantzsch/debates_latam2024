@@ -41,7 +41,9 @@ data_dlujan_elecciones <- read.csv("Base_elecciones_presidenciales_AL_Luján.csv
 data_mainw_elecciones <- haven::read_dta("VOLATILITY/LAEVD_presidential_dataset.dta")
 data_incumbentes <-  read.csv("base_incumbentes_oficialistas.csv")
 data_idpart <- read.csv("idpart_lapop/idpart_lapop.csv")  
-  
+data_tecno_uit <- read.csv("UIT/df_tecno_uit.csv")  
+data_tv_lapop <- read.csv("tv_lapop/proptv_lapop.csv")
+
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
@@ -291,6 +293,7 @@ indicador_volatility <- check_elecciones3 %>%
 # summary(data_volatility)
 
 ### indicador partyid  o alineamiento #######
+# OJO CAMBIAR FUENTE ######### 
 
 indicador_alineamiento <- data_idpart %>% 
   select(-X) %>% 
@@ -341,7 +344,7 @@ indicador_competitividad <- check_elecciones2 %>%
   select(cat_pais, ncat_eleccion, ncat_ronda, marginvic) %>% 
   mutate(source_marginvic = "Caluclo propio con base en datos desagregados por candidato")
 
-###### indicador de incumbencias ####
+###### incumbencias ####
 
 data_incumbentes_firstround_tojoin <- data_incumbentes %>% 
   subset(ncat_ronda==1) %>% 
@@ -398,11 +401,37 @@ indicador_incumbentes <- indicador_incumbentes_firstround %>%
 #   rbind(data_incumbentes_excepcion)
 
 
+##### tecnologia ######
 
 
+indicador_proptv <- data_base_elecciones %>% 
+  left_join(data_tv_lapop %>%  select(-X))
 
+indicador_proptv <- indicador_proptv %>% 
+  mutate(source_proptv_lapop = ifelse(!is.na(proptv_lapop),
+                                      "LAPOP",
+                                      NA))
+indicador_proptv <- indicador_proptv %>% 
+  left_join(data_tecno_uit %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, proptv, source_proptv))
+
+indicador_proptv <- indicador_proptv %>% 
+  mutate(new_proptv = ifelse(is.na(proptv_lapop),
+                             proptv,
+                             proptv_lapop)) %>% 
+  mutate(new_source_proptv = ifelse(is.na(proptv_lapop),
+                                    source_proptv,
+                                    source_proptv_lapop))  
+
+check <- indicador_proptv %>% subset(!is.na(new_proptv)) %>% subset(ncat_ronda==2) 
+check$dico_debates_eleccion %>% table()
+
+indicador_proptv <- indicador_proptv %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, new_proptv, new_source_proptv) %>% 
+  dplyr::rename("proptv" = "new_proptv",
+                "source_proptv" = "new_source_proptv")
   
-### chequeo y guardo lo disponible hasta ahora  #########################
+### GURADADO chequeo y guardo lo disponible hasta ahora  #########################
 
 summary(indicador_nec)
 indicador_nec %>% write.csv("indicador_nec.csv")
@@ -422,6 +451,8 @@ indicador_ntc %>% write.csv("indicador_ntc.csv")
 summary(indicador_incumbentes)
 indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 
+summary(indicador_proptv)
+indicador_proptv %>% write.csv("indicador_proptv.csv")
 
 
 ########################################################################
