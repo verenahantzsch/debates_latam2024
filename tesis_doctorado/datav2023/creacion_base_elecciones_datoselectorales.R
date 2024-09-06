@@ -43,6 +43,9 @@ data_incumbentes <-  read.csv("base_incumbentes_oficialistas.csv")
 data_idpart <- read.csv("idpart_lapop/idpart_lapop.csv")  
 data_tecno_uit <- read.csv("UIT/df_tecno_uit.csv")  
 data_tv_lapop <- read.csv("tv_lapop/proptv_lapop.csv")
+data_tv_latinobarometro <- read.csv("latinobarometro/df_proptv_latinobarometro.csv")
+data_descontento_latinobarometro <- read.csv("latinobarometro/df_satisfaccion_latinobarometro.csv")
+data_descontento_lapop <- read.csv("lapop/data_satisfaccionlapop.csv")
 
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -51,10 +54,10 @@ data_encuestas_elecciones <-read.csv("all_elections_full_dataset.csv") %>% selec
 data_encuestas_candidatos <- read.csv("base_candidatos_matcheados2023.csv")
 
 
-# DATA POR ELECCION #####
+#### INDICADORES NIVEL ELECCION #####
 # vamos paso por paso. primero vamos a ver que datos de los importantes tenemos para el modelo 1 OBS POR ELECCION
 
-# join de bases disponibles ##########################
+# join de bases disponibles # 
 
 # creo variables para unir  
 data_dlujan_elecciones_tojoin <- data_dlujan_elecciones %>% 
@@ -292,15 +295,14 @@ indicador_volatility <- check_elecciones3 %>%
 # 
 # summary(data_volatility)
 
-### indicador partyid  o alineamiento #######
-# OJO CAMBIAR FUENTE ######### 
+##### indicador partyid  o alineamiento #####################
 
 indicador_alineamiento <- data_idpart %>% 
   select(-X) %>% 
   left_join(check_elecciones3 %>%  select(-ncat_ronda)) %>% 
-  select(cat_pais, ncat_eleccion, ncat_ronda, party_id, idpart_lapop) %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, party_id, idpart_lapop, source_idpart) %>% 
   mutate(alineamiento = ifelse(is.na(idpart_lapop), party_id, idpart_lapop)) %>% 
-  mutate(source_alineamiento = ifelse(!is.na(idpart_lapop), "LAPOP", 
+  mutate(source_alineamiento = ifelse(!is.na(idpart_lapop), source_idpart, 
                                       ifelse(!is.na(party_id), 
                                              "Mainwaring & Su (2021)",
                                              NA)))
@@ -401,27 +403,68 @@ indicador_incumbentes <- indicador_incumbentes_firstround %>%
 #   rbind(data_incumbentes_excepcion)
 
 
-##### tecnologia ######
+##### TV tecnologia ######
 
 
 indicador_proptv <- data_base_elecciones %>% 
-  left_join(data_tv_lapop %>%  select(-X))
+  left_join(data_tv_lapop %>%  select(-X)) %>% 
+  left_join(data_tv_latinobarometro %>%  select(-X)) 
 
 indicador_proptv <- indicador_proptv %>% 
-  mutate(source_proptv_lapop = ifelse(!is.na(proptv_lapop),
-                                      "LAPOP",
-                                      NA))
+  dplyr::rename("source_proptvlapop" = source_proptv ) # para evitar confusiones
+
+# latinobarometro mide la variable hasta 2010
+# para ser mas correctos vamos a forzar a NA los valores proyectados despues de este año
+# y vamos a promediar valores lapop y latinobarometro alli donde los tengamos. 
+# independientemente de si se trata de valores medidos o proyectados 
+# los numeros son muy parecidos entre las dos encuestas, a simple vista.
+# por si acaso creamos variable de control de diferencias 
+# en cambio los numeros de UIT divergen mas y en algunos casos como en Chile encontramos valores sospechosos. 
+
+indicador_proptv <- indicador_proptv %>%
+  mutate(proptv_latinobarometro = ifelse(ncat_eleccion>2010, NA, proptv_latinobarometro)) %>% 
+  mutate(source_proptvlatinobarometro = ifelse(ncat_eleccion>2010, NA, source_proptvlatinobarometro))
+
+indicador_proptv <- indicador_proptv %>%
+  mutate(proptv_latinobarometro = proptv_latinobarometro*100) # estaban en distinta escala
+
+check <- indicador_proptv %>% 
+  mutate(check_diff = proptv_latinobarometro - proptv_lapop)
+
 indicador_proptv <- indicador_proptv %>% 
   left_join(data_tecno_uit %>% 
-              select(cat_pais, ncat_eleccion, ncat_ronda, proptv, source_proptv))
+              select(cat_pais, ncat_eleccion, ncat_ronda, proptv, source_proptv) %>% 
+              dplyr::rename("proptv_uit" = proptv,
+                            "source_proptvuit" = source_proptv))
+
+check <- indicador_proptv %>% 
+  mutate(check_diff = proptv_latinobarometro - proptv_lapop,
+         check_diff2 = proptv_latinobarometro - proptv_uit,
+         check_diff3 = proptv_lapop - proptv_uit)
 
 indicador_proptv <- indicador_proptv %>% 
-  mutate(new_proptv = ifelse(is.na(proptv_lapop),
-                             proptv,
-                             proptv_lapop)) %>% 
-  mutate(new_source_proptv = ifelse(is.na(proptv_lapop),
-                                    source_proptv,
-                                    source_proptv_lapop))  
+  mutate(check_diff3 = proptv_lapop - proptv_uit) %>% # nos deshacemos de valores inusualmente extremos
+  mutate(proptv_uit = ifelse(check_diff3>5, NA, proptv_uit)) %>% 
+  mutate(source_proptvuit = ifelse(is.na(proptv_uit), NA, source_proptvuit))
+
+# indicador_proptv <- indicador_proptv %>% 
+#   # mutate(new_proptv = ifelse(is.na(proptv_lapop),
+#   #                            proptv,
+#   #                            proptv_lapop)) %>% 
+#   # mutate(new_source_proptv = ifelse(is.na(proptv_lapop),
+#   #                                   source_proptv,
+#   #                                   source_proptv_lapop))  
+
+indicador_proptv <- indicador_proptv %>% 
+  mutate(new_proptv = rowMeans(select(., proptv_uit, proptv_latinobarometro, proptv_lapop), na.rm = TRUE)) %>% 
+  mutate(new_source_proptv = ifelse(!is.na(new_proptv),
+    paste0("Promedio de valores provenientes de:", 
+           source_proptvuit, 
+           ";", 
+           source_proptvlatinobarometro,
+           ";",
+           source_proptvlapop),
+    NA))
 
 check <- indicador_proptv %>% subset(!is.na(new_proptv)) %>% subset(ncat_ronda==2) 
 check$dico_debates_eleccion %>% table()
@@ -429,8 +472,33 @@ check$dico_debates_eleccion %>% table()
 indicador_proptv <- indicador_proptv %>% 
   select(cat_pais, ncat_eleccion, ncat_ronda, new_proptv, new_source_proptv) %>% 
   dplyr::rename("proptv" = "new_proptv",
-                "source_proptv" = "new_source_proptv")
-  
+                "source_proptv" = "new_source_proptv") %>% 
+  mutate(source_proptv = str_replace(source_proptv, "NA;","")) %>% 
+  mutate(source_proptv = str_replace(source_proptv, "Proyectado. Ultimo","Valor proyectado segun ultimo"))
+
+
+
+##### satisfaccion con democracia ######
+
+indicador_satisfaccion <- data_descontento_lapop %>% 
+  select(-X) %>% 
+  left_join(data_descontento_latinobarometro %>% select(-X))
+
+indicador_satisfaccion <- indicador_satisfaccion %>% 
+  mutate(satisfaccion = rowMeans(select(., satisfaccion_lapop, satisfaccion_latinobarometro), na.rm = TRUE)) %>% 
+  mutate(source_satisfaccion = ifelse(!is.na(satisfaccion),
+                                      paste0("Promedio de valores provenientes de:", 
+                                             source_satisfaccionlapop, 
+                                             ";", 
+                                             source_satisfaccionlatinobarometro),
+                                      NA)) %>% 
+  mutate(source_satisfaccion = str_replace(source_satisfaccion, "NA;","")) %>% 
+  mutate(source_satisfaccion = str_replace(source_satisfaccion, "Proyectado. Ultimo","Valor proyectado segun ultimo"))
+
+indicador_satisfaccion <- indicador_satisfaccion %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, satisfaccion, source_satisfaccion)
+
+
 ### GURADADO chequeo y guardo lo disponible hasta ahora  #########################
 
 summary(indicador_nec)
@@ -454,6 +522,8 @@ indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 summary(indicador_proptv)
 indicador_proptv %>% write.csv("indicador_proptv.csv")
 
+summary(indicador_satisfaccion)
+indicador_satisfaccion %>% write.csv("indicador_satisfaccion.csv")
 
 ########################################################################
 ##########################################################################
