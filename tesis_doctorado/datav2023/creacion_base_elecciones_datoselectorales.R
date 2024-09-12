@@ -46,6 +46,7 @@ data_tv_lapop <- read.csv("tv_lapop/proptv_lapop.csv")
 data_tv_latinobarometro <- read.csv("latinobarometro/df_proptv_latinobarometro.csv")
 data_descontento_latinobarometro <- read.csv("latinobarometro/df_satisfaccion_latinobarometro.csv")
 data_descontento_lapop <- read.csv("lapop/data_satisfaccionlapop.csv")
+data_debates_USA <- read.csv("USA_all_debates.csv")
 
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -498,6 +499,71 @@ indicador_satisfaccion <- indicador_satisfaccion %>%
 indicador_satisfaccion <- indicador_satisfaccion %>% 
   select(cat_pais, ncat_eleccion, ncat_ronda, satisfaccion, source_satisfaccion)
 
+##### EEUU debates ######
+# source: https://www.presidency.ucsb.edu/documents/presidential-documents-archive-guidebook/presidential-campaigns-debates-and-endorsements-0
+
+indicador_eeuu <- data_debates_USA %>% 
+  group_by(year) %>% 
+  summarise(n_debates_usa_year = n()) 
+
+indicador_eeuu_full <- indicador_eeuu %>%
+  summarize(StartYear = min(year), EndYear = max(year)) %>%
+  rowwise() %>%
+  do(data.frame(year = seq(.$StartYear, .$EndYear, by = 1))) %>%
+  ungroup()
+
+indicador_eeuu_full <- indicador_eeuu_full %>%
+  left_join(indicador_eeuu, 
+            by = c("year"))  %>% 
+  mutate(n_debates_usa_year = ifelse(is.na(n_debates_usa_year),0,n_debates_usa_year)) %>% 
+  mutate(year = year + 1 ) # sumo un año porque en gral las elecciones en eeuu son hacia fin de año
+
+# vamos a contabilizar debates por periodos electoales
+# para eso creamos data que indica años-periodo
+# notese que para las primeras elecciones consideramos un ciclo corto de dos años como referencia
+# arbitraria pero que busca no ser ni muy distante ni excesivamente reduccionista
+# contamos como que el ciclo electoral arranca en la primera ronda
+years_full <- electyears %>%
+  select(-X) %>% 
+  group_by(cat_pais) %>%
+  summarize(StartYear = min(ncat_election_year)-2, EndYear = max(ncat_election_year)) %>%
+  rowwise() %>%
+  do(data.frame(cat_pais = .$cat_pais, ncat_election_year = seq(.$StartYear, .$EndYear, by = 1))) %>%
+  ungroup()
+
+df_complete <- years_full %>%
+  left_join(electyears 
+            %>% select(-X) %>% subset(ncat_ronda==1), 
+            by = c("cat_pais", "ncat_election_year")) 
+
+df_complete <- df_complete %>% 
+  group_by(cat_pais) %>% 
+  arrange(ncat_election_year) %>% 
+  mutate(ciclo_electoral = ncat_eleccion) %>% 
+  fill(ciclo_electoral, .direction = "up") %>%
+  ungroup()
+
+indicador_eeuu_full <- df_complete %>% 
+  left_join(indicador_eeuu_full %>% 
+              dplyr::rename("ncat_election_year" = "year"))
+
+indicador_eeuu_full <- indicador_eeuu_full %>% 
+  mutate(n_debates_usa_year = ifelse(is.na(n_debates_usa_year),
+                                     0 , n_debates_usa_year))
+
+indicador_eeuu <- indicador_eeuu_full %>% 
+  group_by(cat_pais, ciclo_electoral) %>% 
+  summarise(n_debates_usa_ciclo = sum(n_debates_usa_year)) %>% 
+  ungroup() %>% 
+  mutate(dico_debates_usa_ciclo = ifelse(n_debates_usa_ciclo>0,1,0)) %>% 
+  mutate(source_debates_usa_ciclo = "Cuenta con base en información disponible en: https://www.presidency.ucsb.edu/documents/presidential-documents-archive-guidebook/presidential-campaigns-debates-and-endorsements-0") %>% 
+  dplyr::rename("ncat_eleccion" = "ciclo_electoral") 
+
+indicador_eeuu <- data_base_elecciones %>% 
+  left_join(indicador_eeuu)
+
+indicador_eeuu <- indicador_eeuu %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, n_debates_usa_ciclo, dico_debates_usa_ciclo, source_debates_usa_ciclo )
 
 ### GURADADO chequeo y guardo lo disponible hasta ahora  #########################
 
@@ -524,6 +590,9 @@ indicador_proptv %>% write.csv("indicador_proptv.csv")
 
 summary(indicador_satisfaccion)
 indicador_satisfaccion %>% write.csv("indicador_satisfaccion.csv")
+
+summary(indicador_eeuu)
+indicador_eeuu %>% write.csv("indicador_eeuu.csv")
 
 ########################################################################
 ##########################################################################
