@@ -46,7 +46,8 @@ data_tv_lapop <- read.csv("tv_lapop/proptv_lapop.csv")
 data_tv_latinobarometro <- read.csv("latinobarometro/df_proptv_latinobarometro.csv")
 data_descontento_latinobarometro <- read.csv("latinobarometro/df_satisfaccion_latinobarometro.csv")
 data_descontento_lapop <- read.csv("lapop/data_satisfaccionlapop.csv")
-data_debates_USA <- read.csv("USA_all_debates.csv")
+data_debates_USA <- read.csv("USA_all_debates - debates.csv")
+data_elecs_USA <- read.csv("USA_all_debates - electyears.csv")
 
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -478,6 +479,21 @@ indicador_proptv <- indicador_proptv %>%
   mutate(source_proptv = str_replace(source_proptv, "Proyectado. Ultimo","Valor proyectado segun ultimo"))
 
 
+##### internet tecnologia ######
+summary(data_tecno_uit)
+cor(data_tecno_uit %>% select(propindivinternet, propinternet), use = "pairwise.complete.obs")
+# correlacionan muy bien y tengo un poquito mas de data para el "propindiv"
+
+indicador_propinternet <- data_tecno_uit %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, 
+                     propindivinternet,
+                     source_propindivinternet)
+
+##### regulacion especifica debates ######
+
+##### acceso a medios regulacion #####
+
+##### imagen oficialista ######
 
 ##### satisfaccion con democracia ######
 
@@ -500,11 +516,18 @@ indicador_satisfaccion <- indicador_satisfaccion %>%
   select(cat_pais, ncat_eleccion, ncat_ronda, satisfaccion, source_satisfaccion)
 
 ##### EEUU debates ######
+# OJO INCORPORAR VALORES NEGATIVOS EN PROP COMO SE HACE PARA LATAM!#######
 # source: https://www.presidency.ucsb.edu/documents/presidential-documents-archive-guidebook/presidential-campaigns-debates-and-endorsements-0
 
-indicador_eeuu <- data_debates_USA %>% 
+n_debates_eeuu <- data_debates_USA %>% 
   group_by(year) %>% 
   summarise(n_debates_usa_year = n()) 
+
+indicador_eeuu <- data_elecs_USA %>% 
+  dplyr::rename("year" = "electyears") %>% 
+  left_join(n_debates_eeuu) %>% 
+  mutate(n_debates_usa_year = ifelse(is.na(n_debates_usa_year),0,n_debates_usa_year)) %>% 
+  mutate(dico_debates_usa_year = ifelse(n_debates_usa_year==0,0,1))
 
 indicador_eeuu_full <- indicador_eeuu %>%
   summarize(StartYear = min(year), EndYear = max(year)) %>%
@@ -523,10 +546,12 @@ indicador_eeuu_full <- indicador_eeuu_full %>%
 # notese que para las primeras elecciones consideramos un ciclo corto de dos años como referencia
 # arbitraria pero que busca no ser ni muy distante ni excesivamente reduccionista
 # contamos como que el ciclo electoral arranca en la primera ronda
+criterio <- 2
+
 years_full <- electyears %>%
   select(-X) %>% 
   group_by(cat_pais) %>%
-  summarize(StartYear = min(ncat_election_year)-2, EndYear = max(ncat_election_year)) %>%
+  summarize(StartYear = min(ncat_election_year)-criterio, EndYear = max(ncat_election_year)) %>%
   rowwise() %>%
   do(data.frame(cat_pais = .$cat_pais, ncat_election_year = seq(.$StartYear, .$EndYear, by = 1))) %>%
   ungroup()
@@ -545,7 +570,8 @@ df_complete <- df_complete %>%
 
 indicador_eeuu_full <- df_complete %>% 
   left_join(indicador_eeuu_full %>% 
-              dplyr::rename("ncat_election_year" = "year"))
+              dplyr::rename("ncat_election_year" = "year") %>% 
+              select(-c(winner, challenger, country)))
 
 indicador_eeuu_full <- indicador_eeuu_full %>% 
   mutate(n_debates_usa_year = ifelse(is.na(n_debates_usa_year),
@@ -553,17 +579,104 @@ indicador_eeuu_full <- indicador_eeuu_full %>%
 
 indicador_eeuu <- indicador_eeuu_full %>% 
   group_by(cat_pais, ciclo_electoral) %>% 
-  summarise(n_debates_usa_ciclo = sum(n_debates_usa_year)) %>% 
+  summarise(n_debates_usa_ciclo = sum(n_debates_usa_year),
+            prop_elec_usa_ciclo = mean(dico_debates_usa_year, na.rm = T)) %>% 
   ungroup() %>% 
   mutate(dico_debates_usa_ciclo = ifelse(n_debates_usa_ciclo>0,1,0)) %>% 
   mutate(source_debates_usa_ciclo = "Cuenta con base en información disponible en: https://www.presidency.ucsb.edu/documents/presidential-documents-archive-guidebook/presidential-campaigns-debates-and-endorsements-0") %>% 
   dplyr::rename("ncat_eleccion" = "ciclo_electoral") 
 
+indicador_eeuu <- indicador_eeuu %>% 
+  mutate(prop_elec_usa_ciclo = ifelse(is.na(prop_elec_usa_ciclo), 0,prop_elec_usa_ciclo))
+
 indicador_eeuu <- data_base_elecciones %>% 
   left_join(indicador_eeuu)
 
 indicador_eeuu <- indicador_eeuu %>% 
-  select(cat_pais, ncat_eleccion, ncat_ronda, n_debates_usa_ciclo, dico_debates_usa_ciclo, source_debates_usa_ciclo )
+  select(cat_pais, ncat_eleccion, ncat_ronda, prop_elec_usa_ciclo, n_debates_usa_ciclo, dico_debates_usa_ciclo, source_debates_usa_ciclo )
+
+##### LATAM debates ######
+# copiado y adaptado de un archivo anterior
+
+# EN MAING Y PEREZ LIÑAN : 
+# In addition to global trends and hegemonic powers, changes in neighboring countries may affect the preferences and resources of domestic coalitions. We estimate the presence of a favorable regional environment using the average score in our democracy scale for the whole region (but excluding the country in question) during the previous year. The coding for this indicator is based on our trichotomous measure of democracy. The value of this variable can theoretically range from 0, if none of the other nineteen countries in the region were democratic in a given year, to 1 if all nineteen countries were democratic in that year. To compute this average, we gave semi-democratic countries a score of 0.5. We exclude the country in question and lag the variable to minimize problems of endogeneity. Therefore, the variable reflecting the regional environment is defined for any country i at time t as: (3.1) where Rit is the value of the regional indicator, Dt–1 is the proportion ofdemocracies in the region during the previous year, St–1 is the proportion of semi-democracies in the region during the previous year, and γit−1 is a correction term that acquires a value of 1/N if the country was democratic, and 1/(2N) if the country was semi-democratic during the previous year (i.e., excludes the country’s score if the regime was competitive during the past year). The second term (N / (N−1)) reweights the proportions to reflect the fact that the specific country was excluded from the denominator.
+# FORMULA ES
+# REGION = ( PROP ELECCIONES CON DEBATES AÑO ANTERIOR  - (DICO_DEBATES EN PAIS/N) ) * ( N / (N-1))
+
+# necesito primero crear base anual para la region. para esta base anual, contar : cantidad de elecciones. cantidad de elecciones con debates. prop elecciones con debates
+
+base_anual <- data_base_elecciones %>% 
+  left_join(electyears %>%  select(-X)) %>% 
+  group_by(ncat_election_year) %>% 
+  dplyr::summarise(n_elecciones_en_año_region = n(),
+                   n_elecciones_en_año_region_con_debates = sum(dico_debates_eleccion)) %>% 
+  ungroup() %>% 
+  dplyr::mutate(prop_elecciones_en_año_region_con_debates = n_elecciones_en_año_region_con_debates/n_elecciones_en_año_region)
+
+base_elecciones_reducida <- electyears %>% 
+  select(cat_pais, ncat_election_year) %>% 
+  unique() %>% 
+  mutate(previous_year = ncat_election_year -1 ) %>% 
+  group_by(cat_pais) %>% 
+  arrange(ncat_election_year) %>% 
+  mutate(start_year = lag(ncat_election_year)) %>% 
+  ungroup() %>% 
+  mutate(start_year = ifelse(is.na(start_year), 
+                             ncat_election_year - criterio,  # mismo criterio que aplicamos para calculo USA
+                             start_year))
+
+base_elecciones_reducida_año_anterior <- base_elecciones_reducida %>% 
+  left_join(base_anual %>% dplyr::rename("previous_year" = "ncat_election_year", # debe haber forma más automatizada de hacer esto pero no se me ocurre ahora 
+                                         "n_elecciones_año_anterior_region" = "n_elecciones_en_año_region",
+                                         "n_elecciones_año_anterior_region_con_debates" =  "n_elecciones_en_año_region_con_debates",
+                                         "prop_elecciones_año_anterior_region_con_debates" = "prop_elecciones_en_año_region_con_debates")) %>%
+  mutate(n_elecciones_año_anterior_region = ifelse(is.na(n_elecciones_año_anterior_region),0, n_elecciones_año_anterior_region)) %>% 
+  mutate(n_elecciones_año_anterior_region_con_debates = ifelse( n_elecciones_año_anterior_region==0, 0, n_elecciones_año_anterior_region_con_debates),
+         prop_elecciones_año_anterior_region_con_debates  = ifelse( n_elecciones_año_anterior_region==0, 0, prop_elecciones_año_anterior_region_con_debates))
+
+# Calculate average values for periods between elections # CODIGO DE CHATGPT NO FUNCA
+df_avg_values <- base_elecciones_reducida %>%
+  arrange(cat_pais, ncat_election_year) %>%
+  #group_by(cat_pais) %>%
+  #filter(row_number() > 1) %>%  # Remove the first row for each country
+  rowwise() %>%
+  mutate(
+    avg_prop = base_anual %>%
+      filter(ncat_election_year >= start_year & ncat_election_year <= previous_year) %>%
+      summarize(avg_prop = mean(prop_elecciones_en_año_region_con_debates, na.rm = TRUE)) %>%
+      pull(avg_prop)
+  ) %>%
+  select(cat_pais, ncat_election_year, avg_prop) %>%
+  ungroup()
+
+# testeo de codigo, saltear 
+# start_year <- 2019
+# previous_year <- 2023
+# 
+# test_avg_prop = base_anual %>%
+#   filter(ncat_eleccion >= start_year & ncat_eleccion <= previous_year) %>%
+#   summarize(avg_prop = mean(prop_elecciones_en_año_region_con_debates, na.rm = TRUE)) %>%
+#   pull(avg_prop)
+# 
+# mean(test_avg_prop$prop_elecciones_en_año_region_con_debates)
+
+base_elecciones_reducida2 <- base_elecciones_reducida %>%
+  left_join(df_avg_values, by = c("cat_pais", "ncat_election_year")) %>% 
+  left_join(base_elecciones_reducida_año_anterior) 
+
+base_elecciones_reducida2 <- base_elecciones_reducida2 %>% 
+  dplyr::rename("avgpropdebatesregionxciclo" = "avg_prop",
+                "lagpropdebatesregion" = "prop_elecciones_año_anterior_region_con_debates",
+                "lagndebatesregion" = "n_elecciones_año_anterior_region_con_debates")  %>% 
+  select(cat_pais, ncat_election_year, 
+         avgpropdebatesregionxciclo, lagpropdebatesregion, lagndebatesregion) %>% 
+  mutate(avgpropdebatesregionxciclo = ifelse(is.na(avgpropdebatesregionxciclo),0,avgpropdebatesregionxciclo))
+ 
+indicador_region <- electyears %>% 
+  left_join(base_elecciones_reducida2) %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda,
+         avgpropdebatesregionxciclo, lagpropdebatesregion, lagndebatesregion) %>% 
+  mutate(source_region = "Calculo con base en data recabada para Franco H. (2022)")
 
 ### GURADADO chequeo y guardo lo disponible hasta ahora  #########################
 
@@ -588,11 +701,17 @@ indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 summary(indicador_proptv)
 indicador_proptv %>% write.csv("indicador_proptv.csv")
 
+summary(indicador_propinternet)
+indicador_propinternet %>% write.csv("indicador_propinternet.csv")
+
 summary(indicador_satisfaccion)
 indicador_satisfaccion %>% write.csv("indicador_satisfaccion.csv")
 
 summary(indicador_eeuu)
 indicador_eeuu %>% write.csv("indicador_eeuu.csv")
+
+summary(indicador_region)
+indicador_region %>% write.csv("indicador_region.csv")
 
 ########################################################################
 ##########################################################################

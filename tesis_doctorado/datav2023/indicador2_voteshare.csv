@@ -1,0 +1,713 @@
+cat_pais,ncat_eleccion,ncat_ronda,nombres_candidatos,voteshare,source_voteshare
+Brasil,1989,1,Leonel Brizola,15.45,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Luiz Inacio Lula da Silva,16.08,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Mario Covas,10.78,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Paulo Maluf,8.28,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Aureliano Chaves,0.83,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Guilherme Afif Domingos,4.53,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Roberto Freire,1.06,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Ronaldo Caiado,0.68,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Affonso Camargo,0.52,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Ulysses Guimaraes,4.43,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,2,Fernando Collor de Mello,53.03,Friedenberg (2016a) 
+Brasil,1989,2,Luiz Inacio Lula da Silva,46.97,Friedenberg (2016a) 
+Brasil,1994,1,Fernando Henrique Cardoso,54.27,Friedenberg (2016a) 
+Brasil,1994,1,Leonel Brizola,3.18,Friedenberg (2016a) 
+Brasil,1994,1,Eneas Ferreira Carneiro,7.38,Friedenberg (2016a) 
+Brasil,1994,1,Esperidiao Amin,2.75,Friedenberg (2016a) 
+Brasil,1994,1,Flavio Gurgel Rocha,NA,Web Wikipedia https://pt.wikipedia.org/wiki/Fl%C3%A1vio_Rocha
+Brasil,1994,1,Hernani Goulart Fortuna,0.38,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres94.html
+Brasil,1994,1,Luiz Inacio Lula da Silva,27.04,Friedenberg (2016a) 
+Brasil,1994,1,Orestes Quercia,4.38,Friedenberg (2016a) 
+Brasil,2002,1,Luiz Inacio Lula da Silva,46.44,Friedenberg (2016a) 
+Brasil,2002,1,Jose Serra,23.19,Friedenberg (2016a) 
+Brasil,2002,1,Ciro Gomes,12,Friedenberg (2016a) 
+Brasil,2002,1,Anthony Garotinho,17.9,Friedenberg (2016a) 
+Brasil,2002,2,Luiz Inacio Lula da Silva,61.27,Friedenberg (2016a) 
+Brasil,2002,2,Jose Serra,38.72,Friedenberg (2016a) 
+Brasil,2006,1,Geraldo Alckmin,41.64,Friedenberg (2016a) 
+Brasil,2006,1,Jose Maria Eymael,0.07,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres06.html
+Brasil,2006,1,Luciano Bivar,0.06,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres06.html
+Brasil,2006,1,Cristovam Buarque,2.6,Friedenberg (2016a) 
+Brasil,2006,1,Heloisa Helena,6.8,Friedenberg (2016a) 
+Brasil,2006,2,Geraldo Alckmin,39.17,Friedenberg (2016a) 
+Brasil,2006,2,Luiz Inacio Lula da Silva,60.83,Friedenberg (2016a) 
+Brasil,2010,1,Marina Silva,19.3,Friedenberg (2016a) 
+Brasil,2010,1,Jose Serra,32.61,Friedenberg (2016a) 
+Brasil,2010,1,Dilma Rousseff,46.91,Friedenberg (2016a) 
+Brasil,2010,1,Plinio Sampaio,0.9,Friedenberg (2016a) 
+Brasil,2010,2,Jose Serra,43.95,Friedenberg (2016a) 
+Brasil,2010,2,Dilma Rousseff,56.05,Friedenberg (2016a) 
+Brasil,2014,1,Dilma Rousseff,41.59,Friedenberg (2016a) 
+Brasil,2014,1,Aecio Neves,33.55,Friedenberg (2016a) 
+Brasil,2014,1,Marina Silva,21.3,Friedenberg (2016a) 
+Brasil,2014,1,Luciana Genro,1.55,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2014&session=106911297479454
+Brasil,2014,1,Pastor Everaldo,0.75,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2014&session=106911297479454
+Brasil,2014,1,Levy Fidelix,0.43,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2014&session=106911297479454
+Brasil,2014,1,Eduardo Jorge,0.61,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2014&session=106911297479454
+Brasil,2014,1,Jose Maria Eymael,0.06,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2014&session=106911297479454
+Brasil,2014,2,Dilma Rousseff,51.64,Friedenberg (2016a) 
+Brasil,2014,2,Aecio Neves,48.36,Friedenberg (2016a) 
+Brasil,2018,1,Alvaro Dias,0.8,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2018&session=106911297479454
+Brasil,2018,1,Geraldo Alckmin,4.76,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2018&session=106911297479454
+Brasil,2018,1,Marina Silva,1,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2018&session=106911297479454
+Brasil,2018,1,Henrique Meirelles,1.2,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2018&session=106911297479454
+Brasil,2018,1,Guilherme Boulos,0.58,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2018&session=106911297479454
+Brasil,2018,1,Ciro Gomes,12.46,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2018&session=106911297479454
+Brasil,2018,1,Cabo Daciolo,1.26,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2018&session=106911297479454
+Brasil,2018,1,Jair Bolsonaro,46.03,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Brasil,2018,1,Fernando Haddad,29.28,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Brasil,2022,1,Jair Bolsonaro,43.2,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Brasil,2022,1,Luiz Inacio Lula da Silva,48.43,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Brasil,2022,1,Luiz Felipe d'Avila,0.47,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2022&session=106911297479454
+Brasil,2022,1,Ciro Gomes,3.04,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2022&session=106911297479454
+Brasil,2022,1,Simone Tebet,4.16,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2022&session=106911297479454
+Brasil,2022,1,Soraya Thronicke,0.51,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2022&session=106911297479454
+Brasil,2022,1,Kelmon Souza,0.07,TSE Brasil https://sig.tse.jus.br/ords/dwapr/r/seai/sig-eleicao-resultados/maiores-votacoes?p0_ano=2022&session=106911297479454
+Brasil,2022,2,Jair Bolsonaro,49.1,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Brasil,2022,2,Luiz Inacio Lula da Silva,50.9,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,1989,1,Hernan Buchi,29.4,Friedenberg (2016a) 
+Chile,1989,1,Patricio Aylwin Azocar,55.17,Friedenberg (2016a) 
+Chile,1993,1,Eduardo Frei Ruiz-Tagle,57.98,Friedenberg (2016a) 
+Chile,1993,1,Arturo Alessandri Besa,24.41,Friedenberg (2016a) 
+Chile,2000,1,Joaquin Lavin Infante,47.51,Friedenberg (2016a) 
+Chile,2000,1,Ricardo Lagos Escobar,47.95,Friedenberg (2016a) 
+Chile,2006,1,Michelle Bachelet,45.96,Friedenberg (2016a) 
+Chile,2006,1,Tomas Hirsch Goldschmidt,5.4,Friedenberg (2016a) 
+Chile,2006,1,Joaquin Lavin Infante,23.23,Friedenberg (2016a) 
+Chile,2006,1,Sebastian Pinera,25.41,Friedenberg (2016a) 
+Chile,2006,2,Sebastian Pinera,46.5,Friedenberg (2016a) 
+Chile,2006,2,Michelle Bachelet,53.5,Friedenberg (2016a) 
+Chile,2010,1,Jorge Arrate Mac Niven,6.21,Friedenberg (2016a) 
+Chile,2010,1,Marco Enriquez-Ominami,20.14,Friedenberg (2016a) 
+Chile,2010,1,Sebastian Pinera,44.06,Friedenberg (2016a) 
+Chile,2010,1,Eduardo Frei Ruiz-Tagle,29.6,Friedenberg (2016a) 
+Chile,2010,2,Sebastian Pinera,51.61,Friedenberg (2016a) 
+Chile,2010,2,Eduardo Frei Ruiz-Tagle,48.39,Friedenberg (2016a) 
+Chile,2013,1,Franco Parisi,10.11,Friedenberg (2016a) 
+Chile,2013,1,Marcel Claude,2.81,Friedenberg (2016a) 
+Chile,2013,1,Ricardo Israel,0.57,Friedenberg (2016a) 
+Chile,2013,1,Marco Enriquez-Ominami,10.99,Friedenberg (2016a) 
+Chile,2013,1,Roxana Miranda,1.24,Friedenberg (2016a) 
+Chile,2013,1,Evelyn Matthei,25.03,Friedenberg (2016a) 
+Chile,2013,1,Alfredo Sfeir,2.35,Friedenberg (2016a) 
+Chile,2013,1,Tomas Jocelyn-Holt,0.19,Friedenberg (2016a) 
+Chile,2013,1,Michelle Bachelet,46.7,Friedenberg (2016a) 
+Chile,2013,2,Michelle Bachelet,62.17,Friedenberg (2016a) 
+Chile,2013,2,Evelyn Matthei,37.83,Friedenberg (2016a) 
+Chile,2017,1,Sebastian Pinera,36.64,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,2017,1,Beatriz Sanchez,20.27,Diario Oficial de Chile https://www.diariooficial.interior.gob.cl/publicaciones/2017/12/05/41925/01/1314632.pdf
+Chile,2017,1,Jose Antonio Kast,7.93,Diario Oficial de Chile https://www.diariooficial.interior.gob.cl/publicaciones/2017/12/05/41925/01/1314632.pdf
+Chile,2017,1,Alejandro Guillier,22.7,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,2017,1,Carolina Goic,5.88,Diario Oficial de Chile https://www.diariooficial.interior.gob.cl/publicaciones/2017/12/05/41925/01/1314632.pdf
+Chile,2017,1,Marco Enriquez-Ominami,5.71,Diario Oficial de Chile https://www.diariooficial.interior.gob.cl/publicaciones/2017/12/05/41925/01/1314632.pdf
+Chile,2017,1,Eduardo Artes,0.51,Diario Oficial de Chile https://www.diariooficial.interior.gob.cl/publicaciones/2017/12/05/41925/01/1314632.pdf
+Chile,2017,1,Alejandro Navarro,0.36,Diario Oficial de Chile https://www.diariooficial.interior.gob.cl/publicaciones/2017/12/05/41925/01/1314632.pdf
+Chile,2017,2,Sebastian Pinera,54.58,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,2017,2,Alejandro Guillier,45.42,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,2021,1,Gabriel Boric,25.83,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,2021,1,Sebastian Sichel,12.79,SERVEL Chile https://app.powerbi.com/view?r=eyJrIjoiODIyYWQ5NjctYTY3OS00NDQwLWJlMjQtMzA0ZjNjYmVlM2I2IiwidCI6ImVhZjg3OWJkLWQzZWMtNDY1MC1iMTI5LTEzZGZkZjQ4NTlmZSJ9
+Chile,2021,1,Jose Antonio Kast,27.91,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,2021,1,Yasna Provoste,11.6,SERVEL Chile https://app.powerbi.com/view?r=eyJrIjoiODIyYWQ5NjctYTY3OS00NDQwLWJlMjQtMzA0ZjNjYmVlM2I2IiwidCI6ImVhZjg3OWJkLWQzZWMtNDY1MC1iMTI5LTEzZGZkZjQ4NTlmZSJ9
+Chile,2021,1,Eduardo Artes,1.46,SERVEL Chile https://app.powerbi.com/view?r=eyJrIjoiODIyYWQ5NjctYTY3OS00NDQwLWJlMjQtMzA0ZjNjYmVlM2I2IiwidCI6ImVhZjg3OWJkLWQzZWMtNDY1MC1iMTI5LTEzZGZkZjQ4NTlmZSJ9
+Chile,2021,1,Marco Enriquez-Ominami,7.6,SERVEL Chile https://app.powerbi.com/view?r=eyJrIjoiODIyYWQ5NjctYTY3OS00NDQwLWJlMjQtMzA0ZjNjYmVlM2I2IiwidCI6ImVhZjg3OWJkLWQzZWMtNDY1MC1iMTI5LTEzZGZkZjQ4NTlmZSJ9
+Chile,2021,1,Franco Parisi,12.81,SERVEL Chile https://app.powerbi.com/view?r=eyJrIjoiODIyYWQ5NjctYTY3OS00NDQwLWJlMjQtMzA0ZjNjYmVlM2I2IiwidCI6ImVhZjg3OWJkLWQzZWMtNDY1MC1iMTI5LTEzZGZkZjQ4NTlmZSJ9
+Chile,2021,2,Gabriel Boric,55.87,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Chile,2021,2,Jose Antonio Kast,44.13,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Argentina,2015,1,Nicolas del Cano,3.23,Archivo elecciones.gob.ar https://web.archive.org/web/20151118233023/http://elecciones.gob.ar/admin/ckfinder/userfiles/files/P_V__DEFINITIVO%20x%20Distrito_GRALES_%202015_WEB.pdf
+Argentina,2015,1,Adolfo Rodriguez Saa,1.64,Archivo elecciones.gob.ar https://web.archive.org/web/20151118233023/http://elecciones.gob.ar/admin/ckfinder/userfiles/files/P_V__DEFINITIVO%20x%20Distrito_GRALES_%202015_WEB.pdf
+Argentina,2015,1,Sergio Massa,21.39,Archivo elecciones.gob.ar https://web.archive.org/web/20151118233023/http://elecciones.gob.ar/admin/ckfinder/userfiles/files/P_V__DEFINITIVO%20x%20Distrito_GRALES_%202015_WEB.pdf
+Argentina,2015,1,Margarita Stolbizer,2.51,Archivo elecciones.gob.ar https://web.archive.org/web/20151118233023/http://elecciones.gob.ar/admin/ckfinder/userfiles/files/P_V__DEFINITIVO%20x%20Distrito_GRALES_%202015_WEB.pdf
+Argentina,2015,1,Mauricio Macri,34.15,Friedenberg (2016a) 
+Argentina,2015,2,Daniel Scioli,48.66,Friedenberg (2016a) 
+Argentina,2015,2,Mauricio Macri,51.34,Friedenberg (2016a) 
+Argentina,2019,1,Juan Jose Gomez Centurion,1.71,web Dirección Nacional Electoral https://www.argentina.gob.ar/dine/resultados-electorales/elecciones-2019
+Argentina,2019,1,Mauricio Macri,40.28,Friedenberg (2016a) 
+Argentina,2019,1,Alberto Fernandez,48.24,Friedenberg (2016a) 
+Argentina,2019,1,Jose Luis Espert,1.47,web Dirección Nacional Electoral https://www.argentina.gob.ar/dine/resultados-electorales/elecciones-2019
+Argentina,2019,1,Roberto Lavagna,6.15,web Dirección Nacional Electoral https://www.argentina.gob.ar/dine/resultados-electorales/elecciones-2019
+Argentina,2019,1,Nicolas del Cano,2.16,web Dirección Nacional Electoral https://www.argentina.gob.ar/dine/resultados-electorales/elecciones-2019
+Argentina,2023,1,Sergio Massa,36.78,Prensa https://www.perfil.com/noticias/politica/escrutinio-definitivo-cuales-son-los-resultados-finales-de-las-elecciones-presidenciales.phtml
+Argentina,2023,1,Javier Milei,29.99,Friedenberg (2016a) 
+Argentina,2023,1,Myriam Bregman,2.7,Prensa https://www.perfil.com/noticias/politica/escrutinio-definitivo-cuales-son-los-resultados-finales-de-las-elecciones-presidenciales.phtml
+Argentina,2023,1,Juan Schiaretti,6.73,Prensa https://www.perfil.com/noticias/politica/escrutinio-definitivo-cuales-son-los-resultados-finales-de-las-elecciones-presidenciales.phtml
+Argentina,2023,1,Patricia Bullrich,23.81,Prensa https://www.perfil.com/noticias/politica/escrutinio-definitivo-cuales-son-los-resultados-finales-de-las-elecciones-presidenciales.phtml
+Argentina,2023,2,Sergio Massa,44.31,Friedenberg (2016a) 
+Argentina,2023,2,Javier Milei,55.69,Friedenberg (2016a) 
+Peru,1990,2,Alberto Fujimori,62.32,Friedenberg (2016a) 
+Peru,1990,2,Mario Vargas Llosa,37.68,Friedenberg (2016a) 
+Peru,2001,2,Alejandro Toledo Manrique,53.08,Friedenberg (2016a) 
+Peru,2001,2,Alan Garcia Perez,46.92,Friedenberg (2016a) 
+Peru,2006,2,Alan Garcia Perez,52.63,Friedenberg (2016a) 
+Peru,2006,2,Ollanta Moises Humala Tasso,47.37,Friedenberg (2016a) 
+Peru,2011,1,Keiko Fujimori Higuchi,23.55,Friedenberg (2016a) 
+Peru,2011,1,Oscar Luis Castaneda Lossio,9.83,Friedenberg (2016a) 
+Peru,2011,1,Pedro Pablo Kuczynski,18.51,Friedenberg (2016a) 
+Peru,2011,1,Ollanta Moises Humala Tasso,31.7,Friedenberg (2016a) 
+Peru,2011,1,Alejandro Toledo Manrique,15.63,Friedenberg (2016a) 
+Peru,2011,1,Juliana Reymer Rodriguez,0.11,JNE Peru https://portal.jne.gob.pe/portal_documentos/files/informacionelectoral/estadisticaelectoral/6_10.pdf
+Peru,2011,1,Humberto Pinazo Bella,0.08,JNE Peru https://portal.jne.gob.pe/portal_documentos/files/informacionelectoral/estadisticaelectoral/6_10.pdf
+Peru,2011,1,Rafael Belaunde Aubry,0.12,JNE Peru https://portal.jne.gob.pe/portal_documentos/files/informacionelectoral/estadisticaelectoral/6_10.pdf
+Peru,2011,1,Jose Manuel Rodriguez Cuadros,0.06,JNE Peru https://portal.jne.gob.pe/portal_documentos/files/informacionelectoral/estadisticaelectoral/6_10.pdf
+Peru,2011,1,Ricardo Noriega Salaverry,0.15,JNE Peru https://portal.jne.gob.pe/portal_documentos/files/informacionelectoral/estadisticaelectoral/6_10.pdf
+Peru,2011,1,Jose Nique de la Puente,0.25,JNE Peru https://portal.jne.gob.pe/portal_documentos/files/informacionelectoral/estadisticaelectoral/6_10.pdf
+Peru,2011,2,Ollanta Moises Humala Tasso,51.44,Friedenberg (2016a) 
+Peru,2011,2,Keiko Fujimori Higuchi,48.56,Friedenberg (2016a) 
+Peru,2016,1,Antero Flores Araoz,0.43,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Hernando Guerra Garcia,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Peru,2016,1,Francisco Diez Canseco,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Peru,2016,1,Yehude Simon,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Peru,2016,1,Fernando Olivera,1.32,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Julio Guzman,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Peru,2016,1,Veronika Mendoza,18.74,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Vladimir Cerron,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Peru,2016,1,Gregorio Santos Guerrero,4,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Alan Garcia Perez,5.83,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Alejandro Toledo Manrique,1.3,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Alfredo Barnechea,6.97,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Keiko Fujimori Higuchi,39.86,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Peru,2016,1,Miguel Hilario,0.49,ONPE Peru https://www.web.onpe.gob.pe/modElecciones/elecciones/elecciones2016/PRPCP2016/Resumen-GeneralPresidencial.html#posicion
+Peru,2016,1,Pedro Pablo Kuczynski,21.05,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Peru,2016,2,Keiko Fujimori Higuchi,49.88,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Peru,2016,2,Pedro Pablo Kuczynski,50.12,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Peru,2021,1,Yonhy Lescano,9.07,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,George Forsyth,5.66,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Veronika Mendoza,7.87,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Keiko Fujimori Higuchi,13.41,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Peru,2021,1,Daniel Urresti,5.64,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Cesar Acuna,6.02,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Marco Arana,0.45,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Alberto Beingolea,1.99,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Hernando de Soto,11.63,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Andres Alcantara,0.35,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Ollanta Moises Humala Tasso,1.6,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Pedro Castillo,18.92,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Peru,2021,1,Jose Vega,0.7,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Julio Guzman,2.26,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Rafael Santos,0.39,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Ciro Galvez,0.62,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Rafael Lopez Aliaga,11.75,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,1,Daniel Salaverry,1.67,ONPE Peru https://resultadoshistorico.onpe.gob.pe/EG2021/EleccionesPresidenciales/RePres/T
+Peru,2021,2,Keiko Fujimori Higuchi,49.87,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Peru,2021,2,Pedro Castillo,50.13,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Paraguay,2003,1,Nicanor Duarte Frutos,37.18,Friedenberg (2016a) 
+Paraguay,2003,1,Julio Cesar Franco,24.03,Friedenberg (2016a) 
+Paraguay,2003,1,Pedro Fadul,21.3,Friedenberg (2016a) 
+Paraguay,2003,1,Guillermo Sanchez Guffanti,13.5,Friedenberg (2016a) 
+Paraguay,2003,1,Diego Abente,0.58,"Nohlen (2005b), Volumen II, p. 437 "
+Paraguay,2008,1,Lino Oviedo,21.93,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/2008.pdf
+Paraguay,2008,1,Blanca Ovelar,30.63,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/2008.pdf
+Paraguay,2008,1,Pedro Fadul,2.35,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/2008.pdf
+Paraguay,2008,1,Fernando Lugo,40.9,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/2008.pdf
+Paraguay,2013,1,Horacio Cartes,45.68,Friedenberg (2016a) 
+Paraguay,2013,1,Efrain Alegre,37.11,Friedenberg (2016a) 
+Paraguay,2013,1,Miguel Carrizosa,1.12,Friedenberg (2016a) 
+Paraguay,2013,1,Mario Ferreiro,5.88,Friedenberg (2016a) 
+Paraguay,2013,1,Lino Oviedo,0.81,Friedenberg (2016a) 
+Paraguay,2013,1,Anibal Carrillo,3.3,Friedenberg (2016a) 
+Paraguay,2018,1,Efrain Alegre,42.74,TSJE Paraguay https://tsje.gov.py/resultados-de-computo-definitivo---elecciones-generales-2018.html
+Paraguay,2018,1,Mario Abdo Benitez,46.42,TSJE Paraguay https://tsje.gov.py/resultados-de-computo-definitivo---elecciones-generales-2018.html
+Paraguay,2023,1,Paraguayo Cubas,22.92,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/MEMORIA_Y_ESTADISTICA_ELECTORAL_%20ELECCIONES_2023.pdf
+Paraguay,2023,1,Euclides Acevedo,1.36,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/MEMORIA_Y_ESTADISTICA_ELECTORAL_%20ELECCIONES_2023.pdf
+Paraguay,2023,1,Jorge Gomez Otano,0.4,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/MEMORIA_Y_ESTADISTICA_ELECTORAL_%20ELECCIONES_2023.pdf
+Paraguay,2023,1,Luis Talavera,0.57,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/MEMORIA_Y_ESTADISTICA_ELECTORAL_%20ELECCIONES_2023.pdf
+Paraguay,2023,1,Alfredo Luis Machuca Doldan,0.17,TSJE Paraguay https://www.tsje.gov.py/static/ups/libros/pdf/MEMORIA_Y_ESTADISTICA_ELECTORAL_%20ELECCIONES_2023.pdf
+Ecuador,1979,1,Jaime Roldos,27.7,Friedenberg (2016a) 
+Ecuador,1979,1,Sixto Duran Ballen,23.86,Friedenberg (2016a) 
+Ecuador,1979,1,Raul Clemente Huerta,22.7,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,1979,1,Rodrigo Borja,12,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,1979,1,Abdon Calderon,9,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,1979,1,Rene Mauge,4.7,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,1979,2,Sixto Duran Ballen,31.51,Friedenberg (2016a) 
+Ecuador,1979,2,Jaime Roldos,68.49,Friedenberg (2016a) 
+Ecuador,1984,2,Rodrigo Borja,48.46,Friedenberg (2016a) 
+Ecuador,1984,2,Leon Febres Cordero,51.54,Friedenberg (2016a) 
+Ecuador,2006,1,Rafael Correa,22.84,Friedenberg (2016a) 
+Ecuador,2006,1,Cynthia Viteri,9.6,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2006,1,Leon Roldos,14.8,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2006,1,Fernando Rosero,2.1,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2006,1,Alvaro Noboa,26.83,Friedenberg (2016a) 
+Ecuador,2013,1,Lucio Gutierrez,6.7,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2013,1,Alvaro Noboa,3.7,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2013,1,Nelson Zavala,1.2,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2013,1,Guillermo Lasso,22.68,Friedenberg (2016a) 
+Ecuador,2013,1,Mauricio Rodas,3.9,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2013,1,Norman Wray,1.3,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2017,1,Abdala Bucaram,4.8,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2017,1,Guillermo Lasso,28.09,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Ecuador,2017,1,Washington Pesantes,0.8,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2017,1,Patricio Zuquilanda,0.8,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2017,1,Ivan Espinel,3.2,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2017,1,Paco Moncayo,6.7,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2017,1,Cynthia Viteri,16.3,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2017,1,Lenin Moreno,39.36,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Ecuador,2021,1,Andres Arauz,32.72,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Yaku Perez,19.39,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Isidro Romero,1.86,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Gustavo Larrea,0.4,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Carlos Sagnay,0.29,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Giovanny Andrade,0.22,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Paul Carrasco,0.21,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Ximena Pena,1.54,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Guillermo Lasso,19.74,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Guillermo Celi,0.91,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Lucio Gutierrez,1.78,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Xavier Hervas,15.68,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Cesar Montufar,0.62,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Gerson Almeida,1.73,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Juan Fernando Velasco,0.82,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,1,Pedro Freile,2.08,CNE Ecuador https://app01.cne.gob.ec/Resultados2021
+Ecuador,2021,2,Andres Arauz,47.54,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Ecuador,2021,2,Guillermo Lasso,52.36,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Ecuador,2023,1,Yaku Perez,3.97,CNE Ecuador https://www.cne.gob.ec/wp-content/uploads/2024/06/ResultadosElectoralesAnticipadasyConsultas2023.pdf
+Ecuador,2023,1,Bolivar Armijos,0.36,CNE Ecuador https://www.cne.gob.ec/wp-content/uploads/2024/06/ResultadosElectoralesAnticipadasyConsultas2023.pdf
+Ecuador,2023,1,Luisa Gonzalez,33.61,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Ecuador,2023,1,Xavier Hervas,0.49,CNE Ecuador https://www.cne.gob.ec/wp-content/uploads/2024/06/ResultadosElectoralesAnticipadasyConsultas2023.pdf
+Ecuador,2023,1,Daniel Noboa Azin,23.47,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Ecuador,2023,1,Otto Sonnenholzner,7.06,CNE Ecuador https://www.cne.gob.ec/wp-content/uploads/2024/06/ResultadosElectoralesAnticipadasyConsultas2023.pdf
+Ecuador,2023,1,Jan Topic,14.67,CNE Ecuador https://www.cne.gob.ec/wp-content/uploads/2024/06/ResultadosElectoralesAnticipadasyConsultas2023.pdf
+Ecuador,2023,2,Luisa Gonzalez,47.8,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Ecuador,2023,2,Daniel Noboa Azin,52.2,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Uruguay,1984,1,Julio Maria Sanguinetti,31.2,"Nohlen (2005b), Volumen II, p. 525. Se computan los votos directos al candidato "
+Uruguay,1984,1,Alberto Zumaran,29.3,"Nohlen (2005b), Volumen II, p. 525. Se computan los votos directos al candidato "
+Uruguay,1989,1,Jorge Batlle,14.8,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1989,1,Luis Alberto Lacalle Herrera,22.6,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1989,1,Carlos Julio Pereyra,11.1,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1989,1,Alberto Zumaran,5.1,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1989,1,Liber Seregni,21.2,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1989,1,Hugo Batalla,9,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1994,1,Julio Maria Sanguinetti,24.7,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1994,1,Tabare Vazquez,30.6,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,1994,1,Juan Andres Ramirez,13,"Nohlen (2005b), Volumen II, p. 526. Se computan los votos directos al candidato "
+Uruguay,2009,1,Pedro Bordaberry,17.02,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/sites/corte-electoral/files/2023-08/Elecciones_Nacionales_2009.pdf
+Uruguay,2009,1,Pablo Mieres,2.49,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/sites/corte-electoral/files/2023-08/Elecciones_Nacionales_2009.pdf
+Uruguay,2009,1,Raul Rodriguez,0.67,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/sites/corte-electoral/files/2023-08/Elecciones_Nacionales_2009.pdf
+Uruguay,2014,1,Luis Alberto Lacalle Pou,30.88,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231084
+Uruguay,2014,1,Pedro Bordaberry,12.89,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/datos-y-estadisticas/estadisticas/resultados-elecciones-nacionales-plebiscito-balotaje-2014
+Uruguay,2014,1,Pablo Mieres,3.09,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/datos-y-estadisticas/estadisticas/resultados-elecciones-nacionales-plebiscito-balotaje-2014
+Uruguay,2014,1,Cesar Vega,0.75,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/datos-y-estadisticas/estadisticas/resultados-elecciones-nacionales-plebiscito-balotaje-2014
+Uruguay,2014,1,Gonzalo Abella,1.13,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/datos-y-estadisticas/estadisticas/resultados-elecciones-nacionales-plebiscito-balotaje-2014
+Uruguay,2014,1,Rafael Fernandez,0.14,Corte Electoral Uruguay https://www.gub.uy/corte-electoral/datos-y-estadisticas/estadisticas/resultados-elecciones-nacionales-plebiscito-balotaje-2014
+Uruguay,2019,1,Luis Alberto Lacalle Pou,29.7,Corte Electoral Uruguay https://eleccionesnacionales.corteelectoral.gub.uy/
+Uruguay,2019,1,Daniel Martinez,40.49,Corte Electoral Uruguay https://eleccionesnacionales.corteelectoral.gub.uy/
+Uruguay,2019,2,Luis Alberto Lacalle Pou,50.79,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231089
+Uruguay,2019,2,Daniel Martinez,49.21,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231090
+Nicaragua,2006,1,Eduardo Montealegre,28.3,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Nica/nica06.html
+Nicaragua,2006,1,Edmundo Jarquin,6.3,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Nica/nica06.html
+Nicaragua,2006,1,Jose Rizo,27.11,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Nica/nica06.html
+Nicaragua,2006,1,Eden Pastora,0.28,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Nica/nica06.html
+Panama,1994,1,Jose Salvador Munoz,0.3,Friedenberg (2016b) 
+Panama,1994,1,Samuel Lewis Galindo,1.7,Friedenberg (2016b) 
+Panama,1994,1,Ernesto Perez Balladares,33.3,Friedenberg (2016b) 
+Panama,1994,1,Ruben Blades,17.1,Friedenberg (2016b) 
+Panama,1994,1,Eduardo Vallarino Arjona,2.4,Friedenberg (2016b) 
+Panama,1994,1,Ruben Dario Carles,16,Friedenberg (2016b) 
+Panama,2004,1,Guillermo Endara,30.86,Friedenberg (2016b) 
+Panama,2004,1,Jose Miguel Aleman,16.4,Friedenberg (2016b) 
+Panama,2004,1,Ricardo Martinelli,5.3,Friedenberg (2016b) 
+Panama,2004,1,Martin Torrijos,47.44,Friedenberg (2016b) 
+Panama,2009,1,Ricardo Martinelli,60.03,Friedenberg (2016b) 
+Panama,2009,1,Balbina Herrera,37.65,Friedenberg (2016b) 
+Panama,2014,1,Juan Carlos Navarro,28.1,Archivo Web del TE Panama https://web.archive.org/web/20140714174636/http://www.tribunal-electoral.gob.pa/html/fileadmin/user_upload/Elecciones/elecciones-2014/Cuadro_02_-_Presidente.pdf
+Panama,2014,1,Juan Carlos Varela,39.09,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Panama,2014,1,Genaro Lopez,0.6,Archivo Web del TE Panama https://web.archive.org/web/20140714174636/http://www.tribunal-electoral.gob.pa/html/fileadmin/user_upload/Elecciones/elecciones-2014/Cuadro_02_-_Presidente.pdf
+Panama,2014,1,Jose Domingo Arias,31.28,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Panama,2014,1,Juan Jovane,0.6,Archivo Web del TE Panama https://web.archive.org/web/20140714174636/http://www.tribunal-electoral.gob.pa/html/fileadmin/user_upload/Elecciones/elecciones-2014/Cuadro_02_-_Presidente.pdf
+Panama,2014,1,Gerardo Barroso,0.1,Archivo Web del TE Panama https://web.archive.org/web/20140714174636/http://www.tribunal-electoral.gob.pa/html/fileadmin/user_upload/Elecciones/elecciones-2014/Cuadro_02_-_Presidente.pdf
+Panama,2014,1,Esteban Rodriguez,0.1,Archivo Web del TE Panama https://web.archive.org/web/20140714174636/http://www.tribunal-electoral.gob.pa/html/fileadmin/user_upload/Elecciones/elecciones-2014/Cuadro_02_-_Presidente.pdf
+Panama,2019,1,Ana Matilde Gomez,4.76,Instituto Electoral de la Ciudad de Mexico https://www.iecm.mx/www/sites/VotoChilango/docs/InformeEleccionesGeneralesenPanama.pdf
+Panama,2019,1,Ricardo Lombana,18.8,Instituto Electoral de la Ciudad de Mexico https://www.iecm.mx/www/sites/VotoChilango/docs/InformeEleccionesGeneralesenPanama.pdf
+Panama,2019,1,Marco Ameglio,0.58,Instituto Electoral de la Ciudad de Mexico https://www.iecm.mx/www/sites/VotoChilango/docs/InformeEleccionesGeneralesenPanama.pdf
+Panama,2019,1,Jose Isabel Blandon,10.83,Instituto Electoral de la Ciudad de Mexico https://www.iecm.mx/www/sites/VotoChilango/docs/InformeEleccionesGeneralesenPanama.pdf
+Panama,2019,1,Saul Mendez,0.69,Instituto Electoral de la Ciudad de Mexico https://www.iecm.mx/www/sites/VotoChilango/docs/InformeEleccionesGeneralesenPanama.pdf
+Panama,2019,1,Romulo Roux,30.99,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Panama,2019,1,Laurentino Cortizo,33.35,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Venezuela,1963,1,Rafael Caldera,20.19,Archivo del CNE https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php
+Venezuela,1963,1,Arturo Uslar Pietri,16.1,"Nohlen (2005b), Volumen II, p. 580 "
+Venezuela,1968,1,Gonzalo Barrios,28.24,Archivo del CNE https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php
+Venezuela,1968,1,German Borregales,0.3,"Nohlen (2005b), Volumen II, p. 580 "
+Venezuela,1968,1,Luis Beltran Prieto,19.3,"Nohlen (2005b), Volumen II, p. 580 "
+Venezuela,1968,1,Rafael Caldera,29.13,Archivo del CNE https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php
+Venezuela,1968,1,Alejandro Hernandez,0.7,"Nohlen (2005b), Volumen II, p. 580 "
+Venezuela,1983,1,Jaime Lusinchi,58.43,"Nohlen (2005b), Volumen II, p. 582 "
+Venezuela,1983,1,Rafael Caldera,33.53,"Nohlen (2005b), Volumen II, p. 582 "
+Venezuela,1998,1,Claudio Fermin,NA,Web Wikipedia https://es.wikipedia.org/wiki/Claudio_Ferm%C3%ADn
+Venezuela,1998,1,Hugo Chavez,56.2,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231099
+Bolivia,1989,1,Carlos Palenque,12.25,"Nohlen (2005b) Volumen II, p 152 "
+Bolivia,1989,1,Genaro Flores,1.16,"Nohlen (2005b) Volumen II, p 152 "
+Bolivia,1989,1,Luis Sandoval Moron,0.68,"Nohlen (2005b) Volumen II, p 152 "
+Bolivia,1989,1,Antonio Aranibar,8.02,"Nohlen (2005b) Volumen II, p 152 "
+Bolivia,1989,1,Roger Cortez,2.81,"Nohlen (2005b) Volumen II, p 152 "
+Bolivia,1989,1,Victor Hugo Cardena,1.62,"Nohlen (2005b) Volumen II, p 152 "
+Bolivia,1989,1,Gonzalo Sanchez de Lozada,25.64,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231025
+Bolivia,1989,1,Jaime Paz Zamora,21.83,"Nohlen (2005b) Volumen II, p 152 "
+Bolivia,1989,1,Hugo Banzer,25.23,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231026
+Bolivia,1993,1,Felix Cardenas,1.1,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1993,1,Jerjes Justiniano,1.84,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1993,1,Mario Serrate,1.27,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1993,1,Fernando Untoja,0.77,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1993,1,Antonio Aranibar,5.36,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1993,1,Ramiro Velasco,0.98,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1993,1,Gonzalo Sanchez de Lozada,35.36,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231027
+Bolivia,1993,1,Hugo Banzer,21.05,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231028
+Bolivia,1993,1,Max Fernandez,13.77,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1997,1,Juan Carlos Duran,18.2,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231030
+Bolivia,1997,1,Miguel Urioste,2.5,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/el971.html
+Bolivia,1997,1,Remedios Loza,15.8,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/el971.html
+Bolivia,1997,1,Jaime Paz Zamora,16.7,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/el971.html
+Bolivia,1997,1,Ivo Kuljis,15.9,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/el971.html
+Bolivia,2002,1,Gonzalo Sanchez de Lozada,22.46,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231031
+Bolivia,2002,1,Manfred Reyes Villa,20.91,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2002,1,Evo Morales,20.94,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231032
+Bolivia,2002,1,Felipe Quispe,6.09,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2002,1,Jaime Paz Zamora,16.31,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2005,1,Jorge Quiroga,28.62,Friedenberg (2016a) 
+Bolivia,2005,1,Samuel Doria Medina,7.7,Friedenberg (2016a) 
+Bolivia,2005,1,Michiaki Nagatani,6.47,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres05.html
+Bolivia,2014,1,Samuel Doria Medina,24.23,Friedenberg (2016a) 
+Bolivia,2014,1,Juan del Granado,2.7,Friedenberg (2016a) 
+Bolivia,2014,1,Jorge Quiroga,9,Friedenberg (2016a) 
+Bolivia,2014,1,Fernando Vargas,2.69,Organo Electoral Plurinacional https://www.oep.org.bo/wp-content/uploads/2017/01/elecciones_nacionales_2014.pdf
+Bolivia,2020,1,Luis Arce,55.11,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231032
+Bolivia,2020,1,Carlos Mesa,28.83,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231032
+Bolivia,2020,1,Luis Fernando Camacho,14,Organo Electoral Plurinacional https://www.oep.org.bo/wp-content/uploads/2020/10/Separata_Resultados_EG_2020.pdf
+Bolivia,2020,1,Chi Hyun Chung,1.55,Organo Electoral Plurinacional https://www.oep.org.bo/wp-content/uploads/2020/10/Separata_Resultados_EG_2020.pdf
+Bolivia,2020,1,Jorge Quiroga,NA,Prensa https://www.infobae.com/america/america-latina/2020/10/11/jorge-tuto-quiroga-retiro-su-candidatura-a-la-presidencia-de-bolivia/
+Bolivia,2020,1,Maria de la Cruz Baya,NA,Prensa https://www.telesurtv.net/news/partido-adn-retira-elecciones-presidenciales-bolivia-20201007-0057.html
+Bolivia,2020,1,Feliciano Mamani,0.52,Organo Electoral Plurinacional https://www.oep.org.bo/wp-content/uploads/2020/10/Separata_Resultados_EG_2020.pdf
+Mexico,1994,1,Cuauhtemoc Cardenas,17.07,"Nohlen (2005a), Volumen I, p. 474 "
+Mexico,1994,1,Diego Fernandez de Cevallos,25.92,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Mexico,1994,1,Ernesto Zedillo,48.69,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Mexico,2000,1,Francisco Labastida,36.89,"Nohlen (2005a), Volumen I, p. 475 + INE Mexico https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067"
+Mexico,2000,1,Cuauhtemoc Cardenas,17,"Nohlen (2005a), Volumen I, p. 475 + INE Mexico https://portalanterior.ine.mx/documentos/RESELEC/esta2000/comp_test/reportes/centrales/Presidente.html"
+Mexico,2000,1,Vicente Fox,43.44,"Nohlen (2005a), Volumen I, p. 475 + INE Mexico https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067"
+Mexico,2000,1,Gilberto Rincon,1.61,"Nohlen (2005a), Volumen I, p. 475 + INE Mexico https://portalanterior.ine.mx/documentos/RESELEC/esta2000/comp_test/reportes/centrales/Presidente.html"
+Mexico,2000,1,Porfirio Munoz,0.43,"Nohlen (2005a), Volumen I, p. 475 + INE Mexico https://portalanterior.ine.mx/documentos/RESELEC/esta2000/comp_test/reportes/centrales/Presidente.html"
+Mexico,2000,1,Manuel Camacho,0.56,"Nohlen (2005a), Volumen I, p. 475 + INE Mexico https://portalanterior.ine.mx/documentos/RESELEC/esta2000/comp_test/reportes/centrales/Presidente.html"
+Mexico,2006,1,Roberto Campa,0.96,INE Mexico https://portalanterior.ine.mx/documentos/Estadisticas2006/presidentet/nac.html
+Mexico,2006,1,Patricia Mercado,2.71,INE Mexico https://portalanterior.ine.mx/documentos/Estadisticas2006/presidentet/nac.html
+Mexico,2006,1,Roberto Madrazo,22.23,INE Mexico https://portalanterior.ine.mx/documentos/Estadisticas2006/presidentet/nac.html
+Mexico,2006,1,Felipe Calderon,35.89,INE Mexico https://portalanterior.ine.mx/documentos/Estadisticas2006/presidentet/nac.html
+Mexico,2006,1,Andres Manuel Lopez Obrador,35.33,INE Mexico https://portalanterior.ine.mx/documentos/Estadisticas2006/presidentet/nac.html
+Mexico,2012,1,Enrique Pena Nieto,38.21,IFE Mexico https://portalanterior.ine.mx/archivos3/portal/historico/recursos/IFE-v2/CNCS/CNCS-IFE-Responde/2012/Julio/Le010712/Le010712.pdf
+Mexico,2012,1,Andres Manuel Lopez Obrador,31.59,IFE Mexico https://portalanterior.ine.mx/archivos3/portal/historico/recursos/IFE-v2/CNCS/CNCS-IFE-Responde/2012/Julio/Le010712/Le010712.pdf
+Mexico,2012,1,Josefina Vazquez Mota,25.41,IFE Mexico https://portalanterior.ine.mx/archivos3/portal/historico/recursos/IFE-v2/CNCS/CNCS-IFE-Responde/2012/Julio/Le010712/Le010712.pdf
+Mexico,2012,1,Gabriel Quadri,2.29,IFE Mexico https://portalanterior.ine.mx/archivos3/portal/historico/recursos/IFE-v2/CNCS/CNCS-IFE-Responde/2012/Julio/Le010712/Le010712.pdf
+Mexico,2018,1,Andres Manuel Lopez Obrador,53.19,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Mexico,2018,1,Ricardo Anaya Cortes,22.27,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Mexico,2018,1,Margarita Zavala,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_federales_de_M%C3%A9xico_de_2018
+Mexico,2018,1,Jose Antonio Meade Kuribrena,16.41,TE Mexico https://www.te.gob.mx/front3/bulletins/detail/3360/0
+Mexico,2018,1,Jaime Rodriguez Calderon,5.23,TE Mexico https://www.te.gob.mx/front3/bulletins/detail/3360/0
+Guatemala,1995,2,Alvaro Arzu,51.2,Friedenberg (2016b) 
+Guatemala,1995,2,Alfonso Portillo,48.7,Friedenberg (2016b) 
+Guatemala,2003,1,Eduardo Suger,2.23,Friedenberg (2016b) 
+Guatemala,2003,1,Fritz Garcia-Gallont,3.02,Friedenberg (2016b) 
+Guatemala,2003,1,Alvaro Colom,26.4,Friedenberg (2016b) 
+Guatemala,2003,1,Manuel Conde Orellana,0.4,Friedenberg (2016b) 
+Guatemala,2003,1,Leonel Lopez Rodas,8.35,Friedenberg (2016b) 
+Guatemala,2003,2,Oscar Berger,54.12,Friedenberg (2016b) 
+Guatemala,2003,2,Alvaro Colom,45.88,Friedenberg (2016b) 
+Guatemala,2007,1,Alvaro Colom,28.23,Friedenberg (2016b) 
+Guatemala,2007,1,Rigoberta Menchu,3.06,Friedenberg (2016b) 
+Guatemala,2007,1,Eduardo Suger,7.45,Friedenberg (2016b) 
+Guatemala,2007,1,Otto Perez Molina,23.51,Friedenberg (2016b) 
+Guatemala,2007,1,Alejandro Giammattei,17.23,Friedenberg (2016b) 
+Guatemala,2011,1,Manuel Baldizon,22.68,Friedenberg (2016b) 
+Guatemala,2011,1,Harold Caballeros,6.23,Friedenberg (2016b) 
+Guatemala,2011,1,Otto Perez Molina,36.1,Friedenberg (2016b) 
+Guatemala,2011,1,Eduardo Suger,16.56,Friedenberg (2016b) 
+Guatemala,2011,1,Sandra Torres,NA,Prensa https://web.archive.org/web/20110814184413/http://prensalibre.com/decision_libre_-_actualidad/Torres-queda-contienda-electoral_0_532746739.html
+Guatemala,2011,1,Juan Gutierrez,2.76,Friedenberg (2016b) 
+Guatemala,2011,1,Adela de Torre,0.43,Friedenberg (2016b) 
+Guatemala,2011,1,Alejandro Giammattei,1.05,Friedenberg (2016b) 
+Guatemala,2011,1,Patricia de Arzu,2.19,Friedenberg (2016b) 
+Guatemala,2011,1,Rigoberta Menchu,3.26,Friedenberg (2016b) 
+Guatemala,2011,2,Otto Perez Molina,53.74,Friedenberg (2016b) 
+Guatemala,2011,2,Manuel Baldizon,46.26,Friedenberg (2016b) 
+Guatemala,2015,1,Zury Rios,5.89,Friedenberg (2016b) 
+Guatemala,2015,1,Alejandro Giammattei,6.45,Friedenberg (2016b) 
+Guatemala,2015,1,Jose Angel Lopez,0.91,Friedenberg (2016b) 
+Guatemala,2015,1,Miguel Angel Sandoval,2.11,Friedenberg (2016b) 
+Guatemala,2015,1,Lizardo Sosa,5.33,Friedenberg (2016b) 
+Guatemala,2015,1,Juan Gutierrez,3.1,Friedenberg (2016b) 
+Guatemala,2015,1,Luis Fernando Perez,0.86,Friedenberg (2016b) 
+Guatemala,2015,1,Mario David Garcia,4.63,Friedenberg (2016b) 
+Guatemala,2015,1,Sandra Torres,19.76,Friedenberg (2016b) 
+Guatemala,2015,1,Roberto Gonzalez,3.45,Friedenberg (2016b) 
+Guatemala,2015,1,Jimmy Morales,23.85,Friedenberg (2016b) 
+Guatemala,2015,1,Manuel Baldizon,19.64,Friedenberg (2016b) 
+Guatemala,2015,1,Anibal Garcia,0.58,Friedenberg (2016b) 
+Guatemala,2015,1,Mario Estrada,3.45,Friedenberg (2016b) 
+Guatemala,2015,2,Sandra Torres,32.56,Friedenberg (2016b) 
+Guatemala,2015,2,Jimmy Morales,67.44,Friedenberg (2016b) 
+Guatemala,2019,1,Roberto Arzu,6.08,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Edwin Escobar,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019
+Guatemala,2019,1,Hector Estrada,3.75,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Alejandro Giammattei,13.96,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Guatemala,2019,1,Edmond Mulet,11.22,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Sandra Torres,25.53,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Guatemala,2019,1,Estuardo Galdamez,4.12,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Amilcar Rivera,2.54,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Isaac Farchi,5.9,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Manfredo Marroquin,1.15,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Benito Morales,0.86,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Manuel Villacorta,5.22,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Pablo Ignacio Ceto,2.16,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Pablo Duarte,1.43,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Fredy Cabrera,3.13,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Anibal Garcia,0.95,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Danilo Roca,0.48,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Jose Luis Chea Urruela,0.54,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2019,1,Luis Velasquez,0.61,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019#Resultados
+Guatemala,2023,1,Ricardo Sagastume,1.86,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Armando Castillo,9.44,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Giulio Talamonti,0.96,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Francisco Arredondo,1.04,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Sandra Torres,21.1,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Guatemala,2023,1,Zury Rios,8.7,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Edmond Mulet,8.78,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Manuel Conde Orellana,10.37,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Amilcar Pop,2.09,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Alvaro Trujillo,0.43,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Giovanni Reyes,3.37,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Rudio Lecsan Merida,0.84,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Luis Lam,0.22,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Julio Rivera Claveria,1.1,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Amilcar Rivera,3.27,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Manuel Villacorta,5.62,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Rudy Guzman,1.59,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Bernardo Arevalo,15.51,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Guatemala,2023,1,Hugo Pena,0.94,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,2,Bernardo Arevalo,60.9,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Guatemala,2023,2,Sandra Torres,39.1,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Guatemala,2023,1,Samuel Morales,0.54,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Guatemala,2023,1,Carlos Pineda,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023
+Guatemala,2023,1,Rafael Espada,0.77,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Honduras,1993,1,Jose Oswaldo Ramos Soto,42.97,Friedenberg (2016b) 
+Honduras,1993,1,Marco Orlando Iriarte,1.19,Friedenberg (2016b) 
+Honduras,1993,1,Olban Valladares,2.83,Friedenberg (2016b) 
+Honduras,1993,1,Carlos Roberto Reina,53.01,Friedenberg (2016b) 
+Honduras,2013,1,Orle Anibal Solis,0.17,Friedenberg (2016b) 
+Honduras,2013,1,Romeo Vasquez Velasquez,0.2,Friedenberg (2016b) 
+Honduras,2013,1,Mauricio Villeda Bermudez,20.3,Friedenberg (2016b) 
+Honduras,2013,1,Salvador Nasralla,13.43,Friedenberg (2016b) 
+Honduras,2013,1,Iris Xiomara Castro de Zelaya,28.78,Friedenberg (2016b) 
+Honduras,2013,1,Jorge Rafael Aguilar,0.14,Friedenberg (2016b) 
+Honduras,2013,1,Andres Pavon Murillo,0.1,Friedenberg (2016b) 
+Honduras,2013,1,Juan Orlando Hernandez,36.89,Friedenberg (2016b) 
+Honduras,2017,1,Jose Alfonso Diaz Narvaez,0.14,TSE Honduras https://eleccionesgenerales2017.tse.hn/
+Honduras,2017,1,Salvador Nasralla,41.42,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Honduras,2017,1,Eliseo Vallecillo Reyes,0.09,TSE Honduras https://eleccionesgenerales2017.tse.hn/
+Honduras,2017,1,Lucas Evangelisto Aguilera,0.18,TSE Honduras https://eleccionesgenerales2017.tse.hn/
+Honduras,2017,1,Luis Orlando Zelaya,14.74,TSE Honduras https://eleccionesgenerales2017.tse.hn/
+Honduras,2017,1,Romeo Vasquez Velasquez,0.2,TSE Honduras https://eleccionesgenerales2017.tse.hn/
+Honduras,2017,1,Isaias Fonseca Aguilar,0.1,TSE Honduras https://eleccionesgenerales2017.tse.hn/
+Colombia,1986,1,Alvaro Gomez Hurtado,36,Friedenberg (2016a) 
+Colombia,1986,1,Luis Carlos Galan,NA,Web Wikipedia https://es.wikipedia.org/wiki/Luis_Carlos_Gal%C3%A1n#Postcandidatura_y_segunda_candidatura_presidencial_(1982-1986)
+Colombia,1994,1,Andres Pastrana,44.98,Friedenberg (2016a) 
+Colombia,1994,1,Ernesto Samper,45.3,Friedenberg (2016a) 
+Colombia,1998,2,Andres Pastrana,50.39,Friedenberg (2016a) 
+Colombia,1998,2,Horacio Serpa,46.53,Friedenberg (2016a) 
+Colombia,2002,1,Alvaro Uribe Velez,54.51,Friedenberg (2016a) 
+Colombia,2002,1,Noemi Sanin,5.81,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Col/pres02.html
+Colombia,2002,1,Luis Eduardo Garzon,6.1,Friedenberg (2016a) 
+Colombia,2002,1,Horacio Serpa,32.68,Friedenberg (2016a) 
+Colombia,2002,1,Harold Bedoy,0.46,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Col/pres02.html
+Colombia,2006,1,Antanas Mockus,1.23,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Col/pres06.html
+Colombia,2006,1,Horacio Serpa,11.8,Friedenberg (2016a) 
+Colombia,2006,1,Enrique Parejo,0.35,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Col/pres06.html
+Colombia,2006,1,Carlos Gaviria,22.02,Friedenberg (2016a) 
+Colombia,2006,1,Alvaro Leyva,0.15,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Col/pres06.html
+Colombia,2010,1,Antanas Mockus,21.51,Friedenberg (2016a) 
+Colombia,2010,1,Noemi Sanin,6.1,Friedenberg (2016a) 
+Colombia,2010,1,Gustavo Petro,9.1,Friedenberg (2016a) 
+Colombia,2010,1,German Vargas Lleras,10.1,Friedenberg (2016a) 
+Colombia,2010,1,Rafael Pardo,4.4,Friedenberg (2016a) 
+Colombia,2010,1,Juan Manuel Santos,46.67,Friedenberg (2016a) 
+Colombia,2010,1,Sergio Fajardo,NA,NA NA
+Colombia,2010,2,Antanas Mockus,27.44,Friedenberg (2016a) 
+Colombia,2010,2,Juan Manuel Santos,69.56,Friedenberg (2016a) 
+Colombia,2014,1,Clara Lopez,15.2,Friedenberg (2016a) 
+Colombia,2014,1,Marta Lucia Ramirez,15.5,Friedenberg (2016a) 
+Colombia,2014,1,Oscar Ivan Zuluaga,29.28,Friedenberg (2016a) 
+Colombia,2014,1,Enrique Penalosa,8.3,Friedenberg (2016a) 
+Colombia,2014,1,Juan Manuel Santos,25.72,Friedenberg (2016a) 
+Colombia,2014,2,Juan Manuel Santos,50.99,Friedenberg (2016a) 
+Colombia,2014,2,Oscar Ivan Zuluaga,45,Friedenberg (2016a) 
+Colombia,2018,1,Sergio Fajardo,23.8,Mision de Observacion Electoral https://moe.org.co/wp-content/uploads/2018/11/Resultados-Electorales-Elecciones-Presidenciales-2018_Digital.pdf
+Colombia,2018,1,Humberto de la Calle,2,Mision de Observacion Electoral https://moe.org.co/wp-content/uploads/2018/11/Resultados-Electorales-Elecciones-Presidenciales-2018_Digital.pdf
+Colombia,2018,1,Ivan Duque,39.34,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Colombia,2018,1,Gustavo Petro,25.09,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Colombia,2018,1,German Vargas Lleras,7.3,Mision de Observacion Electoral https://moe.org.co/wp-content/uploads/2018/11/Resultados-Electorales-Elecciones-Presidenciales-2018_Digital.pdf
+Colombia,2018,1,Viviane Morales,0.2,Mision de Observacion Electoral https://moe.org.co/wp-content/uploads/2018/11/Resultados-Electorales-Elecciones-Presidenciales-2018_Digital.pdf
+Colombia,2022,1,Gustavo Petro,40.34,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Colombia,2022,1,Ingrid Betancourt,0.1,Mision de Observacion Electoral https://www.moe.org.co/wp-content/uploads/2022/11/DIGITAL-Resultados-Presidenciales-2022.pdf
+Colombia,2022,1,Federico Gutierrez,23.9,Mision de Observacion Electoral https://www.moe.org.co/wp-content/uploads/2022/11/DIGITAL-Resultados-Presidenciales-2022.pdf
+Colombia,2022,1,Sergio Fajardo,4.2,Mision de Observacion Electoral https://www.moe.org.co/wp-content/uploads/2022/11/DIGITAL-Resultados-Presidenciales-2022.pdf
+Colombia,2022,1,Enrique Gomez,0.2,Mision de Observacion Electoral https://www.moe.org.co/wp-content/uploads/2022/11/DIGITAL-Resultados-Presidenciales-2022.pdf
+Colombia,2022,1,John Milton Rodriguez,1.3,Mision de Observacion Electoral https://www.moe.org.co/wp-content/uploads/2022/11/DIGITAL-Resultados-Presidenciales-2022.pdf
+Colombia,2022,1,Luis Perez,0.05,Mision de Observacion Electoral https://www.moe.org.co/wp-content/uploads/2022/11/DIGITAL-Resultados-Presidenciales-2022.pdf
+Colombia,2022,1,Rodolfo Hernandez,28.17,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231034
+Costa Rica,1986,1,Oscar Arias Sanchez,52.34,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231037
+Costa Rica,1986,1,Rafael Calderon Fournier,45.77,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231038
+Costa Rica,1998,1,Jose Miguel Corrales Bolanos,44.56,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231044
+Costa Rica,1998,1,Miguel Angel Rodriguez Echeverria,46.96,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231043
+Costa Rica,2002,1,Otto Guevara,1.7,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Abel Pacheco de la Espriella,38.58,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231045
+Costa Rica,2002,1,Otton Solis,26.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Rolando Araya,31.05,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231046
+Costa Rica,2002,1,Pablo Galo Angulo Casasola,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Jose Hine Garcia,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Justo Orozco Alvarez,1.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Jorge Walter Coto Molina,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Marvin Calvo Montoya,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Walter Munoz,0.4,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Daniel Reynolds Vargas,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Vladimir de la Cruz de Lemos,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,1,Rolando Angulo Zeledon,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2002,2,Abel Pacheco de la Espriella,57.95,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231047
+Costa Rica,2002,2,Rolando Araya,42.05,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231048
+Costa Rica,2006,1,Humberto Arce,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Otton Solis,39.8,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231050
+Costa Rica,2006,1,Otto Guevara,8.5,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Abel Pacheco de la Espriella,NA,NA NA
+Costa Rica,2006,1,Alvaro Montero,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Ricardo Toledo,3.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Vladimir de la Cruz,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Bolivar Serrano Hidalgo,1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Jose Manuel Echandi,1.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Antonio Alvarez Desanti,2.4,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Walter Munoz,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Juan Jose Vargas Fallas,1.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Jose Miguel Villalobos,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Humberto Vargas,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2006,1,Oscar Arias,40.92,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231049
+Costa Rica,2018,1,Carlos Alvarado Quesada,21.63,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231058
+Costa Rica,2018,1,Otto Guevara,1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Edgardo Araya,0.8,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Mario Redondo Poveda,0.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Rodolfo Hernandez,4.9,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Antonio Alvarez Desanti,18.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Fabricio Alvarado Munoz,24.99,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231057
+Costa Rica,2018,1,Oscar Lopez,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Sergio Mena,0.8,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Jhon Vega,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2010,1,Laura Chinchilla,46.91,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231051
+Costa Rica,2010,1,Otton Solis,25.05,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231052
+Costa Rica,2010,1,Otto Guevara,20.91,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/CR/pres10.html
+Costa Rica,2010,1,Luis Fishman,3.87,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/CR/pres10.html
+Costa Rica,2010,1,Walter Munoz,0.1,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/CR/pres10.html
+Costa Rica,2010,1,Mayra Gonzalez,0.72,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/CR/pres10.html
+Costa Rica,2010,1,Eugenio Trejos,0.35,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/CR/pres10.html
+Costa Rica,2010,1,Oscar Lopez,1.88,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/CR/pres10.html
+Costa Rica,2010,1,Rolando Araya,0.16,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/CR/pres10.html
+Costa Rica,2014,1,Johnny Araya Monge,29.71,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231054
+Costa Rica,2014,1,Jose Miguel Corrales Bolanos,1.5,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Otto Guevara,11.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Rodolfo Piza,6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Luis Guillermo Solis,30.64,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231053
+Costa Rica,2014,1,Jose Maria Villalta,17.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Jose Manuel Echandi,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Hector Monestel Herrera,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Sergio Mena,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Oscar Lopez,0.5,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Carlos Avendano,1.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Walter Munoz,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2014,1,Justo Orozco,0.8,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Stephanie Campos,0.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,2,Fabricio Alvarado Munoz,39.41,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231060
+Costa Rica,2018,2,Carlos Alvarado Quesada,60.59,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231059
+Costa Rica,2018,1,Juan Diego Castro,9.5,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2018,1,Rodolfo Piza,16,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Rodrigo Chaves,16.78,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231062
+Costa Rica,2022,1,Fabricio Alvarado Munoz,14.9,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Rolando Araya,1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Welmer Ramos,0.7,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Jose Maria Villalta,8.7,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Eliecer Feinzaig,12.4,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Jose Maria Figueres,27.28,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231061
+Costa Rica,2022,1,Lineth Saborio,12.4,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Rodolfo Hernandez,0.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Rodolfo Piza,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Federico Malavassi,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Carmen Quesada,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Greivin Moya,0.8,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Martin Chinchilla,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Luis Alberto Cordero,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Eduardo Cruickshank,0.5,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Christian Rivera,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Maricela Morales,0.3,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Roulan Jimenez,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Sergio Mena,0.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Oscar Lopez,0.6,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Natalia Diaz,0.8,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Oscar Campos,0.2,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Walter Munoz,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,1,Jhon Vega,0.1,TSE Costa Rica https://www.tse.go.cr/estadisticas_elecciones.htm
+Costa Rica,2022,2,Rodrigo Chaves,52.82,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231063
+Costa Rica,2022,2,Jose Maria Figueres,47.18,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231064
+Republica Dominicana,2016,1,Luis Rodolfo Abinader,34.98,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+Republica Dominicana,2016,1,Guillermo Moreno,1.83,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+Republica Dominicana,2016,1,Minerva Tavarez Mirabal,0.35,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+Republica Dominicana,2016,1,Soraya Aquino,0.12,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+Republica Dominicana,2016,1,Pelegrin Castillo,0.35,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+Republica Dominicana,2016,1,Elias Wessin Chavez,0.44,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+Republica Dominicana,2016,1,Hatuey De Camps,0.18,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+El Salvador,1999,1,Rodolfo Parker,5.78,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/ElSal/pre99.html
+El Salvador,1999,1,Facundo Guardado,28.88,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231068
+El Salvador,1999,1,Ruben Zamora,7.59,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/ElSal/pre99.html
+El Salvador,1999,1,Salvador Nestor Garcia,3.75,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/ElSal/pre99.html
+El Salvador,2014,1,Salvador Sanchez Ceren,48.93,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231073
+El Salvador,2014,1,Norman Quijano,38.95,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231074
+El Salvador,2014,1,Elias Antonio Saca,11.44,TSE El Salvador https://www.tse.gob.sv/2014/escrutiniofinal_1ray2davuelta/pres1/pais.html
+El Salvador,2014,1,Rene Rodriguez Hurtado,0.42,TSE El Salvador https://www.tse.gob.sv/2014/escrutiniofinal_1ray2davuelta/pres1/pais.html
+El Salvador,2014,1,Oscar Lemu,0.25,TSE El Salvador https://www.tse.gob.sv/2014/escrutiniofinal_1ray2davuelta/pres1/pais.html
+El Salvador,2019,1,Carlos Calleja,31.72,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231078
+El Salvador,2019,1,Hugo Martinez,14.42,Observatorio electoral Argentina https://www.argentina.gob.ar/interior/observatorioelectoral/analisis/elecciones-en-el-mundo/el-salvador-2019
+El Salvador,2019,1,Josue Alvarado,0.78,Observatorio electoral Argentina https://www.argentina.gob.ar/interior/observatorioelectoral/analisis/elecciones-en-el-mundo/el-salvador-2019
+Brasil,1989,1,Fernando Collor de Mello,28.52,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Brazil/pres89.html
+Brasil,1989,1,Silvio Santos,NA,Prensa https://elpais.com/diario/1989/11/11/internacional/626742030_850215.html
+Brasil,1994,1,Walter Queiroz,NA,Prensa https://www.semana.com/collor-otra-vez/23465-3/
+Brasil,2006,1,Luiz Inacio Lula da Silva,48.61,Friedenberg (2016a) 
+Brasil,2018,1,Luiz Inacio Lula da Silva,NA,Prensa https://elpais.com/internacional/2018/09/11/america/1536682782_892328.html
+Argentina,2015,1,Daniel Scioli,37.08,Friedenberg (2016a) 
+Peru,2016,1,Cesar Acuna,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Peru,2016,1,Daniel Urresti,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Peru,2016,1,Renzo Reggiardo,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecciones_generales_de_Per%C3%BA_de_2016#Resultados
+Ecuador,2006,1,Luis Macas Ambuludi,2.2,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Ecuador,2013,1,Rafael Correa,57.17,Friedenberg (2016a) 
+Ecuador,2013,1,Alberto Acosta,3.3,"""Libro Presidentes"", Instituto de la Democracia Ecuador https://institutodemocracia.gob.ec/wp-content/uploads/2019/11/libro_presidentes_1948-2017.pdf"
+Uruguay,2009,1,Luis Alberto Lacalle Herrera,29.07,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231080
+Uruguay,2009,1,Jose Mujica,47.96,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231079
+Uruguay,2014,1,Tabare Vazquez,47.81,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231083
+Nicaragua,2006,1,Daniel Ortega,38,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Nica/nica06.html
+Panama,1994,1,Mireya Moscoso,29.1,Friedenberg (2016b) 
+Panama,2009,1,Guillermo Endara,2.32,Friedenberg (2016b) 
+Venezuela,1963,1,Raul Leoni,32.81,Archivo del CNE https://web.archive.org/web/20161114025014/http://www.cse.gob.ni/fri3/respres1.php
+Venezuela,1998,1,Irene Saez,2.82,"Nohlen (2005b), Volumen II, p. 583 "
+Bolivia,1993,1,Carlos Palenque,14.29,"Nohlen (2005b) Volumen II, p 153 "
+Bolivia,1997,1,Hugo Banzer,22.26,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231029
+Bolivia,2002,1,Rene Blattmann,0.63,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2002,1,Nicolas Valdivia,0.37,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2002,1,Costa Obregon,2.72,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2002,1,Rolando Morales,0.65,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2002,1,Johnny Fernandez,5.51,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres02.html
+Bolivia,2005,1,Evo Morales,53.72,Friedenberg (2016a) 
+Bolivia,2005,1,Felipe Quispe,2.16,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres05.html
+Bolivia,2005,1,Gildo Angulo,0.68,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres05.html
+Bolivia,2005,1,Nestor Garcia,0.26,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres05.html
+Bolivia,2005,1,Eliseo Rodriguez,0.3,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Bolivia/pres05.html
+Bolivia,2014,1,Evo Morales,61.36,Friedenberg (2016a) 
+Guatemala,2003,1,Oscar Berger,34.3,Friedenberg (2016b) 
+Guatemala,2011,1,Mario Estrada,8.69,Friedenberg (2016b) 
+Guatemala,2019,1,Zury Rios,NA,Web Wikipedia https://es.wikipedia.org/wiki/Elecci%C3%B3n_presidencial_de_Guatemala_de_2019
+Guatemala,2023,1,Isaac Farchi,1.46,Wikipedia con base en TSE Guatemala (sitio oficial caido) https://es.wikipedia.org/wiki/Elecciones_generales_de_Guatemala_de_2023#Resultados
+Honduras,2017,1,Juan Orlando Hernandez,42.95,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+Honduras,2017,1,Marlene Alvarenga,0.18,TSE Honduras https://eleccionesgenerales2017.tse.hn/
+Colombia,1986,1,Virgilio Barco,58.8,Friedenberg (2016a) 
+Colombia,2002,1,Ingrid Betancourt,0.46,Political Database of the Americas https://pdba.georgetown.edu/Elecdata/Col/pres02.html
+Colombia,2006,1,Alvaro Uribe Velez,62.35,Friedenberg (2016a) 
+Colombia,2018,1,Jorge Antonio Trujillo,0.3,Mision de Observacion Electoral https://moe.org.co/wp-content/uploads/2018/11/Resultados-Electorales-Elecciones-Presidenciales-2018_Digital.pdf
+Republica Dominicana,2016,1,Danilo Medina,61.74,JCE R.Dominicana https://jce.gob.do/DesktopModules/Bring2mind/DMX/Download.aspx?EntryId=5397&Command=Core_Download&language=es-ES&PortalId=1&TabId=190
+El Salvador,1999,1,Francisco Flores,51.96,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231067
+El Salvador,2019,1,Nayib Bukele,53.1,Freidenberg (2024) https://docs.google.com/spreadsheets/d/1dHGOkLPw5adHjyrGcbrwRQ3dSmeBgGb2/edit?gid=1202231021#gid=1202231077
