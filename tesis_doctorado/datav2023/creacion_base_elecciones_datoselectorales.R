@@ -35,6 +35,9 @@ data_fried_seaw_caro_candidatos <- data_fried_seaw_caro_candidatos %>%
   mutate(vote_share = as.numeric(gsub(",", ".", vote_share)))
 
 # data a nivel de eleccciones
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
+data_normativa <- readxl::read_xlsx("base_anual_fullv2023.xlsx") 
+
 # versiones originales y backups de esta data en dataexterna
 setwd("/home/carolina/Documents/dataexterna")
 data_dlujan_elecciones <- read.csv("Base_elecciones_presidenciales_AL_Luján.csv")
@@ -521,6 +524,17 @@ indicador_propinternet <- data_tecno_uit %>%
 
 ##### regulacion especifica debates ######
 
+indicador_regulacion <- data_normativa %>% 
+  select(cat_pais, ncat_eleccion, ncat_totreg) %>% 
+  mutate(ncat_eleccion = ifelse(cat_pais=="Guatemala"&ncat_eleccion==1990,1991,ncat_eleccion)) %>%  # peq ajuste manual
+  mutate(regulaciondico = ifelse(ncat_totreg==0,0,
+                                 ifelse(ncat_totreg>0,1,NA))) %>% 
+  dplyr::rename("regulacionordinal" = ncat_totreg) %>% 
+  mutate(source_regulacion = "Franco H. (2022)")
+
+indicador_regulacion <- data_base_elecciones %>% 
+  left_join(indicador_regulacion) %>% 
+  select(-dico_debates_eleccion, -eng_cat_pais)
 
 ##### acceso a medios regulacion #####
 
@@ -738,8 +752,11 @@ indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 summary(indicador_proptv)
 indicador_proptv %>% write.csv("indicador_proptv.csv")
 
-indicador_accesomedios
+summary(indicador_accesomedios)
 indicador_accesomedios %>% write.csv("indicador_accesomedios.csv")
+
+summary(indicador_regulacion)
+indicador_regulacion %>% write.csv("indicador_regulacion.csv")
 
 summary(indicador_propinternet)
 indicador_propinternet %>% write.csv("indicador_propinternet.csv")
