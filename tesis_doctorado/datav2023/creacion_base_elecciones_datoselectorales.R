@@ -48,6 +48,8 @@ data_descontento_latinobarometro <- read.csv("latinobarometro/df_satisfaccion_la
 data_descontento_lapop <- read.csv("lapop/data_satisfaccionlapop.csv")
 data_debates_USA <- read.csv("USA_all_debates - debates.csv")
 data_elecs_USA <- read.csv("USA_all_debates - electyears.csv")
+data_accesomedios <- read.csv("OBSREF/data_accesomedios.csv")  # creada en abriendo_data_friedenberg
+
 
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -129,9 +131,21 @@ indicador_nec <- data_nefcandidatos %>%
 
 
 # sepramos missing para seguir buscando data
-
 missing_nefcandidatos <- data_nefcandidatos %>% 
-  subset(is.na(nec))  
+  subset(is.na(nec)) 
+
+# sobre el siguiente breve paso:
+# hacemos este agregado por separado por tratarse del sistema de doble voto simulaneo, que Lujan calcula de manera diferente a la propia. Lo mismo aplica a los casos uruguayos pero aquí el cálculo es automático porque ocurrieron debates
+data_honduras <- data.frame(cat_pais = "Honduras",
+                             ncat_eleccion = 1985,
+                             ncat_ronda = 1,
+                             nec = NA,
+                            source_nec = NA,
+                            nec_caro = NA,
+                            nec_lujan = NA)
+
+missing_nefcandidatos <- missing_nefcandidatos %>% 
+  rbind(data_honduras)
 
 calculo_nec_propio_missings <- data_fried_seaw_caro_candidatos %>% 
   mutate(proportions = vote_share/100) %>% 
@@ -150,6 +164,7 @@ indicador_nec <-indicador_nec %>%
 
 indicador_nec <- indicador_nec %>% 
   mutate(nec = ifelse(is.na(nec), nec_caro_missing, nec)) %>% 
+  mutate(nec = ifelse(cat_pais=="Honduras"&ncat_eleccion==1985, nec_caro_missing, nec)) %>% 
   mutate(source_nec = ifelse(!is.na(nec_caro_missing), 
                              "Calculo propio con base en datos de candidatos",
                              source_nec))
@@ -207,6 +222,20 @@ indicador_ntc <- data_ntcandidatos %>%
 missing_ntcandidatos <- data_ntcandidatos %>% 
   subset(is.na(ntc))  
 
+# sobre el siguiente breve paso:
+# hacemos este agregado por separado por tratarse del sistema de doble voto simulaneo, que Lujan calcula de manera diferente a la propia. Lo mismo aplica a los casos uruguayos pero aquí el cálculo es automático porque ocurrieron debates
+data_honduras <- data.frame(cat_pais = "Honduras",
+                            ncat_eleccion = 1985,
+                            ncat_ronda = 1,
+                            ntc = NA,
+                            source_ntc = NA,
+                            ntc_caro = NA,
+                            all_ntc_caro = NA,
+                            ntc_lujan = NA)
+
+missing_ntcandidatos <- missing_ntcandidatos %>% 
+  rbind(data_honduras)
+
 calculo_all_ntc_propio_missings <- data_fried_seaw_caro_candidatos %>% 
   group_by(cat_pais, ncat_eleccion, ncat_ronda) %>% 
   summarise(all_ntc_caro = n()) %>% # ACA INCLUIMOS CANDIDATOS QUE LUEGO SE RETIRARON, unos pocos que registramos participando en debates
@@ -235,6 +264,7 @@ indicador_ntc <-indicador_ntc %>%
 
 indicador_ntc <- indicador_ntc %>% 
   mutate(ntc = ifelse(is.na(ntc), ntc_caro_missing, ntc)) %>% 
+  mutate(ntc = ifelse(cat_pais=="Honduras"&ncat_eleccion==1985, ntc_caro_missing, ntc)) %>% 
   mutate(all_ntc_caro = ifelse(is.na(all_ntc_caro), all_ntc_caro_missing, all_ntc_caro)) %>%
   mutate(source_ntc = ifelse(!is.na(ntc_caro_missing), 
                              "Calculo propio con base en datos de candidatos",
@@ -491,7 +521,14 @@ indicador_propinternet <- data_tecno_uit %>%
 
 ##### regulacion especifica debates ######
 
+
 ##### acceso a medios regulacion #####
+
+indicador_accesomedios <- electyears %>% select(-X) %>% 
+  left_join(data_accesomedios %>% select(-X)) %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda,
+         prohibicionpropaganda, accesogratuito, 
+         source_accesomedios)
 
 ##### imagen oficialista ######
 
@@ -516,7 +553,7 @@ indicador_satisfaccion <- indicador_satisfaccion %>%
   select(cat_pais, ncat_eleccion, ncat_ronda, satisfaccion, source_satisfaccion)
 
 ##### EEUU debates ######
-# OJO INCORPORAR VALORES NEGATIVOS EN PROP COMO SE HACE PARA LATAM!#######
+
 # source: https://www.presidency.ucsb.edu/documents/presidential-documents-archive-guidebook/presidential-campaigns-debates-and-endorsements-0
 
 n_debates_eeuu <- data_debates_USA %>% 
@@ -700,6 +737,9 @@ indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 
 summary(indicador_proptv)
 indicador_proptv %>% write.csv("indicador_proptv.csv")
+
+indicador_accesomedios
+indicador_accesomedios %>% write.csv("indicador_accesomedios.csv")
 
 summary(indicador_propinternet)
 indicador_propinternet %>% write.csv("indicador_propinternet.csv")
