@@ -438,6 +438,59 @@ indicador_incumbentes <- indicador_incumbentes_firstround %>%
 #   rbind(data_incumbentes_excepcion)
 
 
+
+###### imagen oficialismo ####
+
+# un indicador posible: votos oficialismo
+
+data_incumbentes_tojoin <- data_incumbentes %>% 
+  select(cat_pais, ncat_eleccion, nombre_oficialista) %>% 
+  mutate(nombre_oficialista = iconv(nombre_oficialista, to = "ASCII//TRANSLIT") %>%  str_trim())
+
+data_all_candidatos_incumbentes <- data_fried_seaw_caro_candidatos %>% 
+  mutate(candidate_name = iconv(candidate_name, to = "ASCII//TRANSLIT") %>%  str_trim()) %>% 
+  left_join(data_incumbentes_tojoin) %>% 
+  subset(!(cat_pais=="Chile"&ncat_eleccion==2017&ncat_ronda==1&nombre_oficialista=="Alejandro Guillier")) %>% 
+  subset(!(cat_pais=="Chile"&ncat_eleccion==2017&ncat_ronda==2&nombre_oficialista=="No hay un claro oficialista"))
+
+data_candidatos_incumbentes <- data_all_candidatos_incumbentes %>% 
+  mutate(is_oficialista = ifelse(candidate_name==nombre_oficialista,
+                                 1, 0)) %>% 
+  subset(is_oficialista==1) %>% 
+  mutate(source_voteshareincumbent = paste0(source_str_vote_share, source_url_vote_share, sep = " - ")) %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, vote_share, source_voteshareincumbent) 
+  
+
+data_no_candidatos_incumbentes <- data_all_candidatos_incumbentes %>% 
+  subset(nombre_oficialista=="No hay un claro oficialista") %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  distinct() %>% 
+  mutate(vote_share = 0) %>% 
+  mutate(source_voteshareincumbent = "Imputado ya que no hay un claro oficialista") 
+  
+
+data_disponible_incumbentes <- data_candidatos_incumbentes %>% 
+  rbind(data_no_candidatos_incumbentes) %>% 
+  dplyr::rename("voteshareincumbent" = vote_share)
+ 
+indicador_voteshareincumbent <- data_base_elecciones %>% 
+  left_join(data_disponible_incumbentes)
+
+indicador_voteshareincumbent <- indicador_voteshareincumbent %>% 
+  mutate(source_voteshareincumbent = ifelse(ncat_ronda==2&is.na(voteshareincumbent),
+                                    "Imputado ya que no hay un claro oficialista",
+                                     source_voteshareincumbent)) %>% 
+  mutate(voteshareincumbent = ifelse(ncat_ronda==2&is.na(voteshareincumbent),
+                                     0,
+                                     voteshareincumbent))
+
+# voteshareincumbent_tofill <- indicador_voteshareincumbent %>% 
+#   subset(is.na(voteshareincumbent))
+# voteshareincumbent_tofill %>% write.csv("voteshareincumbent_tofill.csv")
+
+indicador_voteshareincumbent <- indicador_voteshareincumbent %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, voteshareincumbent, source_voteshareincumbent)
+
 ##### TV tecnologia ######
 
 
@@ -748,6 +801,9 @@ indicador_ntc %>% write.csv("indicador_ntc.csv")
 
 summary(indicador_incumbentes)
 indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
+
+summary(indicador_voteshareincumbent)
+indicador_voteshareincumbent %>% write.csv("indicador_voteshareincumbent.csv")
 
 summary(indicador_proptv)
 indicador_proptv %>% write.csv("indicador_proptv.csv")
