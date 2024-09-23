@@ -52,7 +52,7 @@ data_descontento_lapop <- read.csv("lapop/data_satisfaccionlapop.csv")
 data_debates_USA <- read.csv("USA_all_debates - debates.csv")
 data_elecs_USA <- read.csv("USA_all_debates - electyears.csv")
 data_accesomedios <- read.csv("OBSREF/data_accesomedios.csv")  # creada en abriendo_data_friedenberg
-
+data_exapproval <- read.csv("Carlin/data_exapproval.csv")
 
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -60,6 +60,7 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/da
 data_encuestas_elecciones <-read.csv("all_elections_full_dataset.csv") %>% select(-X)
 data_encuestas_candidatos <- read.csv("base_candidatos_matcheados2023.csv")
 
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
 #### INDICADORES NIVEL ELECCION #####
 # vamos paso por paso. primero vamos a ver que datos de los importantes tenemos para el modelo 1 OBS POR ELECCION
@@ -491,6 +492,25 @@ indicador_voteshareincumbent <- indicador_voteshareincumbent %>%
 indicador_voteshareincumbent <- indicador_voteshareincumbent %>% 
   select(cat_pais, ncat_eleccion, ncat_ronda, voteshareincumbent, source_voteshareincumbent)
 
+# agragamos data executive approval 
+
+indicador_voteshareincumbent <- indicador_voteshareincumbent %>% 
+  left_join(data_exapproval %>% select(-X))
+
+indicador_exapproval <- indicador_voteshareincumbent %>% 
+  mutate(exapproval_notsmoothed = ifelse(str_detect(source_exapproval,
+                                                    "Proyectado"),
+                                         NA,
+                                         exapproval_notsmoothed)) %>%
+  mutate(exapproval_smoothed = ifelse(str_detect(source_exapproval,
+                                                    "Proyectado"),
+                                         NA,
+                                         exapproval_smoothed)) %>% 
+  dplyr::rename("exapprovalnotsmoothed" = exapproval_notsmoothed,
+                "exapprovalsmoothed" = exapproval_smoothed)
+
+           
+
 ##### TV tecnologia ######
 
 
@@ -597,7 +617,6 @@ indicador_accesomedios <- electyears %>% select(-X) %>%
          prohibicionpropaganda, accesogratuito, 
          source_accesomedios)
 
-##### imagen oficialista ######
 
 ##### satisfaccion con democracia ######
 
@@ -802,8 +821,8 @@ indicador_ntc %>% write.csv("indicador_ntc.csv")
 summary(indicador_incumbentes)
 indicador_incumbentes %>% write.csv("indicador_incumbentes.csv")
 
-summary(indicador_voteshareincumbent)
-indicador_voteshareincumbent %>% write.csv("indicador_voteshareincumbent.csv")
+summary(indicador_exapproval)
+indicador_exapproval %>% write.csv("indicador_exapproval.csv")
 
 summary(indicador_proptv)
 indicador_proptv %>% write.csv("indicador_proptv.csv")
@@ -825,6 +844,8 @@ indicador_eeuu %>% write.csv("indicador_eeuu.csv")
 
 summary(indicador_region)
 indicador_region %>% write.csv("indicador_region.csv")
+
+
 
 ########################################################################
 ##########################################################################
