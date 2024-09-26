@@ -32,6 +32,8 @@ data_fried_seaw_caro_candidatos <- data_fried_seaw_caro_candidatos %>%
 
 data_incumbentes <-  read.csv("base_incumbentes_oficialistas.csv")
 
+data_vdem  <-  read.csv("VDEM/df_candidates_vdem.csv")
+
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
 # ajuste general para no trabajar con data duplicada
@@ -167,6 +169,18 @@ indicador_participaciones <- data_anual %>%
          dicopresenciaspasadas, dicoausenciaspasadas) %>% 
   mutate(source_participaciones = "Elaboracion propia con base en Franco Hanztsch (2023)")   
   
+### vdem partylevel data ##################
+
+data_vdem_tojoin <- data_vdem %>% 
+  select(-X) %>% 
+  dplyr::rename("nombres_candidatos" = candidate_name) %>% 
+  mutate(nombres_candidatos = iconv(nombres_candidatos, to = "ASCII//TRANSLIT") %>%  str_trim())
+
+indicadores_partylevel <- data_base_candidatos_tojoin %>% 
+  left_join(data_vdem_tojoin) %>% 
+  select(-ncat_election_year,-party_name)
+
+summary(indicadores_partylevel)
 
 # guardado ############
 
@@ -181,3 +195,6 @@ indicador_invitaciones %>% write_csv("indicador2_invitaciones.csv")
 
 summary(indicador_participaciones)
 indicador_participaciones %>% write.csv("indicador2_participaciones.csv")
+
+summary(indicadores_partylevel)
+indicadores_partylevel %>% write.csv("indicador2_partylevel.csv")
