@@ -311,6 +311,9 @@ indicador_volatility <- check_elecciones3 %>%
   select(cat_pais, ncat_eleccion, ncat_ronda, volatility, newparties, withinsv) %>% 
   mutate(source_volatility = ifelse(!is.na(volatility),"Mainwaring & Su (2021)",NA))
   
+ 
+indicador_volatility <- indicador_volatility %>% 
+  haven::zap_formats()
 
 # unir d lujan para pispear
 
@@ -807,13 +810,13 @@ summary(indicador_nec)
 indicador_nec %>% write.csv("indicador_nec.csv")
 
 summary(indicador_volatility)
-indicador_nec %>% write.csv("indicador_volatility.csv")
+indicador_volatility %>% write.csv("indicador_volatility.csv")
 
 summary(indicador_alineamiento)
 indicador_alineamiento %>% write.csv("indicador_alineamiento.csv")
 
 summary(indicador_competitividad)
-indicador_nec %>% write.csv("indicador_competitividad.csv")
+indicador_competitividad %>% write.csv("indicador_competitividad.csv")
 
 summary(indicador_ntc)
 indicador_ntc %>% write.csv("indicador_ntc.csv")
@@ -846,7 +849,70 @@ summary(indicador_region)
 indicador_region %>% write.csv("indicador_region.csv")
 
 
+### ARMADO DE BASE UNIFICADA  #########################
+# data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_base_base.R
 
+indicador_nec <- read.csv("indicador_nec.csv") %>% select(-X)
+indicador_volatility <- read.csv("indicador_volatility.csv") %>% select(-X) %>% select(-ncat_ronda)
+indicador_alineamiento <- read.csv("indicador_alineamiento.csv") %>% select(-X)
+indicador_competitividad <- read.csv("indicador_competitividad.csv") %>% select(-X)
+indicador_ntc <- read.csv("indicador_ntc.csv") %>% select(-X)
+indicador_incumbentes <- read.csv("indicador_incumbentes.csv") %>% select(-X)
+indicador_exapproval <- read.csv("indicador_exapproval.csv") %>% select(-X)
+indicador_proptv <- read.csv("indicador_proptv.csv") %>% select(-X)
+indicador_accesomedios <- read.csv("indicador_accesomedios.csv") %>% select(-X)
+indicador_regulacion <- read.csv("indicador_regulacion.csv") %>% select(-X)
+indicador_propinternet <- read.csv("indicador_propinternet.csv") %>% select(-X)
+indicador_satisfaccion <- read.csv("indicador_satisfaccion.csv") %>% select(-X)
+indicador_eeuu <- read.csv("indicador_eeuu.csv") %>% select(-X)
+indicador_region <- read.csv("indicador_region.csv") %>% select(-X)
+
+base_unificada <- data_base_elecciones %>% 
+  left_join(indicador_nec) %>%
+  left_join(indicador_volatility) %>%
+  left_join(indicador_alineamiento) %>%
+  left_join(indicador_competitividad) %>%
+  left_join(indicador_ntc) %>%
+  left_join(indicador_incumbentes) %>%
+  left_join(indicador_exapproval) %>%
+  left_join(indicador_proptv) %>%
+  left_join(indicador_accesomedios) %>%
+  left_join(indicador_regulacion) %>%
+  left_join(indicador_propinternet) %>%
+  left_join(indicador_satisfaccion) %>%
+  left_join(indicador_eeuu) %>%
+  left_join(indicador_region)  
+  
+summary(base_unificada)
+
+# test basicos
+totest <- base_unificada %>% 
+  select(-starts_with("source_")) %>% 
+  select(-cat_pais, -eng_cat_pais) #%>% 
+  #mutate(across(everything(), as.integer(.)))
+summary(totest)
+correlation_matrix <- cor(totest , use = "pairwise.complete.obs" )
+corrplot::corrplot(correlation_matrix)
+
+logit_model <- glm(dico_debates_eleccion ~ 
+                     nec + 
+                     marginvic + 
+                     #newparties + 
+                     #withinsv + 
+                     #alineamiento +
+                     dico_reeleccion +
+                     voteshareincumbent + 
+                     #proptv +
+                     propindivinternet +
+                     #prohibicionpropaganda +
+                     regulaciondico +
+                     #satisfaccion +
+                     #prop_elec_usa_ciclo +
+                     lagpropdebatesregion, 
+                   family = binomial(link = "logit"), 
+                   data = totest)
+summary(totest)
+summary(logit_model)
 ########################################################################
 ##########################################################################
 ############# auxiliares para llenar incumbencia ##############
