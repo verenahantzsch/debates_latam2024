@@ -804,6 +804,26 @@ indicador_region <- electyears %>%
          avgpropdebatesregionxciclo, lagpropdebatesregion, lagndebatesregion) %>% 
   mutate(source_region = "Calculo con base en data recabada para Franco H. (2022)")
 
+##### LAGGED debates tradicion ######
+
+calculo_lagged <- data_base_elecciones %>% 
+  group_by(cat_pais, ncat_eleccion) %>% 
+  mutate(dico_debates_ciclo = ifelse(sum(dico_debates_eleccion)>0,1,0)) %>% 
+  ungroup() %>% 
+  subset(ncat_ronda==1) %>% 
+  select(cat_pais, ncat_eleccion, dico_debates_ciclo) %>% 
+  group_by(cat_pais) %>% 
+  arrange(ncat_eleccion) %>% 
+  mutate(dico_debates_pastelection = lag(dico_debates_ciclo),
+         cumsum_pastciclos = cumsum(dico_debates_ciclo)-dico_debates_ciclo) 
+
+indicador_lagged <- data_base_elecciones %>% 
+  left_join(calculo_lagged) %>% 
+  mutate(source_lagged = "Calculo con base en data recabada para Franco H. (2022)")
+
+indicador_lagged <- indicador_lagged %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, dico_debates_pastelection, cumsum_pastciclos, source_lagged )
+
 ### GURADADO chequeo y guardo lo disponible hasta ahora  #########################
 
 summary(indicador_nec)
@@ -848,9 +868,11 @@ indicador_eeuu %>% write.csv("indicador_eeuu.csv")
 summary(indicador_region)
 indicador_region %>% write.csv("indicador_region.csv")
 
+summary(indicador_lagged)
+indicador_lagged %>% write.csv("indicador_lagged.csv")
 
 ### ARMADO DE BASE UNIFICADA  #########################
-# data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_base_base.R
+data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_base_base.R
 
 indicador_nec <- read.csv("indicador_nec.csv") %>% select(-X)
 indicador_volatility <- read.csv("indicador_volatility.csv") %>% select(-X) %>% select(-ncat_ronda)
@@ -866,6 +888,7 @@ indicador_propinternet <- read.csv("indicador_propinternet.csv") %>% select(-X)
 indicador_satisfaccion <- read.csv("indicador_satisfaccion.csv") %>% select(-X)
 indicador_eeuu <- read.csv("indicador_eeuu.csv") %>% select(-X)
 indicador_region <- read.csv("indicador_region.csv") %>% select(-X)
+indicador_lagged <- read.csv("indicador_lagged.csv")
 
 base_unificada <- data_base_elecciones %>% 
   left_join(indicador_nec) %>%
@@ -881,38 +904,13 @@ base_unificada <- data_base_elecciones %>%
   left_join(indicador_propinternet) %>%
   left_join(indicador_satisfaccion) %>%
   left_join(indicador_eeuu) %>%
-  left_join(indicador_region)  
+  left_join(indicador_region) %>% 
+  left_join(indicador_lagged)
   
 summary(base_unificada)
 
-# test basicos
-totest <- base_unificada %>% 
-  select(-starts_with("source_")) %>% 
-  select(-cat_pais, -eng_cat_pais) #%>% 
-  #mutate(across(everything(), as.integer(.)))
-summary(totest)
-correlation_matrix <- cor(totest , use = "pairwise.complete.obs" )
-corrplot::corrplot(correlation_matrix)
+base_unificada %>% write.csv("indicadores_elecciones.csv")
 
-logit_model <- glm(dico_debates_eleccion ~ 
-                     nec + 
-                     marginvic + 
-                     #newparties + 
-                     #withinsv + 
-                     #alineamiento +
-                     dico_reeleccion +
-                     voteshareincumbent + 
-                     #proptv +
-                     propindivinternet +
-                     #prohibicionpropaganda +
-                     regulaciondico +
-                     #satisfaccion +
-                     #prop_elec_usa_ciclo +
-                     lagpropdebatesregion, 
-                   family = binomial(link = "logit"), 
-                   data = totest)
-summary(totest)
-summary(logit_model)
 ########################################################################
 ##########################################################################
 ############# auxiliares para llenar incumbencia ##############
