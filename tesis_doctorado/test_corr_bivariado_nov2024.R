@@ -44,7 +44,11 @@ summary(logit_model)
 
 # acomodo data preparacion #######
 
-# For practical interpretation, you might use these general thresholds:
+# para interpretacion del Taub b
+# https://blogs.sas.com/content/iml/2023/04/05/interpret-spearman-kendall-corr.html
+# https://datatab.net/tutorial/kendalls-tau
+
+# CHATGPT OJO: For practical interpretation, you might use these general thresholds:
 #   
 #   0.00 to ±0.10: Very weak to no association
 # ±0.10 to ±0.19: Weak association
@@ -87,6 +91,8 @@ summary(modelo) # para ver si diferencia es significativa
 
 # ronda - VWEAK / NO + NO SFICATIVA #######
 
+# variable_independiente <-  base$ncat_ronda %>% mutate(ifelse(ncat_ronda==1,0,
+#                                                              ifelse(ncat_ronda==2,1)))
 variable_independiente <-  base$ncat_ronda
 
 data <- tibble(variable_independiente = variable_independiente,
@@ -112,6 +118,7 @@ summary(modelo) # para ver si diferencia es significativa
 # fragmentacion: NEC - WEAK POSITIVE + SFICATIVA #######
 
 variable_independiente <-  base$nec
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -131,10 +138,16 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 # fragmentacion: n_candidatos - VWEAK/NO + NO SFICATIVA #######
 
 variable_independiente <- base$ntc
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -153,10 +166,16 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 # volatilidad: overall - VWEAK/NO + NO SFICATIVA #######
 
 variable_independiente <- base$volatility
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -176,10 +195,16 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 # volatilidad: intrasistemica - VWEAK/NO + Signo esperado, pero NO SFICATIVA #######
 
 variable_independiente <- base$withinsv
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -200,9 +225,15 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
 
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
 # volatilidad: extrasistemica - VWEAK/NO + NO SFICATIVA #######
 
 variable_independiente <- base$newparties
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -221,10 +252,16 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 # desalineamiento (% personas que YES se identifican con partido). MODERATE NEGATIVE COR + SFICATIVA  #######
 
 variable_independiente <- base$alineamiento
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -243,11 +280,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # descontento WEAK NEGATIVE + NO SFICATIVA #######
 
 variable_independiente <- base$satisfaccion
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -267,11 +310,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # competitividad (marginvic) VWEAK/NO + SFICATIVA  #######
 
 variable_independiente <- base$marginvic
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -291,10 +340,16 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 # incumbent: vote share incumbent VWEAK/NO + NO SFICATIVA #######
 
 variable_independiente <- base$voteshareincumbent
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -314,6 +369,11 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # incumbent: exec approval (img) WEAK NEGATIVE + SFICATIVA #######
@@ -325,6 +385,7 @@ tau_b
 
 
 variable_independiente <- base$exapprovalnotsmoothed
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -344,11 +405,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # incumbent: reelije WEAK NEGATIVE  + SFICATIVA #######
 
 variable_independiente <- base$dico_reeleccion
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -368,11 +435,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 
 # incumbent: oficialismo tiene candidato - VWEAK/NO  + NO SFICATIVA #######
 
 variable_independiente <- base$dico_oficialista
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -391,11 +464,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 
 # media : proptv - WEAK POSITIVE  + SFICATIVA #######
 
 variable_independiente <- base$proptv
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -415,11 +494,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # media : propint  - STRONG POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$propindivinternet
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -439,11 +524,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # regulaciones: prohibicion propaganda - MODERATE POSITIVE + SFICATIVA  #######
 
 variable_independiente <- base$prohibicionpropaganda
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -463,11 +554,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 
 # regulaciones: acceso gratuito - VWEAK/NO + NO SFICATIVA #######
 
 variable_independiente <- base$accesogratuito
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -488,9 +585,15 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
 
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
+
 # regulaciones sobre debates: ordinal - STRONG POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$regulacionordinal
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -510,11 +613,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # regulaciones sobre debates: dicotomica - STRONG POSITIVE  + SFICATIVA #######
 
 variable_independiente <- base$regulaciondico
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -534,11 +643,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 
 # lagged: dico ciclo anterior - STRONG POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$dico_debates_pastelection
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -558,11 +673,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 
 # lagged: cumsum ciclos anteriores - STRONG POSITIVE #######
 
 variable_independiente <- base$cumsum_pastciclos
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -582,11 +703,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # region  avgprop x ciclo - MODERATE/STRONG POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$avgpropdebatesregionxciclo
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -606,11 +733,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # region lag n  - MODERATE POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$lagndebatesregion
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -630,11 +763,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # region lag prop  - MODERATE POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$lagpropdebatesregion
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -654,11 +793,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # USA prop - WEAK POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$prop_elec_usa_ciclo
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -678,11 +823,17 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
 
 # USA n - WEAK/MODERATE POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$n_debates_usa_ciclo
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -703,10 +854,16 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
 
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
 
 # USA dico - MODERATE POSITIVE + SFICATIVA #######
 
 variable_independiente <- base$dico_debates_usa_ciclo
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
                variable_dependiente = variable_dependiente)
@@ -726,4 +883,9 @@ modelo <- glm(variable_dependiente ~ variable_independiente,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
 
