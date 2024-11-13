@@ -54,6 +54,14 @@ data_elecs_USA <- read.csv("USA_all_debates - electyears.csv")
 data_accesomedios <- read.csv("OBSREF/data_accesomedios.csv")  # creada en abriendo_data_friedenberg
 data_exapproval <- read.csv("Carlin/data_exapproval.csv")
 
+# carga data controles #
+data_gdp <- read.csv("WDI/df_gdp.csv")  
+qof_controles_ohtersregime <- read.csv("QofG/indicadores_ohtersregime_qof.csv")
+qof_controles_mediaquality <- read.csv("QofG/indicadores_mediaquality_qof.csv")
+qof_controles_democracia <- read.csv("QofG/indicadores_democracia_qof.csv")
+qof_controles_desarrollo <- read.csv("QofG/indicadores_desarrollo_qof.csv")
+qof_controles_turnout <- read.csv("QofG/indicadores_turnout_qof.csv")
+
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
@@ -62,7 +70,7 @@ data_encuestas_candidatos <- read.csv("base_candidatos_matcheados2023.csv")
 
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
-#### INDICADORES NIVEL ELECCION #####
+# INDICADORES NIVEL ELECCION #####
 # vamos paso por paso. primero vamos a ver que datos de los importantes tenemos para el modelo 1 OBS POR ELECCION
 
 # join de bases disponibles # 
@@ -478,7 +486,7 @@ data_disponible_incumbentes <- data_candidatos_incumbentes %>%
   dplyr::rename("voteshareincumbent" = vote_share)
  
 indicador_voteshareincumbent <- data_base_elecciones %>% 
-  left_join(data_disponible_incumbentes)
+  left_join(data_disponible_incumbentes) 
 
 indicador_voteshareincumbent <- indicador_voteshareincumbent %>% 
   mutate(source_voteshareincumbent = ifelse(ncat_ronda==2&is.na(voteshareincumbent),
@@ -486,7 +494,8 @@ indicador_voteshareincumbent <- indicador_voteshareincumbent %>%
                                      source_voteshareincumbent)) %>% 
   mutate(voteshareincumbent = ifelse(ncat_ronda==2&is.na(voteshareincumbent),
                                      0,
-                                     voteshareincumbent))
+                                     voteshareincumbent)) %>% 
+  subset(!(cat_pais=="Bolivia"&ncat_eleccion==1978&voteshareincumbent<5)) # por algun motivo en Nohlen hay dos mediciones reportadas para el mismo candidato. Confuso
 
 # voteshareincumbent_tofill <- indicador_voteshareincumbent %>% 
 #   subset(is.na(voteshareincumbent))
@@ -494,6 +503,8 @@ indicador_voteshareincumbent <- indicador_voteshareincumbent %>%
 
 indicador_voteshareincumbent <- indicador_voteshareincumbent %>% 
   select(cat_pais, ncat_eleccion, ncat_ronda, voteshareincumbent, source_voteshareincumbent)
+
+# indicador_voteshareincumbent %>% select(cat_pais,ncat_eleccion, ncat_ronda) %>% duplicated()
 
 # agragamos data executive approval 
 
@@ -824,7 +835,7 @@ indicador_lagged <- data_base_elecciones %>%
 indicador_lagged <- indicador_lagged %>% 
   select(cat_pais, ncat_eleccion, ncat_ronda, dico_debates_pastelection, cumsum_pastciclos, source_lagged )
 
-### GURADADO chequeo y guardo lo disponible hasta ahora  #########################
+### GURADADO INDICADORES chequeo y guardo lo disponible hasta ahora  #########################
 
 summary(indicador_nec)
 indicador_nec %>% write.csv("indicador_nec.csv")
@@ -871,7 +882,7 @@ indicador_region %>% write.csv("indicador_region.csv")
 summary(indicador_lagged)
 indicador_lagged %>% write.csv("indicador_lagged.csv")
 
-### ARMADO DE BASE UNIFICADA  #########################
+### ARMADO DE BASE UNIFICADA INDICADORES #########################
 data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_base_base.R
 
 indicador_nec <- read.csv("indicador_nec.csv") %>% select(-X)
@@ -911,6 +922,282 @@ summary(base_unificada)
 
 base_unificada %>% write.csv("indicadores_elecciones.csv")
 
+
+
+######################################################################################################################
+######################################################################################################################
+# CONTROLES NIVEL ELECCION #####
+##### Desarrollo/ PBI per Capita ######
+
+# (WDI) data GDP per capita (constant 2010 US$)
+data_gdp <- data_gdp %>% 
+  mutate(source_gdpxcapita2 = paste(source_gdpxcapita2, "- WDI Indicators - GDP per capita (constant 2010 US$)" ))
+
+control_gdp <- data_gdp %>% 
+  select(-X)
+
+
+##### Desarrollo/ Urbanizacion ######
+summary(qof_controles_desarrollo)
+
+controles_desarrollo <- qof_controles_desarrollo %>% 
+  select(-X) %>% 
+  dplyr::rename("urbanpop" = "new_wdi_popurb",
+                "source_urbanpop" = "source_wdi_popurb",
+                "undphdi" = "new_undp_hdi",
+                "source_undphdi" = "source_undp_hdi")
+
+##### Desarrollo/ N educativo promedio ######
+
+##### Sist pol/ Turnout ######
+
+
+control_turnout <- qof_controles_turnout %>% 
+  select(-X) %>% 
+  dplyr::rename("turnout" = "ideavt_presvt",
+                "source_turnout" = "source_ideavt_presvt")
+
+missing_turnout <- control_turnout %>% # completo manualmente missing data
+  subset(is.na(turnout)) %>% 
+  mutate(turnout = ifelse(cat_pais=="Argentina"&ncat_eleccion==2023&ncat_ronda==1,
+                          77.04,
+                          ifelse(cat_pais=="Argentina"&ncat_eleccion==2023&ncat_ronda==2,
+                                 76.4,
+                                 turnout))) %>% 
+  mutate(source_turnout = ifelse(is.na(source_turnout)&!is.na(turnout),
+                                 "Web Chequeado: https://chequeado.com/el-explicador/elecciones-2023-la-participacion-fue-de-al-menos-el-74-la-mas-baja-en-una-eleccion-presidencial-desde-1983/",
+                                 source_turnout)) %>% 
+  mutate(turnout = ifelse(cat_pais=="Colombia"&ncat_eleccion==1990&ncat_ronda==1,
+                          43.50,
+                          ifelse(cat_pais=="Colombia"&ncat_eleccion==1994&ncat_ronda==1,
+                                 33.95,
+                                 ifelse(cat_pais=="Colombia"&ncat_eleccion==1994&ncat_ronda==2,
+                                        43.32,
+                                        ifelse(cat_pais=="Colombia"&ncat_eleccion==1998&ncat_ronda==1,
+                                               51.55,
+                                               ifelse(cat_pais=="Colombia"&ncat_eleccion==1998&ncat_ronda==2,
+                                                      58.76,
+                                                      turnout)))))) %>% 
+  mutate(source_turnout = ifelse(is.na(source_turnout)&!is.na(turnout),
+                                 "Web IDEA: https://www.idea.int/data-tools/data/question-country?question_id=9189&country=49&database_theme=293 ",
+                                 source_turnout))   
+
+control_turnout <-control_turnout %>% 
+  subset(!is.na(turnout)) %>% 
+  rbind(missing_turnout)
+
+##### Sist pol/ Clausula runoff, concurrent elections y compulsory voting ######
+# runoff: de mainw
+# conc_elec de mainw
+# ideavt_prescv de Qof 
+
+# paso para unir la data (copiado identico de arriba)
+data_mainw_elecciones_tojoin <- data_mainw_elecciones %>% 
+  dplyr::rename( "mayus_eng_cat_pais" = "country", 
+                 "ncat_election_year" = "election_year" ) 
+
+data_base_elecciones_tojoin <- data_base_elecciones %>% 
+  left_join(electyears) %>% 
+  select(-eng_cat_pais) %>% 
+  mutate(cat_pais = str_replace(cat_pais, "Republica Dominicana","Rep. Dominicana")) %>% 
+  left_join(countrynames) 
+
+data_mainw_elecciones_tojoin$mayus_eng_cat_pais %>% unique()
+data_base_elecciones_tojoin$mayus_eng_cat_pais %>% unique()
+
+check_elecciones3 <- data_base_elecciones_tojoin %>% 
+  subset(ncat_ronda ==1) %>% 
+  left_join(data_mainw_elecciones_tojoin)
+
+control_sistelect <- check_elecciones3 %>% 
+  select(cat_pais, ncat_eleccion, runoff, conc_elec) %>% 
+  mutate(source_runoff = ifelse(!is.na(runoff), "Mainwaring & Su (2021) - runoff", NA) ,
+         source_concelec = ifelse(!is.na(conc_elec), "Mainwaring & Su (2021) - conc_elec", NA)  ) %>% 
+  dplyr::rename("concelec" = "conc_elec")
+
+control_sistelect <- data_base_elecciones %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  left_join(control_sistelect)
+
+compulsoryvoting <- qof_controles_ohtersregime %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, ideavt_prescv, source_ideavt_prescv) %>% 
+  dplyr::rename("compulsoryvoting" = "ideavt_prescv",
+                "source_compulsoryvoting" = "source_ideavt_prescv")
+
+control_sistelect <- control_sistelect %>% 
+  left_join(compulsoryvoting)
+
+##### Sist pol/ Polarizacion ######
+# polar de mainw 
+control_polarizacion <- check_elecciones3 %>% 
+  select(cat_pais, ncat_eleccion, polar) %>% 
+  mutate(source_polar = ifelse(!is.na(polar), "Mainwaring & Su (2021) - runoff", NA))
+
+control_polarizacion <- data_base_elecciones %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  left_join(control_polarizacion)
+
+# ver si data DLUJAN hace diferencia #ojo en caso afirmativo habria que ver como esta medida 
+# GANO unos 8 puntos de datos pero la diferencia de medidas parece incompatible
+# 
+# data_dlujan_elecciones$polarizdiffideo
+# 
+# # primero uno data
+# # creo variables para unir  
+# data_dlujan_elecciones_tojoin <- data_dlujan_elecciones %>% 
+#   mutate(ncat_ronda = 1,
+#          cat_pais =  iconv(pais, to = "ASCII//TRANSLIT") %>%  str_trim() %>% str_replace("R. Dominicana", "Republica Dominicana"),
+#          ncat_eleccion = id_eleccion)  
+# 
+# # descarto variables menos relevantes de momento
+# data_dlujan_elecciones_tojoin <- data_dlujan_elecciones_tojoin %>% 
+#   select(-c(pol_coppedge, pol_handlin,	pol_singer, federalismo_Gerring, reglaelectoral, anio, id_eleccion, nepl_golder))
+# 
+# # unimos
+# check_elecciones <- data_base_elecciones %>% 
+#   left_join(data_dlujan_elecciones_tojoin)
+# 
+# # ahora veo compatibildad
+# data_polarizacion_lujan <- check_elecciones %>%
+#   select(cat_pais, ncat_eleccion, ncat_ronda, polarizdiffideo)
+# 
+# control_polarizacion2 <- control_polarizacion %>%
+#   left_join(data_polarizacion_lujan)
+#  
+# summary(control_polarizacion2)
+# 
+# control_polarizacion2 <- control_polarizacion2 %>%
+#   mutate(polarizacion = ifelse(is.na(polar), polarizdiffideo, polar)) %>%
+#   mutate(source_polarizacion = ifelse(is.na(source_polar)&!is.na(polarizacion),
+#                                     "Luján (2020)",
+#                                     source_polar))
+# 
+# summary(control_polarizacion2)
+
+### Regimen/ Duracion del regimen ######
+
+# age_democracy de mainw
+# pendiente: crear una base filled con bmr_demdur. excluir años > 100. 
+
+control_edadregimen <- qof_controles_ohtersregime %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda,
+         p_durable, source_p_durable,
+         bmr_demdur, source_bmr_demdur) %>% 
+  dplyr::rename("edadregimenppolity" = "p_durable",
+                "source_edadregimenppolity" = "source_p_durable",
+                "edadregimenbmr" = "bmr_demdur",
+                "source_edadregimenbmr" = "source_bmr_demdur") #Boix-Miller_Rosato Dichotomous Coding
+
+control_edadregimen2 <- check_elecciones3 %>% 
+  select(cat_pais, ncat_eleccion, age_demo) %>% 
+  dplyr::rename("edadregimenmainw" = "age_demo") %>% 
+  mutate(source_edadregimenmainw = "Mainwaring & Su (2021) - age_demo")
+
+control_edadregimen <- control_edadregimen %>% 
+  left_join(control_edadregimen2)
+
+control_edadregimen3 <- control_edadregimen %>% 
+  subset(ncat_ronda==1) %>% 
+  group_by(cat_pais) %>% 
+  arrange(ncat_eleccion) %>% 
+  mutate(edadregimenfilled = ifelse(is.na(edadregimenbmr),
+           lag(edadregimenbmr) + ncat_eleccion - lag(ncat_eleccion),
+           edadregimenbmr) ) %>% 
+  mutate(edadregimenfilled = ifelse(is.na(edadregimenfilled),
+                                    lag(edadregimenfilled) + ncat_eleccion - lag(ncat_eleccion),
+                                    edadregimenfilled) ) %>%  # solo aplica a un caso, el de ecuador
+  ungroup() %>% 
+  mutate(source_edadregimenfilled = ifelse(is.na(edadregimenbmr)&!is.na(source_edadregimenbmr),
+                                    source_edadregimenbmr,
+                                    "Proyectado con base en datos Q of G, bmr_demdur")) %>% 
+  mutate(edadregimenfilled = ifelse(edadregimenfilled>100, NA, edadregimenfilled)) %>%  # una alternativa seria puntuar con 0
+  mutate(source_edadregimenfilled = ifelse(is.na(edadregimenfilled),
+                                           "Dato perdido a propósito. Elección considerada híbrida por bmr_demdur",
+                                           edadregimenfilled)) 
+
+control_edadregimen <- control_edadregimen %>% 
+  left_join(control_edadregimen3 %>% 
+              select(cat_pais, ncat_eleccion, edadregimenfilled, source_edadregimenfilled))
+
+##### Regimen / Calidad del regimen ######
+
+control_democracia <- qof_controles_democracia %>% 
+  select(-X) %>% 
+  dplyr::rename(democraciappolity = new_p_polity2,
+                democraciavdempolyarchy = new_vdem_polyarchy,
+                democraciavdemelectoralcomp = new_vdem_edcomp_thick,
+                source_democraciappolity = source_p_polity2,
+                source_democraciavdempolyarchy = source_vdem_edcomp_thick,
+                source_democraciavdemelectoralcomp = source_vdem_edcomp_thick)
+
+##### Sist medios/ Media bias ######
+
+control_medios <- qof_controles_mediaquality %>% 
+  select(-X) %>% 
+  dplyr::rename(mediaqualityfreedombti = new_bti_foe,
+                mediaqualityconftvwvs = new_wvs_conftv,
+                mediaqualitycorruptvdem = new_vdem_mecorrpt,
+                mediaqualitybiasnelda = new_nelda_mbbe,
+                source_mediaqualityfreedombti = source_bti_foe,
+                source_mediaqualityconftvwvs = source_wvs_conftv,
+                source_mediaqualitycorruptvdem = source_vdem_mecorrpt,
+                source_mediaqualitybiasnelda = source_nelda_mbbe)
+
+
+### GURADADO CONTROLES chequeo y guardo lo disponible hasta ahora  #########################
+
+summary(control_gdp)
+control_gdp %>% write.csv("control_gdp.csv")
+
+summary(controles_desarrollo)
+controles_desarrollo %>% write.csv("control_desarrollo.csv")
+
+summary(control_sistelect)
+control_sistelect %>% write.csv("control_sistelect.csv")
+
+summary(control_polarizacion)
+control_polarizacion %>% write.csv("control_polarizacion.csv")
+
+summary(control_edadregimen) 
+control_edadregimen %>% write.csv("control_edadregimen.csv")
+
+summary(control_democracia) 
+control_democracia %>% write.csv("control_democracia.csv")
+
+summary(control_medios)
+control_medios %>%write.csv("control_medios.csv")
+
+summary(control_turnout)
+control_turnout %>%write.csv("control_turnout.csv")
+
+
+### ARMADO DE BASE UNIFICADA CONTROLES #########################
+data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_base_base.R
+
+
+control_gdp <- read.csv("control_gdp.csv") %>% select(-X)
+control_desarrollo <- read.csv("control_desarrollo.csv") %>% select(-X)
+control_sistelect <- read.csv("control_sistelect.csv") %>% select(-X)
+control_polarizacion <- read.csv("control_polarizacion.csv") %>% select(-X)
+control_edadregimen <- read.csv("control_edadregimen.csv") %>% select(-X)
+control_democracia <- read.csv("control_democracia.csv") %>% select(-X)
+control_medios <- read.csv("control_medios.csv") %>% select(-X)
+control_turnout <- read.csv("control_turnout.csv") %>% select(-X)
+
+base_unificada_controles <- data_base_elecciones %>% 
+  left_join(control_gdp) %>%
+  left_join(control_desarrollo) %>%
+  left_join(control_sistelect) %>%
+  left_join(control_polarizacion) %>%
+  left_join(control_edadregimen) %>%
+  left_join(control_democracia) %>%
+  left_join(control_medios) %>%
+  left_join(control_turnout) 
+
+summary(base_unificada_controles)
+
+base_unificada_controles %>% write.csv("controles_elecciones.csv")
+
 ########################################################################
 ##########################################################################
 ############# auxiliares para llenar incumbencia ##############
@@ -929,7 +1216,7 @@ INCUMBENTS <- data_fried_seaw_caro_candidatos %>%
 
 #############################################################################
 ##### VIEJO ################################################ 
-##### CHEQUEO DE MISSINGS ########################################
+##### chequeo de missings ########################################
 
 # vemos qué data esta missing y tendremos que buscar por nuestra cuenta
 
@@ -977,7 +1264,7 @@ to_fill <- check_elecciones %>%
 
 to_fill %>% write.csv("missing_nec_to_fill.csv")
 
-####### PASO A EXPLORAR DATA DE CANDIDATOS ####################################
+####### paso a explorar data candidatos ####################################
 
 # Me quedo con nombres unicos por eleccion / pais
 data_base_candidatos_unicos <- data_base_candidatos %>% 

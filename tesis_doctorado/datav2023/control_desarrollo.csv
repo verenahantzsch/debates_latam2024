@@ -1,0 +1,253 @@
+"","cat_pais","ncat_eleccion","ncat_ronda","urbanpop","source_urbanpop","undphdi","source_undphdi"
+"1","El Salvador",2024,1,74.767,"Proyectado. Último valor disponible base Qof wdi_popurb",0.67500001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"2","Argentina",2023,2,92.347,"Proyectado. Último valor disponible base Qof wdi_popurb",0.84200001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"3","Argentina",2023,1,92.347,"Proyectado. Último valor disponible base Qof wdi_popurb",0.84200001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"4","Ecuador",2023,2,64.57,"Proyectado. Último valor disponible base Qof wdi_popurb",0.74000001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"5","Ecuador",2023,1,64.57,"Proyectado. Último valor disponible base Qof wdi_popurb",0.74000001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"6","Guatemala",2023,2,52.666,"Proyectado. Último valor disponible base Qof wdi_popurb",0.62699997,"Proyectado. Último valor disponible base Qof undp_hdi"
+"7","Guatemala",2023,1,52.666,"Proyectado. Último valor disponible base Qof wdi_popurb",0.62699997,"Proyectado. Último valor disponible base Qof undp_hdi"
+"8","Paraguay",2023,1,62.818,"Proyectado. Último valor disponible base Qof wdi_popurb",0.71700001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"9","Brasil",2022,2,87.555,"Base Qof wdi_popurb",0.75400001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"10","Brasil",2022,1,87.555,"Base Qof wdi_popurb",0.75400001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"11","Colombia",2022,2,82.05,"Base Qof wdi_popurb",0.75199997,"Proyectado. Último valor disponible base Qof undp_hdi"
+"12","Colombia",2022,1,82.05,"Base Qof wdi_popurb",0.75199997,"Proyectado. Último valor disponible base Qof undp_hdi"
+"13","Costa Rica",2022,2,82.042,"Base Qof wdi_popurb",0.80900002,"Proyectado. Último valor disponible base Qof undp_hdi"
+"14","Costa Rica",2022,1,82.042,"Base Qof wdi_popurb",0.80900002,"Proyectado. Último valor disponible base Qof undp_hdi"
+"15","Chile",2021,2,87.817,"Base Qof wdi_popurb",0.85500002,"Base Qof undp_hdi"
+"16","Chile",2021,1,87.817,"Base Qof wdi_popurb",0.85500002,"Base Qof undp_hdi"
+"17","Ecuador",2021,2,64.361,"Base Qof wdi_popurb",0.74000001,"Base Qof undp_hdi"
+"18","Ecuador",2021,1,64.361,"Base Qof wdi_popurb",0.74000001,"Base Qof undp_hdi"
+"19","Honduras",2021,1,58.982,"Base Qof wdi_popurb",0.62099999,"Base Qof undp_hdi"
+"20","Peru",2021,2,78.5,"Base Qof wdi_popurb",0.76200002,"Base Qof undp_hdi"
+"21","Peru",2021,1,78.5,"Base Qof wdi_popurb",0.76200002,"Base Qof undp_hdi"
+"22","Bolivia",2020,1,70.123,"Base Qof wdi_popurb",0.69400001,"Base Qof undp_hdi"
+"23","Republica Dominicana",2020,1,82.54,"Base Qof wdi_popurb",0.764,"Base Qof undp_hdi"
+"24","Argentina",2019,1,91.991,"Base Qof wdi_popurb",0.852,"Base Qof undp_hdi"
+"25","Bolivia",2019,1,69.773,"Base Qof wdi_popurb",0.71700001,"Base Qof undp_hdi"
+"26","El Salvador",2019,1,72.746,"Base Qof wdi_popurb",0.68300003,"Base Qof undp_hdi"
+"27","Guatemala",2019,2,51.439,"Base Qof wdi_popurb",0.64200002,"Base Qof undp_hdi"
+"28","Guatemala",2019,1,51.439,"Base Qof wdi_popurb",0.64200002,"Base Qof undp_hdi"
+"29","Panama",2019,1,68.059,"Base Qof wdi_popurb",0.81699997,"Base Qof undp_hdi"
+"30","Uruguay",2019,2,95.426,"Base Qof wdi_popurb",0.82099998,"Base Qof undp_hdi"
+"31","Uruguay",2019,1,95.426,"Base Qof wdi_popurb",0.82099998,"Base Qof undp_hdi"
+"32","Brasil",2018,2,86.569,"Base Qof wdi_popurb",0.764,"Base Qof undp_hdi"
+"33","Brasil",2018,1,86.569,"Base Qof wdi_popurb",0.764,"Base Qof undp_hdi"
+"34","Colombia",2018,2,80.778,"Base Qof wdi_popurb",0.76300001,"Base Qof undp_hdi"
+"35","Colombia",2018,1,80.778,"Base Qof wdi_popurb",0.76300001,"Base Qof undp_hdi"
+"36","Costa Rica",2018,2,79.34,"Base Qof wdi_popurb",0.81099999,"Base Qof undp_hdi"
+"37","Costa Rica",2018,1,79.34,"Base Qof wdi_popurb",0.81099999,"Base Qof undp_hdi"
+"38","Mexico",2018,1,80.156,"Base Qof wdi_popurb",0.77700001,"Base Qof undp_hdi"
+"39","Paraguay",2018,1,61.585,"Base Qof wdi_popurb",0.727,"Base Qof undp_hdi"
+"40","Venezuela",2018,1,88.208,"Base Qof wdi_popurb",0.73799998,"Base Qof undp_hdi"
+"41","Chile",2017,2,87.49,"Base Qof wdi_popurb",0.85299999,"Base Qof undp_hdi"
+"42","Chile",2017,1,87.49,"Base Qof wdi_popurb",0.85299999,"Base Qof undp_hdi"
+"43","Ecuador",2017,2,63.67,"Base Qof wdi_popurb",0.76200002,"Base Qof undp_hdi"
+"44","Ecuador",2017,1,63.67,"Base Qof wdi_popurb",0.76200002,"Base Qof undp_hdi"
+"45","Honduras",2017,1,56.457,"Base Qof wdi_popurb",0.61699998,"Base Qof undp_hdi"
+"46","Nicaragua",2016,1,58.09,"Base Qof wdi_popurb",0.653,"Base Qof undp_hdi"
+"47","Peru",2016,2,77.539,"Base Qof wdi_popurb",0.76499999,"Base Qof undp_hdi"
+"48","Peru",2016,1,77.539,"Base Qof wdi_popurb",0.76499999,"Base Qof undp_hdi"
+"49","Republica Dominicana",2016,1,79.436,"Base Qof wdi_popurb",0.755,"Base Qof undp_hdi"
+"50","Argentina",2015,2,91.503,"Base Qof wdi_popurb",0.84799999,"Base Qof undp_hdi"
+"51","Argentina",2015,1,91.503,"Base Qof wdi_popurb",0.84799999,"Base Qof undp_hdi"
+"52","Guatemala",2015,2,49.971,"Base Qof wdi_popurb",0.639,"Base Qof undp_hdi"
+"53","Guatemala",2015,1,49.971,"Base Qof wdi_popurb",0.639,"Base Qof undp_hdi"
+"54","Bolivia",2014,1,68.047,"Base Qof wdi_popurb",0.68400002,"Base Qof undp_hdi"
+"55","Brasil",2014,2,85.492,"Base Qof wdi_popurb",0.75400001,"Base Qof undp_hdi"
+"56","Brasil",2014,1,85.492,"Base Qof wdi_popurb",0.75400001,"Base Qof undp_hdi"
+"57","Colombia",2014,2,79.415,"Base Qof wdi_popurb",0.75,"Base Qof undp_hdi"
+"58","Colombia",2014,1,79.415,"Base Qof wdi_popurb",0.75,"Base Qof undp_hdi"
+"59","Costa Rica",2014,2,75.941,"Base Qof wdi_popurb",0.796,"Base Qof undp_hdi"
+"60","Costa Rica",2014,1,75.941,"Base Qof wdi_popurb",0.796,"Base Qof undp_hdi"
+"61","El Salvador",2014,2,68.874,"Base Qof wdi_popurb",0.66600001,"Base Qof undp_hdi"
+"62","El Salvador",2014,1,68.874,"Base Qof wdi_popurb",0.66600001,"Base Qof undp_hdi"
+"63","Panama",2014,1,66.371,"Base Qof wdi_popurb",0.79400003,"Base Qof undp_hdi"
+"64","Uruguay",2014,2,94.945,"Base Qof wdi_popurb",0.80800003,"Base Qof undp_hdi"
+"65","Uruguay",2014,1,94.945,"Base Qof wdi_popurb",0.80800003,"Base Qof undp_hdi"
+"66","Chile",2013,2,87.246,"Base Qof wdi_popurb",0.83600003,"Base Qof undp_hdi"
+"67","Chile",2013,1,87.246,"Base Qof wdi_popurb",0.83600003,"Base Qof undp_hdi"
+"68","Ecuador",2013,1,63.125,"Base Qof wdi_popurb",0.755,"Base Qof undp_hdi"
+"69","Honduras",2013,1,53.858,"Base Qof wdi_popurb",0.60299999,"Base Qof undp_hdi"
+"70","Paraguay",2013,1,60.197,"Base Qof wdi_popurb",0.71499997,"Base Qof undp_hdi"
+"71","Venezuela",2013,1,88.133,"Base Qof wdi_popurb",0.77399999,"Base Qof undp_hdi"
+"72","Mexico",2012,1,78.405,"Base Qof wdi_popurb",0.75999999,"Base Qof undp_hdi"
+"73","Republica Dominicana",2012,1,75.802,"Base Qof wdi_popurb",0.71799999,"Base Qof undp_hdi"
+"74","Venezuela",2012,1,88.123,"Base Qof wdi_popurb",0.76700002,"Base Qof undp_hdi"
+"75","Argentina",2011,1,90.99,"Base Qof wdi_popurb",0.84100002,"Base Qof undp_hdi"
+"76","Guatemala",2011,2,48.701,"Base Qof wdi_popurb",0.611,"Base Qof undp_hdi"
+"77","Guatemala",2011,1,48.701,"Base Qof wdi_popurb",0.611,"Base Qof undp_hdi"
+"78","Nicaragua",2011,1,57.113,"Base Qof wdi_popurb",0.62199998,"Base Qof undp_hdi"
+"79","Peru",2011,2,76.617,"Base Qof wdi_popurb",0.73199999,"Base Qof undp_hdi"
+"80","Peru",2011,1,76.617,"Base Qof wdi_popurb",0.73199999,"Base Qof undp_hdi"
+"81","Brasil",2010,2,84.335,"Base Qof wdi_popurb",0.72299999,"Base Qof undp_hdi"
+"82","Brasil",2010,1,84.335,"Base Qof wdi_popurb",0.72299999,"Base Qof undp_hdi"
+"83","Chile",2010,2,87.074,"Base Qof wdi_popurb",0.81300002,"Base Qof undp_hdi"
+"84","Colombia",2010,2,77.964,"Base Qof wdi_popurb",0.72600001,"Base Qof undp_hdi"
+"85","Colombia",2010,1,77.964,"Base Qof wdi_popurb",0.72600001,"Base Qof undp_hdi"
+"86","Costa Rica",2010,1,71.736,"Base Qof wdi_popurb",0.77200001,"Base Qof undp_hdi"
+"87","Bolivia",2009,1,65.984,"Base Qof wdi_popurb",0.65799999,"Base Qof undp_hdi"
+"88","Chile",2010,1,87.017,"Base Qof wdi_popurb",0.81099999,"Base Qof undp_hdi"
+"89","Ecuador",2009,1,62.495,"Base Qof wdi_popurb",0.73100001,"Base Qof undp_hdi"
+"90","El Salvador",2009,1,64.57,"Base Qof wdi_popurb",0.653,"Base Qof undp_hdi"
+"91","Honduras",2009,1,51.225,"Base Qof wdi_popurb",0.59399998,"Base Qof undp_hdi"
+"92","Panama",2009,1,64.851,"Base Qof wdi_popurb",0.76899999,"Base Qof undp_hdi"
+"93","Uruguay",2009,2,94.209,"Base Qof wdi_popurb",0.77999997,"Base Qof undp_hdi"
+"94","Uruguay",2009,1,94.209,"Base Qof wdi_popurb",0.77999997,"Base Qof undp_hdi"
+"95","Paraguay",2008,1,58.612,"Base Qof wdi_popurb",0.67900002,"Base Qof undp_hdi"
+"96","Republica Dominicana",2008,1,71.3,"Base Qof wdi_popurb",0.69700003,"Base Qof undp_hdi"
+"97","Argentina",2007,1,90.366,"Base Qof wdi_popurb",0.81699997,"Base Qof undp_hdi"
+"98","Guatemala",2007,2,47.508,"Base Qof wdi_popurb",0.58999997,"Base Qof undp_hdi"
+"99","Guatemala",2007,1,47.508,"Base Qof wdi_popurb",0.58999997,"Base Qof undp_hdi"
+"100","Brasil",2006,2,83.143,"Base Qof wdi_popurb",0.69999999,"Base Qof undp_hdi"
+"101","Brasil",2006,1,83.143,"Base Qof wdi_popurb",0.69999999,"Base Qof undp_hdi"
+"102","Chile",2006,2,86.842,"Base Qof wdi_popurb",0.796,"Base Qof undp_hdi"
+"103","Colombia",2006,1,76.423,"Base Qof wdi_popurb",0.69800001,"Base Qof undp_hdi"
+"104","Costa Rica",2006,1,66.935,"Base Qof wdi_popurb",0.74699998,"Base Qof undp_hdi"
+"105","Ecuador",2006,2,61.907,"Base Qof wdi_popurb",0.72000003,"Base Qof undp_hdi"
+"106","Ecuador",2006,1,61.907,"Base Qof wdi_popurb",0.72000003,"Base Qof undp_hdi"
+"107","Mexico",2006,1,76.616,"Base Qof wdi_popurb",0.741,"Base Qof undp_hdi"
+"108","Nicaragua",2006,1,56.132,"Base Qof wdi_popurb",0.59299999,"Base Qof undp_hdi"
+"109","Peru",2006,2,75.421,"Base Qof wdi_popurb",0.69099998,"Base Qof undp_hdi"
+"110","Peru",2006,1,75.421,"Base Qof wdi_popurb",0.69099998,"Base Qof undp_hdi"
+"111","Venezuela",2006,1,87.98,"Base Qof wdi_popurb",0.73199999,"Base Qof undp_hdi"
+"112","Bolivia",2005,1,64.17,"Base Qof wdi_popurb",0.63499999,"Base Qof undp_hdi"
+"113","Chile",2006,1,86.783,"Base Qof wdi_popurb",0.79500002,"Base Qof undp_hdi"
+"114","Honduras",2005,1,48.585,"Base Qof wdi_popurb",0.57700002,"Base Qof undp_hdi"
+"115","El Salvador",2004,1,61.107,"Base Qof wdi_popurb",0.63599998,"Base Qof undp_hdi"
+"116","Panama",2004,1,63.387,"Base Qof wdi_popurb",0.74299997,"Base Qof undp_hdi"
+"117","Republica Dominicana",2004,1,66.003,"Base Qof wdi_popurb",0.66299999,"Base Qof undp_hdi"
+"118","Uruguay",2004,1,93.078,"Base Qof wdi_popurb",0.76999998,"Base Qof undp_hdi"
+"119","Argentina",2003,1,89.686,"Base Qof wdi_popurb",0.79299998,"Base Qof undp_hdi"
+"120","Guatemala",2003,2,46.318,"Base Qof wdi_popurb",0.56599998,"Base Qof undp_hdi"
+"121","Guatemala",2003,1,46.318,"Base Qof wdi_popurb",0.56599998,"Base Qof undp_hdi"
+"122","Paraguay",2003,1,56.977,"Base Qof wdi_popurb",0.65499997,"Base Qof undp_hdi"
+"123","Bolivia",2002,1,62.783,"Base Qof wdi_popurb",0.63,"Base Qof undp_hdi"
+"124","Brasil",2002,2,81.88,"Base Qof wdi_popurb",0.69199997,"Base Qof undp_hdi"
+"125","Brasil",2002,1,81.88,"Base Qof wdi_popurb",0.69199997,"Base Qof undp_hdi"
+"126","Colombia",2002,1,74.797,"Base Qof wdi_popurb",0.67000002,"Base Qof undp_hdi"
+"127","Costa Rica",2002,2,61.753,"Base Qof wdi_popurb",0.722,"Base Qof undp_hdi"
+"128","Costa Rica",2002,1,61.753,"Base Qof wdi_popurb",0.722,"Base Qof undp_hdi"
+"129","Ecuador",2002,2,61.118,"Base Qof wdi_popurb",0.69800001,"Base Qof undp_hdi"
+"130","Ecuador",2002,1,61.118,"Base Qof wdi_popurb",0.69800001,"Base Qof undp_hdi"
+"131","Honduras",2001,1,45.964,"Base Qof wdi_popurb",0.55900002,"Base Qof undp_hdi"
+"132","Nicaragua",2001,1,55.335,"Base Qof wdi_popurb",0.57099998,"Base Qof undp_hdi"
+"133","Peru",2001,2,73.448,"Base Qof wdi_popurb",0.68400002,"Base Qof undp_hdi"
+"134","Peru",2001,1,73.448,"Base Qof wdi_popurb",0.68400002,"Base Qof undp_hdi"
+"135","Chile",2000,2,86.073,"Base Qof wdi_popurb",0.76300001,"Base Qof undp_hdi"
+"136","Mexico",2000,1,74.722,"Base Qof wdi_popurb",0.70899999,"Base Qof undp_hdi"
+"137","Peru",2000,2,73.042,"Base Qof wdi_popurb",0.676,"Base Qof undp_hdi"
+"138","Peru",2000,1,73.042,"Base Qof wdi_popurb",0.676,"Base Qof undp_hdi"
+"139","Republica Dominicana",2000,1,61.753,"Base Qof wdi_popurb",0.64600003,"Base Qof undp_hdi"
+"140","Venezuela",2000,1,87.559,"Base Qof wdi_popurb",0.68400002,"Base Qof undp_hdi"
+"141","Argentina",1999,1,88.952,"Base Qof wdi_popurb",0.773,"Base Qof undp_hdi"
+"142","Chile",2000,1,85.778,"Base Qof wdi_popurb",0.755,"Base Qof undp_hdi"
+"143","El Salvador",1999,1,58.357,"Base Qof wdi_popurb",0.60900003,"Base Qof undp_hdi"
+"144","Guatemala",1999,2,44.995,"Base Qof wdi_popurb",0.542,"Base Qof undp_hdi"
+"145","Guatemala",1999,1,44.995,"Base Qof wdi_popurb",0.542,"Base Qof undp_hdi"
+"146","Panama",1999,1,61.451,"Base Qof wdi_popurb",0.71499997,"Base Qof undp_hdi"
+"147","Uruguay",1999,2,91.743,"Base Qof wdi_popurb",0.74699998,"Base Qof undp_hdi"
+"148","Uruguay",1999,1,91.743,"Base Qof wdi_popurb",0.74699998,"Base Qof undp_hdi"
+"149","Brasil",1998,1,79.781,"Base Qof wdi_popurb",0.66600001,"Base Qof undp_hdi"
+"150","Colombia",1998,2,73.098,"Base Qof wdi_popurb",0.66500002,"Base Qof undp_hdi"
+"151","Colombia",1998,1,73.098,"Base Qof wdi_popurb",0.66500002,"Base Qof undp_hdi"
+"152","Costa Rica",1998,1,57.264,"Base Qof wdi_popurb",0.70499998,"Base Qof undp_hdi"
+"153","Ecuador",1998,2,59.291,"Base Qof wdi_popurb",0.68400002,"Base Qof undp_hdi"
+"154","Ecuador",1998,1,59.291,"Base Qof wdi_popurb",0.68400002,"Base Qof undp_hdi"
+"155","Paraguay",1998,1,54.054,"Base Qof wdi_popurb",0.64399999,"Base Qof undp_hdi"
+"156","Venezuela",1998,1,86.959,"Base Qof wdi_popurb",0.68599999,"Base Qof undp_hdi"
+"157","Bolivia",1997,1,60.212,"Base Qof wdi_popurb",0.62,"Base Qof undp_hdi"
+"158","Honduras",1997,1,43.944,"Base Qof wdi_popurb",0.54400003,"Base Qof undp_hdi"
+"159","Ecuador",1996,2,58.277,"Base Qof wdi_popurb",0.67400002,"Base Qof undp_hdi"
+"160","Ecuador",1996,1,58.277,"Base Qof wdi_popurb",0.67400002,"Base Qof undp_hdi"
+"161","Nicaragua",1996,1,54.587,"Base Qof wdi_popurb",0.53200001,"Base Qof undp_hdi"
+"162","Republica Dominicana",1996,2,58.441,"Base Qof wdi_popurb",0.62,"Base Qof undp_hdi"
+"163","Republica Dominicana",1996,1,58.441,"Base Qof wdi_popurb",0.62,"Base Qof undp_hdi"
+"164","Argentina",1995,1,88.164,"Base Qof wdi_popurb",0.745,"Base Qof undp_hdi"
+"165","Guatemala",1995,2,43.654,"Base Qof wdi_popurb",0.50800002,"Base Qof undp_hdi"
+"166","Guatemala",1995,1,43.654,"Base Qof wdi_popurb",0.50800002,"Base Qof undp_hdi"
+"167","Peru",1995,1,70.951,"Base Qof wdi_popurb",0.64700001,"Base Qof undp_hdi"
+"168","Brasil",1994,1,76.903,"Base Qof wdi_popurb",0.63800001,"Base Qof undp_hdi"
+"169","Colombia",1994,2,71.328,"Base Qof wdi_popurb",0.63999999,"Base Qof undp_hdi"
+"170","Colombia",1994,1,71.328,"Base Qof wdi_popurb",0.63999999,"Base Qof undp_hdi"
+"171","Costa Rica",1994,1,53.653,"Base Qof wdi_popurb",0.685,"Base Qof undp_hdi"
+"172","El Salvador",1994,2,52.704,"Base Qof wdi_popurb",0.56800002,"Base Qof undp_hdi"
+"173","El Salvador",1994,1,52.704,"Base Qof wdi_popurb",0.56800002,"Base Qof undp_hdi"
+"174","Mexico",1994,1,72.985,"Base Qof wdi_popurb",0.67400002,"Base Qof undp_hdi"
+"175","Panama",1994,1,57.301,"Base Qof wdi_popurb",0.68699998,"Base Qof undp_hdi"
+"176","Republica Dominicana",1994,1,56.752,"Base Qof wdi_popurb",0.60699999,"Base Qof undp_hdi"
+"177","Uruguay",1994,1,90.245,"Base Qof wdi_popurb",0.71600002,"Base Qof undp_hdi"
+"178","Bolivia",1993,1,58.079,"Base Qof wdi_popurb",0.57800001,"Base Qof undp_hdi"
+"179","Chile",1993,1,83.896,"Base Qof wdi_popurb",0.71600002,"Base Qof undp_hdi"
+"180","Honduras",1993,1,41.943,"Base Qof wdi_popurb",0.52700001,"Base Qof undp_hdi"
+"181","Paraguay",1993,1,50.844,"Base Qof wdi_popurb",0.61199999,"Base Qof undp_hdi"
+"182","Venezuela",1993,1,85.352,"Base Qof wdi_popurb",0.676,"Base Qof undp_hdi"
+"183","Ecuador",1992,2,56.226,"Base Qof wdi_popurb",0.65799999,"Base Qof undp_hdi"
+"184","Ecuador",1992,1,56.226,"Base Qof wdi_popurb",0.65799999,"Base Qof undp_hdi"
+"185","Guatemala",1991,2,42.323,"Base Qof wdi_popurb",0.48800001,"Base Qof undp_hdi"
+"186","Colombia",1990,1,69.481,"Base Qof wdi_popurb",0.61000001,"Base Qof undp_hdi"
+"187","Costa Rica",1990,1,50.003,"Base Qof wdi_popurb",0.66000003,"Base Qof undp_hdi"
+"188","Guatemala",1991,1,41.992,"Base Qof wdi_popurb",0.484,"Base Qof undp_hdi"
+"189","Nicaragua",1990,1,53.075,"Base Qof wdi_popurb",0.49000001,"Base Qof undp_hdi"
+"190","Peru",1990,2,68.901,"Base Qof wdi_popurb",0.62099999,"Base Qof undp_hdi"
+"191","Peru",1990,1,68.901,"Base Qof wdi_popurb",0.62099999,"Base Qof undp_hdi"
+"192","Republica Dominicana",1990,1,55.226,"Base Qof wdi_popurb",0.57700002,"Base Qof undp_hdi"
+"193","Argentina",1989,1,86.613,"Base Qof wdi_popurb",0.72299999,"Proyectado. Último valor disponible base Qof undp_hdi"
+"194","Bolivia",1989,1,54.571,"Base Qof wdi_popurb",0.55000001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"195","Brasil",1989,2,73.139,"Base Qof wdi_popurb",0.61000001,"Proyectado. Último valor disponible base Qof undp_hdi"
+"196","Brasil",1989,1,73.139,"Base Qof wdi_popurb",NA,NA
+"197","Chile",1989,1,83.143,"Base Qof wdi_popurb",0.70599997,"Proyectado. Último valor disponible base Qof undp_hdi"
+"198","El Salvador",1989,1,48.754,"Base Qof wdi_popurb",0.52499998,"Proyectado. Último valor disponible base Qof undp_hdi"
+"199","Honduras",1989,1,39.969,"Base Qof wdi_popurb",0.51599997,"Proyectado. Último valor disponible base Qof undp_hdi"
+"200","Paraguay",1989,1,47.949,"Base Qof wdi_popurb",0.59500003,"Proyectado. Último valor disponible base Qof undp_hdi"
+"201","Uruguay",1989,1,88.633,"Base Qof wdi_popurb",0.70099998,"Proyectado. Último valor disponible base Qof undp_hdi"
+"202","Ecuador",1988,2,53.546,"Base Qof wdi_popurb",NA,NA
+"203","Ecuador",1988,1,53.546,"Base Qof wdi_popurb",NA,NA
+"204","Mexico",1988,1,70.462,"Base Qof wdi_popurb",NA,NA
+"205","Venezuela",1988,1,83.372,"Base Qof wdi_popurb",NA,NA
+"206","Colombia",1986,1,67.566,"Base Qof wdi_popurb",NA,NA
+"207","Costa Rica",1986,1,46.353,"Base Qof wdi_popurb",NA,NA
+"208","Republica Dominicana",1986,1,54.14,"Base Qof wdi_popurb",NA,NA
+"209","Bolivia",1985,1,50.519,"Base Qof wdi_popurb",NA,NA
+"210","Guatemala",1985,2,40.347,"Base Qof wdi_popurb",NA,NA
+"211","Guatemala",1985,1,40.347,"Base Qof wdi_popurb",NA,NA
+"212","Honduras",1985,1,37.735,"Base Qof wdi_popurb",NA,NA
+"213","Peru",1985,1,66.864,"Base Qof wdi_popurb",NA,NA
+"214","Ecuador",1984,2,50.438,"Base Qof wdi_popurb",NA,NA
+"215","Ecuador",1984,1,50.438,"Base Qof wdi_popurb",NA,NA
+"216","El Salvador",1984,2,46.16,"Base Qof wdi_popurb",NA,NA
+"217","El Salvador",1984,1,46.16,"Base Qof wdi_popurb",NA,NA
+"218","Nicaragua",1984,1,51.406,"Base Qof wdi_popurb",NA,NA
+"219","Uruguay",1984,1,86.85,"Base Qof wdi_popurb",NA,NA
+"220","Argentina",1983,1,84.194,"Base Qof wdi_popurb",NA,NA
+"221","Venezuela",1983,1,80.907,"Base Qof wdi_popurb",NA,NA
+"222","Colombia",1982,1,65.073,"Base Qof wdi_popurb",NA,NA
+"223","Costa Rica",1982,1,43.803,"Base Qof wdi_popurb",NA,NA
+"224","Guatemala",1982,1,39.37,"Base Qof wdi_popurb",NA,NA
+"225","Mexico",1982,1,67.396,"Base Qof wdi_popurb",NA,NA
+"226","Republica Dominicana",1982,1,53.05,"Base Qof wdi_popurb",NA,NA
+"227","Honduras",1981,1,35.435,"Base Qof wdi_popurb",NA,NA
+"228","Bolivia",1980,1,45.451,"Base Qof wdi_popurb",NA,NA
+"229","Peru",1980,1,64.574,"Base Qof wdi_popurb",NA,NA
+"230","Bolivia",1979,1,44.443,"Base Qof wdi_popurb",NA,NA
+"231","Ecuador",1979,2,46.034,"Base Qof wdi_popurb",NA,NA
+"232","Ecuador",1979,1,46.034,"Base Qof wdi_popurb",NA,NA
+"233","Bolivia",1978,1,43.442,"Base Qof wdi_popurb",NA,NA
+"234","Colombia",1978,1,62.379,"Base Qof wdi_popurb",NA,NA
+"235","Costa Rica",1978,1,42.396,"Base Qof wdi_popurb",NA,NA
+"236","Guatemala",1978,1,38.081,"Base Qof wdi_popurb",NA,NA
+"237","Republica Dominicana",1978,1,49.061,"Base Qof wdi_popurb",NA,NA
+"238","Venezuela",1978,1,77.868,"Base Qof wdi_popurb",NA,NA
+"239","Colombia",1974,1,59.607,"Base Qof wdi_popurb",NA,NA
+"240","Costa Rica",1974,1,41.002,"Base Qof wdi_popurb",NA,NA
+"241","Guatemala",1974,1,36.809,"Base Qof wdi_popurb",NA,NA
+"242","Venezuela",1973,1,74.325,"Base Qof wdi_popurb",NA,NA
+"243","Costa Rica",1970,1,38.827,"Base Qof wdi_popurb",NA,NA
+"244","Guatemala",1970,1,35.545,"Base Qof wdi_popurb",NA,NA
+"245","Ecuador",1968,1,38.215,"Base Qof wdi_popurb",NA,NA
+"246","Venezuela",1968,1,69.973,"Base Qof wdi_popurb",NA,NA
+"247","Costa Rica",1966,1,36.39,"Base Qof wdi_popurb",NA,NA
+"248","Guatemala",1966,1,34.298,"Base Qof wdi_popurb",NA,NA
+"249","Venezuela",1963,1,64.977,"Base Qof wdi_popurb",NA,NA
+"250","Costa Rica",1962,1,34.404,"Base Qof wdi_popurb",NA,NA
+"251","Ecuador",1960,1,33.878,"Base Qof wdi_popurb",NA,NA
+"252","Venezuela",1958,1,NA,NA,NA,NA
