@@ -10,12 +10,12 @@
 "9","Brasil",1989,1,"Affonso Camargo","PTB",NA,NA,NA,NA
 "10","Brasil",1989,1,"Ulysses Guimaraes","PMDB",NA,NA,NA,NA
 "11","Brasil",1989,2,"Fernando Collor de Mello","PRN",NA,NA,NA,NA
-"12","Brasil",1989,2,"Luiz Inacio Lula da Silva","PT",NA,NA,NA,NA
+"12","Brasil",1989,2,"Luiz Inacio Lula da Silva","PT",-2.448,"Proyectado. Ultimo valor disponible V-DEM",0.517,"Proyectado. Ultimo valor disponible V-DEM"
 "13","Brasil",1994,1,"Fernando Henrique Cardoso","PSDB",0.386,"VDEM",-0.551,"VDEM"
 "14","Brasil",1994,1,"Leonel Brizola","PDT",-1.19,"VDEM",-0.908,"VDEM"
 "15","Brasil",1994,1,"Eneas Ferreira Carneiro",NA,NA,NA,NA,NA
-"16","Brasil",1994,1,"Esperidiao Amin","PP",0.091,"Proyectado. Ultimo valor disponible V-DEM",0.066,"Proyectado. Ultimo valor disponible V-DEM"
-"17","Brasil",1994,1,"Flavio Gurgel Rocha","PL",-1.19,"Proyectado. Ultimo valor disponible V-DEM",-0.908,"Proyectado. Ultimo valor disponible V-DEM"
+"16","Brasil",1994,1,"Esperidiao Amin","PP",NA,NA,NA,NA
+"17","Brasil",1994,1,"Flavio Gurgel Rocha","PL",NA,NA,NA,NA
 "18","Brasil",1994,1,"Hernani Goulart Fortuna",NA,NA,NA,NA,NA
 "19","Brasil",1994,1,"Luiz Inacio Lula da Silva","PT",-2.631,"VDEM",0.712,"VDEM"
 "20","Brasil",1994,1,"Orestes Quercia","PMDB",0.091,"VDEM",0.066,"VDEM"
@@ -70,11 +70,11 @@
 "69","Chile",1989,1,"Patricio Aylwin Azocar","C",NA,"VDEM",NA,"VDEM"
 "70","Chile",1993,1,"Eduardo Frei Ruiz-Tagle","C",NA,"VDEM",NA,"VDEM"
 "71","Chile",1993,1,"Arturo Alessandri Besa","Alliance",NA,"VDEM",NA,"VDEM"
-"72","Chile",2000,1,"Joaquin Lavin Infante",NA,NA,NA,NA,NA
+"72","Chile",2000,1,"Joaquin Lavin Infante","Alliance",NA,NA,NA,NA
 "73","Chile",2000,1,"Ricardo Lagos Escobar","C",NA,NA,NA,NA
 "74","Chile",2006,1,"Michelle Bachelet","C",NA,"VDEM",NA,"VDEM"
 "75","Chile",2006,1,"Tomas Hirsch Goldschmidt","PODEMOS",NA,"VDEM",NA,"VDEM"
-"76","Chile",2006,1,"Joaquin Lavin Infante",NA,NA,NA,NA,NA
+"76","Chile",2006,1,"Joaquin Lavin Infante","UDI",2.619,"VDEM",0.473,"VDEM"
 "77","Chile",2006,1,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
 "78","Chile",2006,2,"Sebastian Pinera","RN",1.669,"Proyectado. Ultimo valor disponible V-DEM",-0.977,"Proyectado. Ultimo valor disponible V-DEM"
 "79","Chile",2006,2,"Michelle Bachelet","C",NA,NA,NA,NA
@@ -123,7 +123,7 @@
 "122","Argentina",2015,2,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
 "123","Argentina",2019,1,"Juan Jose Gomez Centurion",NA,NA,NA,NA,NA
 "124","Argentina",2019,1,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
-"125","Argentina",2019,1,"Alberto Fernandez",NA,NA,NA,NA,NA
+"125","Argentina",2019,1,"Alberto Fernandez","Frente de Todos",NA,"VDEM",NA,"VDEM"
 "126","Argentina",2019,1,"Jose Luis Espert",NA,NA,NA,NA,NA
 "127","Argentina",2019,1,"Roberto Lavagna","CF",0.073,"VDEM",-1.35,"VDEM"
 "128","Argentina",2019,1,"Nicolas del Cano",NA,NA,NA,NA,NA
@@ -194,7 +194,7 @@
 "193","Paraguay",2003,1,"Julio Cesar Franco","PLRA",1.944,"VDEM",0.602,"VDEM"
 "194","Paraguay",2003,1,"Pedro Fadul","PPQ",2.324,"VDEM",-0.9,"VDEM"
 "195","Paraguay",2003,1,"Guillermo Sanchez Guffanti","UNACE",3.686,"VDEM",-0.434,"VDEM"
-"196","Paraguay",2003,1,"Diego Abente","PEN",0.551,"Proyectado. Ultimo valor disponible V-DEM",1.392,"Proyectado. Ultimo valor disponible V-DEM"
+"196","Paraguay",2003,1,"Diego Abente","PEN",NA,NA,NA,NA
 "197","Paraguay",2008,1,"Lino Oviedo","UNACE",3.686,"VDEM",-0.434,"VDEM"
 "198","Paraguay",2008,1,"Blanca Ovelar","ANR-PC",1.244,"VDEM",1.392,"VDEM"
 "199","Paraguay",2008,1,"Pedro Fadul","PPQ",2.324,"VDEM",-0.9,"VDEM"
@@ -206,7 +206,7 @@
 "205","Paraguay",2013,1,"Lino Oviedo","UNACE",3.695,"VDEM",-0.434,"VDEM"
 "206","Paraguay",2013,1,"Anibal Carrillo","GF",-0.175,"VDEM",-0.221,"VDEM"
 "207","Paraguay",2018,1,"Efrain Alegre","GANAR",1.128,"VDEM",-0.012,"VDEM"
-"208","Paraguay",2018,1,"Mario Abdo Benitez",NA,NA,NA,NA,NA
+"208","Paraguay",2018,1,"Mario Abdo Benitez","ANR-PC",1.655,"VDEM",1.392,"VDEM"
 "209","Paraguay",2023,1,"Paraguayo Cubas",NA,NA,NA,NA,NA
 "210","Paraguay",2023,1,"Euclides Acevedo",NA,NA,NA,NA,NA
 "211","Paraguay",2023,1,"Jorge Gomez Otano","UNACE",3.695,"Proyectado. Ultimo valor disponible V-DEM",-0.434,"Proyectado. Ultimo valor disponible V-DEM"
@@ -221,7 +221,7 @@
 "220","Ecuador",1979,2,"Sixto Duran Ballen","PSC",2.255,"VDEM",0.172,"VDEM"
 "221","Ecuador",1979,2,"Jaime Roldos","CFP",-0.915,"VDEM",0.023,"VDEM"
 "222","Ecuador",1984,2,"Rodrigo Borja","ID",-0.883,"VDEM",0.556,"VDEM"
-"223","Ecuador",1984,2,"Leon Febres Cordero",NA,NA,NA,NA,NA
+"223","Ecuador",1984,2,"Leon Febres Cordero","PSC",2.255,"VDEM",0.636,"VDEM"
 "224","Ecuador",2006,1,"Rafael Correa","PAIS",NA,NA,NA,NA
 "225","Ecuador",2006,1,"Cynthia Viteri","PSC",2.253,"VDEM",0.397,"VDEM"
 "226","Ecuador",2006,1,"Leon Roldos","ID",-0.532,"VDEM",-0.904,"VDEM"
@@ -398,7 +398,7 @@
 "397","Mexico",2018,1,"Margarita Zavala",NA,NA,NA,NA,NA
 "398","Mexico",2018,1,"Jose Antonio Meade Kuribrena","PRI",0.949,"VDEM",2.667,"VDEM"
 "399","Mexico",2018,1,"Jaime Rodriguez Calderon",NA,NA,NA,NA,NA
-"400","Guatemala",1995,2,"Alvaro Arzu",NA,NA,NA,NA,NA
+"400","Guatemala",1995,2,"Alvaro Arzu","PAN",1.64,"VDEM",-0.892,"VDEM"
 "401","Guatemala",1995,2,"Alfonso Portillo","FRG",2.146,"VDEM",-0.191,"VDEM"
 "402","Guatemala",2003,1,"Eduardo Suger",NA,NA,NA,NA,NA
 "403","Guatemala",2003,1,"Fritz Garcia-Gallont","PU",2.984,"VDEM",-2.646,"VDEM"
@@ -508,7 +508,7 @@
 "507","Colombia",1994,1,"Ernesto Samper","PLC",-0.752,"VDEM",1.632,"VDEM"
 "508","Colombia",1998,2,"Andres Pastrana","PCC",2.344,"VDEM",0.905,"VDEM"
 "509","Colombia",1998,2,"Horacio Serpa","PLC",-0.342,"VDEM",1.632,"VDEM"
-"510","Colombia",2002,1,"Alvaro Uribe Velez","Primero Colombia",-0.387,"Proyectado. Ultimo valor disponible V-DEM",0.953,"Proyectado. Ultimo valor disponible V-DEM"
+"510","Colombia",2002,1,"Alvaro Uribe Velez","Primero Colombia",NA,NA,NA,NA
 "511","Colombia",2002,1,"Noemi Sanin",NA,NA,NA,NA,NA
 "512","Colombia",2002,1,"Luis Eduardo Garzon",NA,NA,NA,NA,NA
 "513","Colombia",2002,1,"Horacio Serpa","PLC",-0.387,"VDEM",0.953,"VDEM"
@@ -525,7 +525,7 @@
 "524","Colombia",2010,1,"Rafael Pardo","PLC",-0.455,"VDEM",0.563,"VDEM"
 "525","Colombia",2010,1,"Juan Manuel Santos","Partido-U",0.144,"VDEM",0.632,"VDEM"
 "526","Colombia",2010,1,"Sergio Fajardo",NA,NA,NA,NA,NA
-"527","Colombia",2010,2,"Antanas Mockus","Verde",0.144,"Proyectado. Ultimo valor disponible V-DEM",0.632,"Proyectado. Ultimo valor disponible V-DEM"
+"527","Colombia",2010,2,"Antanas Mockus","Verde",NA,NA,NA,NA
 "528","Colombia",2010,2,"Juan Manuel Santos","Partido-U",0.144,"VDEM",0.632,"VDEM"
 "529","Colombia",2014,1,"Clara Lopez","PDA",-2.329,"Proyectado. Ultimo valor disponible V-DEM",-0.273,"Proyectado. Ultimo valor disponible V-DEM"
 "530","Colombia",2014,1,"Marta Lucia Ramirez","PCC",2.358,"VDEM",0.251,"VDEM"
@@ -577,7 +577,7 @@
 "576","Costa Rica",2006,1,"Bolivar Serrano Hidalgo",NA,NA,NA,NA,NA
 "577","Costa Rica",2006,1,"Jose Manuel Echandi",NA,NA,NA,NA,NA
 "578","Costa Rica",2006,1,"Antonio Alvarez Desanti",NA,NA,NA,NA,NA
-"579","Costa Rica",2006,1,"Walter Munoz","PIN",-1.125,"Proyectado. Ultimo valor disponible V-DEM",-2.486,"Proyectado. Ultimo valor disponible V-DEM"
+"579","Costa Rica",2006,1,"Walter Munoz","PIN",NA,NA,NA,NA
 "580","Costa Rica",2006,1,"Juan Jose Vargas Fallas",NA,NA,NA,NA,NA
 "581","Costa Rica",2006,1,"Jose Miguel Villalobos",NA,NA,NA,NA,NA
 "582","Costa Rica",2006,1,"Humberto Vargas",NA,NA,NA,NA,NA
@@ -596,7 +596,7 @@
 "595","Costa Rica",2010,1,"Otton Solis","PAC",-1.125,"VDEM",-1.318,"VDEM"
 "596","Costa Rica",2010,1,"Otto Guevara","PML",2.097,"VDEM",-2.503,"VDEM"
 "597","Costa Rica",2010,1,"Luis Fishman","PUSC",1.516,"VDEM",-2.414,"VDEM"
-"598","Costa Rica",2010,1,"Walter Munoz","PIN",1.57,"Proyectado. Ultimo valor disponible V-DEM",-2.464,"Proyectado. Ultimo valor disponible V-DEM"
+"598","Costa Rica",2010,1,"Walter Munoz","PIN",NA,NA,NA,NA
 "599","Costa Rica",2010,1,"Mayra Gonzalez",NA,NA,NA,NA,NA
 "600","Costa Rica",2010,1,"Eugenio Trejos","FA",NA,NA,NA,NA
 "601","Costa Rica",2010,1,"Oscar Lopez","PASE",1.57,"VDEM",-2.464,"VDEM"
@@ -654,7 +654,7 @@
 "653","Republica Dominicana",2016,1,"Elias Wessin Chavez","PQD",NA,NA,NA,NA
 "654","Republica Dominicana",2016,1,"Hatuey De Camps",NA,NA,NA,NA,NA
 "655","El Salvador",1999,1,"Rodolfo Parker","PDC",NA,NA,NA,NA
-"656","El Salvador",1999,1,"Facundo Guardado","FMLN",NA,NA,NA,NA
+"656","El Salvador",1999,1,"Facundo Guardado","FMLN",-2.503,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
 "657","El Salvador",1999,1,"Ruben Zamora",NA,NA,NA,NA,NA
 "658","El Salvador",1999,1,"Salvador Nestor Garcia",NA,NA,NA,NA,NA
 "659","El Salvador",2014,1,"Salvador Sanchez Ceren","FMLN",-1.292,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
@@ -706,8 +706,8 @@
 "705","Honduras",2017,1,"Marlene Alvarenga","PAC",-0.064,"Proyectado. Ultimo valor disponible V-DEM",-0.347,"Proyectado. Ultimo valor disponible V-DEM"
 "706","Colombia",1986,1,"Virgilio Barco","PLC",-0.611,"VDEM",1.577,"VDEM"
 "707","Colombia",2002,1,"Ingrid Betancourt",NA,NA,NA,NA,NA
-"708","Colombia",2006,1,"Alvaro Uribe Velez","Primero Colombia",-0.63,"Proyectado. Ultimo valor disponible V-DEM",0.814,"Proyectado. Ultimo valor disponible V-DEM"
+"708","Colombia",2006,1,"Alvaro Uribe Velez","Primero Colombia",NA,NA,NA,NA
 "709","Colombia",2018,1,"Jorge Antonio Trujillo",NA,NA,NA,NA,NA
 "710","Republica Dominicana",2016,1,"Danilo Medina","PLD",NA,NA,NA,NA
-"711","El Salvador",1999,1,"Francisco Flores","ARENA",-2.503,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
+"711","El Salvador",1999,1,"Francisco Flores","ARENA",2.493,"Proyectado. Ultimo valor disponible V-DEM",1.515,"Proyectado. Ultimo valor disponible V-DEM"
 "712","El Salvador",2019,1,"Nayib Bukele",NA,NA,NA,NA,NA

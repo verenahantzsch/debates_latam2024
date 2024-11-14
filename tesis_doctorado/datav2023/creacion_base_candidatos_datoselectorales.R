@@ -198,3 +198,35 @@ indicador_participaciones %>% write.csv("indicador2_participaciones.csv")
 
 summary(indicadores_partylevel)
 indicadores_partylevel %>% write.csv("indicador2_partylevel.csv")
+
+# pendientes: ########################
+# - indicadores a nivel de debate: tipo de organizador. Se puede hacer con datos dipsponibles. Es un join y 3 dico: OSCUNIV - ESTADO -MEDIOS 
+# -indicador a nivel del candidato: participacion en campañas anteriores. No tenemos datos suficientes necesariamente ya que no hemos registrado datos para todos los candidatos para todas las elecciones cuando no hubo debates. Ver
+# - prop inasistencias pasadas 
+
+# unifico base #########################
+setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
+data_base_candidatos <- readxl::read_xlsx("all_candidates.xlsx") # esta base fue creada en segunda_limpieza_datos y es usada en creacion_base_candidatos1
+
+data_base_candidatos_clean <- data_base_candidatos %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, dico_candidato_presente) %>% 
+  subset(nombres_candidatos!="sin ausencias conocidas") %>% 
+  subset(nombres_candidatos!="sin datos") 
+
+indicador2_voteshare <- read.csv("indicador2_voteshare.csv") #%>% select(-X)
+indicador2_incumbentes <- read.csv("indicador2_incumbentes.csv") #%>% select(-X)
+indicador2_invitaciones <- read.csv("indicador2_invitaciones.csv") #%>% select(-X)
+indicador2_participaciones <- read.csv("indicador2_participaciones.csv") %>% select(-X)
+indicador2_partylevel <- read.csv("indicador2_partylevel.csv") %>% select(-X)
+
+indicadores_candidatos <- data_base_candidatos_clean %>% 
+ left_join(indicador2_voteshare) %>% 
+  left_join(indicador2_incumbentes) %>%
+  left_join(indicador2_invitaciones) %>%
+  left_join(indicador2_participaciones) %>%
+  left_join(indicador2_partylevel)  
+
+summary(indicadores_candidatos)
+
+indicadores_candidatos %>% write.csv("indicadores_candidatos.csv")
+
