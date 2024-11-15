@@ -1,4 +1,9 @@
 
+# pendientes: ########################
+# - LISTO   indicadores a nivel de debate: tipo de organizador. Se puede hacer con datos dipsponibles. Es un join y 3 dico: OSCUNIV - ESTADO -MEDIOS 
+# -indicador a nivel del candidato: participacion en campañas anteriores. No tenemos datos suficientes necesariamente ya que no hemos registrado datos para todos los candidatos para todas las elecciones cuando no hubo debates. Ver
+# - LISTO    prop inasistencias pasadas 
+
 # librereias ######################
 
 library(tidyverse)
@@ -13,6 +18,7 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/da
 # data basica propia
 data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_base_base.R
 data_base_candidatos <- readxl::read_xlsx("all_candidates.xlsx") # esta base fue creada en segunda_limpieza_datos y es usada en creacion_base_candidatos1
+data_debates <- read_csv("base_final3v2023.csv") %>% select(-...1, -...2)
 
 # data auxiliar
 
@@ -154,19 +160,25 @@ data_anual <- data_base_candidatos %>%
   group_by(cat_pais, nombres_candidatos) %>% 
   arrange(ncat_eleccion) %>% 
   mutate(cumsum_presencias = cumsum(n_presencias),
-         cumsum_ausencias = cumsum(n_ausencias)) %>% 
+         cumsum_ausencias = cumsum(n_ausencias),
+         cumsum_invitaciones = cumsum(n_invitaciones)) %>% 
   mutate(lag_presencias = lag(cumsum_presencias),
-         lag_ausencias = lag(cumsum_ausencias)) %>% 
+         lag_ausencias = lag(cumsum_ausencias),
+         lag_invitaciones = lag(cumsum_invitaciones)) %>% 
   ungroup()
 
 indicador_participaciones <- data_anual %>% 
   mutate(npresenciaspasadas = ifelse(is.na(lag_presencias), 0, lag_presencias),
-         nausenciaspasadas = ifelse(is.na(lag_ausencias), 0, lag_ausencias)) %>% 
+         nausenciaspasadas = ifelse(is.na(lag_ausencias), 0, lag_ausencias),
+         ninvitacionespasadas = ifelse(is.na(lag_invitaciones), 0, lag_invitaciones)) %>% 
   mutate(dicopresenciaspasadas = ifelse(npresenciaspasadas==0, 0, 1),
-         dicoausenciaspasadas = ifelse(nausenciaspasadas==0, 0, 1)) %>% 
+         dicoausenciaspasadas = ifelse(nausenciaspasadas==0, 0, 1),
+         propausenciaspasadas = nausenciaspasadas/ninvitacionespasadas) %>% 
+  mutate(propausenciaspasadasfilled = ifelse(is.na(propausenciaspasadas),0,1)) %>% 
   select(cat_pais, ncat_eleccion, nombres_candidatos, 
          npresenciaspasadas, nausenciaspasadas,
-         dicopresenciaspasadas, dicoausenciaspasadas) %>% 
+         dicopresenciaspasadas, dicoausenciaspasadas,
+         propausenciaspasadas, propausenciaspasadasfilled) %>% 
   mutate(source_participaciones = "Elaboracion propia con base en Franco Hanztsch (2023)")   
   
 ### vdem partylevel data ##################
@@ -199,17 +211,29 @@ indicador_participaciones %>% write.csv("indicador2_participaciones.csv")
 summary(indicadores_partylevel)
 indicadores_partylevel %>% write.csv("indicador2_partylevel.csv")
 
-# pendientes: ########################
-# - indicadores a nivel de debate: tipo de organizador. Se puede hacer con datos dipsponibles. Es un join y 3 dico: OSCUNIV - ESTADO -MEDIOS 
-# -indicador a nivel del candidato: participacion en campañas anteriores. No tenemos datos suficientes necesariamente ya que no hemos registrado datos para todos los candidatos para todas las elecciones cuando no hubo debates. Ver
-# - prop inasistencias pasadas 
+
+# debate nivel indicador ######################
+
+base_debates_tojoin <- data_debates %>% 
+  select(id_debate, dico_org_educ, dico_org_estado,
+         dico_org_mmc, dico_org_mmp, dico_org_osc) %>% 
+  unique() %>% 
+  mutate(orgosc = ifelse(dico_org_educ==T|dico_org_osc==T,1,0),
+         orgestado = ifelse(dico_org_estado==T|dico_org_mmc==T,1,0),
+         orgmmc = ifelse(dico_org_mmc==T,1,0))
+
+tipo_debate <- base_debates_tojoin %>% 
+  select(id_debate, orgosc, orgestado, orgmmc) %>% 
+  mutate(source_orgdebate = "Elaboracion propia con base en Franco Hanztsch (2023)")
+
+
 
 # unifico base #########################
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 data_base_candidatos <- readxl::read_xlsx("all_candidates.xlsx") # esta base fue creada en segunda_limpieza_datos y es usada en creacion_base_candidatos1
 
 data_base_candidatos_clean <- data_base_candidatos %>% 
-  select(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, dico_candidato_presente) %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, dico_candidato_presente, id_debate) %>% 
   subset(nombres_candidatos!="sin ausencias conocidas") %>% 
   subset(nombres_candidatos!="sin datos") 
 
@@ -224,7 +248,8 @@ indicadores_candidatos <- data_base_candidatos_clean %>%
   left_join(indicador2_incumbentes) %>%
   left_join(indicador2_invitaciones) %>%
   left_join(indicador2_participaciones) %>%
-  left_join(indicador2_partylevel)  
+  left_join(indicador2_partylevel) %>% 
+  left_join(tipo_debate, by= join_by(id_debate))
 
 summary(indicadores_candidatos)
 

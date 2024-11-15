@@ -9,6 +9,7 @@ library(tidyverse)
 # data unificada, creada en creacion_base_elecciones_datoselectorales
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
+base_vdependiente <- read.csv("variables_dependientes_elecciones.csv")
 base_indicadores <- read.csv("indicadores_elecciones.csv")
 base_controles <- read.csv("controles_elecciones.csv")
 base_candidatos <-  read.csv("indicadores_candidatos.csv")
@@ -30,13 +31,12 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 base <- base_indicadores  %>% 
   select(-starts_with("source_")) %>% 
-  select(-X, -eng_cat_pais)
+  select(-X, -eng_cat_pais) %>% 
+  left_join(base_vdependiente)
 
-controles <- base_controles %>% 
-  select(-starts_with("source_")) %>% 
-  select(-X, -eng_cat_pais)
 
-variable_dependiente <- base$dico_debates_eleccion
+
+variable_dependiente <- base$dico_hubo_debates
 options(scipen=999)
 
 
@@ -68,6 +68,9 @@ summary(modelo) # para ver si diferencia es significativa
 
 # ronda - VWEAK / NO + NO SFICATIVA #######
 
+base <- base %>% 
+  mutate(ncat_ronda = ifelse(ncat_ronda==2,1,
+                             ifelse(ncat_ronda==1,0,NA)))
 # variable_independiente <-  base$ncat_ronda %>% mutate(ifelse(ncat_ronda==1,0,
 #                                                              ifelse(ncat_ronda==2,1)))
 variable_independiente <-  base$ncat_ronda
@@ -296,9 +299,12 @@ summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 # competitividad (marginvic) VWEAK/NO + SFICATIVA  #######
 
-#basem <- base %>% 
-#  subset(marginvic<75)
-variable_independiente <- basem$marginvic
+# basem <- base %>%
+#  subset(marginvic>-75)
+# variable_independiente <- abs(basem$marginvic)
+# variable_dependiente <- basem$dico_debates_eleccion
+
+variable_independiente <- abs(base$marginvic)
 standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 data <- tibble(variable_independiente = variable_independiente,
@@ -540,7 +546,7 @@ modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_indepen
 summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 
-# regulaciones: acceso gratuito - VWEAK/NO + NO SFICATIVA #######
+# regulaciones: acceso gratuito - VWEAK/NO + SFICATIVA #######
 
 variable_independiente <- base$accesogratuito
 standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
@@ -869,7 +875,17 @@ modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_indepen
 summary(modelo_estandarizado) # para ver si diferencia es significativa
 
 ## CONTROLES. tests bivariados ######
+# acomodo data preparacion #######
 
+
+controles <- base_controles %>% 
+  select(-starts_with("source_")) %>% 
+  select(-X, -eng_cat_pais) %>% 
+  left_join(base_vdependiente)
+
+variable_dependiente <- controles$dico_hubo_debates
+
+options(scipen=999)
 
 # Desarrollo/PBI per capita: - MODERATE POSITIVE + SFICATIVA #######
 
@@ -1499,22 +1515,64 @@ summary(all_corr_controles)
 correlation_matrix <- cor(all_corr_controles , use = "pairwise.complete.obs" )
 corrplot::corrplot(correlation_matrix)
 
+
+all_corrs <- base_indicadores %>% 
+  left_join(base_controles) %>% 
+  left_join(base_vdependiente %>% select(-X)) %>% 
+  select(-cat_pais) %>% 
+  select(ncat_eleccion,
+         proptv,
+         propindivinternet,
+         dico_debates_pastelection,
+         cumsum_pastciclos,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         regulacionordinal,
+         edadregimenfilled,
+         democraciavdemelectoralcomp,
+         urbanpop,
+         mediaqualitycorruptvdem,
+         mediaqualitybiasnelda,
+         #mediaqualityfreedombti,
+         prohibicionpropaganda,
+         alineamiento,
+         marginvic,
+         exapprovalnotsmoothed,
+         dico_reeleccion,
+         nec,
+         ncat_ronda,
+         dico_hubo_debates)
+
+summary(all_corrs)
+correlation_matrix <- cor(all_corrs , use = "pairwise.complete.obs" )
+corrplot::corrplot(correlation_matrix, diag = F, addCoef.col= "black")
+
 ## MODELOS DE PRUEBA #####
  
-data <- base %>% 
-  select(-X.1) %>% 
-  left_join(base_controles)
+data <- base_indicadores  %>% 
+  select(-starts_with("source_")) %>% 
+  select(-X, -eng_cat_pais, -dico_debates_eleccion) %>% 
+  left_join(base_controles %>% 
+              select(-starts_with("source_")) %>% 
+              select(-X, -eng_cat_pais)) %>% 
+  left_join(base_vdependiente %>% select(-X)) 
 
 # Modelo contingencia  
  
-modelo_contingencia_controles <- glm(dico_debates_eleccion ~ 
+modelo_contingencia_controles <- glm(dico_hubo_debates ~ 
+                                       #dico_debates_primerosdos ~ 
+                                       #dico_hubo_debate_mediatico ~ 
                              marginvic + 
                              nec +
-                             exapprovalnotsmoothed +
-                             dico_reeleccion + 
-                             democraciavdemelectoralcomp +
-                             dico_debates_pastelection +
+                             #exapprovalnotsmoothed + 
+                               voteshareincumbent +
+                            dico_reeleccion + 
+                              regulaciondico +
+                               cumsum_pastciclos +
+                               #dico_debates_pastelection +
                                gdpxcapita +
+                               democraciavdemelectoralcomp +
                                mediaqualitycorruptvdem +
                                edadregimenbmr,
                            family = binomial(link = "logit"), 
@@ -1522,55 +1580,60 @@ modelo_contingencia_controles <- glm(dico_debates_eleccion ~
 
 summary(modelo_contingencia_controles)
 
-modelo_sistemico_controles <- glm(dico_debates_eleccion ~ 
-                                    #alineamiento + 
-                                    #proptv +
+modelo_sistemico_controles <- glm(dico_hubo_debates ~ 
+                                    alineamiento + 
+                                    proptv +
                                     propindivinternet +
-                                    democraciavdemelectoralcomp +
-                                    dico_debates_pastelection +
+                                    cumsum_pastciclos +
+                                    #dico_debates_pastelection +
                                     gdpxcapita +
+                                    democraciavdemelectoralcomp +
                                     mediaqualitycorruptvdem +
                                     edadregimenbmr,
                                   family = binomial(link = "logit"), 
                                   data = data)
-summary(modelo_sistemico_controles)
+summary(modelo_sistemico_controles) # indeterminado
 
-modelo_regulatorio_controles <- glm(dico_debates_eleccion ~ 
+modelo_regulatorio_controles <- glm(dico_hubo_debates ~ 
                                       regulaciondico + 
                                       prohibicionpropaganda +
-                                    democraciavdemelectoralcomp +
-                                    dico_debates_pastelection +
-                                    gdpxcapita +
-                                    mediaqualitycorruptvdem +
-                                    edadregimenbmr,
+                                      cumsum_pastciclos +
+                                      #dico_debates_pastelection +
+                                      gdpxcapita +
+                                      democraciavdemelectoralcomp +
+                                      mediaqualitycorruptvdem +
+                                      edadregimenbmr,
                                   family = binomial(link = "logit"), 
                                   data = data)
 summary(modelo_regulatorio_controles)
 
-modelo_temporal <- glm(dico_debates_eleccion ~ 
+modelo_temporal <- glm(dico_hubo_debates ~ 
                          avgpropdebatesregionxciclo + 
                          prop_elec_usa_ciclo +
                          democraciavdemelectoralcomp +
+                         #cumsum_pastciclos +
                          dico_debates_pastelection +
                          gdpxcapita +
-                         mediaqualitycorruptvdem +
+                         #mediaqualitycorruptvdem +
                          regulaciondico + 
                          edadregimenbmr,
                                     family = binomial(link = "logit"), 
                                     data = data)
 summary(modelo_temporal)
 
-all <- glm(dico_debates_eleccion ~ 
+all <- glm(dico_hubo_debates ~ 
              ncat_eleccion +
            gdpxcapita +
-           democraciavdempolyarchy +
+           #democraciavdempolyarchy +
+             democraciavdemelectoralcomp +
            urbanpop +
            mediaqualitycorruptvdem +
-           mediaqualitybiasnelda +
-           mediaqualityfreedombti +
+           #mediaqualitybiasnelda +
+           #mediaqualityfreedombti +
            edadregimenfilled +
            marginvic +
-           exapprovalnotsmoothed +
+           #exapprovalnotsmoothed +
+             voteshareincumbent +
            dico_reeleccion +
            dico_debates_pastelection +
            alineamiento +
@@ -1588,20 +1651,10 @@ summary(all)
 ####### CANDIDATOS ##############################
 # acomodo data preparacion #######
 
-# para interpretacion del Taub b
-# https://blogs.sas.com/content/iml/2023/04/05/interpret-spearman-kendall-corr.html
-# https://datatab.net/tutorial/kendalls-tau
 
-# CHATGPT OJO: For practical interpretation, you might use these general thresholds:
-#   
-#   0.00 to ±0.10: Very weak to no association
-# ±0.10 to ±0.19: Weak association
-# ±0.20 to ±0.29: Moderate association
-# ±0.30 and above: Strong association
-
-base <- base_candidatos  %>% 
+base <- base_candidatos %>% 
   select(-starts_with("source_")) %>% 
-  select(-X)
+  select(-X) 
 
 variable_dependiente <- base$dico_candidato_presente
 
@@ -1785,6 +1838,64 @@ modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_indepen
                             family = "binomial")
 summary(modelo_estandarizado) # para ver si diferencia es significativa 
 
+# experiencia pasada: propausenciaspasadas #######
+
+variable_independiente <-  base$propausenciaspasadas
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
+
+# experiencia pasada: propausenciaspasadasfilled #######
+
+variable_independiente <-  base$propausenciaspasadasfilled
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
+
 # experiencia pasada: npresenciaspasadas #######
 
 variable_independiente <-  base$npresenciaspasadas
@@ -1901,34 +2012,144 @@ modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_indepen
                             family = "binomial")
 summary(modelo_estandarizado) # para ver si diferencia es significativa
 
+# tipo debate: osc #######
+
+variable_independiente <-  base$orgosc
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) 
+
+# tipo debate: estado #######
+
+variable_independiente <-  base$orgestado
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) 
+
+# tipo debate: mmc #######
+
+variable_independiente <-  base$orgmmc
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) 
+
+## CORRELACIONES ENTRE VARIABLES INDEP #####
+
+all_corr_indicadores <- base_candidatos %>% 
+  select(voteshare,
+         v2pariglef_vdem,
+         v2paactcom_vdem,
+         dico_reeleccion,
+         dico_oficialista,
+         ninvitaciones,
+         propausenciaspasadas,
+         propausenciaspasadasfilled,
+         dicoausenciaspasadas,
+         dicopresenciaspasadas,
+         nausenciaspasadas,
+         npresenciaspasadas,
+         orgosc,
+         orgmmc,
+         orgestado,
+         dico_candidato_presente)
+
+summary(all_corr_indicadores)
+correlation_matrix <- cor(all_corr_indicadores , use = "pairwise.complete.obs" )
+corrplot::corrplot(correlation_matrix, diag = F, addCoef.col= "black")
 
 
-## OLD primeras versiones viejas #######
-# test basicos
-totest <- base_indicadores %>% 
-  select(-starts_with("source_")) %>% 
-  select(-cat_pais, -eng_cat_pais) #%>% 
-#mutate(across(everything(), as.integer(.)))
-summary(totest)
-correlation_matrix <- cor(totest , use = "pairwise.complete.obs" )
-corrplot::corrplot(correlation_matrix)
-
-logit_model <- glm(dico_debates_eleccion ~ 
-                     nec + 
-                     marginvic + 
-                     #newparties + 
-                     #withinsv + 
-                     #alineamiento +
-                     dico_reeleccion +
-                     voteshareincumbent + 
-                     #proptv +
-                     propindivinternet +
-                     #prohibicionpropaganda +
-                     regulaciondico +
-                     #satisfaccion +
-                     #prop_elec_usa_ciclo +
-                     lagpropdebatesregion, 
-                   family = binomial(link = "logit"), 
-                   data = totest)
-summary(totest)
-summary(logit_model)
+# ## OLD primeras versiones viejas #######
+# # test basicos
+# totest <- base_indicadores %>% 
+#   select(-starts_with("source_")) %>% 
+#   select(-cat_pais, -eng_cat_pais) #%>% 
+# #mutate(across(everything(), as.integer(.)))
+# summary(totest)
+# correlation_matrix <- cor(totest , use = "pairwise.complete.obs" )
+# corrplot::corrplot(correlation_matrix)
+# 
+# logit_model <- glm(dico_debates_eleccion ~ 
+#                      nec + 
+#                      marginvic + 
+#                      #newparties + 
+#                      #withinsv + 
+#                      #alineamiento +
+#                      dico_reeleccion +
+#                      voteshareincumbent + 
+#                      #proptv +
+#                      propindivinternet +
+#                      #prohibicionpropaganda +
+#                      regulaciondico +
+#                      #satisfaccion +
+#                      #prop_elec_usa_ciclo +
+#                      lagpropdebatesregion, 
+#                    family = binomial(link = "logit"), 
+#                    data = totest)
+# summary(totest)
+# summary(logit_model)
