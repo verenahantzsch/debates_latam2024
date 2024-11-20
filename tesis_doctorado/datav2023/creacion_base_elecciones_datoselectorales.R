@@ -826,14 +826,28 @@ calculo_lagged <- data_base_elecciones %>%
   group_by(cat_pais) %>% 
   arrange(ncat_eleccion) %>% 
   mutate(dico_debates_pastelection = lag(dico_debates_ciclo),
-         cumsum_pastciclos = cumsum(dico_debates_ciclo)-dico_debates_ciclo) 
+         cumsum_pastciclos = cumsum(dico_debates_ciclo)-dico_debates_ciclo) %>% 
+  mutate(dico_2_eleccondebatesseguidos = ifelse(lag(dico_debates_ciclo) + lag(dico_debates_pastelection) == 2 , 1, 0)) %>% 
+  mutate(dico_3_eleccondebatesseguidos = ifelse(lag(dico_debates_ciclo) + lag(dico_2_eleccondebatesseguidos) == 2 , 1, 0)) %>%
+  mutate(dico_4_eleccondebatesseguidos = ifelse(lag(dico_debates_ciclo) + lag(dico_3_eleccondebatesseguidos) == 2 , 1, 0)) %>%
+  mutate(dico_5_eleccondebatesseguidos = ifelse(lag(dico_debates_ciclo) + lag(dico_4_eleccondebatesseguidos) == 2 , 1, 0)) %>%
+  mutate(dico_6_eleccondebatesseguidos = ifelse(lag(dico_debates_ciclo) + lag(dico_5_eleccondebatesseguidos) == 2 , 1, 0)) %>%
+  mutate(dico_7_eleccondebatesseguidos = ifelse(lag(dico_debates_ciclo) + lag(dico_6_eleccondebatesseguidos) == 2 , 1, 0)) 
 
 indicador_lagged <- data_base_elecciones %>% 
   left_join(calculo_lagged) %>% 
   mutate(source_lagged = "Calculo con base en data recabada para Franco H. (2022)")
 
 indicador_lagged <- indicador_lagged %>% 
-  select(cat_pais, ncat_eleccion, ncat_ronda, dico_debates_pastelection, cumsum_pastciclos, source_lagged )
+  select(cat_pais, ncat_eleccion, ncat_ronda, 
+         dico_debates_pastelection,
+         dico_2_eleccondebatesseguidos,
+         dico_3_eleccondebatesseguidos,
+         dico_4_eleccondebatesseguidos,
+         dico_5_eleccondebatesseguidos,
+         dico_6_eleccondebatesseguidos,
+         dico_7_eleccondebatesseguidos, 
+         cumsum_pastciclos, source_lagged )
 
 ### GURADADO INDICADORES chequeo y guardo lo disponible hasta ahora  #########################
 

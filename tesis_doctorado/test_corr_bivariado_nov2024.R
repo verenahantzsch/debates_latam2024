@@ -3,6 +3,8 @@
 # librerias ########### 
 
 library(tidyverse)
+library(sandwich) # para clusterizar errores estandares
+library(lmtest) # para clusterizar errores estandares
 
 # carga de data y seteo de directorio ######
 
@@ -15,7 +17,7 @@ base_controles <- read.csv("controles_elecciones.csv")
 base_candidatos <-  read.csv("indicadores_candidatos.csv")
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
-####### ELECCIONES ##############################
+# ELECCIONES ##############################
 # acomodo data preparacion #######
 
 # para interpretacion del Taub b
@@ -1547,9 +1549,11 @@ all_corrs <- base_indicadores %>%
 summary(all_corrs)
 correlation_matrix <- cor(all_corrs , use = "pairwise.complete.obs" )
 corrplot::corrplot(correlation_matrix, diag = F, addCoef.col= "black")
+write.csv(correlation_matrix, "correlation_matrix.csv", row.names = TRUE)
 
 ## MODELOS DE PRUEBA #####
- 
+
+### preparo data #####
 data <- base_indicadores  %>% 
   select(-starts_with("source_")) %>% 
   select(-X, -eng_cat_pais, -dico_debates_eleccion) %>% 
@@ -1558,6 +1562,19 @@ data <- base_indicadores  %>%
               select(-X, -eng_cat_pais)) %>% 
   left_join(base_vdependiente %>% select(-X)) 
 
+# creo variable para clusterizar SSEE
+data <- data %>% 
+  mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
+
+# creo data estandarizada
+data_scaled <- data %>%
+  mutate(across(-c(dico_hubo_debates, 
+                   dico_debates_primerosdos,
+                   dico_hubo_debate_mediatico,
+                   cat_pais,
+                   elecid), scale))
+
+### modelos #####
 # Modelo contingencia  
  
 modelo_contingencia_controles <- glm(dico_hubo_debates ~ 
@@ -1573,12 +1590,21 @@ modelo_contingencia_controles <- glm(dico_hubo_debates ~
                                #dico_debates_pastelection +
                                gdpxcapita +
                                democraciavdemelectoralcomp +
-                               mediaqualitycorruptvdem +
-                               edadregimenbmr,
+                               mediaqualitycorruptvdem,
+                               #edadregimenbmr#, #Sacar edad de régimen.  
+                            #No tiene sentido incluirla si controlas por la calidad de la democracia 
+                            # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
                            family = binomial(link = "logit"), 
                            data = data)
-
+options(scipen=999)
 summary(modelo_contingencia_controles)
+vif_values <- car::vif(modelo_contingencia_controles) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_contingencia_controles, vcov = vcovCL(modelo_contingencia_controles, cluster = data$elecid))
+print(robust_se_cluster)
 
 modelo_sistemico_controles <- glm(dico_hubo_debates ~ 
                                     alineamiento + 
@@ -1588,38 +1614,60 @@ modelo_sistemico_controles <- glm(dico_hubo_debates ~
                                     #dico_debates_pastelection +
                                     gdpxcapita +
                                     democraciavdemelectoralcomp +
-                                    mediaqualitycorruptvdem +
-                                    edadregimenbmr,
+                                    mediaqualitycorruptvdem,
+                                    #edadregimenbmr,
                                   family = binomial(link = "logit"), 
                                   data = data)
 summary(modelo_sistemico_controles) # indeterminado
+vif_values <- car::vif(modelo_sistemico_controles) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_sistemico_controles, vcov = vcovCL(modelo_sistemico_controles, cluster = data$elecid))
+print(robust_se_cluster)
 
 modelo_regulatorio_controles <- glm(dico_hubo_debates ~ 
                                       regulaciondico + 
                                       prohibicionpropaganda +
+                                      accesogratuito +
                                       cumsum_pastciclos +
                                       #dico_debates_pastelection +
                                       gdpxcapita +
                                       democraciavdemelectoralcomp +
-                                      mediaqualitycorruptvdem +
-                                      edadregimenbmr,
+                                      mediaqualitycorruptvdem,
+                                      #edadregimenbmr,
                                   family = binomial(link = "logit"), 
                                   data = data)
 summary(modelo_regulatorio_controles)
+vif_values <- car::vif(modelo_regulatorio_controles) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_regulatorio_controles, vcov = vcovCL(modelo_regulatorio_controles, cluster = data$elecid))
+print(robust_se_cluster)
 
 modelo_temporal <- glm(dico_hubo_debates ~ 
                          avgpropdebatesregionxciclo + 
                          prop_elec_usa_ciclo +
                          democraciavdemelectoralcomp +
-                         #cumsum_pastciclos +
-                         dico_debates_pastelection +
+                         cumsum_pastciclos +
+                         #dico_debates_pastelection +
                          gdpxcapita +
-                         #mediaqualitycorruptvdem +
-                         regulaciondico + 
-                         edadregimenbmr,
+                         mediaqualitycorruptvdem +
+                         regulaciondico,
+                         #edadregimenbmr,
                                     family = binomial(link = "logit"), 
                                     data = data)
 summary(modelo_temporal)
+vif_values <- car::vif(modelo_temporal) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_temporal, vcov = vcovCL(modelo_temporal, cluster = data$elecid))
+print(robust_se_cluster)
 
 all <- glm(dico_hubo_debates ~ 
              ncat_eleccion +
@@ -1648,7 +1696,141 @@ all <- glm(dico_hubo_debates ~
            data = data)
 summary(all)
 
-####### CANDIDATOS ##############################
+
+modelo_sficativas <- glm(dico_hubo_debates ~ 
+                                       #dico_debates_primerosdos ~ 
+                                       #dico_hubo_debate_mediatico ~ 
+                           avgpropdebatesregionxciclo + 
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                                       marginvic + 
+                                       nec +
+                                       #exapprovalnotsmoothed + 
+                                       voteshareincumbent +
+                                       dico_reeleccion + 
+                                       regulaciondico +
+                                       cumsum_pastciclos +
+                                       #dico_debates_pastelection +
+                                       gdpxcapita +
+                                       democraciavdemelectoralcomp +
+                                       mediaqualitycorruptvdem,
+                                     #edadregimenbmr#, #Sacar edad de régimen.  
+                                     #No tiene sentido incluirla si controlas por la calidad de la democracia 
+                                     # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+                                     family = binomial(link = "logit"), 
+                                     data = data)
+options(scipen=999)
+summary(modelo_sficativas)
+vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_sficativas, vcov = vcovCL(modelo_sficativas, cluster = data$elecid))
+print(robust_se_cluster)
+
+modelo_sficativas_scaled <- glm(dico_hubo_debates ~ 
+                           #dico_debates_primerosdos ~ 
+                           #dico_hubo_debate_mediatico ~ 
+                           avgpropdebatesregionxciclo + 
+                           #proptv +
+                           propindivinternet +
+                          # accesogratuito + para tener menos missing
+                           marginvic + 
+                           nec +
+                           #exapprovalnotsmoothed + 
+                           voteshareincumbent +
+                           dico_reeleccion + 
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           gdpxcapita +
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem,#+
+                           #ncat_eleccion + #cuando agregamos año, internet desaparece
+                             #edadregimenbmr,
+                         family = binomial(link = "logit"), 
+                         data = data_scaled)
+options(scipen=999)
+summary(modelo_sficativas_scaled)
+vif_values <- car::vif(modelo_sficativas_scaled) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_sficativas_scaled, vcov = vcovCL(modelo_sficativas_scaled, cluster = data$elecid))
+ 
+# primera version de loop
+
+# para otra version: sustituyo NAs por 0, para tener mismo n en todas las corridas del loop
+
+data <- data %>% 
+  mutate(across(.cols = c(dico_debates_pastelection,
+                    dico_2_eleccondebatesseguidos,
+                    dico_3_eleccondebatesseguidos,
+                    dico_4_eleccondebatesseguidos,
+                    dico_5_eleccondebatesseguidos,
+                    dico_6_eleccondebatesseguidos,
+                    dico_7_eleccondebatesseguidos), 
+                .fns = ~ ifelse(is.na(.), 0, .)))
+
+# List of predictor variables to loop through
+predictors <- c(   "dico_debates_pastelection",
+                   "dico_2_eleccondebatesseguidos",
+                   "dico_3_eleccondebatesseguidos",
+                   "dico_4_eleccondebatesseguidos",
+                   "dico_5_eleccondebatesseguidos",
+                   "dico_6_eleccondebatesseguidos",
+                   "dico_7_eleccondebatesseguidos")
+
+# Create an empty list to store coefficients
+coef_results <- list()
+
+# Loop through each predictor
+for (var in predictors) {
+  # Construct the formula dynamically
+  formula <- as.formula(paste("dico_hubo_debates ~ 
+                           avgpropdebatesregionxciclo + 
+                           propindivinternet +
+                           marginvic + 
+                           nec +
+                           voteshareincumbent +
+                           dico_reeleccion + 
+                           regulaciondico +
+                           gdpxcapita +
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem +", var))
+  
+  # Perform the regression
+  model <- glm(formula,
+               family = binomial(link = "logit"),
+               data = data)
+  
+  robust_se_cluster <- coeftest(model, vcov = vcovCL(model, cluster = data$elecid))
+  
+  
+  # Save the coefficients
+  coef_results[[var]] <-data.frame(
+    Estimate = robust_se_cluster[, "Estimate"],
+    Std.Error = robust_se_cluster[, "Std. Error"],
+    #t.value = robust_se_cluster[, "t value"],
+    Pr = robust_se_cluster[, "Pr(>|z|)"]
+  )
+}
+
+
+# Extract the results for the desired predictor
+coef_for_predictor <- lapply(coef_results, function(x) x[rownames(x) %in% predictors, ])
+
+# Convert the list to a data frame for easy comparison
+comparison_df <- do.call(rbind, coef_for_predictor)
+rownames(comparison_df) <- NULL
+
+# View the comparison table
+comparison_df
+
+# CANDIDATOS ##############################
 # acomodo data preparacion #######
 
 
@@ -2122,7 +2304,60 @@ all_corr_indicadores <- base_candidatos %>%
 summary(all_corr_indicadores)
 correlation_matrix <- cor(all_corr_indicadores , use = "pairwise.complete.obs" )
 corrplot::corrplot(correlation_matrix, diag = F, addCoef.col= "black")
+write.csv(correlation_matrix, "correlation_matrix.csv", row.names = TRUE)
 
+## MODELOS DE PRUEBA #####
+
+data <- base_candidatos  %>% 
+  select(-starts_with("source_")) %>% 
+  select(-X,
+         -nombres_candidatos,
+         -v2pashname)
+
+# creo variable para clusterizar SSEE
+data <- data %>% # en este caso tb tengo id_debate
+  mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
+
+# creo data estandarizada
+data_scaled <- data %>%
+  mutate(
+    # across(-c(dico_candidato_presente,
+    #                cat_pais,
+    #                elecid,
+    #                id_debate), as.integer),
+         across(-c(dico_candidato_presente,
+                   cat_pais,
+                   elecid,
+                   id_debate), scale))
+
+
+modelo_all <- glm(dico_candidato_presente ~ 
+                    voteshare + 
+                  #v2pariglef_vdem + 
+                  #v2paactcom_vdem + 
+                  dico_reeleccion + 
+                  #dico_oficialista + 
+                  ninvitaciones + 
+                  #propausenciaspasadas + 
+                  propausenciaspasadasfilled + 
+                  #dicoausenciaspasadas + 
+                  #dicopresenciaspasadas + 
+                  #nausenciaspasadas + 
+                  #npresenciaspasadas + 
+                  orgosc + 
+                  #orgmmc + 
+                  orgestado,
+                  family = binomial(link = "logit"),
+                  data = data)
+options(scipen=999)
+summary(modelo_all)
+vif_values <- car::vif(modelo_all) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_all, vcov = vcovCL(modelo_all, cluster = data$elecid))
+print(robust_se_cluster)
 
 # ## OLD primeras versiones viejas #######
 # # test basicos
