@@ -69,6 +69,48 @@ elecciones_con_debates <- base_debates %>%
   summarise(dico_hubo_debates = 1) %>% 
   ungroup()
 
+# variables de punto de arranque y de quiebre, primera version  #######
+
+lag_debates <- data_base_elecciones %>% 
+  group_by(cat_pais, ncat_eleccion) %>% 
+  mutate(dico_debates_ciclo = ifelse(sum(dico_debates_eleccion)>0,1,0)) %>% 
+  ungroup() %>% 
+  subset(ncat_ronda==1) %>% 
+  select(cat_pais, ncat_eleccion, dico_debates_ciclo) %>% 
+  group_by(cat_pais) %>% 
+  arrange(ncat_eleccion) %>% 
+  mutate(dico_debates_pastelection = lag(dico_debates_ciclo),
+         cumsum_pastciclos = cumsum(dico_debates_ciclo)-dico_debates_ciclo) 
+
+variables_dependientes_puntodearranque <- data_base_elecciones %>%
+  left_join(lag_debates) %>% 
+  arrange(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  # creo variables de inicio y de arranque a nivel del ciclo electoral
+  mutate(dico_nueva_practica_ciclo = ifelse(dico_debates_pastelection == 0 & dico_debates_ciclo == 1, 1, 0),
+         dico_practica_interrumpida_ciclo = ifelse(dico_debates_pastelection == 1 & dico_debates_ciclo == 0, 1, 0)) %>%
+  # creo variables de inicio y de arranque diferenciando entre rondas
+  mutate(dico_nueva_practica_elec = ifelse(ncat_ronda==1,
+                                           ifelse(dico_debates_pastelection == 0 & dico_debates_eleccion == 1, 1, 0),
+                                           ifelse(dico_debates_pastelection == 0 & lag(dico_debates_eleccion) == 0 & dico_debates_eleccion == 1, 1, 0)),
+         dico_practica_interrumpida_elec =  ifelse(ncat_ronda==1,
+                                                   ifelse(dico_debates_pastelection == 1 & dico_debates_eleccion == 0, 1, 0),
+                                                   ifelse(dico_debates_pastelection == 1 & lag(dico_debates_eleccion) == 1 & dico_debates_eleccion == 0, 1, 0))) %>% 
+  ungroup() %>% 
+  # rellenamos NAs
+  mutate(dico_nueva_practica_ciclo = ifelse(is.na(dico_nueva_practica_ciclo) & (is.na(cumsum_pastciclos)|cumsum_pastciclos==0) & dico_debates_eleccion == 1, 1, 
+                                            ifelse(is.na(dico_nueva_practica_ciclo) & (is.na(cumsum_pastciclos)|cumsum_pastciclos==0)  & dico_debates_eleccion == 0, 0,
+                                                   dico_nueva_practica_ciclo)),
+         dico_nueva_practica_elec = ifelse(is.na(dico_nueva_practica_elec) & (is.na(cumsum_pastciclos)|cumsum_pastciclos==0) & dico_debates_eleccion == 1, 1, 
+                                            ifelse(is.na(dico_nueva_practica_elec) & (is.na(cumsum_pastciclos)|cumsum_pastciclos==0)  & dico_debates_eleccion == 0, 0,
+                                                   dico_nueva_practica_elec)),
+         dico_practica_interrumpida_elec = ifelse(is.na(dico_practica_interrumpida_elec) & (is.na(cumsum_pastciclos)|cumsum_pastciclos==0), 
+                                                  0, dico_practica_interrumpida_elec),
+         dico_practica_interrumpida_ciclo = ifelse(is.na(dico_practica_interrumpida_ciclo) & (is.na(cumsum_pastciclos)|cumsum_pastciclos==0), 
+                                                   0, dico_practica_interrumpida_ciclo)) %>% 
+  #select(-eng_cat_pais)
+  select(cat_pais, ncat_eleccion, ncat_ronda, 
+         dico_nueva_practica_ciclo, dico_practica_interrumpida_ciclo,
+         dico_nueva_practica_elec, dico_practica_interrumpida_elec)
 
 # uno y guardo  #######
 
@@ -79,7 +121,10 @@ variables_dependientes <- data_base_elecciones %>%
   left_join(elecciones_con_debates) %>% 
   mutate(dico_hubo_debate_mediatico = ifelse(is.na(dico_hubo_debate_mediatico),0,dico_hubo_debate_mediatico),
          dico_debates_primerosdos = ifelse(is.na(dico_debates_primerosdos),0,dico_debates_primerosdos),
-         dico_hubo_debates = ifelse(is.na(dico_hubo_debates),0,dico_hubo_debates))
+         dico_hubo_debates = ifelse(is.na(dico_hubo_debates),0,dico_hubo_debates)) 
+
+variables_dependientes <- variables_dependientes %>% 
+  left_join(variables_dependientes_puntodearranque)
 
 # guardo
 summary(variables_dependientes)
