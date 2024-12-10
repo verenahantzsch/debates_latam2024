@@ -1556,6 +1556,7 @@ write.csv(correlation_matrix, "correlation_matrix.csv", row.names = TRUE)
 ## MODELOS DE PRUEBA #####
 
 ### preparo data #####
+# data completa 
 data <- base_indicadores  %>% 
   select(-starts_with("source_")) %>% 
   select(-starts_with("X")) %>% 
@@ -1581,6 +1582,21 @@ data_scaled <- data %>%
                    cat_pais,
                    elecid), scale))
 
+# data solo democracias
+democracias <- base_indicadores  %>% 
+  select(-starts_with("source_")) %>% 
+  select(-starts_with("X")) %>% 
+  select(-eng_cat_pais, -dico_debates_eleccion) %>% 
+  left_join(base_controles %>% 
+              select(-starts_with("source_")) %>% 
+              select(-X, -eng_cat_pais)) %>% 
+  left_join(base_vdependiente %>% select(-X)) %>% 
+    subset(democraciavdempolyarchy>0.45) 
+
+# creo variable para clusterizar SSEE
+democracias <- democracias %>% 
+  mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
+
 ### modelos convencionales. DICO HUBO DEBATES #####
 # Modelo contingencia  
  
@@ -1602,7 +1618,8 @@ modelo_contingencia_controles <- glm(dico_hubo_debates ~
                             #No tiene sentido incluirla si controlas por la calidad de la democracia 
                             # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
                            family = binomial(link = "logit"), 
-                           data = data)
+                           #data = data 
+                           data = democracias)
 options(scipen=999)
 summary(modelo_contingencia_controles)
 vif_values <- car::vif(modelo_contingencia_controles) # cheq de multicolinealidad segun chatgpt
@@ -1610,7 +1627,11 @@ print(vif_values)
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_contingencia_controles, vcov = vcovCL(modelo_contingencia_controles, cluster = data$elecid))
+robust_se_cluster <- coeftest(modelo_contingencia_controles, 
+                              vcov = vcovCL(modelo_contingencia_controles, 
+                                            cluster = democracias$elecid))
+                                            #cluster = data$elecid))
+
 print(robust_se_cluster)
 
 modelo_sistemico_controles <- glm(dico_hubo_debates ~ 
@@ -1624,14 +1645,19 @@ modelo_sistemico_controles <- glm(dico_hubo_debates ~
                                     mediaqualitycorruptvdem,
                                     #edadregimenbmr,
                                   family = binomial(link = "logit"), 
-                                  data = data)
+                                  #data = data 
+                                  data = democracias)
+
 summary(modelo_sistemico_controles) # indeterminado
 vif_values <- car::vif(modelo_sistemico_controles) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sistemico_controles, vcov = vcovCL(modelo_sistemico_controles, cluster = data$elecid))
+robust_se_cluster <- coeftest(modelo_sistemico_controles, 
+                              vcov = vcovCL(modelo_sistemico_controles,
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
 print(robust_se_cluster)
 
 modelo_regulatorio_controles <- glm(dico_hubo_debates ~ 
@@ -1645,14 +1671,19 @@ modelo_regulatorio_controles <- glm(dico_hubo_debates ~
                                       mediaqualitycorruptvdem,
                                       #edadregimenbmr,
                                   family = binomial(link = "logit"), 
-                                  data = data)
+                                  #data = data 
+                                  data = democracias)
+
 summary(modelo_regulatorio_controles)
 vif_values <- car::vif(modelo_regulatorio_controles) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_regulatorio_controles, vcov = vcovCL(modelo_regulatorio_controles, cluster = data$elecid))
+robust_se_cluster <- coeftest(modelo_regulatorio_controles, 
+                              vcov = vcovCL(modelo_regulatorio_controles, 
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
 print(robust_se_cluster)
 
 modelo_temporal <- glm(dico_hubo_debates ~ 
@@ -1665,68 +1696,76 @@ modelo_temporal <- glm(dico_hubo_debates ~
                          mediaqualitycorruptvdem +
                          regulaciondico,
                          #edadregimenbmr,
-                                    family = binomial(link = "logit"), 
-                                    data = data)
+                         family = binomial(link = "logit"), 
+                       #data = data 
+                       data = democracias)
+
 summary(modelo_temporal)
 vif_values <- car::vif(modelo_temporal) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_temporal, vcov = vcovCL(modelo_temporal, cluster = data$elecid))
+robust_se_cluster <- coeftest(modelo_temporal, 
+                              vcov = vcovCL(modelo_temporal, 
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
 print(robust_se_cluster)
 
-all <- glm(dico_hubo_debates ~ 
-             ncat_eleccion +
-           gdpxcapita +
-           #democraciavdempolyarchy +
-             democraciavdemelectoralcomp +
-           urbanpop +
-           mediaqualitycorruptvdem +
-           #mediaqualitybiasnelda +
-           #mediaqualityfreedombti +
-           edadregimenfilled +
-           marginvic +
-           #exapprovalnotsmoothed +
-             voteshareincumbent +
-           dico_reeleccion +
-           dico_debates_pastelection +
-           alineamiento +
-           nec +
-           proptv +
-           propindivinternet +
-           regulaciondico +
-           prohibicionpropaganda +
-           avgpropdebatesregionxciclo +
-           prop_elec_usa_ciclo,
-           family = binomial(link = "logit"), 
-           data = data)
-summary(all)
+# all <- glm(dico_hubo_debates ~ 
+#              ncat_eleccion +
+#            gdpxcapita +
+#            #democraciavdempolyarchy +
+#              democraciavdemelectoralcomp +
+#            urbanpop +
+#            mediaqualitycorruptvdem +
+#            #mediaqualitybiasnelda +
+#            #mediaqualityfreedombti +
+#            edadregimenfilled +
+#            marginvic +
+#            #exapprovalnotsmoothed +
+#              voteshareincumbent +
+#            dico_reeleccion +
+#            dico_debates_pastelection +
+#            alineamiento +
+#            nec +
+#            proptv +
+#            propindivinternet +
+#            regulaciondico +
+#            prohibicionpropaganda +
+#            avgpropdebatesregionxciclo +
+#            prop_elec_usa_ciclo,
+#            family = binomial(link = "logit"), 
+#            data = data)
+# summary(all)
 
 
 modelo_sficativas <- glm(dico_hubo_debates ~ 
                                        #dico_debates_primerosdos ~ 
                                        #dico_hubo_debate_mediatico ~ 
                            avgpropdebatesregionxciclo + 
+                           prop_elec_usa_ciclo +
                            #proptv +
                            propindivinternet +
                            accesogratuito +
-                                       marginvic + 
-                                       nec +
-                                       #exapprovalnotsmoothed + 
-                                       voteshareincumbent +
-                                       dico_reeleccion + 
-                                       regulaciondico +
-                                       cumsum_pastciclos +
-                                       #dico_debates_pastelection +
-                                       gdpxcapita +
-                                       democraciavdemelectoralcomp +
-                                       mediaqualitycorruptvdem,
-                                     #edadregimenbmr#, #Sacar edad de régimen.  
-                                     #No tiene sentido incluirla si controlas por la calidad de la democracia 
-                                     # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
-                                     family = binomial(link = "logit"), 
-                                     data = data)
+                           marginvic + 
+                           nec +
+                           #exapprovalnotsmoothed + 
+                           voteshareincumbent +
+                           dico_reeleccion + 
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           gdpxcapita +
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem, #+
+                          # ncat_eleccion,
+                          #edadregimenbmr#, #Sacar edad de régimen.  
+                           #No tiene sentido incluirla si controlas por la calidad de la democracia 
+                            # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = democracias)
 options(scipen=999)
 summary(modelo_sficativas)
 vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
@@ -1734,7 +1773,10 @@ print(vif_values)
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sficativas, vcov = vcovCL(modelo_sficativas, cluster = data$elecid))
+robust_se_cluster <- coeftest(modelo_sficativas, 
+                              vcov = vcovCL(modelo_sficativas, 
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
 print(robust_se_cluster)
 
 modelo_sficativas_scaled <- glm(dico_hubo_debates ~ 
@@ -1841,12 +1883,19 @@ comparison_df
 # PENDIENTES, no sirve asi 
 
 data2 <- data %>% 
-  subset(dico_debates_pastelection==0) 
+  subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) 
+  #subset(dico_debates_pastelection==0) 
 summary(data2)
+
+democracias2 <- democracias %>% 
+  subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) 
+#subset(dico_debates_pastelection==0) 
+summary(democracias2)
 
 # Modelo contingencia  
 
-modelo_contingencia2 <- glm(dico_nueva_practica_elec ~ 
+modelo_contingencia2 <- glm(dico_hubo_debates ~ 
+                            #  dico_nueva_practica_elec ~   # es literalmente lo mismo
                             #  dico_nueva_practica_ciclo ~   
                                        marginvic + 
                                        nec +
@@ -1857,11 +1906,12 @@ modelo_contingencia2 <- glm(dico_nueva_practica_elec ~
                                        #cumsum_pastciclos +
                                        #dico_debates_pastelection +
                                       # gdpxcapita +
-                                       democraciavdemelectoralcomp +
-                                       mediaqualitycorruptvdem +
-                                       edadregimenfilled,
+                                       democraciavdemelectoralcomp, #+
+                                       #mediaqualitycorruptvdem, #+
+                                       #edadregimenfilled ,
                                      family = binomial(link = "logit"), 
-                                     data = data2)
+                                    #data = data2
+                                     data = democracias2)
 options(scipen=999)
 summary(modelo_contingencia2)
 vif_values <- car::vif(modelo_contingencia2) # cheq de multicolinealidad segun chatgpt
@@ -1869,31 +1919,41 @@ print(vif_values)
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_contingencia2, vcov = vcovCL(modelo_contingencia2, cluster = data2$elecid))
+robust_se_cluster <- coeftest(modelo_contingencia2, 
+                              vcov = vcovCL(modelo_contingencia2, 
+                                            #cluster = data2$elecid))
+                                            cluster = democracias2$elecid))
 print(robust_se_cluster)
 
-modelo_sistemico2 <- glm(dico_nueva_practica_elec ~ 
+modelo_sistemico2 <- glm(dico_hubo_debates ~ 
+                           #  dico_nueva_practica_elec ~  # es literalmente lo mismo
                                     alineamiento + 
                                     proptv +
                                     propindivinternet +
                                     #cumsum_pastciclos +
                                     #dico_debates_pastelection +
-                                    gdpxcapita +
+                                    #gdpxcapita +
                                     democraciavdemelectoralcomp +
-                                    mediaqualitycorruptvdem +
-                                    edadregimenbmr,
+                                    mediaqualitycorruptvdem, #+
+                                    #edadregimenbmr,
                                   family = binomial(link = "logit"), 
-                                  data = data2)
+                         #data = data2
+                         data = democracias2)
+
 summary(modelo_sistemico2) 
 vif_values <- car::vif(modelo_sistemico2) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sistemico2, vcov = vcovCL(modelo_sistemico2, cluster = data2$elecid))
+robust_se_cluster <- coeftest(modelo_sistemico2, 
+                              vcov = vcovCL(modelo_sistemico2, 
+                                            #cluster = data2$elecid))
+                                            cluster = democracias2$elecid))
 print(robust_se_cluster)
 
-modelo_regulatorio2 <- glm(dico_nueva_practica_elec ~ 
+modelo_regulatorio2 <- glm(dico_hubo_debates ~ 
+                             #  dico_nueva_practica_elec ~  # es literalmente lo mismo
                                       regulaciondico + 
                                       prohibicionpropaganda +
                                       accesogratuito +
@@ -1904,17 +1964,23 @@ modelo_regulatorio2 <- glm(dico_nueva_practica_elec ~
                                       mediaqualitycorruptvdem + 
                                       edadregimenbmr,
                                     family = binomial(link = "logit"), 
-                                    data = data2)
+                           #data = data2
+                           data = democracias2)
+
 summary(modelo_regulatorio2)
 vif_values <- car::vif(modelo_regulatorio2) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_regulatorio2, vcov = vcovCL(modelo_regulatorio2, cluster = data2$elecid))
+robust_se_cluster <- coeftest(modelo_regulatorio2, 
+                              vcov = vcovCL(modelo_regulatorio2, 
+                                            #cluster = data2$elecid))
+                                            cluster = democracias2$elecid))
 print(robust_se_cluster)
 
-modelo_temporal2 <- glm(dico_nueva_practica_elec ~ 
+modelo_temporal2 <- glm(dico_hubo_debates ~ 
+                          #  dico_nueva_practica_elec ~  # es literalmente lo mismo
                          avgpropdebatesregionxciclo + 
                          prop_elec_usa_ciclo +
                          democraciavdemelectoralcomp +
@@ -1925,14 +1991,148 @@ modelo_temporal2 <- glm(dico_nueva_practica_elec ~
                          regulaciondico + 
                           edadregimenbmr,
                        family = binomial(link = "logit"), 
-                       data = data2)
+                       #data = data2
+                       data = democracias2)
+
 summary(modelo_temporal2)
 vif_values <- car::vif(modelo_temporal2) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_temporal2, vcov = vcovCL(modelo_temporal2, cluster = data2$elecid))
+robust_se_cluster <- coeftest(modelo_temporal2, 
+                              vcov = vcovCL(modelo_temporal2, 
+                                            #cluster = data2$elecid))
+                                            cluster = democracias2$elecid))
+print(robust_se_cluster)
+
+
+
+modelo_sficativas <- glm(dico_hubo_debates ~ 
+                           #dico_debates_primerosdos ~ 
+                           #dico_hubo_debate_mediatico ~ 
+                           avgpropdebatesregionxciclo + 
+                           prop_elec_usa_ciclo +
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           marginvic + 
+                           nec +
+                           #exapprovalnotsmoothed + 
+                           voteshareincumbent +
+                           dico_reeleccion + 
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           gdpxcapita +
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem, #+
+                         # ncat_eleccion,
+                         #edadregimenbmr#, #Sacar edad de régimen.  
+                         #No tiene sentido incluirla si controlas por la calidad de la democracia 
+                         # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+                         family = binomial(link = "logit"), 
+                         #data = data2
+                         data = democracias2)
+options(scipen=999)
+summary(modelo_sficativas)
+vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_sficativas, 
+                              vcov = vcovCL(modelo_sficativas, 
+                                            #cluster = data2$elecid))
+                                            cluster = democracias2$elecid))
+print(robust_se_cluster)
+
+
+# sin debates y sin regulacion 
+
+
+data2.2 <- data %>% 
+  subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) %>% 
+  subset(regulaciondico==0)
+#subset(dico_debates_pastelection==0) 
+summary(data2)
+
+democracias2.2 <- democracias %>% 
+  subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) %>% 
+  subset(regulaciondico==0)
+#subset(dico_debates_pastelection==0) 
+summary(democracias2)
+
+# Modelo contingencia  
+
+modelo_contingencia2.2 <- glm(dico_hubo_debates ~ 
+                              #  dico_nueva_practica_elec ~   # es literalmente lo mismo
+                              #  dico_nueva_practica_ciclo ~   
+                              marginvic + 
+                              nec +
+                              #exapprovalnotsmoothed + 
+                              voteshareincumbent +
+                              dico_reeleccion + 
+                              #regulaciondico +
+                              #cumsum_pastciclos +
+                              #dico_debates_pastelection +
+                              # gdpxcapita +
+                              democraciavdemelectoralcomp +
+                              mediaqualitycorruptvdem, #+ 
+                            #edadregimenfilled ,
+                            family = binomial(link = "logit"), 
+                            #data = data2.2,
+                            data = democracias2.2)
+options(scipen=999)
+summary(modelo_contingencia2.2)
+vif_values <- car::vif(modelo_contingencia2.2) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_contingencia2.2, 
+                              vcov = vcovCL(modelo_contingencia2.2, 
+                                            cluster = democracias2.2$elecid))
+                                            #cluster = data2.2$elecid))
+print(robust_se_cluster)
+
+modelo_sficativas <- glm(dico_hubo_debates ~ 
+                           #dico_debates_primerosdos ~ 
+                           #dico_hubo_debate_mediatico ~ 
+                           avgpropdebatesregionxciclo + 
+                           prop_elec_usa_ciclo +
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           marginvic + 
+                           nec +
+                           #exapprovalnotsmoothed + 
+                           voteshareincumbent +
+                           dico_reeleccion + 
+                           #regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           gdpxcapita +
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem, #+
+                         # ncat_eleccion,
+                         #edadregimenbmr#, #Sacar edad de régimen.  
+                         #No tiene sentido incluirla si controlas por la calidad de la democracia 
+                         # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+                         family = binomial(link = "logit"), 
+                         #data = data2
+                         data = democracias2.2)
+options(scipen=999)
+summary(modelo_sficativas)
+vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_sficativas, 
+                              vcov = vcovCL(modelo_sficativas, 
+                                            #cluster = data2$elecid))
+                                            cluster = democracias2.2$elecid))
 print(robust_se_cluster)
 
 ### modelos nada interesante por ahora PRACTICA INTERRUMPIDA  #####
@@ -1942,6 +2142,10 @@ print(robust_se_cluster)
 data3 <- data %>% 
   subset(dico_debates_pastelection==1) 
 summary(data3)
+
+democracias3 <- democracias %>% 
+  subset(dico_debates_pastelection==1) 
+summary(democracias3)
 
 modelo_contingencia3 <- glm(dico_practica_interrumpida_elec ~ 
                               #dico_practica_interrumpida_ciclo ~   
@@ -1958,7 +2162,8 @@ modelo_contingencia3 <- glm(dico_practica_interrumpida_elec ~
                               mediaqualitycorruptvdem +
                               edadregimenfilled,
                             family = binomial(link = "logit"), 
-                            data = data3)
+                           # data = data3
+                            data = democracias3)
 options(scipen=999)
 summary(modelo_contingencia3)
 vif_values <- car::vif(modelo_contingencia3) # cheq de multicolinealidad segun chatgpt
@@ -1966,7 +2171,11 @@ print(vif_values)
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_contingencia3, vcov = vcovCL(modelo_contingencia3, cluster = data3$elecid))
+robust_se_cluster <- coeftest(modelo_contingencia3, 
+                              vcov = vcovCL(modelo_contingencia3,
+                                            #cluster = data3$elecid))
+                                            cluster = democracias3$elecid))
+                                            
 print(robust_se_cluster)
 
 modelo_sistemico3 <- glm(dico_practica_interrumpida_elec ~ 
@@ -1980,14 +2189,19 @@ modelo_sistemico3 <- glm(dico_practica_interrumpida_elec ~
                            mediaqualitycorruptvdem,
                          #edadregimenbmr,
                          family = binomial(link = "logit"), 
-                         data = data3)
+                         # data = data3
+                         data = democracias3)
+
 summary(modelo_sistemico3) # indeterminado
 vif_values <- car::vif(modelo_sistemico3) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sistemico3, vcov = vcovCL(modelo_sistemico3, cluster = data3$elecid))
+robust_se_cluster <- coeftest(modelo_sistemico3, 
+                              vcov = vcovCL(modelo_sistemico3, 
+                                            #cluster = data3$elecid))
+                                            cluster = democracias3$elecid))
 print(robust_se_cluster)
 
 modelo_regulatorio3 <- glm(dico_practica_interrumpida_elec ~ 
@@ -2001,14 +2215,19 @@ modelo_regulatorio3 <- glm(dico_practica_interrumpida_elec ~
                              mediaqualitycorruptvdem,
                            #edadregimenbmr,
                            family = binomial(link = "logit"), 
-                           data = data3)
+                           # data = data3
+                           data = democracias3)
+
 summary(modelo_regulatorio3)
 vif_values <- car::vif(modelo_regulatorio3) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_regulatorio3, vcov = vcovCL(modelo_regulatorio3, cluster = data3$elecid))
+robust_se_cluster <- coeftest(modelo_regulatorio3, 
+                              vcov = vcovCL(modelo_regulatorio3, 
+                                            #cluster = data3$elecid))
+                                            cluster = democracias3$elecid))
 print(robust_se_cluster)
 
 # resultados raros en este siguiente modelo. estoy teniendo algun problem que no detecto 
@@ -2023,14 +2242,59 @@ modelo_temporal3 <- glm(dico_practica_interrumpida_elec ~
                           regulaciondico,
                         #edadregimenbmr,
                         family = binomial(link = "logit"), 
-                        data = data3)
+                        # data = data3
+                        data = democracias3)
 summary(modelo_temporal3)
 vif_values <- car::vif(modelo_temporal3) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_temporal3, vcov = vcovCL(modelo_temporal3, cluster = data3$elecid))
+robust_se_cluster <- coeftest(modelo_temporal3, 
+                              vcov = vcovCL(modelo_temporal3, 
+                                            #cluster = data3$elecid))
+                                            cluster = democracias3$elecid))
+print(robust_se_cluster)
+
+
+
+modelo_sficativas <- glm(dico_hubo_debates ~ 
+                           #dico_debates_primerosdos ~ 
+                           #dico_hubo_debate_mediatico ~ 
+                           avgpropdebatesregionxciclo + 
+                           #prop_elec_usa_ciclo +
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           marginvic + 
+                           nec +
+                           #exapprovalnotsmoothed + 
+                           voteshareincumbent +
+                           dico_reeleccion + 
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           gdpxcapita +
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem, #+
+                         # ncat_eleccion,
+                         #edadregimenbmr#, #Sacar edad de régimen.  
+                         #No tiene sentido incluirla si controlas por la calidad de la democracia 
+                         # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+                         family = binomial(link = "logit"), 
+                         #data = data3
+                         data = democracias3)
+options(scipen=999)
+summary(modelo_sficativas)
+vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
+print(vif_values) 
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+robust_se_cluster <- coeftest(modelo_sficativas, 
+                              vcov = vcovCL(modelo_sficativas, 
+                                            #cluster = data3$elecid))
+                                            cluster = democracias3$elecid))
 print(robust_se_cluster)
 
 # CANDIDATOS ##############################
