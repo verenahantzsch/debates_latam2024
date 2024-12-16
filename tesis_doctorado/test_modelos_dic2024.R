@@ -132,51 +132,44 @@ democracias <- base_indicadores  %>%
 democracias <- democracias %>% 
   mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
 
+#### defino id obs ####
+
+democracias <- democracias %>% 
+  mutate(obsid = paste(cat_pais, ncat_eleccion, ncat_ronda, sep = " "))
+
 ## MODELOS 1: toda la muestra - V.D = dico_hubo_debates #####
 ### Modelo contingencia  ####
- 
-modelo_contingencia_controles <- glm(dico_hubo_debates ~ 
+
+formula_modelo_contingencia <- "dico_hubo_debates ~ 
                                        #dico_debates_primerosdos ~ # variables V.D alternativas, por ahora no uso, serían secundarias 
                                        #dico_hubo_debate_mediatico ~ 
-                             marginvic + 
-                             nec +
+                              marginvic + 
+                              nec +
                              #exapprovalnotsmoothed + # este indicador y el que sigue son alternativos 
-                               voteshareincumbent +
-                            dico_reeleccion + 
+                              voteshareincumbent +
+                              dico_reeleccion + 
                               regulaciondico +
-                               cumsum_pastciclos + # este indicador y el que sigue son alternativos 
-                               #dico_debates_pastelection +
-                               gdpxcapita +
-                               democraciavdemelectoralcomp +
-                               mediaqualitycorruptvdem,
+                              cumsum_pastciclos + # este indicador y el que sigue son alternativos 
+                              #dico_debates_pastelection +
+                              gdpxcapita +
+                              democraciavdemelectoralcomp +
+                              mediaqualitycorruptvdem"
                                #edadregimenbmr#, #Sacar edad de régimen.  
-                            #No tiene sentido incluirla si controlas por la calidad de la democracia 
-                            # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+                               #No tiene sentido incluirla si controlas por la calidad de la democracia 
+                               # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+
+modelo_contingencia <- glm(formula_modelo_contingencia, 
                            family = binomial(link = "logit"), 
                            #data = data  # dos versiones de data, una completa, otra solo con democracias, filtrada arriba
                            data = democracias)
 options(scipen=999)
-summary(modelo_contingencia_controles)
-vif_values <- car::vif(modelo_contingencia_controles) # cheq de multicolinealidad segun chatgpt
-print(vif_values) 
-# VIF < 5: The variable has low multicollinearity (no significant issue).
-#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
-#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_contingencia_controles, 
-                              vcov = vcovCL(modelo_contingencia_controles, 
-                                            cluster = democracias$elecid))
-                                            #cluster = data$elecid))
+summary(modelo_contingencia)
 
-print(robust_se_cluster)
-
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
 ### Modelo sistemico ####
-modelo_sistemico_controles <- glm(dico_hubo_debates ~ 
+
+
+formula_modelo_sistemico <- "dico_hubo_debates ~ 
                                     alineamiento + 
                                     proptv +
                                     propindivinternet +
@@ -185,65 +178,42 @@ modelo_sistemico_controles <- glm(dico_hubo_debates ~
                                     #dico_debates_pastelection +
                                     gdpxcapita +
                                     democraciavdemelectoralcomp +
-                                    mediaqualitycorruptvdem,
-                                    #edadregimenbmr,
+                                    mediaqualitycorruptvdem"
+                                    #edadregimenbmr"
+
+modelo_sistemico <- glm(formula_modelo_sistemico,
                                   family = binomial(link = "logit"), 
                                   #data = data 
                                   data = democracias)
 
-summary(modelo_sistemico_controles) # 
-vif_values <- car::vif(modelo_sistemico_controles) # cheq de multicolinealidad segun chatgpt
-print(vif_values) 
-# VIF < 5: The variable has low multicollinearity (no significant issue).
-#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
-#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sistemico_controles, 
-                              vcov = vcovCL(modelo_sistemico_controles,
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
-print(robust_se_cluster)
+summary(modelo_sistemico) # 
 
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
 ### Modelo marco regulatorio ####
-modelo_regulatorio_controles <- glm(dico_hubo_debates ~ 
-                                      prohibicionpropaganda +
-                                      accesogratuito +
-                                      regulaciondico + 
-                                      cumsum_pastciclos +
-                                      #dico_debates_pastelection +
-                                      gdpxcapita +
-                                      democraciavdemelectoralcomp +
-                                      mediaqualitycorruptvdem,
-                                      #edadregimenbmr,
+
+formula_modelo_regulatorio <- "dico_hubo_debates ~ 
+                                prohibicionpropaganda +
+                                accesogratuito +
+                                regulaciondico + 
+                                cumsum_pastciclos +
+                                #dico_debates_pastelection +
+                                gdpxcapita +
+                                democraciavdemelectoralcomp +
+                                mediaqualitycorruptvdem"
+                                #edadregimenbmr"
+
+
+modelo_regulatorio <- glm(formula_modelo_regulatorio,
                                   family = binomial(link = "logit"), 
                                   #data = data 
                                   data = democracias)
 
-summary(modelo_regulatorio_controles)
-vif_values <- car::vif(modelo_regulatorio_controles) # cheq de multicolinealidad segun chatgpt
-print(vif_values) 
-# VIF < 5: The variable has low multicollinearity (no significant issue).
-#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
-#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_regulatorio_controles, 
-                              vcov = vcovCL(modelo_regulatorio_controles, 
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
-print(robust_se_cluster)
+summary(modelo_regulatorio)
 
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
 ### Modelo geo/temp ####
-modelo_temporal <- glm(dico_hubo_debates ~ 
+
+formula_modelo_temporal <- "dico_hubo_debates ~ 
                          avgpropdebatesregionxciclo + 
                          prop_elec_usa_ciclo +
                          regulaciondico +
@@ -251,34 +221,21 @@ modelo_temporal <- glm(dico_hubo_debates ~
                          #dico_debates_pastelection +
                          gdpxcapita +
                          democraciavdemelectoralcomp +
-                         mediaqualitycorruptvdem,
-                         #edadregimenbmr,
+                         mediaqualitycorruptvdem#,
+                         #edadregimenbmr,"
+
+modelo_temporal <- glm(formula_modelo_temporal,
                          family = binomial(link = "logit"), 
                        #data = data 
                        data = democracias)
 
 summary(modelo_temporal)
-vif_values <- car::vif(modelo_temporal) # cheq de multicolinealidad segun chatgpt
-print(vif_values) 
-# VIF < 5: The variable has low multicollinearity (no significant issue).
-#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
-#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_temporal, 
-                              vcov = vcovCL(modelo_temporal, 
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
-print(robust_se_cluster)
-
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
 ### Modelo final / sficativas ####
-modelo_sficativas <- glm(dico_hubo_debates ~ 
-                                       #dico_debates_primerosdos ~ 
-                                       #dico_hubo_debate_mediatico ~ 
+
+formula_modelo_sficativas <- "dico_hubo_debates ~ 
+                        #dico_debates_primerosdos ~ 
+                        #dico_hubo_debate_mediatico ~ 
                            marginvic + 
                            nec +
                            #exapprovalnotsmoothed + 
@@ -294,32 +251,17 @@ modelo_sficativas <- glm(dico_hubo_debates ~
                            #dico_debates_pastelection +
                            gdpxcapita +
                            democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem, #+
+                           mediaqualitycorruptvdem#, #+
                           # ncat_eleccion,
-                          #edadregimenbmr#, #Sacar edad de régimen.  
-                           #No tiene sentido incluirla si controlas por la calidad de la democracia 
-                            # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+                          #edadregimenbmr#, "
+
+
+modelo_sficativas <- glm(formula_modelo_sficativas,
                          family = binomial(link = "logit"), 
                          #data = data 
                          data = democracias)
 options(scipen=999)
 summary(modelo_sficativas)
-vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
-print(vif_values) 
-# VIF < 5: The variable has low multicollinearity (no significant issue).
-#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
-#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sficativas, 
-                              vcov = vcovCL(modelo_sficativas, 
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
-print(robust_se_cluster)
-
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
 # Modelo lineal generalizado de efectos mixtos (ejemplo: binomial)
 
@@ -472,6 +414,557 @@ rownames(comparison_df) <- NULL
 
 # View the comparison table
 comparison_df
+
+## CONTROLES MODELO 1 ####
+#### defino data reducida ####
+data_reducida <- democracias %>% 
+  select(dico_hubo_debates,
+         cat_pais,
+         ncat_eleccion,
+         ncat_ronda,
+         elecid,
+         marginvic,
+         nec,
+         voteshareincumbent,
+         dico_reeleccion,
+         alineamiento,
+         proptv,
+         propindivinternet,
+         prohibicionpropaganda,
+         accesogratuito,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         cumsum_pastciclos,
+         gdpxcapita,
+         democraciavdemelectoralcomp,
+         mediaqualitycorruptvdem) %>% 
+  na.omit()
+
+
+data_modelo_sficativas <- democracias %>% 
+  select(dico_hubo_debates,
+         cat_pais,
+         ncat_eleccion,
+         ncat_ronda,
+         elecid,
+         obsid,
+         marginvic,
+         nec,
+         voteshareincumbent,
+         dico_reeleccion,
+        # alineamiento,
+        # proptv,
+         propindivinternet,
+        # prohibicionpropaganda,
+         accesogratuito,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         cumsum_pastciclos,
+         gdpxcapita,
+         democraciavdemelectoralcomp,
+         mediaqualitycorruptvdem) %>% 
+  na.omit() %>% 
+  left_join(democracias)
+
+#### defino modelo 0 ####
+
+modelo_0 <- glm(dico_hubo_debates ~ 1, 
+                family = binomial(link = "logit"), 
+                #data = data  # dos versiones de data, una completa, otra solo con democracias, filtrada arriba
+                data = democracias)
+
+#### defino modelos comparables con muestra reducida ####
+
+#### reducida al maximo ####
+modelo_0_reducido <- glm(dico_hubo_debates ~ 1, 
+                                    family = binomial(link = "logit"), 
+                                    data = data_reducida)
+modelo_contingencia_reducido <- glm(formula_modelo_contingencia, 
+                family = binomial(link = "logit"), 
+                data = data_reducida)
+modelo_sistemico_reducido <- glm(formula_modelo_sistemico, 
+                family = binomial(link = "logit"), 
+                data = data_reducida)
+modelo_regulatorio_reducido <- glm(formula_modelo_regulatorio, 
+                family = binomial(link = "logit"), 
+                data = data_reducida)
+modelo_temporal_reducido <- glm(formula_modelo_temporal, 
+                family = binomial(link = "logit"), 
+                data = data_reducida)
+modelo_sficativas_reducido <- glm(formula_modelo_sficativas, 
+                                family = binomial(link = "logit"), 
+                                data = data_reducida)
+
+#### reducida sficativas ####
+modelo_0_reducido_sficativas <- glm(dico_hubo_debates ~ 1, 
+                         family = binomial(link = "logit"), 
+                         data = data_modelo_sficativas)
+modelo_contingencia_reducido_sficativas <- glm(formula_modelo_contingencia, 
+                                    family = binomial(link = "logit"), 
+                                    data = data_modelo_sficativas)
+modelo_sistemico_reducido_sficativas <- glm(formula_modelo_sistemico, 
+                                 family = binomial(link = "logit"), 
+                                 data = data_modelo_sficativas)
+modelo_regulatorio_reducido_sficativas <- glm(formula_modelo_regulatorio, 
+                                   family = binomial(link = "logit"), 
+                                   data = data_modelo_sficativas)
+modelo_temporal_reducido_sficativas <- glm(formula_modelo_temporal, 
+                                family = binomial(link = "logit"), 
+                                data = data_modelo_sficativas)
+
+
+### control de resiudos ####
+
+#### Graficar los residuos ####
+par(mfrow = c(1, 2))
+
+# Residuos deviance
+residuals_dev <- residuals(modelo_sficativas, type = "deviance")
+plot(residuals_dev, main = "Residuos Deviance", ylab = "Residuos", xlab = "Índice")
+abline(h = 0, col = "red", lty = 2)
+# Añadir los IDs junto a los puntos
+text(x = 1:length(residuals_dev), y = residuals_dev, 
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+
+# Residuos de Pearson
+residuals_pearson <- residuals(modelo_sficativas, type = "pearson")
+plot(residuals_pearson, main = "Residuos de Pearson", ylab = "Residuos", xlab = "Índice")
+abline(h = 0, col = "blue", lty = 2)
+# Añadir los IDs junto a los puntos
+text(x = 1:length(residuals_pearson), y = residuals_pearson, 
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+
+ 
+# Residuos Pearsonestandarizados 
+hat_values <- hatvalues(modelo_sficativas)  # Leverage
+residuos_pearson_est <- residuals_pearson / sqrt(1 - hat_values)
+plot(residuos_pearson_est, main = "Residuos de Pearson Estandarizados", ylab = "Residuos", xlab = "Índice")
+abline(h = 0, col = "blue", lty = 2)
+# Añadir los IDs junto a los puntos
+text(x = 1:length(residuos_pearson_est), y = residuos_pearson_est, 
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+
+qqnorm(residuals_dev, main = "QQ Plot - Residuos de Deviance")
+qqline(residuals_dev, col = "red")
+
+# no parecen detectarse patrones claros que indiquen violaciones a supuesto de variable omitida o heterocedasticidad
+# si parece haber dos observaciones potencialmente problemáticas (outliers o con leverage)
+
+#### Durbin-Watson para autocorrelacion de errores ####
+# prueba de Durbin-Watson (verificar autocorrelación en los residuos).
+# The Durbin-Watson test has the null hypothesis that the autocorrelation of the disturbances is 0. 
+# It is possible to test against the alternative that it is greater than, not equal to, or less than 0, respectively. This can be specified by the alternative argument.
+# https://medium.com/@analyttica/durbin-watson-test-fde429f79203
+# no es lo más adecuado de usar cuando tengo variables rezagadas (como es mi caso)
+dwtest(modelo_sficativas)
+# valor del estadistico: Una regla general que se sigue es: los valores de la estadística de prueba DW en el rango de 1,5 a 2,5 son relativamente aceptables. Los valores fuera de este rango podrían ser motivo de preocupación. Los valores inferiores a 1 o superiores a 3 son un motivo definitivo de preocupación.
+# no podemos rechazar (tenemos evidencia favorable a) la H nula de que no hay autocorrelación
+# A p-value of 0.3608 for a Durbin-Watson test indicates that the null hypothesis of no autocorrelation is not rejected
+
+### casos influyentes y outliers ####
+
+# https://stats.stackexchange.com/questions/22161/how-to-read-cooks-distance-plots
+
+#### Cook ####
+# Obtener las estadísticas de Cook
+cooks_distances <- cooks.distance(modelo_sficativas)
+
+# Ver las primeras estadísticas de Cook
+head(cooks_distances)
+
+# Graficar las estadísticas de Cook
+plot(cooks_distances, main = "Estadísticas de Cook", ylab = "Cook's Distance", xlab = "Índice de observación")
+abline(h = 4 / (length(cooks_distances) - 14 - 1) , col = "red", lty = 2)  # Línea de corte común (influencia alta)
+# Identificar observaciones influyentes (por encima del umbral)
+influential_obs <- which(cooks_distances > 4 / length(cooks_distances))
+text(x = influential_obs, y = cooks_distances[influential_obs], 
+     labels = democracias$obsid[influential_obs], pos = 4, cex = 0.7, col = "blue")
+
+# : Se suele trazar una línea de corte en 4 / n, donde n es el número de observaciones) para identificar observaciones que tienen una gran influencia en el modelo. Las observaciones por encima de esta línea pueden ser consideradas como influyentes.
+
+car::influenceIndexPlot(modelo_sficativas, vars = c("Cook", "hat"))
+
+#### dfbetas ####
+
+dfbetas <- as.data.frame(dfbetas(modelo_sficativas))
+#Para cada observación, podemos ver la diferencia en la estimación del coeficiente para la intersección, la variable  disp y la variable  hp que ocurre cuando eliminamos esa observación en particular.
+#Normalmente consideramos que una observación es muy influyente en la estimación de un coeficiente dado si tiene un valor DBETAS mayor que un umbral de 2/√ n, donde  n es el número de observaciones.
+umbral <- 2 / sqrt(nrow(data_modelo_sficativas))
+
+#especificar 2 filas y 1 columna en la región de trazado
+par(mfrow=c(2,1))
+
+#plot DFBETAS para marginvic
+plot(dfbetas$marginvic)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$marginvic,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para nec  
+plot(dfbetas$nec)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$nec,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para voteshareincumbent  
+plot(dfbetas$voteshareincumbent)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$voteshareincumbent,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para dico_reeleccion  
+plot(dfbetas$dico_reeleccion)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$dico_reeleccion,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para propindivinternet  
+plot(dfbetas$propindivinternet)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$propindivinternet,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para accesogratuito  
+plot(dfbetas$accesogratuito)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$accesogratuito,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+
+#plot DFBETAS para avgpropdebatesregionxciclo  
+plot(dfbetas$avgpropdebatesregionxciclo)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$avgpropdebatesregionxciclo,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+
+#plot DFBETAS para prop_elec_usa_ciclo  
+plot(dfbetas$prop_elec_usa_ciclo)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$prop_elec_usa_ciclo,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para regulaciondico  
+plot(dfbetas$regulaciondico)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$regulaciondico,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+
+#plot DFBETAS para cumsum_pastciclos  
+plot(dfbetas$cumsum_pastciclos)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$cumsum_pastciclos,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+
+#plot DFBETAS para gdpxcapita  
+plot(dfbetas$gdpxcapita)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$gdpxcapita,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para democraciavdemelectoralcomp  
+plot(dfbetas$democraciavdemelectoralcomp)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$democraciavdemelectoralcomp,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+#plot DFBETAS para mediaqualitycorruptvdem  
+plot(dfbetas$mediaqualitycorruptvdem)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$mediaqualitycorruptvdem,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+### control de multicolinealidad ####
+#### correlaciones (al menos <.5, conservador <2.5) ####
+#### vif (raiz de vif < 2) ####
+# VIF < 5: The variable has low multicollinearity (no significant issue).
+#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
+#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
+
+vif_values <- car::vif(modelo_contingencia_controles)  
+print(vif_values) 
+
+vif_values <- car::vif(modelo_sistemico)  
+print(vif_values)
+
+vif_values <- car::vif(modelo_regulatorio)  
+print(vif_values) 
+
+vif_values <- car::vif(modelo_temporal)  
+print(vif_values) 
+
+vif_values <- car::vif(modelo_sficativas)  
+print(vif_values) 
+
+# otros
+### missing data ####
+### overall significance y comparaciones ####
+#### test de Wald ####
+
+
+lmtest::waldtest(modelo_sficativas)
+
+# podemos rechazar H0 de que todos los coeficientes = 0
+
+# https://www.geeksforgeeks.org/how-to-perform-a-wald-test-in-r/
+# Res.Df: Indica los grados de libertad residuales, que es la diferencia entre el número total de observaciones y el número de parámetros estimados en el modelo.
+# Df: Representa el cambio en grados de libertad entre el Modelo 1 y el Modelo 2. En este caso, el Modelo 2 tiene 2 parámetros menos estimados en comparación con el Modelo 1 porque incluye menos predictores.
+# F: Esta es la estadística de prueba para la prueba de Wald. Sigue una distribución F bajo la hipótesis nula de que los parámetros en el modelo reducido (Modelo 2) son iguales a cero. En otras palabras, prueba si los predictores adicionales en el Modelo 1 contribuyen significativamente al modelo.
+# Pr(>F): es el valor p asociado con el estadístico de la prueba F. Representa la probabilidad de observar un estadístico F tan extremo como el calculado bajo la hipótesis nula. En este caso, el valor p es 0,006863, que es menor que 0,05, lo que sugiere una evidencia sólida contra la hipótesis nula.
+
+lmtest::waldtest(modelo_sficativas , modelo_0_reducido_sficativas)
+lmtest::waldtest(modelo_sficativas , modelo_contingencia_reducido_sficativas)
+#lmtest::waldtest(modelo_sficativas , modelo_sistemico_reducido_sficativas) # pendiente
+#lmtest::waldtest(modelo_sficativas , modelo_regulatorio_reducido_sficativas) # pendiente
+lmtest::waldtest(modelo_sficativas , modelo_temporal_reducido_sficativas)
+
+# en gral el modelo mejora significativamente en todos los casos
+
+#### lr test (comparar modelos con = cantidad de data, sacando missing) ####
+
+#  First, the two models must be nested. Second, the two models must be estimated on exactly the same sample. 
+#lrtest(null_model, full_model)
+
+likelihood_ratio_test <- lrtest(modelo_0_reducido_sficativas, modelo_sficativas )
+likelihood_ratio_test <- lrtest(modelo_contingencia_reducido_sficativas, modelo_sficativas)
+likelihood_ratio_test <- lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
+likelihood_ratio_test <- lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
+likelihood_ratio_test <- lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
+
+
+# Model 1 : represents the null model, which includes only the intercept.
+# Model 2: represents the full model, which includes predictors
+# #Df : This indicates the degree of freedom or the number of parameters involved
+# LogLik: This indicates the log-likelihood values for each model.
+# Chisq: is the likelihood ratio test statistic, which measures the difference in log-likelihood values between the two models.
+# Pr(>Chisq): represents the p-value associated with the likelihood ratio test.
+
+#likelihood_ratio_test <- lrtest(null_model, full_model)
+# Interpretation of likelihood ratio test results
+if (likelihood_ratio_test$"Pr(>Chisq)"[2] < 0.05) 
+{
+  cat("Reject the null hypothesis. The full model is significantly better than 
+        the null model.\n")
+} else {
+  cat("Fail to reject the null hypothesis. The null model is sufficient.\n")
+}
+
+# en todos los casos, el modelo full es mejor que el modelo más incompleto. 
+
+
+
+#### fit: Pseudos R cuadrados, AIC y BIC ####
+ 
+
+# pseudo R cuadrados. #Mas alto, mejores
+# https://www.rdocumentation.org/packages/rcompanion/versions/2.4.36/topics/nagelkerke
+rcompanion::nagelkerke(modelo_sficativas)
+# https://search.r-project.org/CRAN/refmans/fmsb/html/Nagelkerke.html 
+fmsb::NagelkerkeR2(modelo_sficativas)
+pscl::pR2(modelo_sficativas)
+
+# Obtener AIC y BIC # mas bajos, mejores, aunque se penaliza la inclusion de mas parametros
+AIC(modelo_sficativas)
+BIC(modelo_sficativas)
+
+# Obtener Log-Likelihood, mas alto mejor. solo se pueden comparar modelos anidados
+logLik(modelo_sficativas)
+
+# Realizar prueba de razón de verosimilitudes
+lmtest::lrtest(modelo_0, modelo_sficativas)
+
+
+
+# para comparar modelos con igual n, creo funcion 
+ 
+stats <- function(modelo){
+  pseudoR2 <- rcompanion::nagelkerke(modelo)$Pseudo.R.squared.for.model.vs.null %>% 
+    as.data.frame() %>% 
+    select(Pseudo.R.squared) %>% 
+    dplyr::rename("value" = Pseudo.R.squared)
+  pseudoR2$stat <- c("McFadden", "CoxSnell", "Nagelkerke")
+  rownames(pseudoR2) <- NULL
+  
+  aic <- data.frame(value = AIC(modelo),
+                       stat = "AIC")
+  
+  bic <- data.frame(value = BIC(modelo),
+                       stat = "BIC")
+  
+  data <- rbind(pseudoR2,
+                aic,
+                bic)
+  
+  data$modelo <- deparse(substitute(modelo))  
+  
+  data
+}
+stats0 <- stats( modelo_0_reducido)
+stats1 <- stats( modelo_contingencia_reducido)
+stats2 <- stats( modelo_sistemico_reducido)
+stats3 <- stats( modelo_regulatorio_reducido)
+stats4 <- stats( modelo_temporal_reducido)
+stats5 <- stats( modelo_sficativas_reducido)
+
+all_stats <- rbind(stats0,
+                   stats1,
+                   stats2,
+                   stats3,
+                   stats4,
+                   stats5 )
+
+
+### fit: desempeño: accuracy ####
+
+
+data_modelo_sficativas$probabilidades_predichas <- predict(modelo_sficativas, type = "response")
+data_modelo_sficativas$predicciones_binarias <- ifelse(probabilidades_predichas>0.5,1,0)
+
+# Matriz de confusión
+confusion_matrix <- table(data_modelo_sficativas$predicciones_binarias, data_modelo_sficativas$dico_hubo_debates)
+print(confusion_matrix)
+
+# Count R²: proporción de predicciones correctas
+count_r2 <- mean(data_modelo_sficativas$predicciones_binarias == data_modelo_sficativas$dico_hubo_debates)
+# Precisión base: proporción de la clase mayoritaria
+baseline_accuracy <- max(table(data_modelo_sficativas$dico_hubo_debates)) / length(data_modelo_sficativas$dico_hubo_debates)
+# Adjusted Count R²
+adjusted_count_r2 <- (count_r2 - baseline_accuracy) / (1 - baseline_accuracy)
+#  The adjusted count R2 is the proportion of correct guesses beyond the number that would be correctly guessed by choosing the largest marginal
+
+# Imprimir resultados
+cat("Count R²:", count_r2, "\n")
+cat("Adjusted Count R²:", adjusted_count_r2, "\n")
+
+#modelo <- modelo_0
+# para comparar
+funcion_count_R2 <- function(modelo, variable_dependiente){
+  
+  probabilidades_predichas <- predict(modelo, type = "response")
+  predicciones_binarias <- ifelse(probabilidades_predichas>0.5,1,0)
+ 
+   # Count R²: proporción de predicciones correctas
+  count_r2 <- mean(predicciones_binarias == variable_dependiente)
+  # Precisión base: proporción de la clase mayoritaria
+  baseline_accuracy <- max(table(variable_dependiente)) / length(variable_dependiente)
+  # Adjusted Count R²
+  adjusted_count_r2 <- (count_r2 - baseline_accuracy) / (1 - baseline_accuracy)
+  #  The adjusted count R2 is the proportion of correct guesses beyond the number that would be correctly guessed by choosing the largest marginal
+  
+  name <- deparse(substitute(modelo))
+  
+  dataframe <- tibble(countr2 = count_r2,
+                          adjcountr2 = adjusted_count_r2,
+                          modelo =   name )
+}
+
+countr20 <- funcion_count_R2(modelo_0, democracias$dico_hubo_debates)
+countr21 <- funcion_count_R2(modelo_contingencia_reducido, data_reducida$dico_hubo_debates)
+countr22 <- funcion_count_R2(modelo_sistemico_reducido, data_reducida$dico_hubo_debates)
+countr23 <- funcion_count_R2(modelo_regulatorio_reducido, data_reducida$dico_hubo_debates)
+countr24 <- funcion_count_R2(modelo_temporal_reducido, data_reducida$dico_hubo_debates)
+countr25 <- funcion_count_R2(modelo_sficativas_reducido, data_reducida$dico_hubo_debates)
+
+comparacion_count_r2 <- rbind(countr20 ,
+                              countr21 ,
+                              countr22 ,
+                              countr23 ,
+                              countr24 ,
+                              countr25 )
+
+# el mejor sigue siendo el modelo full
+# quizas vale la pena comparar versiones con mas datos
+# o hacer trabajo andidado de verdad, digamos
+
+### MODELOS ROBUSTOS #####
+### Modelo contingencia  ####
+
+robust_se_cluster_modelo_contingencia <- coeftest(modelo_contingencia, 
+                              vcov = vcovCL(modelo_contingencia_controles, 
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
+
+
+print(robust_se_cluster_modelo_contingencia)
+
+# para pasar a excel
+robust_se_cluster_df <- robust_se_cluster_modelo_contingencia[,] %>% 
+  as_tibble() %>%
+  mutate(variable = rownames(robust_se_cluster_modelo_contingencia))
+writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
+### Modelo sistemico ####
+ 
+robust_se_cluster_modelo_sistemico <- coeftest(modelo_sistemico, 
+                              vcov = vcovCL(modelo_sistemico,
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
+print(robust_se_cluster_modelo_sistemico)
+
+# para pasar a excel
+robust_se_cluster_df <- robust_se_cluster_modelo_sistemico[,] %>% 
+  as_tibble() %>%
+  mutate(variable = rownames(robust_se_cluster_modelo_sistemico))
+writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
+### Modelo marco regulatorio ####
+
+ robust_se_cluster_modelo_regulatorio <- coeftest(modelo_regulatorio, 
+                              vcov = vcovCL(modelo_regulatorio, 
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
+print(robust_se_cluster_modelo_regulatorio)
+
+# para pasar a excel
+robust_se_cluster_df <- robust_se_cluster_modelo_regulatorio[,] %>% 
+  as_tibble() %>%
+  mutate(variable = rownames(robust_se_cluster_modelo_regulatorio))
+writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
+### Modelo geo/temp ####
+
+robust_se_cluster_modelo_temporal <- coeftest(modelo_temporal, 
+                              vcov = vcovCL(modelo_temporal, 
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
+print(robust_se_cluster_modelo_temporal)
+
+# para pasar a excel
+robust_se_cluster_df <- robust_se_cluster_modelo_temporal[,] %>% 
+  as_tibble() %>%
+  mutate(variable = rownames(robust_se_cluster_modelo_temporal))
+writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
+### Modelo final / sficativas ####
+
+robust_se_cluster_modelo_sficativas <- coeftest(modelo_sficativas, 
+                              vcov = vcovCL(modelo_sficativas, 
+                                            #cluster = data$elecid))
+                                            cluster = democracias$elecid))
+print(robust_se_cluster_modelo_sficativas)
+
+# para pasar a excel
+robust_se_cluster_df <- robust_se_cluster_modelo_sficativas[,] %>% 
+  as_tibble() %>%
+  mutate(variable = rownames(robust_se_cluster_modelo_sficativas))
+writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
 ## MODELOS 2: submuestra sin debates en la eleccion pasada. "Nueva práctica"  #####
 ### preparo submuestra ####
