@@ -517,7 +517,7 @@ modelo_temporal_reducido_sficativas <- glm(formula_modelo_temporal,
 
 ### control de resiudos ####
 
-#### Graficar los residuos ####
+##### Graficar los residuos ####
 par(mfrow = c(1, 2))
 
 # Residuos deviance
@@ -552,7 +552,7 @@ qqline(residuals_dev, col = "red")
 # no parecen detectarse patrones claros que indiquen violaciones a supuesto de variable omitida o heterocedasticidad
 # si parece haber dos observaciones potencialmente problemáticas (outliers o con leverage)
 
-#### Durbin-Watson para autocorrelacion de errores ####
+##### Durbin-Watson para autocorrelacion de errores ####
 # prueba de Durbin-Watson (verificar autocorrelación en los residuos).
 # The Durbin-Watson test has the null hypothesis that the autocorrelation of the disturbances is 0. 
 # It is possible to test against the alternative that it is greater than, not equal to, or less than 0, respectively. This can be specified by the alternative argument.
@@ -567,7 +567,7 @@ dwtest(modelo_sficativas)
 
 # https://stats.stackexchange.com/questions/22161/how-to-read-cooks-distance-plots
 
-#### Cook ####
+##### Cook ####
 # Obtener las estadísticas de Cook
 cooks_distances <- cooks.distance(modelo_sficativas)
 
@@ -586,7 +586,7 @@ text(x = influential_obs, y = cooks_distances[influential_obs],
 
 car::influenceIndexPlot(modelo_sficativas, vars = c("Cook", "hat"))
 
-#### dfbetas ####
+##### dfbetas ####
 
 dfbetas <- as.data.frame(dfbetas(modelo_sficativas))
 #Para cada observación, podemos ver la diferencia en la estimación del coeficiente para la intersección, la variable  disp y la variable  hp que ocurre cuando eliminamos esa observación en particular.
@@ -692,8 +692,65 @@ text(dfbetas$mediaqualitycorruptvdem,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
 ### control de multicolinealidad ####
-#### correlaciones (al menos <.5, conservador <2.5) ####
-#### vif (raiz de vif < 2) ####
+##### correlaciones (al menos <.5, conservador <2.5) ####
+
+corr_base_democracias <- democracias %>% 
+  select(dico_hubo_debates,
+         #cat_pais,
+         ncat_eleccion,
+         ncat_ronda,
+         #elecid,
+         #obsid,
+         marginvic,
+         nec,
+         voteshareincumbent,
+         dico_reeleccion,
+         alineamiento,
+         proptv,
+         propindivinternet,
+         prohibicionpropaganda,
+         accesogratuito,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         cumsum_pastciclos,
+         gdpxcapita,
+         democraciavdemelectoralcomp,
+         mediaqualitycorruptvdem)
+
+summary(corr_base_democracias)
+correlation_matrix <- cor(corr_base_democracias , use = "pairwise.complete.obs" )
+ 
+# Generar el gráfico con resaltado
+corrplot::corrplot(
+  correlation_matrix, 
+  method = "circle",        # Puedes usar otros métodos como "color", "number"
+  col = colorRampPalette(c("blue", "white", "red"))(8), # Escala de colores
+  #addCoef.col = "black",    # Añadir los coeficientes al gráfico
+  #tl.col = "black",         # Color de las etiquetas
+  #sig.level = 0.5,          # Nivel de significancia (umbral de 0.5 para el resaltado)
+  #insig = "label_sig",      # Mostrar "*" en los valores destacados
+  #pch.cex = 1.5,            # Tamaño del marcador "*"
+  diag = FALSE              # No graficar la diagonal
+)
+# Resaltar valores absolutos mayores a 0.5
+for (j in 1:ncol(correlation_matrix)) {
+  for (i in 1:nrow(correlation_matrix)){
+    if (abs(correlation_matrix[j, i]) > 0.5) { # Ignorar la diagonal
+      text(j, i, "**", col = "black", cex = 1.5) # Añadir un "*" en las celdas relevantes
+    }
+  }
+}
+correlation_matrix[1, 2]
+
+# PENDIENTE PROBLEMA #########
+corr_base_democracias_reducida <- data_reducida %>% 
+  select()
+summary(corr_base_democracias)
+correlation_matrix <- cor(corr_base_democracias , use = "pairwise.complete.obs" )
+corrplot::corrplot(corr_base_democracias)
+
+##### vif (raiz de vif < 2) ####
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
@@ -716,7 +773,7 @@ print(vif_values)
 # otros
 ### missing data ####
 ### overall significance y comparaciones ####
-#### test de Wald ####
+##### test de Wald ####
 
 
 lmtest::waldtest(modelo_sficativas)
@@ -737,7 +794,7 @@ lmtest::waldtest(modelo_sficativas , modelo_temporal_reducido_sficativas)
 
 # en gral el modelo mejora significativamente en todos los casos
 
-#### lr test (comparar modelos con = cantidad de data, sacando missing) ####
+##### lr test (comparar modelos con = cantidad de data, sacando missing) ####
 
 #  First, the two models must be nested. Second, the two models must be estimated on exactly the same sample. 
 #lrtest(null_model, full_model)
@@ -770,7 +827,7 @@ if (likelihood_ratio_test$"Pr(>Chisq)"[2] < 0.05)
 
 
 
-#### fit: Pseudos R cuadrados, AIC y BIC ####
+### fit: Pseudos R cuadrados, AIC y BIC ####
  
 
 # pseudo R cuadrados. #Mas alto, mejores
