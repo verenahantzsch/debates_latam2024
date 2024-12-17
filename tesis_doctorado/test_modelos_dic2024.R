@@ -18,79 +18,7 @@ base_candidatos <-  read.csv("indicadores_candidatos.csv")
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 # ELECCIONES ##############################
-# CORRELACIONES ENTRE VARIABLES INDEP #####
-
-all_corr_indicadores <- base_indicadores %>% 
-  select(ncat_eleccion,
-         marginvic,
-         exapprovalnotsmoothed,
-         dico_reeleccion,
-         dico_debates_pastelection,
-         alineamiento,
-         nec,
-         proptv,
-         propindivinternet,
-         regulaciondico,
-         prohibicionpropaganda,
-         avgpropdebatesregionxciclo,
-         prop_elec_usa_ciclo)
-#mutate(across(everything(), as.integer(.)))
-summary(all_corr_indicadores)
-correlation_matrix <- cor(all_corr_indicadores , use = "pairwise.complete.obs" )
-corrplot::corrplot(correlation_matrix)
-
-all_corr_controles <- base_controles %>% 
-  select(ncat_eleccion,
-         gdpxcapita,
-         democraciavdempolyarchy,
-         urbanpop,
-         mediaqualitycorruptvdem,
-         mediaqualitybiasnelda,
-         mediaqualityfreedombti,
-         edadregimenfilled)
-summary(all_corr_controles)
-correlation_matrix <- cor(all_corr_controles , use = "pairwise.complete.obs" )
-corrplot::corrplot(correlation_matrix)
-
-
-all_corrs <- base_indicadores %>% 
-  left_join(base_controles) %>% 
-  left_join(base_vdependiente %>% select(-X)) %>% 
-  select(-cat_pais) %>% 
-  select(ncat_eleccion,
-         proptv,
-         propindivinternet,
-         dico_debates_pastelection,
-         cumsum_pastciclos,
-         avgpropdebatesregionxciclo,
-         prop_elec_usa_ciclo,
-         regulaciondico,
-         regulacionordinal,
-         edadregimenfilled,
-         democraciavdemelectoralcomp,
-         urbanpop,
-         mediaqualitycorruptvdem,
-         mediaqualitybiasnelda,
-         #mediaqualityfreedombti,
-         prohibicionpropaganda,
-         alineamiento,
-         marginvic,
-         exapprovalnotsmoothed,
-         dico_reeleccion,
-         nec,
-         ncat_ronda,
-         dico_hubo_debates,
-         dico_nueva_practica_elec,
-         dico_practica_interrumpida_elec)
-
-summary(all_corrs)
-correlation_matrix <- cor(all_corrs , use = "pairwise.complete.obs" )
-corrplot::corrplot(correlation_matrix, diag = F, addCoef.col= "black")
-write.csv(correlation_matrix, "correlation_matrix.csv", row.names = TRUE)
-
-# MODELOS DE PRUEBA #####
-
-## preparo data #####
+## PREPARO DATA #####
 ### data completa #### 
 data <- base_indicadores  %>% 
   select(-starts_with("source_")) %>% 
@@ -132,12 +60,24 @@ democracias <- base_indicadores  %>%
 democracias <- democracias %>% 
   mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
 
-#### defino id obs ####
+### defino id obs ####
 
 democracias <- democracias %>% 
   mutate(obsid = paste(cat_pais, ncat_eleccion, ncat_ronda, sep = " "))
 
-## MODELOS 1: toda la muestra - V.D = dico_hubo_debates #####
+### creo data log y otras transformaciones de variables ####
+
+democracias <- democracias %>% 
+  mutate(marginvic = abs(marginvic)) %>% 
+  mutate(lnpropindivinternet = log(propindivinternet +1),
+         lngdp = log(gdpxcapita),
+         lnmarginvic = log(marginvic),
+         lnnec = log(nec),
+         lnvoteshareincumbent = log(voteshareincumbent + 1))
+
+# democracias$marginvic
+
+## MODELOS 1: toda la muestra de democracias - V.D = dico_hubo_debates #####
 ### Modelo contingencia  ####
 
 formula_modelo_contingencia <- "dico_hubo_debates ~ 
@@ -263,7 +203,42 @@ modelo_sficativas <- glm(formula_modelo_sficativas,
 options(scipen=999)
 summary(modelo_sficativas)
 
-# Modelo lineal generalizado de efectos mixtos (ejemplo: binomial)
+
+
+# variantes modelo sficativas
+formula_modelo_sficativas_variantes <- "dico_hubo_debates ~ 
+                        #dico_debates_primerosdos ~ 
+                        #dico_hubo_debate_mediatico ~ 
+                           lnmarginvic + # CAMBIE
+                           lnnec +
+                           #exapprovalnotsmoothed + 
+                           lnvoteshareincumbent +
+                           dico_reeleccion + 
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           avgpropdebatesregionxciclo + 
+                           #prop_elec_usa_ciclo +
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           lngdp + # CAMBIE
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem#, #+
+                          # ncat_eleccion,
+                          #edadregimenbmr#, "
+
+
+modelo_sficativas_variantes <- glm(formula_modelo_sficativas_variantes,
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = democracias)
+options(scipen=999)
+summary(modelo_sficativas_variantes)
+
+
+
+### borrador prueba Modelo lineal generalizado de efectos mixtos (ejemplo: binomial) ####
 
 # Estandarizar variables predictoras
 democracias_scaled <- democracias %>%
@@ -307,12 +282,12 @@ modelo_MLGEM <- lme4::glmer(dico_hubo_debates ~
 summary(modelo_MLGEM)
 # Calcular errores estándar robustos (Sandwich estimators)
 #table(democracias_scaled$cat_pais, useNA = "ifany")
-democracias_scaled$cat_pais <- as.factor(democracias_scaled$cat_pais) # ESTOY TENIENDO ALGUN PROBLEMA QUE NO PUDE RESOLVER 
-vcov_cr2 <- clubSandwich::vcovCR(modelo_MLGEM, cluster = democracias_scaled$cat_pais, type = "CR2")
-robust_se <- clubSandwich::coef_test(modelo_MLGEM, vcov = vcov_cr2)
-print(robust_se)
-# Residuos y diagnósticos
-plot(resid(modelo_MLGEM))
+# democracias_scaled$cat_pais <- as.factor(democracias_scaled$cat_pais) # ESTOY TENIENDO ALGUN PROBLEMA QUE NO PUDE RESOLVER 
+# vcov_cr2 <- clubSandwich::vcovCR(modelo_MLGEM, cluster = democracias_scaled$cat_pais, type = "CR2")
+# robust_se <- clubSandwich::coef_test(modelo_MLGEM, vcov = vcov_cr2)
+# print(robust_se)
+# # Residuos y diagnósticos
+# plot(resid(modelo_MLGEM))
 
 modelo_sficativas_scaled <- glm(dico_hubo_debates ~ 
                            #dico_debates_primerosdos ~ 
@@ -416,6 +391,7 @@ rownames(comparison_df) <- NULL
 comparison_df
 
 ## CONTROLES MODELO 1 ####
+### Preparaciones ####
 #### defino data reducida ####
 data_reducida <- democracias %>% 
   select(dico_hubo_debates,
@@ -438,7 +414,12 @@ data_reducida <- democracias %>%
          cumsum_pastciclos,
          gdpxcapita,
          democraciavdemelectoralcomp,
-         mediaqualitycorruptvdem) %>% 
+         mediaqualitycorruptvdem,
+         lnpropindivinternet,
+         lngdp,
+         lnmarginvic,
+         lnnec,
+         lnvoteshareincumbent) %>% 
   na.omit()
 
 
@@ -515,13 +496,19 @@ modelo_temporal_reducido_sficativas <- glm(formula_modelo_temporal,
                                 data = data_modelo_sficativas)
 
 
-### control de resiudos ####
+#### importante: defino modelo de prueba ####
+
+modelo_a_probar <- modelo_sficativas_variantes
+#modelo_a_probar <- modelo_sficativas
+
+### Control de resiudos ####
 
 ##### Graficar los residuos ####
+
 par(mfrow = c(1, 2))
 
 # Residuos deviance
-residuals_dev <- residuals(modelo_sficativas, type = "deviance")
+residuals_dev <- residuals(modelo_a_probar, type = "deviance")
 plot(residuals_dev, main = "Residuos Deviance", ylab = "Residuos", xlab = "Índice")
 abline(h = 0, col = "red", lty = 2)
 # Añadir los IDs junto a los puntos
@@ -529,7 +516,7 @@ text(x = 1:length(residuals_dev), y = residuals_dev,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
 
 # Residuos de Pearson
-residuals_pearson <- residuals(modelo_sficativas, type = "pearson")
+residuals_pearson <- residuals(modelo_a_probar, type = "pearson")
 plot(residuals_pearson, main = "Residuos de Pearson", ylab = "Residuos", xlab = "Índice")
 abline(h = 0, col = "blue", lty = 2)
 # Añadir los IDs junto a los puntos
@@ -538,7 +525,7 @@ text(x = 1:length(residuals_pearson), y = residuals_pearson,
 
  
 # Residuos Pearsonestandarizados 
-hat_values <- hatvalues(modelo_sficativas)  # Leverage
+hat_values <- hatvalues(modelo_a_probar)  # Leverage
 residuos_pearson_est <- residuals_pearson / sqrt(1 - hat_values)
 plot(residuos_pearson_est, main = "Residuos de Pearson Estandarizados", ylab = "Residuos", xlab = "Índice")
 abline(h = 0, col = "blue", lty = 2)
@@ -551,6 +538,8 @@ qqline(residuals_dev, col = "red")
 
 # no parecen detectarse patrones claros que indiquen violaciones a supuesto de variable omitida o heterocedasticidad
 # si parece haber dos observaciones potencialmente problemáticas (outliers o con leverage)
+# COLOMBIA Y BRASIL 2018
+# Tambien parece haber mas residuos de un signo que del otro (no me queda claro bien cual)
 
 ##### Durbin-Watson para autocorrelacion de errores ####
 # prueba de Durbin-Watson (verificar autocorrelación en los residuos).
@@ -558,18 +547,18 @@ qqline(residuals_dev, col = "red")
 # It is possible to test against the alternative that it is greater than, not equal to, or less than 0, respectively. This can be specified by the alternative argument.
 # https://medium.com/@analyttica/durbin-watson-test-fde429f79203
 # no es lo más adecuado de usar cuando tengo variables rezagadas (como es mi caso)
-dwtest(modelo_sficativas)
+dwtest(modelo_a_probar)
 # valor del estadistico: Una regla general que se sigue es: los valores de la estadística de prueba DW en el rango de 1,5 a 2,5 son relativamente aceptables. Los valores fuera de este rango podrían ser motivo de preocupación. Los valores inferiores a 1 o superiores a 3 son un motivo definitivo de preocupación.
 # no podemos rechazar (tenemos evidencia favorable a) la H nula de que no hay autocorrelación
 # A p-value of 0.3608 for a Durbin-Watson test indicates that the null hypothesis of no autocorrelation is not rejected
 
-### casos influyentes y outliers ####
+### Casos influyentes y outliers ####
 
 # https://stats.stackexchange.com/questions/22161/how-to-read-cooks-distance-plots
 
 ##### Cook ####
 # Obtener las estadísticas de Cook
-cooks_distances <- cooks.distance(modelo_sficativas)
+cooks_distances <- cooks.distance(modelo_a_probar)
 
 # Ver las primeras estadísticas de Cook
 head(cooks_distances)
@@ -582,13 +571,20 @@ influential_obs <- which(cooks_distances > 4 / length(cooks_distances))
 text(x = influential_obs, y = cooks_distances[influential_obs], 
      labels = democracias$obsid[influential_obs], pos = 4, cex = 0.7, col = "blue")
 
+
+# costa rica 1986 parece ser la mas problematica
+# otras potenciales son brasil 2010 segunda ronda, ecuador 1988, guatemala 1999, colombia 2006, entre otras
+# la posicuion de costa rica mejora en la variante respecto del de sficativas a secas, pero la de otros casos empeora, el balance quizas es relativamente neutro
+
 # : Se suele trazar una línea de corte en 4 / n, donde n es el número de observaciones) para identificar observaciones que tienen una gran influencia en el modelo. Las observaciones por encima de esta línea pueden ser consideradas como influyentes.
 
-car::influenceIndexPlot(modelo_sficativas, vars = c("Cook", "hat"))
+car::influenceIndexPlot(modelo_a_probar, vars = c("Cook", "hat"))
+
+# observaciones nr 90, 116 para cook , 77 y 78 para hat en modelo sficativas 
+# observaciones nr 90, 116 para cook , 7 y 177 para hat en modelo sficativas, aunque tambien vale mencionar que se reducen las escalas del problema 
 
 ##### dfbetas ####
 
-dfbetas <- as.data.frame(dfbetas(modelo_sficativas))
 #Para cada observación, podemos ver la diferencia en la estimación del coeficiente para la intersección, la variable  disp y la variable  hp que ocurre cuando eliminamos esa observación en particular.
 #Normalmente consideramos que una observación es muy influyente en la estimación de un coeficiente dado si tiene un valor DBETAS mayor que un umbral de 2/√ n, donde  n es el número de observaciones.
 umbral <- 2 / sqrt(nrow(data_modelo_sficativas))
@@ -597,104 +593,311 @@ umbral <- 2 / sqrt(nrow(data_modelo_sficativas))
 par(mfrow=c(2,1))
 
 #plot DFBETAS para marginvic
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$marginvic)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$marginvic,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
-#plot DFBETAS para nec  
+# modelo sficativas: costa rica 2014 2 
+
+plot(dfbetas$lnmarginvic)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$lnmarginvic,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+# modelo variantes: ninguna tan influeyente, eventualmente algunas problematicas 
+
+# plot DFBETAS para nec  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$nec)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$nec,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
-#plot DFBETAS para voteshareincumbent  
+# sficativas: 7 obs tirando para abajo 
+
+plot(dfbetas$lnnec)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$lnnec,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+# variantes: mismas observaciones tiran para abajo pero menos potentemente
+
+#plot DFBETAS para voteshareincumbent 
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$voteshareincumbent)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$voteshareincumbent,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
-#plot DFBETAS para dico_reeleccion  
+# sficativas: 7 por debajo, 5 por arriba, nada demasiado exagerado
+
+plot(dfbetas$lnvoteshareincumbent)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$lnvoteshareincumbent,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+# variantes: OJO parece haber mas observaciones por fuera del umbral, quizas esto empeora ** 
+
+#plot DFBETAS para dico_reeleccion 
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$dico_reeleccion)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$dico_reeleccion,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# variantes: argentina 2011, bolivia 2014, ecuador 200 aparecen como las mas influyentes. rango +.4 a -.4 aprox
+# sficativas: sin cambios muy notorios, algunas observaciones menos, otras mas inflyentes. 
+
 #plot DFBETAS para propindivinternet  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$propindivinternet)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$propindivinternet,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# variantes: nada demasiado grave, unas 5 obs por debajo y por arriba, rango -.2 a +.2
+# sficativas: no muy diferente, aunque mas obs tiran para abajo y menos para arriba 
+
 #plot DFBETAS para accesogratuito  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$accesogratuito)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$accesogratuito,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# sficativas: ecuador tira para arriba claramente, pero tb para abajo. honduras 1993 tb -.4
+# variantes: no parecen observarse grandes cambios, quizás las observaciones un poco mas lejos del umbral (i.e. peor)
 
 #plot DFBETAS para avgpropdebatesregionxciclo  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$avgpropdebatesregionxciclo)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$avgpropdebatesregionxciclo,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# sficativas: panama 19994, peru 2001 son las mas llamativas, otros 4-5 casos por sobre el umbral, unos 98 por debajo, rango -.3 +.3
+# variantes: 6 obs por debajo , mismas que en grafico anterior por arriba, quizas mas cerca del umbral
 
 #plot DFBETAS para prop_elec_usa_ciclo  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$prop_elec_usa_ciclo)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$prop_elec_usa_ciclo,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# variantes: quitamos esta variable
+# sficativas: ninguna por fuera del umbral
+
 #plot DFBETAS para regulaciondico  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$regulaciondico)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$regulaciondico,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# sficativas: salvo lo comentado abajo, idem . 5 obs por arriba (poquito) , 7 x debajo, son las mismas para los dos casos
+# variantes: desempeño relativamente mejor del lado superior del umbral, que es mas estrecho. baja mexico 1994. pero empeora el lado inferior del umbral, en particular nicaragua 1990 # FIJAR QUE CATEGORIZACION ESTE CASO 
 
 #plot DFBETAS para cumsum_pastciclos  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$cumsum_pastciclos)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$cumsum_pastciclos,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# sficativas: unos 8 casos ligeramente sobre el umbral, unos 6 por debajo (rango aprox -.3 +.3)
+# variantes: de nuevo parece emperoar nicaragua 1990. pero a la vez desaparece el salvador 2014 del umbral superior. Mejora el umbral inferior, menos casos
 
 #plot DFBETAS para gdpxcapita  
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
 plot(dfbetas$gdpxcapita)  #, type=' h ')
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$gdpxcapita,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# sficativas: Mexico 1994 quizas el peor caso, aprox en .3, otros dos casos para arriba, varios casos uruguay tiran para abajo, tb argentina, entre otros (aprox 8 para abajo)
+
+plot(dfbetas$lngdp)  #, type=' h ')
+abline(h = umbral, lty = 2)
+abline(h = -umbral, lty = 2)
+text(dfbetas$lngdp,
+     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+
+# variantes: otra vez nicaragua 1990 un problema. definitivamente chequear! 3 casos por arriba (la mitad diferente del modelo sficativas)) y 8 por abajo, mejora el rango para abajo respecto de sficativas
+
 #plot DFBETAS para democraciavdemelectoralcomp  
-plot(dfbetas$democraciavdemelectoralcomp)  #, type=' h ')
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
+plot(dfbetas$democraciavdemelectoralcomp)   
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$democraciavdemelectoralcomp,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
+# sficativas: aprox 5 sobre umbral, a hasta .3, 6debajo, -.3. Colombia 1986 tira bastante para abajo (junto a otras 7 aprox), bolivia 2019 y peru 1990 para arriba
+# variantes: muy parecido. mejora ligeramente bolivia 2019. Sigue peru 1990 2 como problematico. mas observaciones se alejan del umbral para abajo (misma cantidad y casos que anterior), pero no mucho
+
 #plot DFBETAS para mediaqualitycorruptvdem  
-plot(dfbetas$mediaqualitycorruptvdem)  #, type=' h ')
+dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+
+plot(dfbetas$mediaqualitycorruptvdem)   
 abline(h = umbral, lty = 2)
 abline(h = -umbral, lty = 2)
 text(dfbetas$mediaqualitycorruptvdem,
      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
-### control de multicolinealidad ####
+# sficativas: otra vez peru 1990 como problematica para abajo.  unas 5 obs hacia arriba en .2. varias mas hacia abajo, nicaragua, paraguay, peru en rango -.3 (y peru 1990 en -.4)
+# variantes: bastante parecido el lado superior. Aparecen algunas obs pero otras se acercan un poco mas. Peru tira muy para arriba y muy para abajo.  Peru 1990 sigue siendo la mas problematica. 8 arriba (.3 aprox), 10 abajo (varias cerquita y Peru 1990)
+
+#### comentario ####
+
+# de cook:
+# costa rica 1986 parece ser la mas problematica
+# otras potenciales son brasil 2010 segunda ronda, ecuador 1988, guatemala 1999, colombia 2006, entre otras
+# la posicuion de costa rica mejora en la variante respecto del de sficativas a secas, pero la de otros casos empeora, el balance quizas es relativamente neutro
+
+# de dfbetas
+# conclusiones generales: los resultados no cambian mucho de sficativas a variantes. En algunos casos mejora, en otros empeora la situacion
+# conviene quizas reestimar sin nicaragua 1990 primera vuelta y Peru 1990 segunda vuelta y examinar estos casos porque en varias variables aparecio como influyente # ATENTI !!!!! ###
+# ademas parece que el pais peru y el pais ecuador estan teniendo algun efecto relevante para algunas variables para las que tiran para abajo y para arriba al mismo tiempo (en distintos años)
+
+
+# reestimaciones sin estos casos: 
+ 
+data_s_outliers <- democracias %>% 
+ mutate(filtrar = ifelse(cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
+                           cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
+                           cat_pais=="Costa Rica"&ncat_eleccion==1986&ncat_ronda==1, 
+                         1, 0)) %>% 
+  subset(filtrar==0)
+
+
+modelo_sficativas_s_outliers <- glm(formula_modelo_sficativas,
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = data_s_outliers)
+options(scipen=999)
+summary(modelo_sficativas_s_outliers)
+summary(modelo_sficativas)
+# al quitar outliers... 
+# dico_reeleccion pierde sficancia
+# nec y regulaciondico mejoran ligeramente magnitud
+
+modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
+                                   family = binomial(link = "logit"), 
+                                   #data = data 
+                                   data = data_s_outliers)
+options(scipen=999)
+summary(modelo_sficativas_variantes_s_outliers)
+summary(modelo_sficativas_variantes)
+# al quitar outliers... 
+# simil anterior: dico_reeleccion pierde sficancia
+# acceso gratuito gana sficancia 
+# simil anterior:nec y regulaciondico mejoran ligeramente magnitud
+
+# ppal conclusion: dico_reeleccion es SENSIBLE a algunos casos...
+
+### Control de multicolinealidad ####
 ##### correlaciones (al menos <.5, conservador <2.5) ####
 
 corr_base_democracias <- democracias %>% 
+  select(dico_hubo_debates,
+         #cat_pais,
+         ncat_eleccion,
+         ncat_ronda,
+         #elecid,
+         #obsid,
+         marginvic,
+         lnmarginvic,
+         nec,
+         voteshareincumbent,
+         lnvoteshareincumbent,
+         dico_reeleccion,
+         alineamiento,
+         proptv,
+         propindivinternet,
+         lnpropindivinternet,
+         prohibicionpropaganda,
+         accesogratuito,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         cumsum_pastciclos,
+         lngdp,
+         gdpxcapita,
+         democraciavdemelectoralcomp,
+         mediaqualitycorruptvdem)
+
+summary(corr_base_democracias)
+correlation_matrix <- cor(corr_base_democracias , use = "pairwise.complete.obs" )
+ 
+# Generar el gráfico con resaltado
+
+# Generar el gráfico con coordenadas capturadas
+corr_plot <- corrplot::corrplot(
+  correlation_matrix, 
+  method = "circle",
+  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  diag = FALSE, 
+  plot = NULL # Capturar coordenadas
+)
+# Crear el gráfico de correlación (parte inferior)
+n <- ncol(correlation_matrix) # Número de columnas/filas
+
+# Graficar la matriz de correlación
+corrplot::corrplot(
+  correlation_matrix, 
+  method = "circle",
+  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  type = "lower",   # Muestra solo la parte inferior
+  addgrid.col = "gray",
+  diag = FALSE      # Ocultar diagonal
+)
+
+# Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
+for (j in 1:n) {
+  for (i in 1:n) {
+    if (i > j) { # Solo trabaja en el triángulo inferior (evita asteriscos en la parte oculta)
+      # Resaltar valores entre 0.25 y 0.5
+      if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
+        text(j, n - i + 1, "*", col = "black", cex = 1.5)
+      }
+      # Resaltar valores mayores a 0.5
+      if (abs(correlation_matrix[i, j]) > 0.5) {
+        text(j, n - i + 1, "**", col = "black", cex = 1.5)
+      }
+    }
+  }
+}
+
+corr_base_democracias_reducida <- data_reducida %>% 
   select(dico_hubo_debates,
          #cat_pais,
          ncat_eleccion,
@@ -711,74 +914,98 @@ corr_base_democracias <- democracias %>%
          prohibicionpropaganda,
          accesogratuito,
          avgpropdebatesregionxciclo,
-         prop_elec_usa_ciclo,
+         #prop_elec_usa_ciclo, # NO TIENE VARIABILIDAD 
          regulaciondico,
          cumsum_pastciclos,
          gdpxcapita,
          democraciavdemelectoralcomp,
          mediaqualitycorruptvdem)
+summary(corr_base_democracias_reducida)
+correlation_matrix <- cor(corr_base_democracias_reducida , use = "pairwise.complete.obs" )
 
-summary(corr_base_democracias)
-correlation_matrix <- cor(corr_base_democracias , use = "pairwise.complete.obs" )
- 
 # Generar el gráfico con resaltado
+
+# Generar el gráfico con coordenadas capturadas
+corr_plot <- corrplot::corrplot(
+  correlation_matrix, 
+  method = "circle",
+  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  diag = FALSE, 
+  plot = NULL # Capturar coordenadas
+)
+# Crear el gráfico de correlación (parte inferior)
+n <- ncol(correlation_matrix) # Número de columnas/filas
+
+# Graficar la matriz de correlación
 corrplot::corrplot(
   correlation_matrix, 
-  method = "circle",        # Puedes usar otros métodos como "color", "number"
-  col = colorRampPalette(c("blue", "white", "red"))(8), # Escala de colores
-  #addCoef.col = "black",    # Añadir los coeficientes al gráfico
-  #tl.col = "black",         # Color de las etiquetas
-  #sig.level = 0.5,          # Nivel de significancia (umbral de 0.5 para el resaltado)
-  #insig = "label_sig",      # Mostrar "*" en los valores destacados
-  #pch.cex = 1.5,            # Tamaño del marcador "*"
-  diag = FALSE              # No graficar la diagonal
+  method = "circle",
+  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  type = "lower",   # Muestra solo la parte inferior
+  addgrid.col = "gray",
+  diag = FALSE      # Ocultar diagonal
 )
-# Resaltar valores absolutos mayores a 0.5
-for (j in 1:ncol(correlation_matrix)) {
-  for (i in 1:nrow(correlation_matrix)){
-    if (abs(correlation_matrix[j, i]) > 0.5) { # Ignorar la diagonal
-      text(j, i, "**", col = "black", cex = 1.5) # Añadir un "*" en las celdas relevantes
+
+# Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
+for (j in 1:n) {
+  for (i in 1:n) {
+    if (i > j) { # Solo trabaja en el triángulo inferior (evita asteriscos en la parte oculta)
+      # Resaltar valores entre 0.25 y 0.5
+      if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
+        text(j, n - i + 1, "*", col = "black", cex = 1.5)
+      }
+      # Resaltar valores mayores a 0.5
+      if (abs(correlation_matrix[i, j]) > 0.5) {
+        text(j, n - i + 1, "**", col = "black", cex = 1.5)
+      }
     }
   }
 }
-correlation_matrix[1, 2]
-
-# PENDIENTE PROBLEMA #########
-corr_base_democracias_reducida <- data_reducida %>% 
-  select()
-summary(corr_base_democracias)
-correlation_matrix <- cor(corr_base_democracias , use = "pairwise.complete.obs" )
-corrplot::corrplot(corr_base_democracias)
 
 ##### vif (raiz de vif < 2) ####
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
 
-vif_values <- car::vif(modelo_contingencia_controles)  
-print(vif_values) 
+vif_values1 <- car::vif(modelo_contingencia)   
+print(vif_values1) 
+# ninguno parece problematico
 
-vif_values <- car::vif(modelo_sistemico)  
-print(vif_values)
+vif_values2 <- car::vif(modelo_sistemico)  
+print(vif_values2)
+# gdpxcapita problematico
+# propindivinternet y democraciavdem border 
 
-vif_values <- car::vif(modelo_regulatorio)  
-print(vif_values) 
+vif_values3 <- car::vif(modelo_regulatorio)  
+print(vif_values3) 
+# ninguno parece problematico
 
-vif_values <- car::vif(modelo_temporal)  
-print(vif_values) 
+vif_values4 <- car::vif(modelo_temporal)  
+print(vif_values4) 
+# ninguno parece problematico. El mas border es democracia pero esta relativamente lejos (3.02)
 
-vif_values <- car::vif(modelo_sficativas)  
-print(vif_values) 
+vif_values5 <- car::vif(modelo_sficativas)  
+print(vif_values5) 
+# gdp per capita es problematico. 4.444897. idem propindivinternet: 5.32 
+# Del resto, democracia vdem esta border. 3.87. El resto, el que sigue es cumsum 3.06
 
-# otros
-### missing data ####
-### overall significance y comparaciones ####
+vif_values6 <- car::vif(modelo_sficativas_variantes)  
+print(vif_values6) 
+# mejora gdp (ahora ln: 3.455), tambien mejora democracia que estaba border (ahora 3.47). 
+# internet mejora: 4.2, pero sigue problematico
+
+#### otros? ####
+### Missing data PENDIENTE ####
+### Fit, Overall significance y comparaciones ####
 ##### test de Wald ####
 
+modelo_a_probar <- modelo_sficativas
+modelo_a_probar <- modelo_sficativas_variantes
 
-lmtest::waldtest(modelo_sficativas)
+lmtest::waldtest(modelo_a_probar)
 
 # podemos rechazar H0 de que todos los coeficientes = 0
+# mejora sficancia en caso variantes 
 
 # https://www.geeksforgeeks.org/how-to-perform-a-wald-test-in-r/
 # Res.Df: Indica los grados de libertad residuales, que es la diferencia entre el número total de observaciones y el número de parámetros estimados en el modelo.
@@ -791,6 +1018,7 @@ lmtest::waldtest(modelo_sficativas , modelo_contingencia_reducido_sficativas)
 #lmtest::waldtest(modelo_sficativas , modelo_sistemico_reducido_sficativas) # pendiente
 #lmtest::waldtest(modelo_sficativas , modelo_regulatorio_reducido_sficativas) # pendiente
 lmtest::waldtest(modelo_sficativas , modelo_temporal_reducido_sficativas)
+lmtest::waldtest(modelo_sficativas , modelo_sficativas_variantes)
 
 # en gral el modelo mejora significativamente en todos los casos
 
@@ -827,7 +1055,7 @@ if (likelihood_ratio_test$"Pr(>Chisq)"[2] < 0.05)
 
 
 
-### fit: Pseudos R cuadrados, AIC y BIC ####
+#### fit: Pseudos R cuadrados, AIC y BIC ####
  
 
 # pseudo R cuadrados. #Mas alto, mejores
@@ -888,7 +1116,7 @@ all_stats <- rbind(stats0,
                    stats5 )
 
 
-### fit: desempeño: accuracy ####
+#### fit: desempeño: accuracy ####
 
 
 data_modelo_sficativas$probabilidades_predichas <- predict(modelo_sficativas, type = "response")
@@ -1023,6 +1251,12 @@ robust_se_cluster_df <- robust_se_cluster_modelo_sficativas[,] %>%
   mutate(variable = rownames(robust_se_cluster_modelo_sficativas))
 writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
+
+
+# INTERPRETACION MODELOS 1 ####
+
+
+# MODELOS MULTINIVEL MODELOS 1 ####
 ## MODELOS 2: submuestra sin debates en la eleccion pasada. "Nueva práctica"  #####
 ### preparo submuestra ####
 data2 <- data %>% 

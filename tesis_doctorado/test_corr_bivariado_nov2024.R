@@ -18,6 +18,560 @@ base_candidatos <-  read.csv("indicadores_candidatos.csv")
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 # ELECCIONES ##############################
+
+## REPITO PARA VARIABLES SELECCIONADAS Y DATA FILTRADA (AGREGADO POSTERIORMENTE)  #####
+
+
+democracias <- base_indicadores  %>% 
+  select(-starts_with("source_")) %>% 
+  select(-starts_with("X")) %>% 
+  select(-eng_cat_pais, -dico_debates_eleccion) %>% 
+  left_join(base_controles %>% 
+              select(-starts_with("source_")) %>% 
+              select(-X, -eng_cat_pais)) %>% 
+  left_join(base_vdependiente %>% select(-X)) %>% 
+  subset(democraciavdempolyarchy>0.45) 
+
+
+variable_dependiente <- democracias$dico_hubo_debates
+options(scipen=999)
+
+# año electoral - STRONG POSITIVE + SIGNIFICATIVA #######
+
+variable_independiente <-  democracias$ncat_eleccion
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+
+
+
+# fragmentacion: NEC - WEAK POSITIVE + SFICATIVA #######
+
+variable_independiente <-  democracias$nec
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log()) # quizas amerita
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+
+# desalineamiento (% personas que YES se identifican con partido). MODERATE NEGATIVE COR + SFICATIVA  #######
+
+variable_independiente <- democracias$alineamiento
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+
+# competitividad (marginvic) VWEAK/NO + SFICATIVA  #######
+
+# basem <- base %>%
+#  subset(marginvic>-75)
+# variable_independiente <- abs(basem$marginvic)
+# variable_dependiente <- basem$dico_debates_eleccion
+
+variable_independiente <- abs(democracias$marginvic)
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log()) # quizas amerita
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+
+# incumbent: vote share incumbent VWEAK/NO + NO SFICATIVA #######
+
+variable_independiente <- democracias$voteshareincumbent
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+
+# media : proptv - WEAK POSITIVE  + SFICATIVA #######
+
+variable_independiente <- democracias$proptv
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+# media : propint  - STRONG POSITIVE + SFICATIVA #######
+
+variable_independiente <- democracias$propindivinternet
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+# regulaciones: prohibicion propaganda - MODERATE POSITIVE + SFICATIVA  #######
+
+variable_independiente <- democracias$prohibicionpropaganda
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+#hist(variable_independiente %>%  log())
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
+
+
+# regulaciones: acceso gratuito - VWEAK/NO + SFICATIVA #######
+
+variable_independiente <- democracias$accesogratuito
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+#hist(variable_independiente %>%  log())
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
+
+
+# regulaciones sobre debates: dicotomica - STRONG POSITIVE  + SFICATIVA #######
+
+variable_independiente <- democracias$regulaciondico
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+#hist(variable_independiente %>%  log())
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa
+
+
+
+# lagged: cumsum ciclos anteriores - STRONG POSITIVE #######
+
+variable_independiente <- democracias$cumsum_pastciclos
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+# region  avgprop x ciclo - MODERATE/STRONG POSITIVE + SFICATIVA #######
+
+variable_independiente <- democracias$avgpropdebatesregionxciclo
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+hist(variable_independiente %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+# USA prop - WEAK POSITIVE + SFICATIVA #######
+
+variable_independiente <- democracias$prop_elec_usa_ciclo
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+table(variable_independiente)
+#hist(variable_independiente %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+#table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+
+
+
+# Desarrollo/PBI per capita: - MODERATE POSITIVE + SFICATIVA #######
+
+# ajustados a 2015
+variable_control <-  democracias$gdpxcapita
+standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
+
+data <- tibble(variable_control = variable_control,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_control)
+hist(variable_control %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_control))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_control)))
+#table(variable_control, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_control,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+
+# Democracia VDEM #######
+
+variable_control <-  democracias$democraciavdemelectoralcomp
+standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
+
+data <- tibble(variable_control = variable_control,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_control)
+hist(variable_control %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_control))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_control)))
+#table(variable_control, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_control,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+# Medios / VDEM : MODERADO + SFICATIVO  #######
+
+# preferido: vdem
+variable_control <-  democracias$mediaqualitycorruptvdem
+standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
+
+data <- tibble(variable_control = variable_control,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_control)
+hist(variable_control %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_control))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_control)))
+#table(variable_control, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_control,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) 
+
+
+## ORIGINAL INDICADORES. tests bivariados ##############
+
 # acomodo data preparacion #######
 
 # para interpretacion del Taub b
@@ -40,10 +594,6 @@ base <- base_indicadores  %>%
 
 variable_dependiente <- base$dico_hubo_debates
 options(scipen=999)
-
-
-## INDICADORES. tests bivariados ##############
-
 
 # año electoral - STRONG POSITIVE + SIGNIFICATIVA #######
 
@@ -876,7 +1426,35 @@ modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_indepen
                             family = "binomial")
 summary(modelo_estandarizado) # para ver si diferencia es significativa
 
-## CONTROLES. tests bivariados ######
+# democracia VDEM - electoral component ####
+variable_control <- controles$democraciavdemelectoralcomp
+standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
+
+data <- tibble(variable_control = variable_control,
+               variable_dependiente = variable_dependiente)
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_control))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_control)))
+#table(variable_control, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_control,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) 
+
+## ORIGINAL CONTROLES. tests bivariados ######
 # acomodo data preparacion #######
 
 
