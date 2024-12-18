@@ -1409,7 +1409,7 @@ exp(coef(modelo_a_interpretar))
 odds_ratios <- jtools::plot_summs(modelo_sficativas_variantes_s_outliers, #modelo_contingencia,
                           exp=T, 
                           scale = T,
-                          inner_ci_level = .9,
+                          inner_ci_level = .95,
                           # coefs = c("nombre coef" =  "variable",
                           #           ....),
                           model.names = c("modelo 1"#,
@@ -1479,10 +1479,15 @@ ggplot(summary(predict_model),
   theme(axis.text.x = element_text(angle = 90)) +
   labs(x = "lnnec", y = "Pr(debate)")
 
+vcov_cluster <- vcovCL(modelo_a_interpretar, 
+                       cluster = data_modelo_a_interpretar$cat_pais)
 
-
-cdat <- margins::cplot(modelo_a_interpretar, "lnnec", what = "prediction",
-              main = "Pr(debate)", draw = F)
+cdat <- margins::cplot(modelo_a_interpretar, 
+                       "lnnec", 
+                       what = "prediction",
+                       #vcov = vcov_cluster, # no veo que cambie mucho
+              main = "Pr(debate)", 
+              draw = F)
 
 ggplot(cdat, aes(x = xvals)) +
   geom_line(aes(y = yvals)) +
@@ -1491,6 +1496,22 @@ ggplot(cdat, aes(x = xvals)) +
   geom_hline(yintercept = 0) +
   labs(title = "Pr. debate",
        x = "lnnec", y = "Prob. predicha")
+
+cdat1 <- margins::cplot(modelo_a_interpretar, 
+                       "lnnec", 
+                       what = "effect", 
+                       vcov = vcov_cluster, 
+                       main = "Pr(debate)",
+                       scattter = T)
+
+ggplot(cdat, aes(x = xvals)) +
+  geom_line(aes(y = yvals)) +
+  geom_line(aes(y = upper), linetype = 2)+
+  geom_line(aes(y = lower), linetype = 2) +
+  geom_hline(yintercept = 0) +
+  labs(title = " Efecto de lnnec",
+       x = "lnnec", y = "Prob. predicha") +
+  
 
 # El resumen nos ofrece un tibble donde tenemos la probabilidad prevista de nuestra variable dependiente para cada valor observado de poder_presid y su significado estadístico. Esto se convierte fácilmente en una cifra, y para ello hay dos alternativas que recomendamos.
 
