@@ -1,4 +1,5 @@
 
+# https://arcruz0.github.io/libroadp/logit.html#representaci%C3%B3n-visual-de-los-resultados
 
 # librerias ########### 
 
@@ -76,6 +77,13 @@ democracias <- democracias %>%
          lnvoteshareincumbent = log(voteshareincumbent + 1))
 
 # democracias$marginvic
+
+### mini exploracion ####
+
+skimr::skim(democracias)
+# problemas de missing en propindiv internet (seguro se puede completar)
+# problemas de missing en acceso gratuito (tratar de completar)
+# problemas de missing en gdp (una picardia total)
 
 ## MODELOS 1: toda la muestra de democracias - V.D = dico_hubo_debates #####
 ### Modelo contingencia  ####
@@ -477,7 +485,9 @@ modelo_temporal_reducido <- glm(formula_modelo_temporal,
 modelo_sficativas_reducido <- glm(formula_modelo_sficativas, 
                                 family = binomial(link = "logit"), 
                                 data = data_reducida)
-
+modelo_sficativas_variantes_reducido <- glm(formula_modelo_sficativas_variantes, 
+                                  family = binomial(link = "logit"), 
+                                  data = data_reducida)
 #### reducida sficativas ####
 modelo_0_reducido_sficativas <- glm(dico_hubo_debates ~ 1, 
                          family = binomial(link = "logit"), 
@@ -803,8 +813,14 @@ modelo_sficativas_s_outliers <- glm(formula_modelo_sficativas,
                          family = binomial(link = "logit"), 
                          #data = data 
                          data = data_s_outliers)
+
+modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
+                                    family = binomial(link = "logit"), 
+                                    #data = data 
+                                    data = data_s_outliers)
 options(scipen=999)
 summary(modelo_sficativas_s_outliers)
+summary(modelo_sficativas_variantes_s_outliers)
 summary(modelo_sficativas)
 # al quitar outliers... 
 # dico_reeleccion pierde sficancia
@@ -859,6 +875,9 @@ summary(corr_base_democracias)
 correlation_matrix <- cor(corr_base_democracias , use = "pairwise.complete.obs" )
  
 # Generar el gráfico con resaltado
+
+# otra funcion de grafico
+ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
 
 # Generar el gráfico con coordenadas capturadas
 corr_plot <- corrplot::corrplot(
@@ -994,7 +1013,7 @@ print(vif_values6)
 # mejora gdp (ahora ln: 3.455), tambien mejora democracia que estaba border (ahora 3.47). 
 # internet mejora: 4.2, pero sigue problematico
 
-#### otros? ####
+#### otros? PENDIENTE ####
 ### Missing data PENDIENTE ####
 ### Fit, Overall significance y comparaciones ####
 ##### test de Wald ####
@@ -1023,15 +1042,20 @@ lmtest::waldtest(modelo_sficativas , modelo_sficativas_variantes)
 # en gral el modelo mejora significativamente en todos los casos
 
 ##### lr test (comparar modelos con = cantidad de data, sacando missing) ####
-
+# Chi-squared test of all coefficients An LR test of the hypothesis that all coefficients except the intercept(s) are zero can be computed by comparing the log likelihoods: LR= 2 ln L(MFull) − 2 ln L(MIntercept ). This statistic is sometimes designated as G2 . 
 #  First, the two models must be nested. Second, the two models must be estimated on exactly the same sample. 
 #lrtest(null_model, full_model)
 
-likelihood_ratio_test <- lrtest(modelo_0_reducido_sficativas, modelo_sficativas )
-likelihood_ratio_test <- lrtest(modelo_contingencia_reducido_sficativas, modelo_sficativas)
-likelihood_ratio_test <- lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
-likelihood_ratio_test <- lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
-likelihood_ratio_test <- lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
+# Obtener Log-Likelihood, mas alto mejor. solo se pueden comparar modelos anidados
+logLik(modelo_a_probar)
+
+# para hacer directamente el test
+lrtest(modelo_0_reducido_sficativas, modelo_sficativas ) # -73.106 (pero mas parametros)
+lrtest(modelo_0_reducido_sficativas, modelo_sficativas_variantes ) # -73.634
+lrtest(modelo_contingencia_reducido_sficativas, modelo_sficativas)
+lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
+lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
+lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
 
 
 # Model 1 : represents the null model, which includes only the intercept.
@@ -1043,13 +1067,13 @@ likelihood_ratio_test <- lrtest(modelo_temporal_reducido_sficativas, modelo_sfic
 
 #likelihood_ratio_test <- lrtest(null_model, full_model)
 # Interpretation of likelihood ratio test results
-if (likelihood_ratio_test$"Pr(>Chisq)"[2] < 0.05) 
-{
-  cat("Reject the null hypothesis. The full model is significantly better than 
-        the null model.\n")
-} else {
-  cat("Fail to reject the null hypothesis. The null model is sufficient.\n")
-}
+# if (likelihood_ratio_test$"Pr(>Chisq)"[2] < 0.05) 
+# {
+#   cat("Reject the null hypothesis. The full model is significantly better than 
+#         the null model.\n")
+# } else {
+#   cat("Fail to reject the null hypothesis. The null model is sufficient.\n")
+# }
 
 # en todos los casos, el modelo full es mejor que el modelo más incompleto. 
 
@@ -1057,24 +1081,19 @@ if (likelihood_ratio_test$"Pr(>Chisq)"[2] < 0.05)
 
 #### fit: Pseudos R cuadrados, AIC y BIC ####
  
+modelo_a_probar <- modelo_sficativas
+modelo_a_probar <- modelo_sficativas_variantes
 
 # pseudo R cuadrados. #Mas alto, mejores
 # https://www.rdocumentation.org/packages/rcompanion/versions/2.4.36/topics/nagelkerke
-rcompanion::nagelkerke(modelo_sficativas)
+rcompanion::nagelkerke(modelo_a_probar)
 # https://search.r-project.org/CRAN/refmans/fmsb/html/Nagelkerke.html 
-fmsb::NagelkerkeR2(modelo_sficativas)
-pscl::pR2(modelo_sficativas)
+fmsb::NagelkerkeR2(modelo_a_probar)
+pscl::pR2(modelo_a_probar)
 
 # Obtener AIC y BIC # mas bajos, mejores, aunque se penaliza la inclusion de mas parametros
-AIC(modelo_sficativas)
-BIC(modelo_sficativas)
-
-# Obtener Log-Likelihood, mas alto mejor. solo se pueden comparar modelos anidados
-logLik(modelo_sficativas)
-
-# Realizar prueba de razón de verosimilitudes
-lmtest::lrtest(modelo_0, modelo_sficativas)
-
+AIC(modelo_a_probar)
+BIC(modelo_a_probar)
 
 
 # para comparar modelos con igual n, creo funcion 
@@ -1107,20 +1126,28 @@ stats2 <- stats( modelo_sistemico_reducido)
 stats3 <- stats( modelo_regulatorio_reducido)
 stats4 <- stats( modelo_temporal_reducido)
 stats5 <- stats( modelo_sficativas_reducido)
+stats6 <- stats( modelo_sficativas_variantes_reducido)
 
 all_stats <- rbind(stats0,
                    stats1,
                    stats2,
                    stats3,
                    stats4,
-                   stats5 )
+                   stats5,
+                   stats6 )
 
+# comentario #
+# los modelos full performan mejor que los modelos reducidos. Incluso con data reducida! 
+# para el caso del AIC, notable que incluso con penalizacion por mas parametros, el valor del estadistico disminuye
+# en todos los casos de pseudos R2, el modelo completo es mejor que los más incompletos, y la variante completa mejor que el completo
 
 #### fit: desempeño: accuracy ####
 
+modelo_a_probar <- modelo_sficativas
+modelo_a_probar <- modelo_sficativas_variantes
 
-data_modelo_sficativas$probabilidades_predichas <- predict(modelo_sficativas, type = "response")
-data_modelo_sficativas$predicciones_binarias <- ifelse(probabilidades_predichas>0.5,1,0)
+data_modelo_sficativas$probabilidades_predichas <- predict(modelo_a_probar, type = "response")
+data_modelo_sficativas$predicciones_binarias <- ifelse(data_modelo_sficativas$probabilidades_predichas>0.5,1,0)
 
 # Matriz de confusión
 confusion_matrix <- table(data_modelo_sficativas$predicciones_binarias, data_modelo_sficativas$dico_hubo_debates)
@@ -1166,98 +1193,619 @@ countr22 <- funcion_count_R2(modelo_sistemico_reducido, data_reducida$dico_hubo_
 countr23 <- funcion_count_R2(modelo_regulatorio_reducido, data_reducida$dico_hubo_debates)
 countr24 <- funcion_count_R2(modelo_temporal_reducido, data_reducida$dico_hubo_debates)
 countr25 <- funcion_count_R2(modelo_sficativas_reducido, data_reducida$dico_hubo_debates)
+countr26 <- funcion_count_R2(modelo_sficativas_variantes_reducido, data_reducida$dico_hubo_debates)
 
-comparacion_count_r2 <- rbind(countr20 ,
+comparacion_count_r2_reducidas <- rbind(countr20 ,
                               countr21 ,
                               countr22 ,
                               countr23 ,
                               countr24 ,
-                              countr25 )
+                              countr25 ,
+                              countr26 )
 
-# el mejor sigue siendo el modelo full
+# en este caso el modelo variante performa peor
+# los modelos completos mejoran la performance de los más incompletos
+
 # quizas vale la pena comparar versiones con mas datos
 # o hacer trabajo andidado de verdad, digamos
 
-### MODELOS ROBUSTOS #####
-### Modelo contingencia  ####
+countr27 <- funcion_count_R2(modelo_sficativas, data_modelo_sficativas$dico_hubo_debates)
+countr28 <- funcion_count_R2(modelo_sficativas_variantes, data_modelo_sficativas$dico_hubo_debates)
+
+comparacion_count_r2_full <- rbind(countr27 ,
+                                   countr28 )
+
+# idem: el desempeño de la variante es ligeramente peor
+
+## MODELOS ROBUSTOS #####
+
+#### https://www.geeksforgeeks.org/different-robust-standard-errors-of-logit-regression-in-stata-and-r/
+
+### Heteroscedasticity-Consistent Standard Errors ####
+
+# robust_se <- coeftest(model, vcov = vcovHC(model, type = "HC0"))
+
+##### Modelo contingencia  ####
+
+robust_se_modelo_contingencia <- coeftest(modelo_contingencia,  
+                                          vcovHC(modelo_contingencia, type = "HC0"))
+
+print(robust_se_modelo_contingencia)
+
+
+##### Modelo sistemico ####
+ 
+robust_se_modelo_sistemico <- coeftest(modelo_sistemico, 
+                                               vcovHC(modelo_sistemico, type = "HC0"))
+print(robust_se_modelo_sistemico)
+
+
+##### Modelo marco regulatorio ####
+
+robust_se_modelo_regulatorio <- coeftest(modelo_regulatorio, 
+                                                  vcovHC(modelo_regulatorio, type = "HC0"))
+print(robust_se_modelo_regulatorio)
+
+
+##### Modelo geo/temp ####
+
+robust_se_modelo_temporal <- coeftest(modelo_temporal, 
+                                              vcovHC(modelo_temporal, type = "HC0"))
+print(robust_se_modelo_temporal)
+
+
+##### Modelo final / sficativas ####
+
+robust_se_modelo_sficativas <- coeftest(modelo_sficativas, 
+                                                vcovHC(modelo_sficativas, type = "HC0"))
+print(robust_se_modelo_sficativas)
+
+##### Modelo final / sficativas variantes ####
+
+robust_se_modelo_sficativas <- coeftest(modelo_sficativas_variantes, 
+                                        vcovHC(modelo_sficativas_variantes, type = "HC0"))
+print(robust_se_modelo_sficativas)
+
+###  Cluster-Robust Standard Errors ####
+##### Modelo contingencia  ####
 
 robust_se_cluster_modelo_contingencia <- coeftest(modelo_contingencia, 
-                              vcov = vcovCL(modelo_contingencia_controles, 
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
+                                                  vcov = vcovCL(modelo_contingencia, 
+                                                                #cluster = democracias$elecid))
+                                                                #cluster = data$elecid))
+                                                                cluster = democracias$cat_pais))
 
 
 print(robust_se_cluster_modelo_contingencia)
+# 
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_contingencia[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_contingencia))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster_modelo_contingencia[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster_modelo_contingencia))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+##### Modelo sistemico ####
 
-### Modelo sistemico ####
- 
 robust_se_cluster_modelo_sistemico <- coeftest(modelo_sistemico, 
-                              vcov = vcovCL(modelo_sistemico,
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
+                                               vcov = vcovCL(modelo_sistemico,
+                                                             #cluster = democracias$elecid))
+                                                             #cluster = data$elecid))
+                                                             cluster = democracias$cat_pais))
 print(robust_se_cluster_modelo_sistemico)
 
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster_modelo_sistemico[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster_modelo_sistemico))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_sistemico[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_sistemico))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
-### Modelo marco regulatorio ####
+##### Modelo marco regulatorio ####
 
- robust_se_cluster_modelo_regulatorio <- coeftest(modelo_regulatorio, 
-                              vcov = vcovCL(modelo_regulatorio, 
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
+robust_se_cluster_modelo_regulatorio <- coeftest(modelo_regulatorio, 
+                                                 vcov = vcovCL(modelo_regulatorio, 
+                                                               #cluster = democracias$elecid))
+                                                               #cluster = data$elecid))
+                                                               cluster = democracias$cat_pais))
 print(robust_se_cluster_modelo_regulatorio)
 
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster_modelo_regulatorio[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster_modelo_regulatorio))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_regulatorio[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_regulatorio))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
-### Modelo geo/temp ####
+##### Modelo geo/temp ####
 
 robust_se_cluster_modelo_temporal <- coeftest(modelo_temporal, 
-                              vcov = vcovCL(modelo_temporal, 
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
+                                              vcov = vcovCL(modelo_temporal, 
+                                                            #cluster = democracias$elecid))
+                                                            #cluster = data$elecid))
+                                                            cluster = democracias$cat_pais))
 print(robust_se_cluster_modelo_temporal)
 
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster_modelo_temporal[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster_modelo_temporal))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_temporal[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_temporal))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
-### Modelo final / sficativas ####
+##### Modelo sficativas ####
 
 robust_se_cluster_modelo_sficativas <- coeftest(modelo_sficativas, 
-                              vcov = vcovCL(modelo_sficativas, 
-                                            #cluster = data$elecid))
-                                            cluster = democracias$elecid))
+                                                vcov = vcovCL(modelo_sficativas, 
+                                                              #cluster = democracias$elecid))
+                                                              #cluster = data$elecid))
+                                                              cluster = democracias$cat_pais))
 print(robust_se_cluster_modelo_sficativas)
 
-# para pasar a excel
-robust_se_cluster_df <- robust_se_cluster_modelo_sficativas[,] %>% 
-  as_tibble() %>%
-  mutate(variable = rownames(robust_se_cluster_modelo_sficativas))
-writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_sficativas[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_sficativas))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
+##### Modelo final / sficativas - variantes ####
+
+robust_se_cluster_modelo_sficativas_variantes <- coeftest(modelo_sficativas_variantes, 
+                                                vcov = vcovCL(modelo_sficativas_variantes, 
+                                                              #cluster = democracias$elecid))
+                                                              #cluster = data$elecid))
+                                                              cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_sficativas_variantes)
+
+robust_se_cluster_modelo_sficativas_s_outliers <- coeftest(modelo_sficativas_variantes_s_outliers, 
+                                                          vcov = vcovCL(modelo_sficativas_variantes_s_outliers, 
+                                                                        #cluster = democracias$elecid))
+                                                                        #cluster = data$elecid))
+                                                                        cluster = data_s_outliers$cat_pais))
+print(robust_se_cluster_modelo_sficativas_s_outliers)
+
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_sficativas_variantes[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_sficativas_variantes))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
+## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
+
+### importante elegir ####
+
+modelo_a_interpretar <- modelo_sficativas_variantes_s_outliers
+data_modelo_a_interpretar <- data_s_outliers
+
+### calculo de probas predichas ####
+data_modelo_a_interpretar$probabilidades_predichas <- predict(modelo_a_interpretar, type = "response")
+data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpretar$probabilidades_predichas>0.5,1,0)
+
+### calculo ODDS RATIO #####
+# a diferencia de la proba predicha, que varia de manera no lineal,
+# el odds ratio es constante para distintos valores de x 
+
+minlnnec <- data_modelo_a_interpretar$lnnec %>% min()
+exp(minlnnec)
+minlnnec1 <- minlnnec + 1
+probaminlnnec
+probaminlnnec1
+probaminlnnec / probaminlnnec1
+# un odds ratio mayor que 1 expresa un cambio positivo, mientras que si es menor que 1 (entre 0 y 1) representa un cambio negativo en las probabilidades estimadas.
+
+# Para utilizar los odds ratios queremos mostrarte cómo puedes cambiar los coeficientes que obtienes directamente de la tabla, que son log odds, y reemplazarlos por odds ratios. Para ello, puedes usar los argumentos override.coef,override.se y override.pvalues de screenreg()
+#summary(modelo_a_interpretar)
+# OJO! que los errores estandar no estan bien calculados en la tabla a continuacion
+texreg::screenreg(modelo_a_interpretar,
+          custom.model.names = "data_modelo_a_interpretar - Odds Ratios",
+          override.coef    = exp(coef(modelo_a_interpretar)),
+          stars = c(0.001, 0.01, 0.05, 0.1),
+          # la siguiente función, odds_*, están en el paquete del libro
+         # override.se      = odds_se(modelo_a_interpretar), # no tengo esta funcion ! 
+         # override.pvalues = odds_pvalues(modelo_a_interpretar),
+          # además, omitiremos el coeficiente del intercepto
+          omit.coef = "Inter")
+
+# También podemos graficar los coeficientes como odds ratios: recuerda que los odds ratios menores que 1 son efectos negativos y mayores que 1 son positivos. El coeficiente se expresa como su valor medio y su intervalo de confianza del 95%. Si el coeficiente es estadísticamente significativo, su intervalo de confianza no pasará de la línea en 1. Si, por el contrario, no son significativos, el efecto cruzará la línea.
+
+exp(coef(modelo_a_interpretar))
+
+odds_ratios <- jtools::plot_summs(modelo_sficativas_variantes_s_outliers, #modelo_contingencia,
+                          exp=T, 
+                          scale = T,
+                          inner_ci_level = .9,
+                          # coefs = c("nombre coef" =  "variable",
+                          #           ....),
+                          model.names = c("modelo 1"#,
+                                          #"modelo 2"
+                                          ))
+# 
+# odds_ratios + labs(x = "Coeficientes exponenciados", y = NULL) # RARISIMO ! 
+
+# interesante que nec y regulacion dico parecen tener los odds mas grandes
+
+# https://stackoverflow.com/questions/41384075/r-calculate-and-interpret-odds-ratio-in-logistic-regression revisar
+
+
+### escenarios #####
+# Crear un dataset base con valores constantes MIN-MEAN-MAX
+data_to_predict <- data.frame(
+  lnnec = rep(seq(min(data_modelo_a_interpretar$lnnec, na.rm = TRUE), 
+                    max(data_modelo_a_interpretar$lnnec, na.rm = TRUE),
+                    #mean(data_modelo_sficativas$lnnec, na.rm = TRUE),
+                    length.out = 10), 2), # Cambiar por los valores que quieras probar
+  lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
+  lnvoteshareincumbent = mean(data_modelo_a_interpretar$lnvoteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = 0, # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
+  accesogratuito = mean(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = rep(c(0,1),each=10) ,
+  cumsum_pastciclos = mean(data_modelo_a_interpretar$cumsum_pastciclos, na.rm = TRUE),
+  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+# Predecir probabilidades
+data_to_predict$predicted_probs <- predict(modelo_a_interpretar, 
+                                     newdata = data_to_predict, 
+                                     type = "response")
+
+# Graficar probabilidades predichas
+# plot(data_to_predict$lnnec, data_to_predict$predicted_probs, 
+#      type = "l", col = "blue", lwd = 2, 
+#      xlab = "lnmarginvic", 
+#      ylab = "Probabilidad Predicha", 
+#      main = "Impacto de lnnec en la Probabilidad Predicha de un debate")
+
+ggplot(data_to_predict) +
+  geom_line(aes(x = exp(lnnec), y = predicted_probs, colour = as.factor(regulaciondico)))
 
 
 
-# INTERPRETACION MODELOS 1 ####
+# version mas simple
 
 
-# MODELOS MULTINIVEL MODELOS 1 ####
-## MODELOS 2: submuestra sin debates en la eleccion pasada. "Nueva práctica"  #####
+predict_model <- prediction::prediction(
+  modelo_a_interpretar, 
+  data = data_to_predict,
+  at = list(lnnec = unique(data_to_predict$lnnec))
+)
+summary(predict_model)
+
+ggplot(summary(predict_model),
+                      aes(x = `at(lnnec)`, y = Prediction,
+                          ymin = lower, ymax = upper,
+                          group = 1)) +
+  geom_line() +
+  geom_errorbar(width = 0.2) +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "lnnec", y = "Pr(debate)")
+
+
+
+cdat <- margins::cplot(modelo_a_interpretar, "lnnec", what = "prediction",
+              main = "Pr(debate)", draw = F)
+
+ggplot(cdat, aes(x = xvals)) +
+  geom_line(aes(y = yvals)) +
+  geom_line(aes(y = upper), linetype = 2)+
+  geom_line(aes(y = lower), linetype = 2) +
+  geom_hline(yintercept = 0) +
+  labs(title = "Pr. debate",
+       x = "lnnec", y = "Prob. predicha")
+
+# El resumen nos ofrece un tibble donde tenemos la probabilidad prevista de nuestra variable dependiente para cada valor observado de poder_presid y su significado estadístico. Esto se convierte fácilmente en una cifra, y para ello hay dos alternativas que recomendamos.
+
+### efecto marginal #####
+#¿Cuál es el efecto medio del aumento de una unidad de la variable independiente en la probabilidad de que se produzca la variable dependiente? El Efecto Marginal Promedio (AME, por sus siglas en inglés) se utiliza para ver estos efectos, y se logra con el comando plot del paquete de margins.
+#  el efecto marginal es la variación de la variable explicada cuando la variable explicativa aumenta en una unidad.
+
+# efecto marginal promedio
+
+marginal_ef <- margins::margins(modelo_a_interpretar)
+
+plot(marginal_ef, 
+     labels = c("lnmarginvic",
+                "lnnec",
+                "lnvoteshareincumbent",
+                "dico_reeleccion",
+                "propindivinternet",
+                "accesogratuito",
+                "avgpropdebatesregionxciclo",
+                 "regulaciondico",
+                 "cumsum_pastciclos",
+                 "lngdp",
+                 "democraciavdemelectoralcomp",
+                 "mediaqualitycorruptvdem"),
+     ylab = "AME")
+
+# También podemos estar interesados, no en el efecto promedio, sino en el efecto marginal completo de una variable. Dada la no linealidad de estos modelos, el efecto marginal de una variable sobre la probabilidad de ocurrencia de la variable dependiente no es constante ni es significativo en toda la variable. Para ello utilizamos la función cplot del paquete margins y luego lo personalizamos con las opciones de ggplot2
+
+marginal_nec <- margins::cplot(modelo_a_interpretar, "lnnec", what = "effect", 
+                          main = "Ef.Marg(Quiebre)",
+                          draw = F)
+
+ggplot(marginal_nec, aes(x = xvals)) +
+  geom_line(aes(y = yvals)) +
+  geom_line(aes(y = upper), linetype = 2)+
+  geom_line(aes(y = lower), linetype = 2) +
+  geom_hline(yintercept = 0) +
+  labs(title = "Modelo a interpretar",
+       x = "NEC", y = "Efecto marginal")
+
+# el efecto de la variable disminuye a medida que aumenta su valor, consistente con la idea que tenemos de que su efecto es log
+# el efecto es sficativo para todos los valores de la variable
+
+
+
+
+###  borrador agrego errores estandar  #####
+# 
+# # a las proba predichas (chatgpt)
+# # Simular coeficientes del modelo con matriz robusta
+# sim_coef <- arm::sim(modelo_a_interpretar, n.sims = 1000, vcovCL(modelo_a_interpretar,
+#                                                             cluster = data_modelo_a_interpretar$cat_pais))
+# # Obtener predicciones simuladas
+# X <- model.matrix(modelo_a_interpretar)
+# pred_sim <- plogis(X %*% t(coef(sim_coef)))  # Probabilidades predichas simuladas
+# 
+# # Calcular media e intervalos de confianza
+# data_modelo_a_interpretar$probabilidad_media <- rowMeans(pred_sim)
+# data_modelo_a_interpretar$probabilidad_ci_inf <- apply(pred_sim, 1, quantile, probs = 0.025)
+# data_modelo_a_interpretar$probabilidad_ci_sup <- apply(pred_sim, 1, quantile, probs = 0.975)
+# 
+# # a los escenarios # (chatgpt)
+# 
+# 
+# 
+# # Obtener matriz de varianza-covarianza robusta clusterizada
+# vcov_cluster <- vcovCL(modelo_a_interpretar, 
+#                        cluster = data_modelo_a_interpretar$cat_pais)
+# 
+# # Crear un objeto "coeftest" con los errores estándar robustos
+# robust_model <- coeftest(modelo_a_interpretar, vcov. = vcov_cluster)
+# 
+# # Matriz de diseño para las predicciones
+# X <- model.matrix(~ lnnec + lnmarginvic + lnvoteshareincumbent + 
+#                     dico_reeleccion + propindivinternet + accesogratuito + 
+#                     avgpropdebatesregionxciclo + regulaciondico + 
+#                     cumsum_pastciclos + lngdp + democraciavdemelectoralcomp + 
+#                     mediaqualitycorruptvdem, 
+#                   data = data_to_predict)
+# 
+# # Coeficientes estimados
+# beta <- coef(robust_model)
+# 
+# # Probabilidades predichas
+# # data_to_predict$predicted_probs2 <- 
+# # test <- plogis(X %*% beta) #%>% tibble()
+# 
+# 
+# # Varianza de las predicciones
+# pred_var <- diag(X %*% vcov_cluster %*% t(X))
+# 
+# # Calcular errores estándar
+# se <- sqrt(pred_var)
+# 
+# # Intervalos de confianza
+# data_to_predict$lower_ci <- plogis(qlogis(data_to_predict$predicted_probs) - 1.96 * data_to_predict$se)
+# data_to_predict$upper_ci <- plogis(qlogis(data_to_predict$predicted_probs) + 1.96 * data_to_predict$se)
+# 
+# 
+# # Graficar probabilidades predichas con bandas de confianza
+# ggplot(data_to_predict, 
+#        aes(x = exp(lnnec), y = predicted_probs, colour = as.factor(regulaciondico))) +
+#   geom_line(size = 1) +
+#   geom_ribbon(aes(ymin = lower_ci, ymax = upper_ci, fill = as.factor(regulaciondico)), 
+#               alpha = 0.2, colour = NA) +
+#   labs(
+#     x = "nec (Escala Original)",
+#     y = "Probabilidad Predicha",
+#     colour = "Regulación Dicótica",
+#     fill = "Regulación Dicótica",
+#     title = "Impacto del NEC en la Probabilidad Predicha de que ocurra un debate, con Intervalos de Confianza"
+#   ) +
+#   theme_minimal() +
+#   scale_colour_manual(values = c("blue", "red")) +
+#   scale_fill_manual(values = c("blue", "red"))
+
+# # Para hacer tabla de escenarios - Crear combinaciones de varios valores
+# scenarios <- expand.grid(
+#   lnmarginvic = seq(0, 5, 1),
+#   dico_reeleccion = c(0, 1),
+#   accesogratuito = mean(data_modelo_sficativas$accesogratuito, na.rm = TRUE),
+#   # Agregar otras variables necesarias...
+# )
+# 
+# # Calcular probabilidades predichas para cada escenario
+# scenarios$predicted_probs <- predict(modelo_sficativas, newdata = scenarios, type = "response")
+# 
+# # Ver resultados
+# print(scenarios)
+
+## MULTINIVEL MODELOS 1 ####
+
+### Version artesanal ####
+
+#### calculo de media dico_hubo_debates, en general y x pais #####
+
+
+mean_dico_hubo_debates <- data_modelo_a_interpretar$dico_hubo_debates %>% mean()
+
+mean_dico_hubo_debatesxpais <- data_modelo_a_interpretar %>% 
+  group_by(cat_pais) %>% 
+  summarise(mean_dico_hubo_debatesxpais = mean(dico_hubo_debates),
+         diff_mean_general = mean_dico_hubo_debates - mean_dico_hubo_debatesxpais,
+         abs_diff_mean_general = abs(diff_mean_general)) %>% 
+  arrange(desc(abs_diff_mean_general))
+
+
+# uruguay es nuestro país de referencia
+
+
+
+#### creamos variables dico ####
+data_modelo_a_interpretar$cat_pais %>% unique()
+data_modelo_a_interpretar <- data_modelo_a_interpretar %>% 
+  mutate(dico_argentina = ifelse(cat_pais=="Argentina",1,0),
+         dico_bolivia = ifelse(cat_pais=="Bolivia",1,0),
+         dico_brasil = ifelse(cat_pais=="Brasil",1,0),
+         dico_chile = ifelse(cat_pais=="Chile",1,0),
+         dico_colombia = ifelse(cat_pais=="Colombia",1,0),
+         dico_crica = ifelse(cat_pais=="Costa Rica",1,0),
+         dico_ecuador = ifelse(cat_pais=="Ecuador",1,0),
+         dico_elslv = ifelse(cat_pais=="El Salvador",1,0),
+         dico_guatemala = ifelse(cat_pais=="Guatemala",1,0),
+         dico_honduras = ifelse(cat_pais=="Honduras",1,0),
+         dico_mx = ifelse(cat_pais=="Mexico",1,0),
+         dico_nicaragua = ifelse(cat_pais=="Nicaragua",1,0),
+         dico_panama = ifelse(cat_pais=="Panama",1,0),
+         dico_paraguay = ifelse(cat_pais=="Paraguay",1,0),
+         dico_peru = ifelse(cat_pais=="Peru",1,0),
+         dico_uruguay = ifelse(cat_pais=="Uruguay",1,0), # cat de referencia 
+         dico_repdom = ifelse(cat_pais=="Republica Dominicana",1,0),
+         dico_venezuela = ifelse(cat_pais=="Venezuela",1,0))
+
+#### corremos modelo incluyendo dico_pais sin cat de referencia ####
+formula_modelo_multinivel <- "dico_hubo_debates ~  # MODELO SFICATIVAS VARIANTES
+                        #dico_debates_primerosdos ~ 
+                        #dico_hubo_debate_mediatico ~ 
+                           lnmarginvic + # CAMBIE
+                           lnnec +
+                           #exapprovalnotsmoothed + 
+                           lnvoteshareincumbent +
+                           dico_reeleccion + 
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           avgpropdebatesregionxciclo + 
+                           #prop_elec_usa_ciclo +
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           lngdp + # CAMBIE
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem +
+                          dico_argentina +
+                          dico_bolivia +
+                          dico_brasil +
+                          dico_chile +
+                          dico_colombia +
+                         dico_crica +
+                         dico_ecuador +
+                         dico_elslv +
+                         dico_guatemala +
+                         dico_honduras +
+                         dico_mx +
+                         dico_nicaragua +
+                         dico_panama+
+                         dico_paraguay +
+                         dico_peru +
+                         dico_repdom +
+                         dico_venezuela"
+
+
+modelo_multinivel <- glm(formula_modelo_multinivel,
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = data_modelo_a_interpretar)
+options(scipen=999)
+summary(modelo_multinivel)
+
+# OJO no se si corresponde clusterizar por pais si ya incorporamos pais
+robust_se_cluster_modelo_multinivel <- coeftest(modelo_multinivel, 
+                                                vcov = vcovCL(modelo_multinivel, 
+                                                 cluster = data_modelo_a_interpretar$cat_pais))
+print(robust_se_cluster_modelo_multinivel)
+
+
+
+#### modelo interactivo #####
+
+
+
+formula_modelo_multinivel_interactivo <- "dico_hubo_debates ~  # MODELO SFICATIVAS VARIANTES
+                        #dico_debates_primerosdos ~ 
+                        #dico_hubo_debate_mediatico ~ 
+                           lnmarginvic + # CAMBIE
+                           lnnec +
+                           #exapprovalnotsmoothed + 
+                           lnvoteshareincumbent +
+                           dico_reeleccion + 
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           avgpropdebatesregionxciclo + 
+                           #prop_elec_usa_ciclo +
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           lngdp + # CAMBIE
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem +
+                          dico_argentina +
+                          dico_bolivia +
+                          dico_brasil +
+                          dico_chile +
+                          dico_colombia +
+                         dico_crica +
+                         dico_ecuador +
+                         dico_elslv +
+                         dico_guatemala +
+                         dico_honduras +
+                         dico_mx +
+                         dico_nicaragua +
+                         dico_panama+
+                         dico_paraguay +
+                         dico_peru +
+                         dico_repdom +
+                         dico_venezuela +  
+                          dico_argentina*lnnec +
+                          dico_bolivia*lnnec +
+                          dico_brasil*lnnec +
+                          dico_chile*lnnec +
+                          dico_colombia*lnnec +
+                         dico_crica*lnnec +
+                         dico_ecuador*lnnec +
+                         dico_elslv*lnnec +
+                         dico_guatemala*lnnec +
+                         dico_honduras*lnnec +
+                         dico_mx*lnnec +
+                         dico_nicaragua*lnnec +
+                         dico_panama*lnnec +
+                         dico_paraguay*lnnec +
+                         dico_peru*lnnec +
+                         dico_uruguay*lnnec + # no estoy segura de si agregar
+                         dico_repdom*lnnec +
+                         dico_venezuela*lnnec  "
+
+
+modelo_multinivel_interactivo <- glm(formula_modelo_multinivel_interactivo,
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = data_modelo_a_interpretar)
+options(scipen=999)
+summary(modelo_multinivel_interactivo)
+
+# OJO no se si corresponde clusterizar por pais si ya incorporamos pais
+robust_se_cluster_modelo_multinivel_interactivo <- coeftest(modelo_multinivel_interactivo, 
+                                                vcov = vcovCL(modelo_multinivel_interactivo, 
+                                                              cluster = data_modelo_a_interpretar$cat_pais))
+print(robust_se_cluster_modelo_multinivel_interactivo)
+
+
+## EXPORTO MODELOS #####
+
+# Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
+ 
+mp_models <- texreg::list(modelo_a_interpretar)
+htmlreg(mp_models,
+        custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
+        custom.coef.names = c("Intercepto", ".... " ),
+        file="tabla_1.html") # nombre de su archivo html. Se guardará en tu  directorio de trabajo por defecto.
+# con funcion screenreg podemos chequear tablas antes de exportarlas
+
+
+
+# MODELOS 2: submuestra sin debates en la eleccion pasada. "Nueva práctica"  #####
 ### preparo submuestra ####
 data2 <- data %>% 
   subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) 
