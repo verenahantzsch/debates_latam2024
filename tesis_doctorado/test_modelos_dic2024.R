@@ -799,14 +799,42 @@ text(dfbetas$mediaqualitycorruptvdem,
 # ademas parece que el pais peru y el pais ecuador estan teniendo algun efecto relevante para algunas variables para las que tiran para abajo y para arriba al mismo tiempo (en distintos años)
 
 
-# reestimaciones sin estos casos: 
+##### reestimacion sin outliers ##### 
  
 data_s_outliers <- democracias %>% 
  mutate(filtrar = ifelse(cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
                            cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
                            cat_pais=="Costa Rica"&ncat_eleccion==1986&ncat_ronda==1, 
                          1, 0)) %>% 
-  subset(filtrar==0)
+  subset(filtrar==0) %>% 
+  select(dico_hubo_debates,
+         cat_pais,
+         ncat_eleccion,
+         ncat_ronda,
+         elecid,
+         obsid,
+         marginvic,
+         nec,
+         voteshareincumbent,
+         dico_reeleccion,
+         # alineamiento,
+         # proptv,
+         propindivinternet,
+         # prohibicionpropaganda,
+         accesogratuito,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         cumsum_pastciclos,
+         gdpxcapita,
+         democraciavdemelectoralcomp,
+         mediaqualitycorruptvdem,
+         lnpropindivinternet,
+         lngdp,
+         lnmarginvic,
+         lnnec,
+         lnvoteshareincumbent) %>% 
+  na.omit()
 
 
 modelo_sficativas_s_outliers <- glm(formula_modelo_sficativas,
@@ -1016,7 +1044,7 @@ print(vif_values6)
 #### otros? PENDIENTE ####
 ### Missing data PENDIENTE ####
 ### Fit, Overall significance y comparaciones ####
-##### test de Wald ####
+#### test de Wald ####
 
 modelo_a_probar <- modelo_sficativas
 modelo_a_probar <- modelo_sficativas_variantes
@@ -1041,7 +1069,7 @@ lmtest::waldtest(modelo_sficativas , modelo_sficativas_variantes)
 
 # en gral el modelo mejora significativamente en todos los casos
 
-##### lr test (comparar modelos con = cantidad de data, sacando missing) ####
+#### lr test (comparar modelos con = cantidad de data, sacando missing) ####
 # Chi-squared test of all coefficients An LR test of the hypothesis that all coefficients except the intercept(s) are zero can be computed by comparing the log likelihoods: LR= 2 ln L(MFull) − 2 ln L(MIntercept ). This statistic is sometimes designated as G2 . 
 #  First, the two models must be nested. Second, the two models must be estimated on exactly the same sample. 
 #lrtest(null_model, full_model)
@@ -1353,78 +1381,125 @@ robust_se_cluster_modelo_sficativas_variantes <- coeftest(modelo_sficativas_vari
                                                               cluster = democracias$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes)
 
-robust_se_cluster_modelo_sficativas_s_outliers <- coeftest(modelo_sficativas_variantes_s_outliers, 
+robust_se_cluster_modelo_sficativas_variantes_s_outliers <- coeftest(modelo_sficativas_variantes_s_outliers, 
                                                           vcov = vcovCL(modelo_sficativas_variantes_s_outliers, 
                                                                         #cluster = democracias$elecid))
                                                                         #cluster = data$elecid))
                                                                         cluster = data_s_outliers$cat_pais))
-print(robust_se_cluster_modelo_sficativas_s_outliers)
-
-# # para pasar a excel
-# robust_se_cluster_df <- robust_se_cluster_modelo_sficativas_variantes[,] %>% 
-#   as_tibble() %>%
-#   mutate(variable = rownames(robust_se_cluster_modelo_sficativas_variantes))
-# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+print(robust_se_cluster_modelo_sficativas_variantes_s_outliers)
 
 ## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
 
 ### importante elegir ####
 
 modelo_a_interpretar <- modelo_sficativas_variantes_s_outliers
-data_modelo_a_interpretar <- data_s_outliers
+data_modelo_a_interpretar <- data_s_outliers 
 
 ### calculo de probas predichas ####
 data_modelo_a_interpretar$probabilidades_predichas <- predict(modelo_a_interpretar, type = "response")
 data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpretar$probabilidades_predichas>0.5,1,0)
 
-### calculo ODDS RATIO #####
+# t the coefficient for X is the difference in the log odds.  https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
+# In other words, for a one-unit increase in the math score, the expected change in log odds is .1563404.
+
+### ODDS RATIO #####
+
 # a diferencia de la proba predicha, que varia de manera no lineal,
 # el odds ratio es constante para distintos valores de x 
+# el coef es log(p/1-p) . ---> entonces: p/1-p = exp (covariates).   al reves: 1-p/p = 1/exp(covariates). despejando: 1/p = 1+ 1/exp(covariates). incorporando el 1 . 1/p = exp(c) + 1/ exp(p). despejando . p = exp (cov)/ 1 + exp (cov ). 
+# https://stackoverflow.com/questions/41384075/r-calculate-and-interpret-odds-ratio-in-logistic-regression revisar
 
-minlnnec <- data_modelo_a_interpretar$lnnec %>% min()
-exp(minlnnec)
-minlnnec1 <- minlnnec + 1
-probaminlnnec
-probaminlnnec1
-probaminlnnec / probaminlnnec1
+odds_ratio <- coef["lnnec"] %>%  exp()
+
+# Each exponentiated coefficient is the ratio of two odds, or the change in odds in the multiplicative scale for a unit increase in the corresponding predictor variable holding other variables at certain value.
+# por cada aumento en una unidad de lnnec, esperamos un aumento de un cambio_odds_promedio en las chances de que haya un debate 
 # un odds ratio mayor que 1 expresa un cambio positivo, mientras que si es menor que 1 (entre 0 y 1) representa un cambio negativo en las probabilidades estimadas.
+# También podemos graficar los coeficientes como odds ratios: recuerda que los odds ratios menores que 1 son efectos negativos y mayores que 1 son positivos. El coeficiente se expresa como su valor medio y su intervalo de confianza del 95%. Si el coeficiente es estadísticamente significativo, su intervalo de confianza no pasará de la línea en 1. Si, por el contrario, no son significativos, el efecto cruzará la línea.
 
 # Para utilizar los odds ratios queremos mostrarte cómo puedes cambiar los coeficientes que obtienes directamente de la tabla, que son log odds, y reemplazarlos por odds ratios. Para ello, puedes usar los argumentos override.coef,override.se y override.pvalues de screenreg()
-#summary(modelo_a_interpretar)
+summary(modelo_a_interpretar)
+
 # OJO! que los errores estandar no estan bien calculados en la tabla a continuacion
 texreg::screenreg(modelo_a_interpretar,
           custom.model.names = "data_modelo_a_interpretar - Odds Ratios",
           override.coef    = exp(coef(modelo_a_interpretar)),
           stars = c(0.001, 0.01, 0.05, 0.1),
-          # la siguiente función, odds_*, están en el paquete del libro
-         # override.se      = odds_se(modelo_a_interpretar), # no tengo esta funcion ! 
-         # override.pvalues = odds_pvalues(modelo_a_interpretar),
+          # la siguiente función, odds_*, están en el paquete del libro. OJO - NO PUDE DESCARGAR
+          # override.se      = odds_se(modelo_a_interpretar), # no tengo esta funcion ! 
+          # override.pvalues = odds_pvalues(modelo_a_interpretar),
           # además, omitiremos el coeficiente del intercepto
           omit.coef = "Inter")
 
-# También podemos graficar los coeficientes como odds ratios: recuerda que los odds ratios menores que 1 son efectos negativos y mayores que 1 son positivos. El coeficiente se expresa como su valor medio y su intervalo de confianza del 95%. Si el coeficiente es estadísticamente significativo, su intervalo de confianza no pasará de la línea en 1. Si, por el contrario, no son significativos, el efecto cruzará la línea.
+exp(cbind(coef(modelo_a_interpretar), confint(modelo_a_interpretar))) 
 
-exp(coef(modelo_a_interpretar))
-
-odds_ratios <- jtools::plot_summs(modelo_sficativas_variantes_s_outliers, #modelo_contingencia,
+odds_ratios <- jtools::plot_summs(modelo_a_interpretar, #modelo_contingencia,
                           exp=T, 
                           scale = T,
-                          inner_ci_level = .95,
-                          # coefs = c("nombre coef" =  "variable",
-                          #           ....),
-                          model.names = c("modelo 1"#,
-                                          #"modelo 2"
+                          inner_ci_level = .9,
+                          # coefs = c("nombre coef" =  "variable",           ....),
+                          model.names = c("modelo 1"#, #"modelo 2" ....
                                           ))
-# 
-# odds_ratios + labs(x = "Coeficientes exponenciados", y = NULL) # RARISIMO ! 
+# no entiendo bien pq variables que son sficativas acá aparecen como que no
 
-# interesante que nec y regulacion dico parecen tener los odds mas grandes
+varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
+                                                 modelo_sistemico,
+                                                 modelo_regulatorio,
+                                                 modelo_temporal, # vemos el efecto sobredeterminado de prop_elec_usa-....
+                                                # modelo_sficativas,
+                                                 modelo_sficativas_variantes,
+                                                 modelo_sficativas_variantes_s_outliers,
+                                                 exp=T, 
+                                                 scale = T,
+                                                 inner_ci_level = .9,
+                                                 # coefs = c("nombre coef" =  "variable",           ....),
+                                                 model.names = c("modelo_contingencia",
+                                                                 "modelo_sistemico",
+                                                                 "modelo_regulatorio",
+                                                                 "modelo_temporal",
+                                                                 #"modelo_sficativas",
+                                                                 "modelo_sficativas_variantes",
+                                                                 "modelo_sficativas_variantes_s_outliers"
+                                                 ))
 
-# https://stackoverflow.com/questions/41384075/r-calculate-and-interpret-odds-ratio-in-logistic-regression revisar
+### ESCENARIOS CON VALORES PREDICHOS #####
 
+# Crear un dataset base sobre el cual predecir 
 
-### escenarios #####
-# Crear un dataset base con valores constantes MIN-MEAN-MAX
+# version valores relevantes
+valores_relevantes <- c(log(min(data_modelo_a_interpretar$nec)),
+                        log(max(data_modelo_a_interpretar$nec)),
+                        log(mean(data_modelo_a_interpretar$nec)),
+                        log(mean(data_modelo_a_interpretar$nec) + sd(data_modelo_a_interpretar$nec)),
+                        log(mean(data_modelo_a_interpretar$nec) + 2*sd(data_modelo_a_interpretar$nec)),
+                        log(mean(data_modelo_a_interpretar$nec) - sd(data_modelo_a_interpretar$nec)),
+                        log(mean(data_modelo_a_interpretar$nec) - 2*sd(data_modelo_a_interpretar$nec)))
+
+data_to_predict <- data.frame(
+  lnnec = rep(valores_relevantes, 2), # Cambiar por los valores que quieras probar
+  lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
+  lnvoteshareincumbent = mean(data_modelo_a_interpretar$lnvoteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = 0, # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
+  accesogratuito = mean(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = rep(c(0,1),each=length(valores_relevantes)) ,
+  cumsum_pastciclos = mean(data_modelo_a_interpretar$cumsum_pastciclos, na.rm = TRUE),
+  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+# Predecir probabilidades
+data_to_predict$predicted_probs <- predict(modelo_a_interpretar, 
+                                           newdata = data_to_predict, 
+                                           type = "response")
+
+# grafico
+
+ggplot(data_to_predict) +
+  geom_line(aes(x = exp(lnnec), y = predicted_probs, colour = as.factor(regulaciondico)))
+
+# version generica
 data_to_predict <- data.frame(
   lnnec = rep(seq(min(data_modelo_a_interpretar$lnnec, na.rm = TRUE), 
                     max(data_modelo_a_interpretar$lnnec, na.rm = TRUE),
@@ -1443,44 +1518,68 @@ data_to_predict <- data.frame(
   mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
 )
 
+                
 # Predecir probabilidades
-data_to_predict$predicted_probs <- predict(modelo_a_interpretar, 
-                                     newdata = data_to_predict, 
-                                     type = "response")
+predicted_probs <- predict(modelo_a_interpretar, 
+                           newdata = data_to_predict, 
+                           type = "response",
+                           se.fit = T)  
 
-# Graficar probabilidades predichas
-# plot(data_to_predict$lnnec, data_to_predict$predicted_probs, 
-#      type = "l", col = "blue", lwd = 2, 
-#      xlab = "lnmarginvic", 
-#      ylab = "Probabilidad Predicha", 
-#      main = "Impacto de lnnec en la Probabilidad Predicha de un debate")
+data_to_predict$predicted_probs <- predicted_probs$fit
+data_to_predict$se_predicted_probs <- predicted_probs$se.fit
+
+# grafico
 
 ggplot(data_to_predict) +
-  geom_line(aes(x = exp(lnnec), y = predicted_probs, colour = as.factor(regulaciondico)))
+  geom_line(aes(x = exp(lnnec), 
+                y = predicted_probs, 
+                colour = as.factor(regulaciondico))) +
+  geom_ribbon(aes(x = exp(lnnec), 
+                  ymin =  predicted_probs - 1.96*se_predicted_probs, 
+                  ymax =  predicted_probs + 1.96*se_predicted_probs, 
+                  fill = as.factor(regulaciondico)), alpha = 0.3) 
 
-
+# nec es especialmente relevante cuando no hay regulacion
 
 # version mas simple
-
+# no esta claro a qué valores de las demás variables me esta caluclando los graficos, pendiente ver
+vcov_cluster <- vcovCL(modelo_a_interpretar, 
+                       cluster = data_modelo_a_interpretar$cat_pais)
 
 predict_model <- prediction::prediction(
   modelo_a_interpretar, 
   data = data_to_predict,
-  at = list(lnnec = unique(data_to_predict$lnnec))
+  vcov = vcov_cluster,
+  at = list(lnnec = unique(data_to_predict$lnnec),
+            regulaciondico =  unique(data_to_predict$regulaciondico))
 )
 summary(predict_model)
 
-ggplot(summary(predict_model),
-                      aes(x = `at(lnnec)`, y = Prediction,
-                          ymin = lower, ymax = upper,
-                          group = 1)) +
-  geom_line() +
-  geom_errorbar(width = 0.2) +
-  theme(axis.text.x = element_text(angle = 90)) +
-  labs(x = "lnnec", y = "Pr(debate)")
+# Convertir a data frame
+pred_df <- as.data.frame(predict_model)
 
-vcov_cluster <- vcovCL(modelo_a_interpretar, 
-                       cluster = data_modelo_a_interpretar$cat_pais)
+# Graficar
+ggplot(pred_df, 
+       aes(x = exp(lnnec), 
+           y = fitted, 
+           colour = as.factor(regulaciondico))) +
+  geom_line(size = 1) +
+  geom_ribbon(aes(ymin = fitted - 1.96*se.fitted, 
+                  ymax =  fitted + 1.96*se.fitted, 
+                  fill = as.factor(regulaciondico)), 
+              alpha = 0.2) +
+  labs(
+    x = "lnnec",
+    y = "Probabilidad Predicha de un debate",
+    colour = "Regulación Dicotómica",
+    fill = "Regulación Dicotómica",
+    title = "Predicciones a diferentes valores de lnnec y regulaciondico"
+  ) +
+  theme_minimal() +
+  scale_colour_manual(values = c("blue", "red")) +
+  scale_fill_manual(values = c("blue", "red"))
+
+# otra version
 
 cdat <- margins::cplot(modelo_a_interpretar, 
                        "lnnec", 
@@ -1496,151 +1595,128 @@ ggplot(cdat, aes(x = xvals)) +
   geom_hline(yintercept = 0) +
   labs(title = "Pr. debate",
        x = "lnnec", y = "Prob. predicha")
-
-cdat1 <- margins::cplot(modelo_a_interpretar, 
-                       "lnnec", 
-                       what = "effect", 
-                       vcov = vcov_cluster, 
-                       main = "Pr(debate)",
-                       scattter = T)
-
-ggplot(cdat, aes(x = xvals)) +
-  geom_line(aes(y = yvals)) +
-  geom_line(aes(y = upper), linetype = 2)+
-  geom_line(aes(y = lower), linetype = 2) +
-  geom_hline(yintercept = 0) +
-  labs(title = " Efecto de lnnec",
-       x = "lnnec", y = "Prob. predicha") +
   
 
-# El resumen nos ofrece un tibble donde tenemos la probabilidad prevista de nuestra variable dependiente para cada valor observado de poder_presid y su significado estadístico. Esto se convierte fácilmente en una cifra, y para ello hay dos alternativas que recomendamos.
+### EFECTO MARGINAL #####
 
-### efecto marginal #####
+# chatgpt: 
+# En el contexto de un modelo logit, el efecto marginal se refiere a 
+# cómo cambia la probabilidad predicha de que ocurra el evento de interés (la variable dependiente sea igual a 1) 
+# cuando se modifica una variable independiente, 
+# manteniendo constantes las demás variables del modelo. 
+# En otras palabras, es la tasa de cambio en la probabilidad asociada con un cambio unitario en una variable independiente.
+#  el efecto marginal varía según los valores de 𝑋 X y, en consecuencia, no es constante.
+
+# formula es: 
+# cambio en P dado cambio en X = beta * p(1-p), donde sabemos que proba predicha varia para distintos valores de Xs
+
+# interpretacion: 
+# Si el efecto marginal de X en cierto valore es 0.1, 
+# significa que un aumento unitario en ese valor incrementa la probabilidad predicha en un 10%, 
+# manteniendo constantes las demás variables.
+
+##### Efecto marginal promedio (Average Marginal Effect, AME): ####
+
+# Se calcula el efecto marginal para cada observación en el conjunto de datos y luego se promedian estos efectos.
+# Es útil para interpretar un "efecto típico" en la muestra.
+
 #¿Cuál es el efecto medio del aumento de una unidad de la variable independiente en la probabilidad de que se produzca la variable dependiente? El Efecto Marginal Promedio (AME, por sus siglas en inglés) se utiliza para ver estos efectos, y se logra con el comando plot del paquete de margins.
 #  el efecto marginal es la variación de la variable explicada cuando la variable explicativa aumenta en una unidad.
 
 # efecto marginal promedio
 
-marginal_ef <- margins::margins(modelo_a_interpretar)
+marginal_effects <- margins::margins(modelo_a_interpretar)
 
-plot(marginal_ef, 
-     labels = c("lnmarginvic",
-                "lnnec",
-                "lnvoteshareincumbent",
-                "dico_reeleccion",
-                "propindivinternet",
-                "accesogratuito",
-                "avgpropdebatesregionxciclo",
-                 "regulaciondico",
-                 "cumsum_pastciclos",
-                 "lngdp",
-                 "democraciavdemelectoralcomp",
-                 "mediaqualitycorruptvdem"),
-     ylab = "AME")
+marginals_df <- summary(marginal_effects)
 
-# También podemos estar interesados, no en el efecto promedio, sino en el efecto marginal completo de una variable. Dada la no linealidad de estos modelos, el efecto marginal de una variable sobre la probabilidad de ocurrencia de la variable dependiente no es constante ni es significativo en toda la variable. Para ello utilizamos la función cplot del paquete margins y luego lo personalizamos con las opciones de ggplot2
+ggplot(marginals_df) +
+  geom_point( aes(x = factor, y = AME)) +
+  geom_errorbar(aes(x = factor, ymin = lower, ymax = upper), width = 0.2) +
+  coord_flip() +
+  labs(x = "Variables", y = "Efectos marginales promedio") +
+  theme_minimal()
 
-marginal_nec <- margins::cplot(modelo_a_interpretar, "lnnec", what = "effect", 
-                          main = "Ef.Marg(Quiebre)",
-                          draw = F)
+margins::marginal_effects(margins::margins(modelo_a_interpretar))
 
-ggplot(marginal_nec, aes(x = xvals)) +
-  geom_line(aes(y = yvals)) +
-  geom_line(aes(y = upper), linetype = 2)+
-  geom_line(aes(y = lower), linetype = 2) +
-  geom_hline(yintercept = 0) +
-  labs(title = "Modelo a interpretar",
-       x = "NEC", y = "Efecto marginal")
+
+#### efecto marginal por variable #####
+# También podemos estar interesados, no en el efecto promedio, sino en el efecto marginal completo de una variable.
+# Dada la no linealidad de estos modelos, el efecto marginal de una variable sobre la probabilidad de ocurrencia de la variable dependiente no es constante ni es significativo en toda la variable. 
+# Para ello utilizamos la función cplot del paquete margins y luego lo personalizamos con las opciones de ggplot2
 
 # el efecto de la variable disminuye a medida que aumenta su valor, consistente con la idea que tenemos de que su efecto es log
 # el efecto es sficativo para todos los valores de la variable
 
+#Columns containing marginal effects are distinguished by their name (prefixed by dydx_). These columns can be extracted from a “margins” object using, for example, marginal_effects(margins(model)). Columns prefixed by Var_ specify the variances of the average marginal effects, whereas (optional) columns prefixed by SE_ contain observation-specific standard errors
 
 
+pred_lnnec <- margins::margins(modelo_a_interpretar, 
+                      data = data_to_predict, #%>% subset(regulaciondico==1),
+                      vcov = vcov_cluster, 
+                      variables = "lnnec")
+summary(pred_lnnec)  # Resumen de los efectos marginales
 
-###  borrador agrego errores estandar  #####
-# 
-# # a las proba predichas (chatgpt)
-# # Simular coeficientes del modelo con matriz robusta
-# sim_coef <- arm::sim(modelo_a_interpretar, n.sims = 1000, vcovCL(modelo_a_interpretar,
-#                                                             cluster = data_modelo_a_interpretar$cat_pais))
-# # Obtener predicciones simuladas
-# X <- model.matrix(modelo_a_interpretar)
-# pred_sim <- plogis(X %*% t(coef(sim_coef)))  # Probabilidades predichas simuladas
-# 
-# # Calcular media e intervalos de confianza
-# data_modelo_a_interpretar$probabilidad_media <- rowMeans(pred_sim)
-# data_modelo_a_interpretar$probabilidad_ci_inf <- apply(pred_sim, 1, quantile, probs = 0.025)
-# data_modelo_a_interpretar$probabilidad_ci_sup <- apply(pred_sim, 1, quantile, probs = 0.975)
-# 
-# # a los escenarios # (chatgpt)
-# 
-# 
-# 
-# # Obtener matriz de varianza-covarianza robusta clusterizada
-# vcov_cluster <- vcovCL(modelo_a_interpretar, 
-#                        cluster = data_modelo_a_interpretar$cat_pais)
-# 
-# # Crear un objeto "coeftest" con los errores estándar robustos
-# robust_model <- coeftest(modelo_a_interpretar, vcov. = vcov_cluster)
-# 
-# # Matriz de diseño para las predicciones
-# X <- model.matrix(~ lnnec + lnmarginvic + lnvoteshareincumbent + 
-#                     dico_reeleccion + propindivinternet + accesogratuito + 
-#                     avgpropdebatesregionxciclo + regulaciondico + 
-#                     cumsum_pastciclos + lngdp + democraciavdemelectoralcomp + 
-#                     mediaqualitycorruptvdem, 
-#                   data = data_to_predict)
-# 
-# # Coeficientes estimados
-# beta <- coef(robust_model)
-# 
-# # Probabilidades predichas
-# # data_to_predict$predicted_probs2 <- 
-# # test <- plogis(X %*% beta) #%>% tibble()
-# 
-# 
-# # Varianza de las predicciones
-# pred_var <- diag(X %*% vcov_cluster %*% t(X))
-# 
-# # Calcular errores estándar
-# se <- sqrt(pred_var)
-# 
-# # Intervalos de confianza
-# data_to_predict$lower_ci <- plogis(qlogis(data_to_predict$predicted_probs) - 1.96 * data_to_predict$se)
-# data_to_predict$upper_ci <- plogis(qlogis(data_to_predict$predicted_probs) + 1.96 * data_to_predict$se)
-# 
-# 
-# # Graficar probabilidades predichas con bandas de confianza
-# ggplot(data_to_predict, 
-#        aes(x = exp(lnnec), y = predicted_probs, colour = as.factor(regulaciondico))) +
-#   geom_line(size = 1) +
-#   geom_ribbon(aes(ymin = lower_ci, ymax = upper_ci, fill = as.factor(regulaciondico)), 
-#               alpha = 0.2, colour = NA) +
-#   labs(
-#     x = "nec (Escala Original)",
-#     y = "Probabilidad Predicha",
-#     colour = "Regulación Dicótica",
-#     fill = "Regulación Dicótica",
-#     title = "Impacto del NEC en la Probabilidad Predicha de que ocurra un debate, con Intervalos de Confianza"
-#   ) +
-#   theme_minimal() +
-#   scale_colour_manual(values = c("blue", "red")) +
-#   scale_fill_manual(values = c("blue", "red"))
+pred_lnnec <- pred_lnnec %>%
+  mutate(SE = sqrt(Var_dydx_lnnec))
 
-# # Para hacer tabla de escenarios - Crear combinaciones de varios valores
-# scenarios <- expand.grid(
-#   lnmarginvic = seq(0, 5, 1),
-#   dico_reeleccion = c(0, 1),
-#   accesogratuito = mean(data_modelo_sficativas$accesogratuito, na.rm = TRUE),
-#   # Agregar otras variables necesarias...
-# )
-# 
-# # Calcular probabilidades predichas para cada escenario
-# scenarios$predicted_probs <- predict(modelo_sficativas, newdata = scenarios, type = "response")
-# 
-# # Ver resultados
-# print(scenarios)
+
+# Graficar el efecto marginal
+ggplot(pred_lnnec, aes(x = lnnec, y = dydx_lnnec, color = as.factor(regulaciondico))) +
+  geom_line() +
+  geom_ribbon(aes(ymin = dydx_lnnec - SE, ymax = dydx_lnnec + SE, color = as.factor(regulaciondico)), alpha = 0.2) +
+  labs(x = "lnnec", y = "Efecto marginal", title = "Efecto marginal de lnnec") +
+  theme_minimal()
+
+# version mas simple, pero no me queda claro a que valores estan las demas variables 
+
+cdat1 <- margins::cplot(modelo_a_interpretar, 
+                        "lnnec", 
+                        what = "effect", 
+                        vcov = vcov_cluster, 
+                        main = "Efecto marginal de nec sobre proba de debates",
+                        scattter = T) # para guardar en lugar de plotear automaticamente
+
+ggplot(cdat1, aes(x = xvals)) +
+  geom_line(aes(y = yvals)) +
+  geom_line(aes(y = upper), linetype = 2)+
+  geom_line(aes(y = lower), linetype = 2) +
+  geom_hline(yintercept = 0) +
+  labs(title = " Efecto de lnnec",
+       x = "lnnec", y = "Efecto marginal") 
+
+ 
+# para regulaciondico # ojo no se si lo que estoy haciendo está bien o tiene sentido 
+
+pred_regulaciondico <- margins::margins(modelo_a_interpretar, 
+                                        data = data_to_predict, #%>% subset(regulaciondico==1),
+                                        vcov = vcov_cluster, 
+                                        variables = "regulaciondico")
+summary(pred_regulaciondico)  # Resumen de los efectos marginales
+
+
+pred_regulaciondico <- pred_regulaciondico %>%
+  mutate(SE = sqrt(Var_dydx_regulaciondico))
+
+effect_regulacion <- pred_regulaciondico %>% 
+  group_by(lnnec) %>% 
+  summarise(
+    efecto_marg_regulaciondico = predicted_probs[regulaciondico == 1] - 
+      predicted_probs[regulaciondico == 0],
+    SE = mean(SE)
+  )
+
+ggplot(effect_regulacion) + 
+  geom_point( aes(x = lnnec, y = efecto_marg_regulaciondico)) +
+  geom_errorbar(aes(x = lnnec, 
+                    ymin = efecto_marg_regulaciondico - 1.96*SE,
+                    ymax = efecto_marg_regulaciondico + 1.96*SE), width = 0.2)   
+
+# cuenta simple para valor medio
+  
+diff(data_regulacion$predicted_probs)
+cat("Efecto marginal de regulaciondico 
+    cuando el resto de las variables están en sus medias:", effect_regulacion, "\n")
+
 
 ## MULTINIVEL MODELOS 1 ####
 
@@ -1660,8 +1736,6 @@ mean_dico_hubo_debatesxpais <- data_modelo_a_interpretar %>%
 
 
 # uruguay es nuestro país de referencia
-
-
 
 #### creamos variables dico ####
 data_modelo_a_interpretar$cat_pais %>% unique()
@@ -1710,18 +1784,18 @@ formula_modelo_multinivel <- "dico_hubo_debates ~  # MODELO SFICATIVAS VARIANTES
                           dico_brasil +
                           dico_chile +
                           dico_colombia +
-                         dico_crica +
-                         dico_ecuador +
-                         dico_elslv +
-                         dico_guatemala +
-                         dico_honduras +
-                         dico_mx +
-                         dico_nicaragua +
-                         dico_panama+
-                         dico_paraguay +
-                         dico_peru +
-                         dico_repdom +
-                         dico_venezuela"
+                          dico_crica +
+                          dico_ecuador +
+                          dico_elslv +
+                          dico_guatemala +
+                          dico_honduras +
+                          dico_mx +
+                          dico_nicaragua +
+                          dico_panama+
+                          dico_paraguay +
+                          dico_peru +
+                          dico_repdom +
+                          dico_venezuela"
 
 
 modelo_multinivel <- glm(formula_modelo_multinivel,
@@ -1762,11 +1836,11 @@ formula_modelo_multinivel_interactivo <- "dico_hubo_debates ~  # MODELO SFICATIV
                            lngdp + # CAMBIE
                            democraciavdemelectoralcomp +
                            mediaqualitycorruptvdem +
-                          dico_argentina +
-                          dico_bolivia +
-                          dico_brasil +
-                          dico_chile +
-                          dico_colombia +
+                         dico_argentina + # DICO POR PAIS
+                         dico_bolivia +
+                         dico_brasil +
+                         dico_chile +
+                         dico_colombia +
                          dico_crica +
                          dico_ecuador +
                          dico_elslv +
@@ -1779,11 +1853,11 @@ formula_modelo_multinivel_interactivo <- "dico_hubo_debates ~  # MODELO SFICATIV
                          dico_peru +
                          dico_repdom +
                          dico_venezuela +  
-                          dico_argentina*lnnec +
-                          dico_bolivia*lnnec +
-                          dico_brasil*lnnec +
-                          dico_chile*lnnec +
-                          dico_colombia*lnnec +
+                         dico_argentina*lnnec + # INTERACCIONES
+                         dico_bolivia*lnnec +
+                         dico_brasil*lnnec +
+                         dico_chile*lnnec +
+                         dico_colombia*lnnec +
                          dico_crica*lnnec +
                          dico_ecuador*lnnec +
                          dico_elslv*lnnec +
@@ -1815,6 +1889,12 @@ print(robust_se_cluster_modelo_multinivel_interactivo)
 
 ## EXPORTO MODELOS #####
 
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_sficativas_variantes[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_sficativas_variantes))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
 # Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
  
 mp_models <- texreg::list(modelo_a_interpretar)
@@ -1824,7 +1904,84 @@ htmlreg(mp_models,
         file="tabla_1.html") # nombre de su archivo html. Se guardará en tu  directorio de trabajo por defecto.
 # con funcion screenreg podemos chequear tablas antes de exportarlas
 
+lista1 <-  list(robust_se_cluster_modelo_contingencia,
+                robust_se_cluster_modelo_sistemico,
+                robust_se_cluster_modelo_regulatorio,
+                robust_se_cluster_modelo_temporal,
+                robust_se_cluster_modelo_sficativas,
+                robust_se_cluster_modelo_sficativas_variantes) 
 
+lista2 <-  list(robust_se_cluster_modelo_sficativas_variantes,
+                robust_se_cluster_modelo_sficativas_variantes_s_outliers,
+                robust_se_cluster_modelo_multinivel,
+                robust_se_cluster_modelo_multinivel_interactivo)
+
+# https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
+
+texreg::htmlreg(lista1,
+        custom.model.names = c("Contingencia",
+                               "Sistemico",
+                               "Regulatorio",
+                               "Temporal",
+                               "Final",
+                               "Final con variantes")  ,
+        stars = c(0.001, 0.01, 0.05, 0.1),
+       custom.coef.names = c("(Intercept)", 
+                             "Margen de victoria",
+                             "NEC",
+                             "Votos oficialista",
+                             "Incumbente reelije",
+                             "Regulacion sobre debates",
+                             "Cant. elecciones pasadas con debates",
+                             "PBI per Capita" ,
+                             "Democracia electoral (VDEM)",
+                            "Corrupcion de medios (VDEM)",
+                            "Alineamiento partidario"		, 	 
+                             "Prop. TV por hogar"		, 
+                             "Prop. individuos c internet",
+                             "Prohibicion propaganda"	 ,
+                             "Acceso gratuito",
+                             "Prop. debates en Region",
+                             "Prop. debates en USA" ,
+                             "log Margen de victoria",
+                             "log NEC" ,
+                            "log Votos oficialista", 
+                            "log PBI per Capita"),
+       reorder.coef =  c(1,
+                         2,
+                         18,
+                         3,
+                         19 ,
+                         4,
+                        20,
+                         5,
+                         6,
+                         7,
+                         8 ,
+                         21,
+                         9,
+                         10,
+                        11,
+                         12,
+                         13,
+                         14 ,
+                         15,
+                        16,
+                         17),
+        file="tabla_1.html",
+       center = T,
+       bold = 0.1)
+
+texreg::htmlreg(lista2,
+                custom.model.names = c("Final con variantes",
+                                       "Final con variantes sin outliers",
+                                       "Multinivel",
+                                       "Multinivel interactivo")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                # custom.coef.names = c("Intercepto", ".... " ),
+                file="tabla_2.html",
+                center = T,
+                bold = 0.1)
 
 # MODELOS 2: submuestra sin debates en la eleccion pasada. "Nueva práctica"  #####
 ### preparo submuestra ####
