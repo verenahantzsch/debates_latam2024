@@ -1043,6 +1043,12 @@ print(vif_values6)
 
 #### otros? PENDIENTE ####
 ### Missing data PENDIENTE ####
+# jack knife
+# imputacion: 
+# reemp x valor promedio, 
+# reemp x mediana, 
+# mcmc multiple imputation approach -> simulacion + iteraciones
+# comparar modelos 
 ### Fit, Overall significance y comparaciones ####
 #### test de Wald ####
 
@@ -1569,7 +1575,7 @@ ggplot(pred_df,
                   fill = as.factor(regulaciondico)), 
               alpha = 0.2) +
   labs(
-    x = "lnnec",
+    x = "exp(lnnec) = NEC",
     y = "Probabilidad Predicha de un debate",
     colour = "Regulación Dicotómica",
     fill = "Regulación Dicotómica",
@@ -1886,7 +1892,69 @@ robust_se_cluster_modelo_multinivel_interactivo <- coeftest(modelo_multinivel_in
                                                               cluster = data_modelo_a_interpretar$cat_pais))
 print(robust_se_cluster_modelo_multinivel_interactivo)
 
+### Version formula #####
+# https://www.publichealth.columbia.edu/research/population-health-methods/multi-level-modeling
 
+
+#PASO 1 MODELO MULTILEVEL: EMPTY)
+
+empty_model <- lme4::glmer(dico_hubo_debates ~ 
+                      1 + (1 | cat_pais), 
+                    family=binomial("logit"), 
+                    data = democracias)
+summary(empty_model)
+
+#PASO 2 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY
+
+modelo_random_intercepts <- lme4::glmer(dico_hubo_debates ~ 
+                                          #dico_debates_primerosdos ~ 
+                                          #dico_hubo_debate_mediatico ~ 
+                                          lnmarginvic + # CAMBIE
+                                          lnnec +
+                                          #exapprovalnotsmoothed + 
+                                          lnvoteshareincumbent +
+                                          dico_reeleccion + 
+                                          #proptv +
+                                          propindivinternet +
+                                          accesogratuito +
+                                          avgpropdebatesregionxciclo + 
+                                          #prop_elec_usa_ciclo +
+                                          regulaciondico +
+                                          cumsum_pastciclos +
+                                          #dico_debates_pastelection +
+                                          lngdp + # CAMBIE
+                                          democraciavdemelectoralcomp +
+                                          mediaqualitycorruptvdem +  
+                                          (1 | cat_pais), 
+                                        family=binomial("logit"), 
+                                        data = democracias)
+summary(modelo_random_intercepts)
+
+#PASO 3 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY AND RANDOM SLOPES BY NEC)
+
+modelo_random_slopes <- lme4::glmer(dico_hubo_debates ~ 
+                                      #dico_debates_primerosdos ~ 
+                                      #dico_hubo_debate_mediatico ~ 
+                                      lnmarginvic + # CAMBIE
+                                      lnnec +
+                                      #exapprovalnotsmoothed + 
+                                      lnvoteshareincumbent +
+                                      dico_reeleccion + 
+                                      #proptv +
+                                      propindivinternet +
+                                      accesogratuito +
+                                      avgpropdebatesregionxciclo + 
+                                      #prop_elec_usa_ciclo +
+                                      regulaciondico +
+                                      cumsum_pastciclos +
+                                      #dico_debates_pastelection +
+                                      lngdp + # CAMBIE
+                                      democraciavdemelectoralcomp +
+                                      mediaqualitycorruptvdem + 
+                                   (1 + lnnec | cat_pais), 
+                                 family=binomial("logit"), 
+                                 data = democracias)
+summary(modelo_random_slopes)
 ## EXPORTO MODELOS #####
 
 # # para pasar a excel
