@@ -7,6 +7,9 @@ library(tidyverse)
 library(sandwich) # para clusterizar errores estandares
 library(lmtest) # para clusterizar errores estandares
 
+# seed #################
+set.seed(111)
+
 # carga de data y seteo de directorio ######
 
 # data unificada, creada en creacion_base_elecciones_datoselectorales
@@ -113,6 +116,32 @@ modelo_contingencia <- glm(formula_modelo_contingencia,
 options(scipen=999)
 summary(modelo_contingencia)
 
+formula_modelo_contingencia_bis <- "dico_hubo_debates ~ 
+                                       #dico_debates_primerosdos ~ # variables V.D alternativas, por ahora no uso, serían secundarias 
+                                       #dico_hubo_debate_mediatico ~ 
+                               lnmarginvic + # CAMBIE
+                                lnnec +
+                             #exapprovalnotsmoothed + # este indicador y el que sigue son alternativos 
+                              lnvoteshareincumbent +
+                              dico_reeleccion + 
+                              regulaciondico +
+                              cumsum_pastciclos + # este indicador y el que sigue son alternativos 
+                              #dico_debates_pastelection +
+                              lngdp +
+                              democraciavdemelectoralcomp +
+                              mediaqualitycorruptvdem"
+
+#edadregimenbmr#, #Sacar edad de régimen.  
+#No tiene sentido incluirla si controlas por la calidad de la democracia 
+# ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+
+modelo_contingencia_bis <- glm(formula_modelo_contingencia_bis, 
+                           family = binomial(link = "logit"), 
+                           #data = data  # dos versiones de data, una completa, otra solo con democracias, filtrada arriba
+                           data = democracias)
+options(scipen=999)
+summary(modelo_contingencia_bis)
+
 
 ### Modelo sistemico ####
 
@@ -137,6 +166,25 @@ modelo_sistemico <- glm(formula_modelo_sistemico,
 summary(modelo_sistemico) # 
 
 
+formula_modelo_sistemico_bis <- "dico_hubo_debates ~ 
+                                    alineamiento + 
+                                    proptv +
+                                    propindivinternet +
+                                    regulaciondico +
+                                    cumsum_pastciclos +
+                                    #dico_debates_pastelection +
+                                    lngdp +
+                                    democraciavdemelectoralcomp +
+                                    mediaqualitycorruptvdem"
+#edadregimenbmr"
+
+modelo_sistemico_bis <- glm(formula_modelo_sistemico_bis,
+                        family = binomial(link = "logit"), 
+                        #data = data 
+                        data = democracias)
+
+summary(modelo_sistemico_bis) # 
+
 ### Modelo marco regulatorio ####
 
 formula_modelo_regulatorio <- "dico_hubo_debates ~ 
@@ -159,6 +207,25 @@ modelo_regulatorio <- glm(formula_modelo_regulatorio,
 summary(modelo_regulatorio)
 
 
+formula_modelo_regulatorio_bis <- "dico_hubo_debates ~ 
+                                prohibicionpropaganda +
+                                accesogratuito +
+                                regulaciondico + 
+                                cumsum_pastciclos +
+                                #dico_debates_pastelection +
+                                lngdp +
+                                democraciavdemelectoralcomp +
+                                mediaqualitycorruptvdem"
+#edadregimenbmr"
+
+
+modelo_regulatorio_bis <- glm(formula_modelo_regulatorio_bis,
+                          family = binomial(link = "logit"), 
+                          #data = data 
+                          data = democracias)
+
+summary(modelo_regulatorio_bis)
+
 ### Modelo geo/temp ####
 
 formula_modelo_temporal <- "dico_hubo_debates ~ 
@@ -178,6 +245,24 @@ modelo_temporal <- glm(formula_modelo_temporal,
                        data = democracias)
 
 summary(modelo_temporal)
+
+formula_modelo_temporal_bis <- "dico_hubo_debates ~ 
+                         avgpropdebatesregionxciclo + 
+                         prop_elec_usa_ciclo +
+                         regulaciondico +
+                         cumsum_pastciclos +
+                         #dico_debates_pastelection +
+                         lngdp +
+                         democraciavdemelectoralcomp +
+                         mediaqualitycorruptvdem#,
+                         #edadregimenbmr,"
+
+modelo_temporal_bis <- glm(formula_modelo_temporal_bis,
+                       family = binomial(link = "logit"), 
+                       #data = data 
+                       data = democracias)
+
+summary(modelo_temporal_bis)
 
 ### Modelo final / sficativas ####
 
@@ -1303,8 +1388,8 @@ print(robust_se_modelo_sficativas)
 ###  Cluster-Robust Standard Errors ####
 ##### Modelo contingencia  ####
 
-robust_se_cluster_modelo_contingencia <- coeftest(modelo_contingencia, 
-                                                  vcov = vcovCL(modelo_contingencia, 
+robust_se_cluster_modelo_contingencia <- coeftest(modelo_contingencia_bis, 
+                                                  vcov = vcovCL(modelo_contingencia_bis, 
                                                                 #cluster = democracias$elecid))
                                                                 #cluster = data$elecid))
                                                                 cluster = democracias$cat_pais))
@@ -1320,8 +1405,8 @@ print(robust_se_cluster_modelo_contingencia)
 
 ##### Modelo sistemico ####
 
-robust_se_cluster_modelo_sistemico <- coeftest(modelo_sistemico, 
-                                               vcov = vcovCL(modelo_sistemico,
+robust_se_cluster_modelo_sistemico <- coeftest(modelo_sistemico_bis, 
+                                               vcov = vcovCL(modelo_sistemico_bis,
                                                              #cluster = democracias$elecid))
                                                              #cluster = data$elecid))
                                                              cluster = democracias$cat_pais))
@@ -1335,8 +1420,8 @@ print(robust_se_cluster_modelo_sistemico)
 
 ##### Modelo marco regulatorio ####
 
-robust_se_cluster_modelo_regulatorio <- coeftest(modelo_regulatorio, 
-                                                 vcov = vcovCL(modelo_regulatorio, 
+robust_se_cluster_modelo_regulatorio <- coeftest(modelo_regulatorio_bis, 
+                                                 vcov = vcovCL(modelo_regulatorio_bis, 
                                                                #cluster = democracias$elecid))
                                                                #cluster = data$elecid))
                                                                cluster = democracias$cat_pais))
@@ -1350,8 +1435,8 @@ print(robust_se_cluster_modelo_regulatorio)
 
 ##### Modelo geo/temp ####
 
-robust_se_cluster_modelo_temporal <- coeftest(modelo_temporal, 
-                                              vcov = vcovCL(modelo_temporal, 
+robust_se_cluster_modelo_temporal <- coeftest(modelo_temporal_bis, 
+                                              vcov = vcovCL(modelo_temporal_bis, 
                                                             #cluster = democracias$elecid))
                                                             #cluster = data$elecid))
                                                             cluster = democracias$cat_pais))
@@ -1965,22 +2050,28 @@ summary(modelo_random_slopes)
 
 # Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
  
-mp_models <- texreg::list(modelo_a_interpretar)
-htmlreg(mp_models,
-        custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
-        custom.coef.names = c("Intercepto", ".... " ),
-        file="tabla_1.html") # nombre de su archivo html. Se guardará en tu  directorio de trabajo por defecto.
+#mp_models <- texreg::list(modelo_a_interpretar)
+# htmlreg(mp_models,
+#         custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
+#         custom.coef.names = c("Intercepto", ".... " ),
+#         file="tabla_1.html") # nombre de su archivo html. Se guardará en tu  directorio de trabajo por defecto.
 # con funcion screenreg podemos chequear tablas antes de exportarlas
 
-lista1 <-  list(robust_se_cluster_modelo_contingencia,
+lista1 <-  list(
+                robust_se_cluster_modelo_contingencia,
                 robust_se_cluster_modelo_sistemico,
                 robust_se_cluster_modelo_regulatorio,
                 robust_se_cluster_modelo_temporal,
-                robust_se_cluster_modelo_sficativas,
-                robust_se_cluster_modelo_sficativas_variantes) 
+                robust_se_cluster_modelo_sficativas_variantes
+                ) 
 
-lista2 <-  list(robust_se_cluster_modelo_sficativas_variantes,
-                robust_se_cluster_modelo_sficativas_variantes_s_outliers,
+lista2 <-  list(
+                robust_se_cluster_modelo_sficativas_variantes,
+                robust_se_cluster_modelo_sficativas,
+                robust_se_cluster_modelo_sficativas_variantes_s_outliers
+                ) 
+
+lista3 <-  list(robust_se_cluster_modelo_sficativas_variantes,
                 robust_se_cluster_modelo_multinivel,
                 robust_se_cluster_modelo_multinivel_interactivo)
 
@@ -1991,57 +2082,105 @@ texreg::htmlreg(lista1,
                                "Sistemico",
                                "Regulatorio",
                                "Temporal",
-                               "Final",
-                               "Final con variantes")  ,
+                               "Final")  ,
         stars = c(0.001, 0.01, 0.05, 0.1),
-       custom.coef.names = c("(Intercept)", 
-                             "Margen de victoria",
-                             "NEC",
-                             "Votos oficialista",
-                             "Incumbente reelije",
-                             "Regulacion sobre debates",
-                             "Cant. elecciones pasadas con debates",
-                             "PBI per Capita" ,
-                             "Democracia electoral (VDEM)",
-                            "Corrupcion de medios (VDEM)",
-                            "Alineamiento partidario"		, 	 
-                             "Prop. TV por hogar"		, 
-                             "Prop. individuos c internet",
-                             "Prohibicion propaganda"	 ,
-                             "Acceso gratuito",
-                             "Prop. debates en Region",
-                             "Prop. debates en USA" ,
-                             "log Margen de victoria",
-                             "log NEC" ,
-                            "log Votos oficialista", 
-                            "log PBI per Capita"),
+        custom.coef.names = c("(Intercepto)",
+                              "log Margen de victoria",
+                              "log NEC",
+                              "log Votos oficialista",
+                              "Incumbente reelije",
+
+                              "Regulacion sobre debates",
+                              "Cant. elecciones pasadas con debates",
+                              "log PBI per Capita",
+                              "Democracia electoral (VDEM)",
+                              "Corrupcion de medios (VDEM)",
+
+                              "Alineamiento partidario",
+                              "Prop. TV por hogar"		,
+                              "Prop. individuos c internet",
+                              "Prohibicion propaganda"	 ,
+                              "Acceso gratuito",
+                              "Prop. debates en Region",
+                              "Prop. debates en USA" 
+
+                             ),
        reorder.coef =  c(1,
                          2,
-                         18,
                          3,
-                         19 ,
                          4,
-                        20,
                          5,
-                        11,
+
+                         11,
                          12,
                          13,
-                         14 ,
+                         14,
                          15,
-                        16,
+                         16,
                          17,
-                        6,
-                        7,
-                        9,
-                        10,
-                        8 ,
-                        21),
-        file="tabla_1.html",
+
+                         6,
+                         7,
+                         9,
+                         10,
+                         8
+                         ),
+        file="tabla_1_bis.html",
        caption = "Todos los modelos están calculados con errores estándar agrupados por país",
        center = T,
        bold = 0.1)
 
 texreg::htmlreg(lista2,
+                custom.model.names = c("Final",
+                                       "Variante",
+                                       "Final s/ casos influyentes")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                 custom.coef.names = c("(Intercepto)",
+                                       "log Margen de victoria",
+                                       "log NEC",
+                                       "log Votos oficialista",
+                                       "Incumbente reelije",
+                                       "Prop. individuos c internet",
+                                       "Acceso gratuito",
+                                       "Prop. debates en Region",
+                                       "Regulacion sobre debates",
+                                       "Cant. elecciones pasadas con debates",
+                                       "log PBI per Capita",
+                                       "Democracia electoral (VDEM)",
+                                       "Corrupcion de medios (VDEM)",
+                                       "Margen de victoria",
+                                       "NEC" ,
+                                       "Votos oficialista",
+                                       "Prop. debates en USA" ,
+                                       "PBI per Capita"
+                                      ),
+                reorder.coef =  c(1,
+                                  14,
+                                  2,
+                                  15,
+                                  3,
+                                  16,
+                                  4,
+                                  5,
+
+                                  6,
+                                  7,
+                                  8,
+                                  17,
+
+                                  9,
+                                  10,
+                                  18,
+                                  11,
+                                  12,
+                                  13
+                                  ),
+                file="tabla_2_bis.html",
+                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                center = T,
+                bold = 0.1)
+
+texreg::htmlreg(lista3,
                 custom.model.names = c("Final con variantes",
                                        "Final con variantes sin outliers",
                                        "Multinivel",
@@ -2057,7 +2196,7 @@ texreg::htmlreg(lista2,
                 # "log PBI per Capita",
                 # "Democracia electoral (VDEM)",
                 # "Corrupcion de medios (VDEM)"),
-                file="tabla_2.html",
+                file="tabla_3_bis.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
                 bold = 0.1)
