@@ -297,7 +297,7 @@ options(scipen=999)
 summary(modelo_sficativas)
 
 
-
+### Modelo final / sficativas variantes ####
 # variantes modelo sficativas
 formula_modelo_sficativas_variantes <- "dico_hubo_debates ~ 
                         #dico_debates_primerosdos ~ 
@@ -330,6 +330,38 @@ options(scipen=999)
 summary(modelo_sficativas_variantes)
 
 
+### Modelo final / sficativas variantes + interaccion ####
+# variantes modelo sficativas
+formula_modelo_sficativas_variantes_interactivo <- "dico_hubo_debates ~ 
+                        #dico_debates_primerosdos ~ 
+                        #dico_hubo_debate_mediatico ~ 
+                           lnmarginvic + # CAMBIE
+                           lnnec +
+                           #exapprovalnotsmoothed + 
+                           lnvoteshareincumbent +
+                           dico_reeleccion + 
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           avgpropdebatesregionxciclo + 
+                           #prop_elec_usa_ciclo +
+                           regulaciondico +
+                          regulaciondico*lnnec +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           lngdp + # CAMBIE
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem#, #+
+                          # ncat_eleccion,
+                          #edadregimenbmr#, "
+
+
+modelo_sficativas_variantes_interactivo <- glm(formula_modelo_sficativas_variantes_interactivo,
+                                   family = binomial(link = "logit"), 
+                                   #data = data 
+                                   data = democracias)
+options(scipen=999)
+summary(modelo_sficativas_variantes_interactivo)
 
 ### borrador prueba Modelo lineal generalizado de efectos mixtos (ejemplo: binomial) ####
 
@@ -555,16 +587,16 @@ modelo_0 <- glm(dico_hubo_debates ~ 1,
 modelo_0_reducido <- glm(dico_hubo_debates ~ 1, 
                                     family = binomial(link = "logit"), 
                                     data = data_reducida)
-modelo_contingencia_reducido <- glm(formula_modelo_contingencia, 
+modelo_contingencia_reducido <- glm(formula_modelo_contingencia_bis, 
                 family = binomial(link = "logit"), 
                 data = data_reducida)
-modelo_sistemico_reducido <- glm(formula_modelo_sistemico, 
+modelo_sistemico_reducido <- glm(formula_modelo_sistemico_bis, 
                 family = binomial(link = "logit"), 
                 data = data_reducida)
-modelo_regulatorio_reducido <- glm(formula_modelo_regulatorio, 
+modelo_regulatorio_reducido <- glm(formula_modelo_regulatorio_bis, 
                 family = binomial(link = "logit"), 
                 data = data_reducida)
-modelo_temporal_reducido <- glm(formula_modelo_temporal, 
+modelo_temporal_reducido <- glm(formula_modelo_temporal_bis, 
                 family = binomial(link = "logit"), 
                 data = data_reducida)
 modelo_sficativas_reducido <- glm(formula_modelo_sficativas, 
@@ -573,6 +605,30 @@ modelo_sficativas_reducido <- glm(formula_modelo_sficativas,
 modelo_sficativas_variantes_reducido <- glm(formula_modelo_sficativas_variantes, 
                                   family = binomial(link = "logit"), 
                                   data = data_reducida)
+
+#### PENDIENTE no tan relevante: reducida para comparar con version final del modelo ####
+modelo_0_reducido <- glm(dico_hubo_debates ~ 1, 
+                         family = binomial(link = "logit"), 
+                         data = data_reducida)
+modelo_contingencia_reducido <- glm(formula_modelo_contingencia_bis, 
+                                    family = binomial(link = "logit"), 
+                                    data = data_reducida)
+modelo_sistemico_reducido <- glm(formula_modelo_sistemico_bis, 
+                                 family = binomial(link = "logit"), 
+                                 data = data_reducida)
+modelo_regulatorio_reducido <- glm(formula_modelo_regulatorio_bis, 
+                                   family = binomial(link = "logit"), 
+                                   data = data_reducida)
+modelo_temporal_reducido <- glm(formula_modelo_temporal_bis, 
+                                family = binomial(link = "logit"), 
+                                data = data_reducida)
+modelo_sficativas_reducido <- glm(formula_modelo_sficativas, 
+                                  family = binomial(link = "logit"), 
+                                  data = data_reducida)
+modelo_sficativas_variantes_reducido <- glm(formula_modelo_sficativas_variantes, 
+                                            family = binomial(link = "logit"), 
+                                            data = data_reducida)
+
 #### reducida sficativas ####
 modelo_0_reducido_sficativas <- glm(dico_hubo_debates ~ 1, 
                          family = binomial(link = "logit"), 
@@ -589,6 +645,9 @@ modelo_regulatorio_reducido_sficativas <- glm(formula_modelo_regulatorio,
 modelo_temporal_reducido_sficativas <- glm(formula_modelo_temporal, 
                                 family = binomial(link = "logit"), 
                                 data = data_modelo_sficativas)
+modelo_varaintes_reducido <- glm(formula_modelo_sficativas_variantes, 
+                                           family = binomial(link = "logit"), 
+                                           data = data_modelo_sficativas)
 
 
 #### importante: defino modelo de prueba ####
@@ -642,9 +701,9 @@ qqline(residuals_dev, col = "red")
 # It is possible to test against the alternative that it is greater than, not equal to, or less than 0, respectively. This can be specified by the alternative argument.
 # https://medium.com/@analyttica/durbin-watson-test-fde429f79203
 # no es lo más adecuado de usar cuando tengo variables rezagadas (como es mi caso)
-dwtest(modelo_a_probar)
+dwtest(modelo_a_probar, alternative = "two.sided")
 # valor del estadistico: Una regla general que se sigue es: los valores de la estadística de prueba DW en el rango de 1,5 a 2,5 son relativamente aceptables. Los valores fuera de este rango podrían ser motivo de preocupación. Los valores inferiores a 1 o superiores a 3 son un motivo definitivo de preocupación.
-# no podemos rechazar (tenemos evidencia favorable a) la H nula de que no hay autocorrelación
+# El valor de p constituye una medida de la credibilidad de la hipótesis nula. Cuanto menor sea, más nos inclinaremos a rechazar la hipótesis nula,
 # A p-value of 0.3608 for a Durbin-Watson test indicates that the null hypothesis of no autocorrelation is not rejected
 
 ### Casos influyentes y outliers ####
@@ -887,7 +946,9 @@ text(dfbetas$mediaqualitycorruptvdem,
 ##### reestimacion sin outliers ##### 
  
 data_s_outliers <- democracias %>% 
- mutate(filtrar = ifelse(cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
+ mutate(filtrar = ifelse(#cat_pais=="Brasil"&ncat_eleccion==2018&ncat_ronda==2|
+                           #cat_pais=="Colombia"&ncat_eleccion==2018&ncat_ronda==2|
+                           cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
                            cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
                            cat_pais=="Costa Rica"&ncat_eleccion==1986&ncat_ronda==1, 
                          1, 0)) %>% 
@@ -1151,12 +1212,12 @@ lmtest::waldtest(modelo_a_probar)
 # F: Esta es la estadística de prueba para la prueba de Wald. Sigue una distribución F bajo la hipótesis nula de que los parámetros en el modelo reducido (Modelo 2) son iguales a cero. En otras palabras, prueba si los predictores adicionales en el Modelo 1 contribuyen significativamente al modelo.
 # Pr(>F): es el valor p asociado con el estadístico de la prueba F. Representa la probabilidad de observar un estadístico F tan extremo como el calculado bajo la hipótesis nula. En este caso, el valor p es 0,006863, que es menor que 0,05, lo que sugiere una evidencia sólida contra la hipótesis nula.
 
-lmtest::waldtest(modelo_sficativas , modelo_0_reducido_sficativas)
-lmtest::waldtest(modelo_sficativas , modelo_contingencia_reducido_sficativas)
-#lmtest::waldtest(modelo_sficativas , modelo_sistemico_reducido_sficativas) # pendiente
-#lmtest::waldtest(modelo_sficativas , modelo_regulatorio_reducido_sficativas) # pendiente
-lmtest::waldtest(modelo_sficativas , modelo_temporal_reducido_sficativas)
-lmtest::waldtest(modelo_sficativas , modelo_sficativas_variantes)
+lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_0_reducido)
+lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
+lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
+lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
+lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido) # pendiente
+lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido) # Pendiente
 
 # en gral el modelo mejora significativamente en todos los casos
 
@@ -1176,6 +1237,12 @@ lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
 lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
 lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
 
+lrtest(modelo_sficativas_variantes_reducido , modelo_0_reducido)
+lrtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
+lrtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
+lrtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
+lrtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido)
+lrtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido)
 
 # Model 1 : represents the null model, which includes only the intercept.
 # Model 2: represents the full model, which includes predictors
@@ -1486,6 +1553,8 @@ print(robust_se_cluster_modelo_sficativas_variantes_s_outliers)
 modelo_a_interpretar <- modelo_sficativas_variantes_s_outliers
 data_modelo_a_interpretar <- data_s_outliers 
 
+modelo_a_interpretar <- modelo_sficativas_variantes
+data_modelo_a_interpretar <- democracias 
 ### calculo de probas predichas ####
 data_modelo_a_interpretar$probabilidades_predichas <- predict(modelo_a_interpretar, type = "response")
 data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpretar$probabilidades_predichas>0.5,1,0)
@@ -1535,7 +1604,7 @@ odds_ratios <- jtools::plot_summs(modelo_a_interpretar, #modelo_contingencia,
 varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
                                                  modelo_sistemico,
                                                  modelo_regulatorio,
-                                                 modelo_temporal, # vemos el efecto sobredeterminado de prop_elec_usa-....
+                                               #  modelo_temporal, # vemos el efecto sobredeterminado de prop_elec_usa-....
                                                 # modelo_sficativas,
                                                  modelo_sficativas_variantes,
                                                  modelo_sficativas_variantes_s_outliers,
@@ -1546,7 +1615,7 @@ varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
                                                  model.names = c("modelo_contingencia",
                                                                  "modelo_sistemico",
                                                                  "modelo_regulatorio",
-                                                                 "modelo_temporal",
+                                                               #  "modelo_temporal",
                                                                  #"modelo_sficativas",
                                                                  "modelo_sficativas_variantes",
                                                                  "modelo_sficativas_variantes_s_outliers"
@@ -1585,6 +1654,37 @@ data_to_predict$predicted_probs <- predict(modelo_a_interpretar,
                                            newdata = data_to_predict, 
                                            type = "response")
 
+
+# tabla
+
+referencias <- tibble( 
+  nec = c( round(min(data_modelo_a_interpretar$nec), 2),
+           round(max(data_modelo_a_interpretar$nec), 2),
+            round(mean(data_modelo_a_interpretar$nec), 2),
+            round(mean(data_modelo_a_interpretar$nec) + sd(data_modelo_a_interpretar$nec), 2),
+            round(mean(data_modelo_a_interpretar$nec) + 2*sd(data_modelo_a_interpretar$nec), 2),
+            round(mean(data_modelo_a_interpretar$nec) - sd(data_modelo_a_interpretar$nec), 2),
+            round(mean(data_modelo_a_interpretar$nec) - 2*sd(data_modelo_a_interpretar$nec), 2)),
+  referencia = c("Valor mínimo observado",
+                 "Valor máximo observado",
+                 "Promedio observado",
+                 "Promedio + un desvío estandar",
+                 "Promedio + dos desvíos estandar",
+                 "Promedio - un desvío estandar",
+                 "Promedio - dos desvío estandar"))
+
+tabla_data_to_predict <- data_to_predict %>% 
+  mutate(nec = exp(lnnec)) %>% 
+  select(nec, regulaciondico, predicted_probs) %>% 
+  pivot_wider(names_from = regulaciondico,
+              values_from = predicted_probs) %>% 
+  mutate(across(everything(),  ~  round(., 2))) %>% 
+  left_join(referencias) %>% 
+  arrange(nec) 
+
+
+
+
 # grafico
 
 ggplot(data_to_predict) +
@@ -1595,14 +1695,14 @@ data_to_predict <- data.frame(
   lnnec = rep(seq(min(data_modelo_a_interpretar$lnnec, na.rm = TRUE), 
                     max(data_modelo_a_interpretar$lnnec, na.rm = TRUE),
                     #mean(data_modelo_sficativas$lnnec, na.rm = TRUE),
-                    length.out = 10), 2), # Cambiar por los valores que quieras probar
+                    length.out = 20), 2), # Cambiar por los valores que quieras probar
   lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
   lnvoteshareincumbent = mean(data_modelo_a_interpretar$lnvoteshareincumbent, na.rm = TRUE),
-  dico_reeleccion = 0, # Si es una variable dicotómica, fija en 0 o 1
+  dico_reeleccion = median(data_modelo_a_interpretar$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
   propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
-  accesogratuito = mean(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
   avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
-  regulaciondico = rep(c(0,1),each=10) ,
+  regulaciondico = rep(c(0,1),each=20) ,
   cumsum_pastciclos = mean(data_modelo_a_interpretar$cumsum_pastciclos, na.rm = TRUE),
   lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
   democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
@@ -1621,16 +1721,59 @@ data_to_predict$se_predicted_probs <- predicted_probs$se.fit
 
 # grafico
 
-ggplot(data_to_predict) +
+plot_interpretacion <- ggplot(data_to_predict) +
   geom_line(aes(x = exp(lnnec), 
                 y = predicted_probs, 
                 colour = as.factor(regulaciondico))) +
   geom_ribbon(aes(x = exp(lnnec), 
                   ymin =  predicted_probs - 1.96*se_predicted_probs, 
                   ymax =  predicted_probs + 1.96*se_predicted_probs, 
-                  fill = as.factor(regulaciondico)), alpha = 0.3) 
+                  fill = as.factor(regulaciondico)), alpha = 0.3) +
+  theme_classic() +
+  labs(
+    title = "Probabilidad predicha de ocurrencia de un debate presidencial",
+    subtitle = "Para distintos valores dentro del rango observado de NEC, con y sin regulación",
+    caption = "Elaboración propia",
+    fill = "Regulación sobre debates",
+    colour = "Regulación sobre debates"
+  ) +
+  xlab("Número Efectivo de Candidatos") +
+  ylab("Probabilidad predicha de que ocurra un debate") +
+  scale_x_continuous(breaks= seq(1, 10, 0.5)) +
+  scale_fill_discrete(labels = c("No hay", "Hay"), breaks = c(0,1)) +
+  scale_colour_discrete(labels = c("No hay", "Hay"), breaks = c(0,1)) +
+  geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2) +
+  geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2)
+ 
 
 # nec es especialmente relevante cuando no hay regulacion
+
+# algunas cuentas para reportar verbalmente
+data_to_predict <- data.frame(
+  lnnec = rep(c(log(2), log(3)), 2), # Cambiar por los valores que quieras probar
+  lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
+  lnvoteshareincumbent = mean(data_modelo_a_interpretar$lnvoteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = median(data_modelo_a_interpretar$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
+  accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = rep(c(0,1),each=2) ,
+  cumsum_pastciclos = mean(data_modelo_a_interpretar$cumsum_pastciclos, na.rm = TRUE),
+  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+
+# Predecir probabilidades
+predicted_probs <- predict(modelo_a_interpretar, 
+                           newdata = data_to_predict, 
+                           type = "response",
+                           se.fit = T)  
+
+data_to_predict$predicted_probs <- predicted_probs$fit
+data_to_predict$se_predicted_probs <- predicted_probs$se.fit
+
 
 # version mas simple
 # no esta claro a qué valores de las demás variables me esta caluclando los graficos, pendiente ver

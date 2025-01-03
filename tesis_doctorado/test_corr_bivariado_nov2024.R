@@ -1041,7 +1041,7 @@ ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_contro
 # Calculate Kendall's Tau-b correlation
 tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
 tau_b
-pearson <- cor(variable_independiente, variable_dependiente, method = "pearson", use = "complete.obs")
+pearson <- cor(variable_control, variable_dependiente, method = "pearson", use = "complete.obs")
 
 summary_tbl <- rbind(summary_tbl,
                      tibble(Statistic = "Tau B",
@@ -1117,7 +1117,7 @@ ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_contro
 tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
 tau_b
 
-pearson <- cor(variable_independiente, variable_dependiente, method = "pearson", use = "complete.obs")
+pearson <- cor(variable_control, variable_dependiente, method = "pearson", use = "complete.obs")
 
 summary_tbl <- rbind(summary_tbl,
                      tibble(Statistic = "Tau B",
@@ -1194,7 +1194,7 @@ ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_contro
 tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
 tau_b
 
-pearson <- cor(variable_independiente, variable_dependiente, method = "pearson", use = "complete.obs")
+pearson <- cor(variable_control, variable_dependiente, method = "pearson", use = "complete.obs")
 
 summary_tbl <- rbind(summary_tbl,
                      tibble(Statistic = "Tau B",
@@ -2852,6 +2852,161 @@ modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control
                             family = "binomial")
 summary(modelo_estandarizado) 
 
+
+# VDEM bias #####
+nombre_variable <- "Sesgo mediático hacia el gobierno (VDEM)"
+
+# preferido: vdem
+variable_control <-  democracias$mediaqualitybiasvdem 
+standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
+
+summary_obj <- summary(variable_control) 
+summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+  mutate(variable = nombre_variable)
+
+std_dev <- tibble(Statistic = "Std. Dev",
+                  Value = sd(variable_control, na.rm = T),
+                  variable = nombre_variable )
+
+summary_tbl <- rbind(summary_tbl,
+                     std_dev)
+
+data <- tibble(variable_control = variable_control,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_control)
+hist(variable_control %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_control))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_control)))
+#table(variable_control, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+pearson <- cor(variable_control, variable_dependiente, method = "pearson", use = "complete.obs")
+
+summary_tbl <- rbind(summary_tbl,
+                     tibble(Statistic = "Tau B",
+                            Value = tau_b,
+                            variable = nombre_variable),
+                     tibble(Statistic = "Pearson",
+                            Value = pearson,
+                            variable = nombre_variable))
+
+mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_control,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+coef <- summary(modelo)$coefficients[2,c(1,4)]
+coef_tbl <- enframe(coef, 
+                    name = "Name", 
+                    value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+  mutate(variable = nombre_variable)
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+                                  name = "Name", 
+                                  value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+  mutate(variable = nombre_variable)
+
+summary_tbl <- rbind(summary_tbl,
+                     coef_estandarizado_tbl,
+                     coef_tbl)
+
+data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
+
+# VDEM perspectives #####
+
+nombre_variable <- "Representación de perspectivas en medios (VDEM)"
+
+# preferido: vdem
+variable_control <-  democracias$mediaqualityperspectivesvdem
+standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
+
+summary_obj <- summary(variable_control) 
+summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+  mutate(variable = nombre_variable)
+
+std_dev <- tibble(Statistic = "Std. Dev",
+                  Value = sd(variable_control, na.rm = T),
+                  variable = nombre_variable )
+
+summary_tbl <- rbind(summary_tbl,
+                     std_dev)
+
+data <- tibble(variable_control = variable_control,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_control)
+hist(variable_control %>%  log())
+
+ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_control))
+#ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_control)))
+#table(variable_control, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+pearson <- cor(variable_control, variable_dependiente, method = "pearson", use = "complete.obs")
+
+summary_tbl <- rbind(summary_tbl,
+                     tibble(Statistic = "Tau B",
+                            Value = tau_b,
+                            variable = nombre_variable),
+                     tibble(Statistic = "Pearson",
+                            Value = pearson,
+                            variable = nombre_variable))
+
+mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_control,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+coef <- summary(modelo)$coefficients[2,c(1,4)]
+coef_tbl <- enframe(coef, 
+                    name = "Name", 
+                    value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+  mutate(variable = nombre_variable)
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+                                  name = "Name", 
+                                  value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+  mutate(variable = nombre_variable)
+
+summary_tbl <- rbind(summary_tbl,
+                     coef_estandarizado_tbl,
+                     coef_tbl)
+
+data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
 
 ## CORRELACIONES ENTRE VARIABLES INDEP #####

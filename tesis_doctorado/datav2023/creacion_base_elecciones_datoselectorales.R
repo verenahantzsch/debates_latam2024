@@ -61,6 +61,7 @@ qof_controles_mediaquality <- read.csv("QofG/indicadores_mediaquality_qof.csv")
 qof_controles_democracia <- read.csv("QofG/indicadores_democracia_qof.csv")
 qof_controles_desarrollo <- read.csv("QofG/indicadores_desarrollo_qof.csv")
 qof_controles_turnout <- read.csv("QofG/indicadores_turnout_qof.csv")
+data_controles_media_vdem <- read.csv("VDEM/V-Dem-CY-FullOthers-v14_csv_YyKfizl/data_media_vdem.csv")
 
 # datos encuestas
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
@@ -1148,14 +1149,21 @@ control_democracia <- qof_controles_democracia %>%
 
 control_medios <- qof_controles_mediaquality %>% 
   select(-X) %>% 
+  left_join(data_controles_media_vdem %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, 
+                     v2mebias, v2merange, source_media)) %>% 
   dplyr::rename(mediaqualityfreedombti = new_bti_foe,
                 mediaqualityconftvwvs = new_wvs_conftv,
                 mediaqualitycorruptvdem = new_vdem_mecorrpt,
                 mediaqualitybiasnelda = new_nelda_mbbe,
+                mediaqualitybiasvdem = v2mebias,
+                mediaqualityperspectivesvdem = v2merange,
                 source_mediaqualityfreedombti = source_bti_foe,
                 source_mediaqualityconftvwvs = source_wvs_conftv,
                 source_mediaqualitycorruptvdem = source_vdem_mecorrpt,
-                source_mediaqualitybiasnelda = source_nelda_mbbe)
+                source_mediaqualitybiasnelda = source_nelda_mbbe,
+                source_mediaqualitybiasvdem = source_media) %>% 
+  mutate(source_mediaqualityperspectivesvdem = source_mediaqualitybiasvdem)
 
 
 ### GURADADO CONTROLES chequeo y guardo lo disponible hasta ahora  #########################
