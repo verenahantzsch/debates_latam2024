@@ -1546,6 +1546,13 @@ robust_se_cluster_modelo_sficativas_variantes_s_outliers <- coeftest(modelo_sfic
                                                                         cluster = data_s_outliers$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes_s_outliers)
 
+robust_se_cluster_modelo_sficativas_variantes_interactivo <- coeftest(modelo_sficativas_variantes_interactivo, 
+                                                                     vcov = vcovCL(modelo_sficativas_variantes_interactivo, 
+                                                                                   #cluster = democracias$elecid))
+                                                                                   #cluster = data$elecid))
+                                                                                   cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_sficativas_variantes_interactivo)
+
 ## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
 
 ### importante elegir ####
@@ -1863,11 +1870,15 @@ marginal_effects <- margins::margins(modelo_a_interpretar)
 
 marginals_df <- summary(marginal_effects)
 
-ggplot(marginals_df) +
+plot_margins <- ggplot(marginals_df) +
   geom_point( aes(x = factor, y = AME)) +
   geom_errorbar(aes(x = factor, ymin = lower, ymax = upper), width = 0.2) +
   coord_flip() +
-  labs(x = "Variables", y = "Efectos marginales promedio") +
+  labs(title = "Efectos marginales promedio",
+       subtite = "Modelo final",
+       x = "Predictores", 
+       y = "Efectos marginales promedio",
+       caption = "Elaboración propia") +
   theme_minimal()
 
 margins::marginal_effects(margins::margins(modelo_a_interpretar))
@@ -1951,6 +1962,20 @@ diff(data_regulacion$predicted_probs)
 cat("Efecto marginal de regulaciondico 
     cuando el resto de las variables están en sus medias:", effect_regulacion, "\n")
 
+### visualizacion de interacciones para modelo INTERACTIVO ####
+
+persp(modelo_sficativas_variantes_interactivo, 
+      "regulaciondico", "lnnec", 
+      what = "prediction",
+      #ylab = "Desigualdad", xlab = "Crecimiento económico",
+      zlab = "Probabilidad predicha" )
+
+image(modelo_sficativas_variantes_interactivo,  
+      "regulaciondico", "lnnec")#, 
+      #xlab = "Crecimiento económico", ylab = "Desigualdad",
+      #zlab = "Probabilidad predicha")
+
+summary(modelo_sficativas_variantes_interactivo)
 
 ## MULTINIVEL MODELOS 1 ####
 
@@ -2359,21 +2384,7 @@ summary(democracias2)
 
 ### Modelo contingencia  ####
 
-modelo_contingencia2 <- glm(dico_hubo_debates ~ 
-                            #  dico_nueva_practica_elec ~   # es literalmente lo mismo
-                            #  dico_nueva_practica_ciclo ~   
-                                       marginvic + 
-                                       nec +
-                                       #exapprovalnotsmoothed + 
-                                       voteshareincumbent +
-                                       dico_reeleccion + 
-                                       regulaciondico +
-                                       #cumsum_pastciclos +
-                                       #dico_debates_pastelection +
-                                      # gdpxcapita +
-                                       democraciavdemelectoralcomp, #+
-                                       #mediaqualitycorruptvdem, #+
-                                       #edadregimenfilled ,
+modelo_contingencia2 <- glm(formula_modelo_contingencia_bis,
                                      family = binomial(link = "logit"), 
                                     #data = data2
                                      data = democracias2)
@@ -2391,17 +2402,7 @@ robust_se_cluster <- coeftest(modelo_contingencia2,
 print(robust_se_cluster)
 
 ### Modelo sistemico ####
-modelo_sistemico2 <- glm(dico_hubo_debates ~ 
-                           #  dico_nueva_practica_elec ~  # es literalmente lo mismo
-                                    alineamiento + 
-                                    proptv +
-                                    propindivinternet +
-                                    #cumsum_pastciclos +
-                                    #dico_debates_pastelection +
-                                    #gdpxcapita +
-                                    democraciavdemelectoralcomp +
-                                    mediaqualitycorruptvdem, #+
-                                    #edadregimenbmr,
+modelo_sistemico2 <- glm(formula_modelo_sistemico_bis,
                                   family = binomial(link = "logit"), 
                          #data = data2
                          data = democracias2)
@@ -2419,17 +2420,7 @@ robust_se_cluster <- coeftest(modelo_sistemico2,
 print(robust_se_cluster)
 
 ### Modelo marco regulatorio ####
-modelo_regulatorio2 <- glm(dico_hubo_debates ~ 
-                             #  dico_nueva_practica_elec ~  # es literalmente lo mismo
-                                      regulaciondico + 
-                                      prohibicionpropaganda +
-                                      accesogratuito +
-                                      #cumsum_pastciclos +
-                                      #dico_debates_pastelection +
-                                      gdpxcapita +
-                                      democraciavdemelectoralcomp +
-                                      mediaqualitycorruptvdem + 
-                                      edadregimenbmr,
+modelo_regulatorio2 <- glm(formula_modelo_regulatorio_bis,
                                     family = binomial(link = "logit"), 
                            #data = data2
                            data = democracias2)
@@ -2447,17 +2438,7 @@ robust_se_cluster <- coeftest(modelo_regulatorio2,
 print(robust_se_cluster)
 
 ### Modelo geo/temp ####
-modelo_temporal2 <- glm(dico_hubo_debates ~ 
-                          #  dico_nueva_practica_elec ~  # es literalmente lo mismo
-                         avgpropdebatesregionxciclo + 
-                         prop_elec_usa_ciclo +
-                         democraciavdemelectoralcomp +
-                         #cumsum_pastciclos +
-                         #dico_debates_pastelection +
-                         gdpxcapita +
-                         mediaqualitycorruptvdem +
-                         regulaciondico + 
-                          edadregimenbmr,
+modelo_temporal2 <- glm(formula_modelo_temporal_bis,
                        family = binomial(link = "logit"), 
                        #data = data2
                        data = democracias2)
@@ -2475,41 +2456,19 @@ robust_se_cluster <- coeftest(modelo_temporal2,
 print(robust_se_cluster)
 
 ### Modelo final / sficativas ####
-modelo_sficativas <- glm(dico_hubo_debates ~ 
-                           #dico_debates_primerosdos ~ 
-                           #dico_hubo_debate_mediatico ~ 
-                           avgpropdebatesregionxciclo + 
-                           prop_elec_usa_ciclo +
-                           #proptv +
-                           propindivinternet +
-                           accesogratuito +
-                           marginvic + 
-                           nec +
-                           #exapprovalnotsmoothed + 
-                           voteshareincumbent +
-                           dico_reeleccion + 
-                           regulaciondico +
-                           cumsum_pastciclos +
-                           #dico_debates_pastelection +
-                           gdpxcapita +
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem, #+
-                         # ncat_eleccion,
-                         #edadregimenbmr#, #Sacar edad de régimen.  
-                         #No tiene sentido incluirla si controlas por la calidad de la democracia 
-                         # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+modelo_sficativas2 <- glm(formula_modelo_sficativas_variantes,
                          family = binomial(link = "logit"), 
                          #data = data2
                          data = democracias2)
 options(scipen=999)
-summary(modelo_sficativas)
-vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
+summary(modelo_sficativas2)
+vif_values <- car::vif(modelo_sficativas2) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sficativas, 
-                              vcov = vcovCL(modelo_sficativas, 
+robust_se_cluster <- coeftest(modelo_sficativas2, 
+                              vcov = vcovCL(modelo_sficativas2, 
                                             #cluster = data2$elecid))
                                             cluster = democracias2$elecid))
 print(robust_se_cluster)
@@ -2519,34 +2478,20 @@ print(robust_se_cluster)
 
 
 data2.2 <- data %>% 
-  subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) %>% 
+  #subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) %>% 
   subset(regulaciondico==0)
 #subset(dico_debates_pastelection==0) 
 summary(data2)
 
 democracias2.2 <- democracias %>% 
-  subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) %>% 
+  #subset(dico_debates_pastelection==0|is.na(dico_debates_pastelection)) %>% 
   subset(regulaciondico==0)
 #subset(dico_debates_pastelection==0) 
 summary(democracias2)
 
 # Modelo contingencia  
 
-modelo_contingencia2.2 <- glm(dico_hubo_debates ~ 
-                              #  dico_nueva_practica_elec ~   # es literalmente lo mismo
-                              #  dico_nueva_practica_ciclo ~   
-                              marginvic + 
-                              nec +
-                              #exapprovalnotsmoothed + 
-                              voteshareincumbent +
-                              dico_reeleccion + 
-                              #regulaciondico +
-                              #cumsum_pastciclos +
-                              #dico_debates_pastelection +
-                              # gdpxcapita +
-                              democraciavdemelectoralcomp +
-                              mediaqualitycorruptvdem, #+ 
-                            #edadregimenfilled ,
+modelo_contingencia2.2 <- glm(formula_modelo_contingencia_bis,
                             family = binomial(link = "logit"), 
                             #data = data2.2,
                             data = democracias2.2)
@@ -2563,43 +2508,21 @@ robust_se_cluster <- coeftest(modelo_contingencia2.2,
                                             #cluster = data2.2$elecid))
 print(robust_se_cluster)
 
-modelo_sficativas <- glm(dico_hubo_debates ~ 
-                           #dico_debates_primerosdos ~ 
-                           #dico_hubo_debate_mediatico ~ 
-                           avgpropdebatesregionxciclo + 
-                           prop_elec_usa_ciclo +
-                           #proptv +
-                           propindivinternet +
-                           accesogratuito +
-                           marginvic + 
-                           nec +
-                           #exapprovalnotsmoothed + 
-                           voteshareincumbent +
-                           dico_reeleccion + 
-                           #regulaciondico +
-                           cumsum_pastciclos +
-                           #dico_debates_pastelection +
-                           gdpxcapita +
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem, #+
-                         # ncat_eleccion,
-                         #edadregimenbmr#, #Sacar edad de régimen.  
-                         #No tiene sentido incluirla si controlas por la calidad de la democracia 
-                         # ademas CAMBIAN MUY POCO resultados relevantes, chequeado
+modelo_sficativas2.2 <- glm(formula_modelo_sficativas_variantes,
                          family = binomial(link = "logit"), 
                          #data = data2
                          data = democracias2.2)
 options(scipen=999)
-summary(modelo_sficativas)
-vif_values <- car::vif(modelo_sficativas) # cheq de multicolinealidad segun chatgpt
+summary(modelo_sficativas2.2)
+vif_values <- car::vif(modelo_sficativas2.2) # cheq de multicolinealidad segun chatgpt
 print(vif_values) 
 # VIF < 5: The variable has low multicollinearity (no significant issue).
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
 robust_se_cluster <- coeftest(modelo_sficativas, 
-                              vcov = vcovCL(modelo_sficativas, 
+                              vcov = vcovCL(modelo_sficativas2.2, 
                                             #cluster = data2$elecid))
-                                            cluster = democracias2.2$elecid))
+                                            cluster = democracias2.2$cat_pais))
 print(robust_se_cluster)
 
 ### MODELOS 3: submuestra con debates en eleccion anterior. "Interrupción de práctica"  #####
@@ -2613,20 +2536,7 @@ democracias3 <- democracias %>%
 summary(democracias3)
 
 ### Modelo contingencia ####
-modelo_contingencia3 <- glm(dico_practica_interrumpida_elec ~ 
-                              #dico_practica_interrumpida_ciclo ~   
-                              marginvic + 
-                              nec +
-                              #exapprovalnotsmoothed + 
-                              voteshareincumbent +
-                              dico_reeleccion + 
-                              regulaciondico +
-                              #cumsum_pastciclos +
-                              #dico_debates_pastelection +
-                              gdpxcapita +
-                              democraciavdemelectoralcomp +
-                              mediaqualitycorruptvdem +
-                              edadregimenfilled,
+modelo_contingencia3 <- glm(formula_modelo_contingencia_bis,
                             family = binomial(link = "logit"), 
                            # data = data3
                             data = democracias3)

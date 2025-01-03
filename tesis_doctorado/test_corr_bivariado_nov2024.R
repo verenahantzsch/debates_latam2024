@@ -1310,11 +1310,35 @@ data_descriptiva_bivariada %>% write.csv("data_descriptiva_bivariada.csv")
 
 # HISTOGRAMAS 
 
+custom_labels <- as_labeller(c(accesogratuito = "Acceso gratuito a TV",
+                  alineamiento = "Alineamiento partidario",
+                  avgpropdebatesregionxciclo = "Prop. elecciones c/debates región",
+                  cumsum_pastciclos = "Cant. elecciones pasadas c/debates",
+                  democraciavdemelectoralcomp = "N. democracia electoral (VDEM)",
+                  gdpxcapita = "PBI x capita",
+                  marginvic = "Margen de victoria",
+                  mediaqualitycorruptvdem = "N. corrupción en medios (VDEM)",
+                  ncat_eleccion = "Año electoral",
+                  nec = "N.E.C.",
+                  prohibicionpropaganda = "Propaganda prohibida",
+                  prop_elec_usa_ciclo =  "Prop. elecciones c/debates USA",
+                  propindivinternet = "% individuos c/Internet",
+                  proptv = "% hogares con TV",
+                  regulaciondico = "Debates regulados",
+                  voteshareincumbent = "% voto oficialista"))
+
+  
 histograms <- data_to_plot_long %>% 
   ggplot() +
   geom_histogram(aes(value)) +
-  facet_wrap(~ name, scales = "free") +
-  theme_classic()
+  facet_wrap(~ name, 
+             scales = "free",
+             labeller = custom_labels) +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
+  theme_classic() +
+  labs(title = "Distribución univariada de variables independientes",
+       caption = "Elaboración propia") +
+  theme(strip.text = element_text(size = 14))
 
 
 # correlaciones entre variables independientes
