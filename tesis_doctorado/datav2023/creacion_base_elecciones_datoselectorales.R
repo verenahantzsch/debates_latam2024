@@ -607,8 +607,14 @@ cor(data_tecno_uit %>% select(propindivinternet, propinternet), use = "pairwise.
 
 indicador_propinternet <- data_tecno_uit %>% 
               select(cat_pais, ncat_eleccion, ncat_ronda, 
-                     propindivinternet,
-                     source_propindivinternet)
+                     propindivinternet, propindivinternet2,
+                     source_propindivinternet, source_propindivinternet2)
+
+# cambio de orden:
+
+indicador_propinternet <- indicador_propinternet %>% 
+  dplyr::rename("propindivinternet" = "propindivinternet2", 
+                "propindivinternet2" = "propindivinternet")
 
 ##### regulacion especifica debates ######
 
