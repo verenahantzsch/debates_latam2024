@@ -614,7 +614,11 @@ indicador_propinternet <- data_tecno_uit %>%
 
 indicador_propinternet <- indicador_propinternet %>% 
   dplyr::rename("propindivinternet" = "propindivinternet2", 
-                "propindivinternet2" = "propindivinternet")
+                "propindivinternet2" = "propindivinternet") %>% 
+  dplyr::rename("source_propindivinternet" = "source_propindivinternet2", 
+                "source_propindivinternet2" = "source_propindivinternet") %>% 
+  mutate(cat_pais = ifelse(cat_pais=="Rep. Dominicana",
+                          "Republica Dominicana", cat_pais  ))
 
 ##### regulacion especifica debates ######
 
@@ -916,7 +920,7 @@ indicador_exapproval <- read.csv("indicador_exapproval.csv") %>% select(-X)
 indicador_proptv <- read.csv("indicador_proptv.csv") %>% select(-X)
 indicador_accesomedios <- read.csv("indicador_accesomedios.csv") %>% select(-X)
 indicador_regulacion <- read.csv("indicador_regulacion.csv") %>% select(-X)
-indicador_propinternet <- read.csv("indicador_propinternet.csv") %>% select(-X)
+indicador_propinternet <- read.csv("indicador_propinternet.csv") %>% select(-X) 
 indicador_satisfaccion <- read.csv("indicador_satisfaccion.csv") %>% select(-X)
 indicador_eeuu <- read.csv("indicador_eeuu.csv") %>% select(-X)
 indicador_region <- read.csv("indicador_region.csv") %>% select(-X)

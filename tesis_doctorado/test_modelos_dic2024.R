@@ -23,7 +23,6 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 # ELECCIONES ##############################
 ## PREPARO DATA #####
-### pendiente: preferir propindivinternet2 ####
 ### data completa #### 
 data <- base_indicadores  %>% 
   select(-starts_with("source_")) %>% 
@@ -498,14 +497,22 @@ modelo_varaintes_reducido <- glm(formula_modelo_sficativas_variantes,
 
 #### importante: defino modelo de prueba ####
 
-modelo_a_probar <- modelo_sficativas_variantes
+modelo_a_probar <-glm(formula_modelo_sficativas_variantes,
+                                                      family = binomial(link = "logit"), 
+                                                      #data = data 
+                                                      data = data_modelo_sficativas)
+options(scipen=999)
+summary(modelo_a_probar)
+summary(modelo_sficativas_variantes)
+data_modelo_a_probar <- data_modelo_sficativas
 #modelo_a_probar <- modelo_sficativas
 
 ### Control de resiudos ####
 
 ##### Graficar los residuos ####
+# https://library.virginia.edu/data/articles/understanding-deviance-residuals
 
-par(mfrow = c(1, 2))
+#par(mfrow = c(1, 2))
 
 # Residuos deviance
 residuals_dev <- residuals(modelo_a_probar, type = "deviance")
@@ -513,25 +520,67 @@ plot(residuals_dev, main = "Residuos Deviance", ylab = "Residuos", xlab = "Índi
 abline(h = 0, col = "red", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuals_dev), y = residuals_dev, 
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+# These are based on a weird-looking formula derived from the likelihood ratio test for comparing logistic regression models, where we compare our current model to a saturated model. A saturated model is a model with as many coefficients as there are observations. The formula for calculating this test statistic for a single observation produces the deviance residual.
+# These are the deviance residuals we see summarized in the model summary output. 
+# If we square the deviance residuals and add them all up, we get the residual deviance statistic we see printed at the bottom of the summary output:
+
+quantile(residuals(modelo_a_probar))
+sum(residuals(modelo_a_probar)*residuals(modelo_a_probar))
+#In general, the reason we might be interested in this summary is to see how well our model is fitting the data. 
+# Residuals are the differences between what we observe and what our model predicts.
+#It would be nice if our residuals were evenly distributed. 
+#We would like for the first quantile and third quantile values 
+# and minimum and maximum values to be about the same in absolute value, 
+# and for the median to be close to 0. 
+# In addition, we would like to see the minimum and maximum valuesbe less than about 3 in absolute value. 
+# This is because deviance residuals can be roughly approximated with a standard normal distribution when the model holds (Agresti, 2002). 
+# Residuals greater than the absolute value of 3 are in the tails of a standard normal distribution and usually indicate strain in the model.
+
+# Response
+# raw residuals
+raw_residuals <- residuals(modelo_a_probar, type = "response") 
+plot(raw_residuals, main = "Raw residuals", ylab = "Residuos", xlab = "Índice")
+abline(h = 0, col = "blue", lty = 2)
+# Añadir los IDs junto a los puntos
+text(x = 1:length(raw_residuals), y = raw_residuals, 
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
 
 # Residuos de Pearson
+#Another type of residual is the Pearson residual. It is the raw residual divided by the estimated standard deviation of a binomial distribution with number of trials equal to 1 and p equal to 
+# The Pearson residual is basically a rescaled version of the raw residual.  
 residuals_pearson <- residuals(modelo_a_probar, type = "pearson")
 plot(residuals_pearson, main = "Residuos de Pearson", ylab = "Residuos", xlab = "Índice")
 abline(h = 0, col = "blue", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuals_pearson), y = residuals_pearson, 
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
 
  
 # Residuos Pearsonestandarizados 
+#Yet another residual is the standardized Pearson residual. This is the Pearson residual adjusted for the leverage of predictors using what are called "hat values." Hat values measure the distance of individual predictors from the mean of the predictors. High hat values indicate a subject or row could have outlying predictor values. This in turn could mean that a subject or row has substantial leverage in determining the predicted response. This adjustment then increases the absolute value of certain residuals based on the leverage of the associated predictors. We’ll call this residual 
+# importantes porque tienen en cuenta el leverage!!
 hat_values <- hatvalues(modelo_a_probar)  # Leverage
 residuos_pearson_est <- residuals_pearson / sqrt(1 - hat_values)
 plot(residuos_pearson_est, main = "Residuos de Pearson Estandarizados", ylab = "Residuos", xlab = "Índice")
 abline(h = 0, col = "blue", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuos_pearson_est), y = residuos_pearson_est, 
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+
+plot(modelo_a_probar, which = 1) # Standardized Pearson residuals are plotted on the y-axis versus predicted log-odds on the x-axis. 
+# SI EN EJE VERTICAL PUNTO APARECE MUY ABAJO: PREDIGO ALTA PROBA PERO FALLO, SE OBSERVA NO OCURRENCIA
+# SI EN EJE VERTICAL PUNTO APARECE MUY ARRIBA: PREDIGO BAJA PROBA PERO FALLO, SE OBSERVA OCURRENCIA
+#Me aplica: It appears at the lower predicted values, we’re under-fitting The observed proportions are larger than the predicted proportions. 
+# At the medium predicted values, we're over-fitting for a couple of observations. The observed proportions are much smaller than the predicted proportions.
+
+data_modelo_a_probar$pred <- predict(modelo_a_probar, type = "response")
+data_modelo_a_probar$deviance <- residuals(modelo_a_probar)
+data_modelo_a_probar[c(162,32,61),]
+
+plot(modelo_a_probar, which = 2)
+# Earlier we mentioned that standardized Pearson residuals have an approximate standard normal distribution if the model fits. This implies looking at a QQ Plot of residuals can provide some assessment of model fit. We can produce this plot using plot() with which = 2. Again the plot created with the group-level model is more informative than the plot created with the subject-level model.
+# This suggests our model is holding well in the middle range of predicted values but is maybe suspect in the extremities. It’s worth mentioning that binomial logistic regression models have no error term or normality assumptions. In a standard linear model, this plot assesses normality of residuals, which is one of the assumptions of a linear model. But in a binary logistic regression model, normality of residuals is simply evidence of a decent fitting model. There is no assumption that residuals are random draws from a normal distribution.
 
 qqnorm(residuals_dev, main = "QQ Plot - Residuos de Deviance")
 qqline(residuals_dev, col = "red")
@@ -558,19 +607,26 @@ dwtest(modelo_a_probar, alternative = "two.sided")
 
 ##### Cook ####
 # Obtener las estadísticas de Cook
-cooks_distances <- cooks.distance(modelo_a_probar)
+data_modelo_a_probar$cooks_distances <- cooks.distance(modelo_a_probar)
+umbral <- 4 / (nrow(data_modelo_a_probar))
 
 # Ver las primeras estadísticas de Cook
-head(cooks_distances)
+tabla_cook <- data_modelo_a_probar %>% 
+       select(obsid, cooks_distances) %>%
+       subset(cooks_distances>umbral) %>% 
+       arrange(desc(cooks_distances))
+
+tabla_cook %>% write.csv("anexos/tabla_cook.csv")
 
 # Graficar las estadísticas de Cook
-plot(cooks_distances, main = "Estadísticas de Cook", ylab = "Cook's Distance", xlab = "Índice de observación")
-abline(h = 4 / (length(cooks_distances) - 14 - 1) , col = "red", lty = 2)  # Línea de corte común (influencia alta)
+plot(data_modelo_a_probar$cooks_distances, main = "Estadísticas de Cook", ylab = "Cook's Distance", xlab = "Índice de observación")
+abline(h = umbral #- 14 - 1) 
+       , col = "red", lty = 2)  # Línea de corte común (influencia alta)
 # Identificar observaciones influyentes (por encima del umbral)
-influential_obs <- which(cooks_distances > 4 / length(cooks_distances))
-text(x = influential_obs, y = cooks_distances[influential_obs], 
-     labels = democracias$obsid[influential_obs], pos = 4, cex = 0.7, col = "blue")
-
+influential_obs <- which(data_modelo_a_probar$cooks_distances > (4 / nrow(data_modelo_a_probar)))
+text(x = influential_obs, y = data_modelo_a_probar$cooks_distances[influential_obs], 
+     labels = data_modelo_a_probar$obsid[influential_obs], pos = 4, cex = 0.7, col = "blue")
+?text
 
 # costa rica 1986 parece ser la mas problematica
 # otras potenciales son brasil 2010 segunda ronda, ecuador 1988, guatemala 1999, colombia 2006, entre otras
@@ -579,8 +635,10 @@ text(x = influential_obs, y = cooks_distances[influential_obs],
 # peru 2011 1 # costa rica 2002 2
 
 # : Se suele trazar una línea de corte en 4 / n, donde n es el número de observaciones) para identificar observaciones que tienen una gran influencia en el modelo. Las observaciones por encima de esta línea pueden ser consideradas como influyentes.
-
+car::influencePlot(modelo_a_probar)
+4/nrow(data_modelo_a_probar)
 car::influenceIndexPlot(modelo_a_probar, vars = c("Cook", "hat"))
+data_modelo_a_probar[c(20,61,77,127, 162),]
 
 # observaciones nr 90, 116 para cook , 77 y 78 para hat en modelo sficativas 
 # observaciones nr 90, 116 para cook , 7 y 177 para hat en modelo sficativas, aunque tambien vale mencionar que se reducen las escalas del problema 
@@ -589,19 +647,21 @@ car::influenceIndexPlot(modelo_a_probar, vars = c("Cook", "hat"))
 
 #Para cada observación, podemos ver la diferencia en la estimación del coeficiente para la intersección, la variable  disp y la variable  hp que ocurre cuando eliminamos esa observación en particular.
 #Normalmente consideramos que una observación es muy influyente en la estimación de un coeficiente dado si tiene un valor DBETAS mayor que un umbral de 2/√ n, donde  n es el número de observaciones.
-umbral <- 2 / sqrt(nrow(data_modelo_sficativas))
+umbral <- 2 / sqrt(nrow(data_modelo_a_probar))
 
 #especificar 2 filas y 1 columna en la región de trazado
-par(mfrow=c(2,1))
+#par(mfrow=c(2,1))
 
-#plot DFBETAS para marginvic
 dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
 
-plot(dfbetas$marginvic)  #, type=' h ')
-abline(h = umbral, lty = 2)
-abline(h = -umbral, lty = 2)
-text(dfbetas$marginvic,
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+#plot DFBETAS para marginvic
+# dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+# 
+# plot(dfbetas$marginvic)  #, type=' h ')
+# abline(h = umbral, lty = 2)
+# abline(h = -umbral, lty = 2)
+# text(dfbetas$marginvic,
+#      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
 # modelo sficativas: costa rica 2014 2 
 
@@ -614,13 +674,13 @@ text(dfbetas$lnmarginvic,
 # modelo variantes: ninguna tan influeyente, eventualmente algunas problematicas 
 
 # plot DFBETAS para nec  
-dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
-
-plot(dfbetas$nec)  #, type=' h ')
-abline(h = umbral, lty = 2)
-abline(h = -umbral, lty = 2)
-text(dfbetas$nec,
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+# dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+# 
+# plot(dfbetas$nec)  #, type=' h ')
+# abline(h = umbral, lty = 2)
+# abline(h = -umbral, lty = 2)
+# text(dfbetas$nec,
+#      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
 # sficativas: 7 obs tirando para abajo 
 
@@ -633,13 +693,13 @@ text(dfbetas$lnnec,
 # variantes: mismas observaciones tiran para abajo pero menos potentemente
 
 #plot DFBETAS para voteshareincumbent 
-dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
-
-plot(dfbetas$voteshareincumbent)  #, type=' h ')
-abline(h = umbral, lty = 2)
-abline(h = -umbral, lty = 2)
-text(dfbetas$voteshareincumbent,
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+# dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+# 
+# plot(dfbetas$voteshareincumbent)  #, type=' h ')
+# abline(h = umbral, lty = 2)
+# abline(h = -umbral, lty = 2)
+# text(dfbetas$voteshareincumbent,
+#      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
 # sficativas: 7 por debajo, 5 por arriba, nada demasiado exagerado
 
@@ -700,13 +760,13 @@ text(dfbetas$avgpropdebatesregionxciclo,
 # variantes: 6 obs por debajo , mismas que en grafico anterior por arriba, quizas mas cerca del umbral
 
 #plot DFBETAS para prop_elec_usa_ciclo  
-dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
-
-plot(dfbetas$prop_elec_usa_ciclo)  #, type=' h ')
-abline(h = umbral, lty = 2)
-abline(h = -umbral, lty = 2)
-text(dfbetas$prop_elec_usa_ciclo,
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+# dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+# 
+# plot(dfbetas$prop_elec_usa_ciclo)  #, type=' h ')
+# abline(h = umbral, lty = 2)
+# abline(h = -umbral, lty = 2)
+# text(dfbetas$prop_elec_usa_ciclo,
+#      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
 # variantes: quitamos esta variable
 # sficativas: ninguna por fuera del umbral
@@ -736,13 +796,13 @@ text(dfbetas$cumsum_pastciclos,
 # variantes: de nuevo parece emperoar nicaragua 1990. pero a la vez desaparece el salvador 2014 del umbral superior. Mejora el umbral inferior, menos casos
 
 #plot DFBETAS para gdpxcapita  
-dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
-
-plot(dfbetas$gdpxcapita)  #, type=' h ')
-abline(h = umbral, lty = 2)
-abline(h = -umbral, lty = 2)
-text(dfbetas$gdpxcapita,
-     labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
+# dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+# 
+# plot(dfbetas$gdpxcapita)  #, type=' h ')
+# abline(h = umbral, lty = 2)
+# abline(h = -umbral, lty = 2)
+# text(dfbetas$gdpxcapita,
+#      labels = data_modelo_sficativas$obsid, pos = 4, cex = 0.7, col = "blue")
 
 # sficativas: Mexico 1994 quizas el peor caso, aprox en .3, otros dos casos para arriba, varios casos uruguay tiran para abajo, tb argentina, entre otros (aprox 8 para abajo)
 
@@ -792,114 +852,6 @@ text(dfbetas$mediaqualitycorruptvdem,
 
 # algunos cambios despues de cambio en imputacion de propindivinternet
 # colombia 1998, el salvador 2014, argentina 2003, repdom 2020 repdom 2016, nicaragua 1990, peru 1990 2
-
-##### REESTIMACION sin outliers ##### 
- 
-data_s_outliers <- democracias %>% 
- mutate(filtrar = ifelse(#cat_pais=="Brasil"&ncat_eleccion==2018&ncat_ronda==2|
-                           #cat_pais=="Colombia"&ncat_eleccion==2018&ncat_ronda==2|
-                           cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
-                           cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
-                           cat_pais=="Costa Rica"&ncat_eleccion==1986&ncat_ronda==1, 
-                         1, 0)) %>% 
-  subset(filtrar==0) %>% 
-  select(dico_hubo_debates,
-         cat_pais,
-         ncat_eleccion,
-         ncat_ronda,
-         elecid,
-         obsid,
-         marginvic,
-         nec,
-         voteshareincumbent,
-         dico_reeleccion,
-         # alineamiento,
-         # proptv,
-         propindivinternet,
-         # prohibicionpropaganda,
-         accesogratuito,
-         avgpropdebatesregionxciclo,
-         prop_elec_usa_ciclo,
-         regulaciondico,
-         cumsum_pastciclos,
-         gdpxcapita,
-         democraciavdemelectoralcomp,
-         mediaqualitycorruptvdem,
-         lnpropindivinternet,
-         lngdp,
-         lnmarginvic,
-         lnnec,
-         lnvoteshareincumbent) %>% 
-  na.omit()
- 
-data_s_outliers <- democracias %>% 
-  mutate(filtrar = ifelse(#cat_pais=="Brasil"&ncat_eleccion==2018&ncat_ronda==2|
-    #cat_pais=="Colombia"&ncat_eleccion==2018&ncat_ronda==2|
-      cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
-      cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
-      cat_pais=="Republica Dominicana"&ncat_eleccion==2020&ncat_ronda==1| 
-      cat_pais=="Republica Dominicana"&ncat_eleccion==2016&ncat_ronda==1,
-    1, 0)) %>% 
-  subset(filtrar==0) %>% 
-  select(dico_hubo_debates,
-         cat_pais,
-         ncat_eleccion,
-         ncat_ronda,
-         elecid,
-         obsid,
-         marginvic,
-         nec,
-         voteshareincumbent,
-         dico_reeleccion,
-         # alineamiento,
-         # proptv,
-         propindivinternet,
-         # prohibicionpropaganda,
-         accesogratuito,
-         avgpropdebatesregionxciclo,
-         prop_elec_usa_ciclo,
-         regulaciondico,
-         cumsum_pastciclos,
-         gdpxcapita,
-         democraciavdemelectoralcomp,
-         mediaqualitycorruptvdem,
-         lnpropindivinternet,
-         lngdp,
-         lnmarginvic,
-         lnnec,
-         lnvoteshareincumbent) %>% 
-  na.omit()
-
-modelo_sficativas_s_outliers <- glm(formula_modelo_sficativas,
-                         family = binomial(link = "logit"), 
-                         #data = data 
-                         data = data_s_outliers)
-
-modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
-                                    family = binomial(link = "logit"), 
-                                    #data = data 
-                                    data = data_s_outliers)
-options(scipen=999)
-summary(modelo_sficativas_s_outliers)
-summary(modelo_sficativas_variantes_s_outliers)
-summary(modelo_sficativas)
-# al quitar outliers... 
-# dico_reeleccion pierde sficancia
-# nec y regulaciondico mejoran ligeramente magnitud
-
-modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
-                                   family = binomial(link = "logit"), 
-                                   #data = data 
-                                   data = data_s_outliers)
-options(scipen=999)
-summary(modelo_sficativas_variantes_s_outliers)
-summary(modelo_sficativas_variantes)
-# al quitar outliers... 
-# simil anterior: dico_reeleccion pierde sficancia
-# acceso gratuito gana sficancia 
-# simil anterior:nec y regulaciondico mejoran ligeramente magnitud
-
-# ppal conclusion: dico_reeleccion es SENSIBLE a algunos casos...
 
 ### Control de multicolinealidad ####
 ##### correlaciones (al menos <.5, conservador <2.5) ####
@@ -1101,10 +1053,10 @@ lmtest::waldtest(modelo_a_probar)
 
 lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_0_reducido)
 lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
-lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
-lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
-lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido) # pendiente
-lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido) # Pendiente
+# lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
+# lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
+# lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido) # pendiente
+# lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido) # Pendiente
 
 # en gral el modelo mejora significativamente en todos los casos
 
@@ -1120,14 +1072,14 @@ logLik(modelo_a_probar)
 lrtest(modelo_0_reducido_sficativas, modelo_sficativas ) # -73.106 (pero mas parametros)
 lrtest(modelo_0_reducido_sficativas, modelo_sficativas_variantes ) # -73.634
 lrtest(modelo_contingencia_reducido_sficativas, modelo_sficativas)
-lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
-lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
+# lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
+# lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
 lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
 
 lrtest(modelo_sficativas_variantes_reducido , modelo_0_reducido)
 lrtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
-lrtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
-lrtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
+# lrtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
+# lrtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
 lrtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido)
 lrtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido)
 
@@ -1294,6 +1246,90 @@ comparacion_count_r2_full <- rbind(countr27 ,
 
 #### https://www.geeksforgeeks.org/different-robust-standard-errors-of-logit-regression-in-stata-and-r/
 
+##### REESTIMACION sin outliers ##### 
+
+# # otros potenciales: Colombia 1998 1 , 
+# El salvador 2014 2 para arriba marginvic. 
+# Brasil 1980 2. 
+# Colombia 1986 1era . 
+ 
+
+data_s_outliers <- democracias %>% 
+  mutate(filtrar = ifelse(cat_pais=="Brasil"&ncat_eleccion==2018&ncat_ronda==2|
+    cat_pais=="Colombia"&ncat_eleccion==2018&ncat_ronda==2|
+    cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
+      cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
+      cat_pais=="Costa Rica"&ncat_eleccion==1986&ncat_ronda==1|
+      cat_pais=="Republica Dominicana"&ncat_eleccion==2020&ncat_ronda==1|
+      cat_pais=="Costa Rica"&ncat_eleccion==2014&ncat_ronda== 2|
+      cat_pais=="Republica Dominicana"&ncat_eleccion== 2016&ncat_ronda== 1|
+      cat_pais=="Ecuador"&ncat_eleccion==2017&ncat_ronda==2, 
+    1, 0)) %>% 
+  subset(filtrar==0) %>% 
+  select(dico_hubo_debates,
+         cat_pais,
+         ncat_eleccion,
+         ncat_ronda,
+         elecid,
+         obsid,
+         marginvic,
+         nec,
+         voteshareincumbent,
+         dico_reeleccion,
+         # alineamiento,
+         # proptv,
+         propindivinternet,
+         # prohibicionpropaganda,
+         accesogratuito,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         cumsum_pastciclos,
+         gdpxcapita,
+         democraciavdemelectoralcomp,
+         mediaqualitycorruptvdem,
+         lnpropindivinternet,
+         lngdp,
+         lnmarginvic,
+         lnnec,
+         lnvoteshareincumbent) %>% 
+  na.omit()
+
+modelo_sficativas_s_outliers <- glm(formula_modelo_sficativas,
+                                    family = binomial(link = "logit"), 
+                                    #data = data 
+                                    data = data_s_outliers)
+summary(modelo_sficativas_s_outliers)
+summary(modelo_sficativas)
+
+modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
+                                              family = binomial(link = "logit"), 
+                                              #data = data 
+                                              data = data_s_outliers)
+options(scipen=999)
+
+summary(modelo_sficativas_variantes_s_outliers)
+summary(modelo_sficativas_variantes)
+
+# al quitar outliers... 
+# dico_reeleccion pierde sficancia
+# nec y regulaciondico mejoran ligeramente magnitud
+
+modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
+                                              family = binomial(link = "logit"), 
+                                              #data = data 
+                                              data = data_s_outliers)
+options(scipen=999)
+summary(modelo_sficativas_variantes_s_outliers)
+summary(modelo_sficativas_variantes)
+# al quitar outliers... 
+# simil anterior: dico_reeleccion pierde sficancia
+# acceso gratuito gana sficancia 
+# simil anterior:nec y regulaciondico mejoran ligeramente magnitud
+
+# ppal conclusion: dico_reeleccion es SENSIBLE a algunos casos...
+
+
 ### Heteroscedasticity-Consistent Standard Errors ####
 
 # robust_se <- coeftest(model, vcov = vcovHC(model, type = "HC0"))
@@ -1449,9 +1485,6 @@ data_modelo_a_interpretar <- data_s_outliers
 
 modelo_a_interpretar <- modelo_sficativas_variantes
 data_modelo_a_interpretar <- democracias 
-### calculo de probas predichas ####
-data_modelo_a_interpretar$probabilidades_predichas <- predict(modelo_a_interpretar, type = "response")
-data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpretar$probabilidades_predichas>0.5,1,0)
 
 # t the coefficient for X is the difference in the log odds.  https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
 # In other words, for a one-unit increase in the math score, the expected change in log odds is .1563404.
@@ -1463,7 +1496,7 @@ data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpre
 # el coef es log(p/1-p) . ---> entonces: p/1-p = exp (covariates).   al reves: 1-p/p = 1/exp(covariates). despejando: 1/p = 1+ 1/exp(covariates). incorporando el 1 . 1/p = exp(c) + 1/ exp(p). despejando . p = exp (cov)/ 1 + exp (cov ). 
 # https://stackoverflow.com/questions/41384075/r-calculate-and-interpret-odds-ratio-in-logistic-regression revisar
 
-odds_ratio <- coef["lnnec"] %>%  exp()
+odds_ratio <- coef(modelo_a_interpretar)["lnnec"] %>%  exp()
 
 # Each exponentiated coefficient is the ratio of two odds, or the change in odds in the multiplicative scale for a unit increase in the corresponding predictor variable holding other variables at certain value.
 # por cada aumento en una unidad de lnnec, esperamos un aumento de un cambio_odds_promedio en las chances de que haya un debate 
@@ -1516,6 +1549,9 @@ varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
                                                  ))
 
 ### ESCENARIOS CON VALORES PREDICHOS #####
+### calculo de probas predichas # tengo que reducir la data para poder calcular asi nomas
+#data_modelo_a_interpretar$probabilidades_predichas <- predict(modelo_a_interpretar, type = "response")
+#data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpretar$probabilidades_predichas>0.5,1,0)
 
 # Crear un dataset base sobre el cual predecir 
 
@@ -1852,7 +1888,7 @@ ggplot(effect_regulacion) +
 
 # cuenta simple para valor medio
   
-diff(data_regulacion$predicted_probs)
+diff(pred_regulaciondico$predicted_probs)
 cat("Efecto marginal de regulaciondico 
     cuando el resto de las variables están en sus medias:", effect_regulacion, "\n")
 
@@ -2229,7 +2265,7 @@ texreg::htmlreg(lista1,
                          10,
                          8
                          ),
-        file="tabla_1_bis.html",
+        file="anexos/tabla_1_bis.html",
        caption = "Todos los modelos están calculados con errores estándar agrupados por país",
        center = T,
        bold = 0.1)
@@ -2279,7 +2315,7 @@ texreg::htmlreg(lista2,
                                   12,
                                   13
                                   ),
-                file="tabla_2_bis.html",
+                file="anexos/tabla_2_bis.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
                 bold = 0.1)
@@ -2300,7 +2336,7 @@ texreg::htmlreg(lista3,
                 # "log PBI per Capita",
                 # "Democracia electoral (VDEM)",
                 # "Corrupcion de medios (VDEM)"),
-                file="tabla_3_bis.html",
+                file="anexos/tabla_3_bis.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
                 bold = 0.1)
