@@ -512,19 +512,6 @@ data_modelo_a_probar <- data_modelo_sficativas
 ##### Graficar los residuos ####
 # https://library.virginia.edu/data/articles/understanding-deviance-residuals
 
-#par(mfrow = c(1, 2))
-
-# Residuos deviance
-residuals_dev <- residuals(modelo_a_probar, type = "deviance")
-plot(residuals_dev, main = "Residuos Deviance", ylab = "Residuos", xlab = "Índice")
-abline(h = 0, col = "red", lty = 2)
-# Añadir los IDs junto a los puntos
-text(x = 1:length(residuals_dev), y = residuals_dev, 
-     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
-# These are based on a weird-looking formula derived from the likelihood ratio test for comparing logistic regression models, where we compare our current model to a saturated model. A saturated model is a model with as many coefficients as there are observations. The formula for calculating this test statistic for a single observation produces the deviance residual.
-# These are the deviance residuals we see summarized in the model summary output. 
-# If we square the deviance residuals and add them all up, we get the residual deviance statistic we see printed at the bottom of the summary output:
-
 quantile(residuals(modelo_a_probar))
 sum(residuals(modelo_a_probar)*residuals(modelo_a_probar))
 #In general, the reason we might be interested in this summary is to see how well our model is fitting the data. 
@@ -537,24 +524,37 @@ sum(residuals(modelo_a_probar)*residuals(modelo_a_probar))
 # This is because deviance residuals can be roughly approximated with a standard normal distribution when the model holds (Agresti, 2002). 
 # Residuals greater than the absolute value of 3 are in the tails of a standard normal distribution and usually indicate strain in the model.
 
+par(mfrow = c(2, 2))
+
 # Response
 # raw residuals
 raw_residuals <- residuals(modelo_a_probar, type = "response") 
-plot(raw_residuals, main = "Raw residuals", ylab = "Residuos", xlab = "Índice")
-abline(h = 0, col = "blue", lty = 2)
+plot(raw_residuals, main = "Residuos Raw", ylab = "Residuos", xlab = "Índice de observación")
+abline(h = 0, col = "red3", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(raw_residuals), y = raw_residuals, 
-     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue4")  # Ajusta 'pos' para la posición del texto
+
+# Residuos deviance
+residuals_dev <- residuals(modelo_a_probar, type = "deviance")
+plot(residuals_dev, main = "Residuos Deviance", ylab = "Residuos", xlab = "Índice de observación")
+abline(h = 0, col = "red3", lty = 2)
+# Añadir los IDs junto a los puntos
+text(x = 1:length(residuals_dev), y = residuals_dev, 
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue4")  # Ajusta 'pos' para la posición del texto
+# These are based on a weird-looking formula derived from the likelihood ratio test for comparing logistic regression models, where we compare our current model to a saturated model. A saturated model is a model with as many coefficients as there are observations. The formula for calculating this test statistic for a single observation produces the deviance residual.
+# These are the deviance residuals we see summarized in the model summary output. 
+# If we square the deviance residuals and add them all up, we get the residual deviance statistic we see printed at the bottom of the summary output:
 
 # Residuos de Pearson
 #Another type of residual is the Pearson residual. It is the raw residual divided by the estimated standard deviation of a binomial distribution with number of trials equal to 1 and p equal to 
 # The Pearson residual is basically a rescaled version of the raw residual.  
 residuals_pearson <- residuals(modelo_a_probar, type = "pearson")
-plot(residuals_pearson, main = "Residuos de Pearson", ylab = "Residuos", xlab = "Índice")
-abline(h = 0, col = "blue", lty = 2)
+plot(residuals_pearson, main = "Residuos de Pearson", ylab = "Residuos", xlab = "Índice de observación")
+abline(h = 0, col = "red3", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuals_pearson), y = residuals_pearson, 
-     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue4")  # Ajusta 'pos' para la posición del texto
 
  
 # Residuos Pearsonestandarizados 
@@ -562,13 +562,15 @@ text(x = 1:length(residuals_pearson), y = residuals_pearson,
 # importantes porque tienen en cuenta el leverage!!
 hat_values <- hatvalues(modelo_a_probar)  # Leverage
 residuos_pearson_est <- residuals_pearson / sqrt(1 - hat_values)
-plot(residuos_pearson_est, main = "Residuos de Pearson Estandarizados", ylab = "Residuos", xlab = "Índice")
-abline(h = 0, col = "blue", lty = 2)
+plot(residuos_pearson_est, main = "Residuos de Pearson Estandarizados", ylab = "Residuos", xlab = "Índice de observación")
+abline(h = 0, col = "red3", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuos_pearson_est), y = residuos_pearson_est, 
-     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue")  # Ajusta 'pos' para la posición del texto
+     labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue4")  # Ajusta 'pos' para la posición del texto
 
-plot(modelo_a_probar, which = 1) # Standardized Pearson residuals are plotted on the y-axis versus predicted log-odds on the x-axis. 
+par(mfrow = c(1,2))
+plot(modelo_a_probar, which = 1)#, 
+    # main = "Residuos vs valores predichos",), ylab = "Residuos de Pearson estandarizados", xlab = "Log odds predichas") # Standardized Pearson residuals are plotted on the y-axis versus predicted log-odds on the x-axis. 
 # SI EN EJE VERTICAL PUNTO APARECE MUY ABAJO: PREDIGO ALTA PROBA PERO FALLO, SE OBSERVA NO OCURRENCIA
 # SI EN EJE VERTICAL PUNTO APARECE MUY ARRIBA: PREDIGO BAJA PROBA PERO FALLO, SE OBSERVA OCURRENCIA
 #Me aplica: It appears at the lower predicted values, we’re under-fitting The observed proportions are larger than the predicted proportions. 
@@ -579,6 +581,8 @@ data_modelo_a_probar$deviance <- residuals(modelo_a_probar)
 data_modelo_a_probar[c(162,32,61),]
 
 plot(modelo_a_probar, which = 2)
+
+
 # Earlier we mentioned that standardized Pearson residuals have an approximate standard normal distribution if the model fits. This implies looking at a QQ Plot of residuals can provide some assessment of model fit. We can produce this plot using plot() with which = 2. Again the plot created with the group-level model is more informative than the plot created with the subject-level model.
 # This suggests our model is holding well in the middle range of predicted values but is maybe suspect in the extremities. It’s worth mentioning that binomial logistic regression models have no error term or normality assumptions. In a standard linear model, this plot assesses normality of residuals, which is one of the assumptions of a linear model. But in a binary logistic regression model, normality of residuals is simply evidence of a decent fitting model. There is no assumption that residuals are random draws from a normal distribution.
 
@@ -856,13 +860,39 @@ text(dfbetas$mediaqualitycorruptvdem,
 ### Control de multicolinealidad ####
 ##### correlaciones (al menos <.5, conservador <2.5) ####
 
-corr_base_democracias <- democracias %>% 
-  select(dico_hubo_debates,
-         #cat_pais,
-         ncat_eleccion,
-         ncat_ronda,
-         #elecid,
-         #obsid,
+# corr_modelo_a_probar <- democracias %>% 
+#   select(dico_hubo_debates,
+#          #cat_pais,
+#          ncat_eleccion,
+#          ncat_ronda,
+#          #elecid,
+#          #obsid,
+#          marginvic,
+#          lnmarginvic,
+#          nec,
+#          voteshareincumbent,
+#          lnvoteshareincumbent,
+#          dico_reeleccion,
+#          alineamiento,
+#          proptv,
+#          propindivinternet,
+#          lnpropindivinternet,
+#          prohibicionpropaganda,
+#          accesogratuito,
+#          avgpropdebatesregionxciclo,
+#          prop_elec_usa_ciclo,
+#          regulaciondico,
+#          cumsum_pastciclos,
+#          lngdp,
+#          gdpxcapita,
+#          democraciavdemelectoralcomp,
+#          mediaqualitycorruptvdem)
+
+corr_modelo_a_probar <- data_modelo_a_probar %>%
+  select(-cat_pais,
+         -elecid,
+         -obsid) %>% 
+  select(ncat_eleccion,
          marginvic,
          lnmarginvic,
          nec,
@@ -884,19 +914,48 @@ corr_base_democracias <- democracias %>%
          democraciavdemelectoralcomp,
          mediaqualitycorruptvdem)
 
-summary(corr_base_democracias)
-correlation_matrix <- cor(corr_base_democracias , use = "pairwise.complete.obs" )
+summary(corr_modelo_a_probar)
+correlation_matrix <- cor(corr_modelo_a_probar , use = "pairwise.complete.obs" )
  
 # Generar el gráfico con resaltado
 
-# otra funcion de grafico
-ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
+
+# reorden manual por bloque teorico (abajo hay codigo para un reorden automatico con CHATGPT)
+
+# Define el nuevo orden de las variables basado en bloques teóricos
+new_order <- c(
+         "ncat_eleccion",
+         "accesogratuito",
+         "prohibicionpropaganda",
+         "regulaciondico",
+         "avgpropdebatesregionxciclo",
+         "cumsum_pastciclos",
+         "prop_elec_usa_ciclo",
+         "proptv",
+         "lnpropindivinternet",
+         "propindivinternet",
+         "lngdp",
+         "gdpxcapita",
+         "alineamiento",
+         "democraciavdemelectoralcomp",
+         "mediaqualitycorruptvdem",
+         "marginvic",
+         "lnmarginvic",
+         "nec",
+         "voteshareincumbent",
+         "lnvoteshareincumbent",
+         "dico_reeleccion") 
+# Reemplaza con los nombres reales de tus variables
+
+# Reorganiza la matriz de correlación manualmente
+correlation_matrix <- correlation_matrix[new_order, new_order]
+
 
 # Generar el gráfico con coordenadas capturadas
 corr_plot <- corrplot::corrplot(
   correlation_matrix, 
   method = "circle",
-  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  col = colorRampPalette(c("red", "white", "green"))(8), 
   diag = FALSE, 
   plot = NULL # Capturar coordenadas
 )
@@ -907,7 +966,7 @@ n <- ncol(correlation_matrix) # Número de columnas/filas
 corrplot::corrplot(
   correlation_matrix, 
   method = "circle",
-  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  col = colorRampPalette(c("red", "white", "green"))(8), 
   type = "lower",   # Muestra solo la parte inferior
   addgrid.col = "gray",
   diag = FALSE      # Ocultar diagonal
@@ -916,7 +975,12 @@ corrplot::corrplot(
 # Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
 for (j in 1:n) {
   for (i in 1:n) {
+    print(paste(i,j))
     if (i > j) { # Solo trabaja en el triángulo inferior (evita asteriscos en la parte oculta)
+      if(is.na(correlation_matrix[i, j])){
+        text(j, n - i + 1, "", col = "black", cex = 1.5)
+      }
+      else{
       # Resaltar valores entre 0.25 y 0.5
       if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
         text(j, n - i + 1, "*", col = "black", cex = 1.5)
@@ -924,11 +988,15 @@ for (j in 1:n) {
       # Resaltar valores mayores a 0.5
       if (abs(correlation_matrix[i, j]) > 0.5) {
         text(j, n - i + 1, "**", col = "black", cex = 1.5)
-      }
+      }}
     }
   }
 }
 
+# otra funcion de grafico
+ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
+
+# muestra mas chica
 corr_base_democracias_reducida <- data_reducida %>% 
   select(dico_hubo_debates,
          #cat_pais,
@@ -953,7 +1021,20 @@ corr_base_democracias_reducida <- data_reducida %>%
          democraciavdemelectoralcomp,
          mediaqualitycorruptvdem)
 summary(corr_base_democracias_reducida)
+
 correlation_matrix <- cor(corr_base_democracias_reducida , use = "pairwise.complete.obs" )
+
+# Reordenar las variables usando agrupamiento jerárquico (CHATGPT)
+reorder_corr_matrix <- function(correlation_matrix) {
+  hc <- hclust(as.dist(1 - correlation_matrix)) # Agrupamiento jerárquico
+  ordered_indices <- hc$order                # Orden de las variables
+  reordered_matrix <- correlation_matrix[ordered_indices, ordered_indices] # Reordenar
+  return(reordered_matrix)
+}
+
+# Aplicar el reordenamiento
+correlation_matrix <- reorder_corr_matrix(correlation_matrix)
+
 
 # Generar el gráfico con resaltado
 
@@ -999,32 +1080,42 @@ for (j in 1:n) {
 #VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
 #VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
 
-vif_values1 <- car::vif(modelo_contingencia)   
-print(vif_values1) 
-# ninguno parece problematico
+# https://online.stat.psu.edu/stat462/node/180/ ! # 
 
-vif_values2 <- car::vif(modelo_sistemico)  
-print(vif_values2)
-# gdpxcapita problematico
-# propindivinternet y democraciavdem border 
+vifs <- function(modelo){
+  vif_values <- car::vif(modelo)
+  vif_tibble <- enframe(vif_values, name = "Indicador", value = "Vif_value") 
+  vif_tibble$Modelo <- deparse(substitute(modelo))
+  #vif_tibble$Sqrt_vif <- sqrt(vif_tibble$Vif_value)
+  vif_tibble
+}
 
-vif_values3 <- car::vif(modelo_regulatorio)  
-print(vif_values3) 
-# ninguno parece problematico
+vifs_1 <- vifs(modelo_contingencia)
+vifs_1_bis <- vifs(modelo_contingencia_bis)
+vifs_2 <- vifs(modelo_sistemico)
+vifs_2_bis <- vifs(modelo_sistemico_bis)
+vifs_3 <- vifs(modelo_regulatorio)
+vifs_3_bis <- vifs(modelo_regulatorio_bis)
+vifs_4 <- vifs(modelo_temporal)
+vifs_4_bis <- vifs(modelo_temporal_bis)
+vifs_5 <- vifs(modelo_sficativas)
+vifs_6 <- vifs(modelo_sficativas_variantes)
 
-vif_values4 <- car::vif(modelo_temporal)  
-print(vif_values4) 
-# ninguno parece problematico. El mas border es democracia pero esta relativamente lejos (3.02)
+all_vifs <- rbind(vifs_1,
+                  vifs_1_bis,
+                  vifs_2 ,
+                  vifs_2_bis,
+                  vifs_3,
+                  vifs_3_bis,
+                  vifs_4 ,
+                  vifs_4_bis,
+                  vifs_5 ,
+                  vifs_6 )
 
-vif_values5 <- car::vif(modelo_sficativas)  
-print(vif_values5) 
-# gdp per capita es problematico. 4.444897. idem propindivinternet: 5.32 
-# Del resto, democracia vdem esta border. 3.87. El resto, el que sigue es cumsum 3.06
+all_vifs <- all_vifs %>% 
+  pivot_wider(names_from = Modelo, values_from = Vif_value)
 
-vif_values6 <- car::vif(modelo_sficativas_variantes)  
-print(vif_values6) 
-# mejora gdp (ahora ln: 3.455), tambien mejora democracia que estaba border (ahora 3.47). 
-# internet mejora: 4.2, pero sigue problematico
+all_vifs %>% write_csv("anexos/vifs_values.csv")
 
 #### otros? PENDIENTE ####
 ### Missing data PENDIENTE ####
@@ -1037,7 +1128,7 @@ print(vif_values6)
 ### Fit, Overall significance y comparaciones ####
 #### test de Wald ####
 
-modelo_a_probar <- modelo_sficativas
+#modelo_a_probar <- modelo_sficativas
 modelo_a_probar <- modelo_sficativas_variantes
 
 lmtest::waldtest(modelo_a_probar)
@@ -1071,17 +1162,17 @@ logLik(modelo_a_probar)
 # para hacer directamente el test
 lrtest(modelo_0_reducido_sficativas, modelo_sficativas ) # -73.106 (pero mas parametros)
 lrtest(modelo_0_reducido_sficativas, modelo_sficativas_variantes ) # -73.634
-lrtest(modelo_contingencia_reducido_sficativas, modelo_sficativas)
+lrtest(modelo_contingencia_reducido, modelo_sficativas_variantes_reducido)
 # lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
 # lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
-lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
+#lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
 
 lrtest(modelo_sficativas_variantes_reducido , modelo_0_reducido)
 lrtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
 # lrtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
 # lrtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
-lrtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido)
-lrtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido)
+#lrtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido) # ojo no estan anidados
+#lrtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido) # ojo no estan anidados
 
 # Model 1 : represents the null model, which includes only the intercept.
 # Model 2: represents the full model, which includes predictors
@@ -1106,9 +1197,10 @@ lrtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido)
 
 #### fit: Pseudos R cuadrados, AIC y BIC ####
  
-modelo_a_probar <- modelo_sficativas
+#modelo_a_probar <- modelo_sficativas
 modelo_a_probar <- modelo_sficativas_variantes
 
+# PRUEBAS PRELIMINARES 
 # pseudo R cuadrados. #Mas alto, mejores
 # https://www.rdocumentation.org/packages/rcompanion/versions/2.4.36/topics/nagelkerke
 rcompanion::nagelkerke(modelo_a_probar)
@@ -1119,7 +1211,10 @@ pscl::pR2(modelo_a_probar)
 # Obtener AIC y BIC # mas bajos, mejores, aunque se penaliza la inclusion de mas parametros
 AIC(modelo_a_probar)
 BIC(modelo_a_probar)
+AIC(modelo_sficativas_variantes_reducido)
+BIC(modelo_sficativas_variantes_reducido)
 
+# DEFINO FUNCION COMPARATIVA
 
 # para comparar modelos con igual n, creo funcion 
  
@@ -1161,27 +1256,44 @@ all_stats <- rbind(stats0,
                    stats5,
                    stats6 )
 
+all_stats <- all_stats %>% 
+  pivot_wider(names_from = modelo, values_from = value)
+
+#all_stats %>% write_csv("anexos/stats_values.csv")
+
 # comentario #
+
 # los modelos full performan mejor que los modelos reducidos. Incluso con data reducida! 
 # para el caso del AIC, notable que incluso con penalizacion por mas parametros, el valor del estadistico disminuye
 # en todos los casos de pseudos R2, el modelo completo es mejor que los más incompletos, y la variante completa mejor que el completo
 
+# comparaciones sobre muestra completa #
+stats27 <- stats(modelo_sficativas )
+stats28 <- stats(modelo_sficativas_variantes )
+
+all_stats_full <- rbind(stats27,   stats28 )
+
+# stats modelo #
+stats_modelo <- stats(modelo_a_probar)
+
+
 #### fit: desempeño: accuracy ####
 
-modelo_a_probar <- modelo_sficativas
+#modelo_a_probar <- modelo_sficativas
 modelo_a_probar <- modelo_sficativas_variantes
 
-data_modelo_sficativas$probabilidades_predichas <- predict(modelo_a_probar, type = "response")
-data_modelo_sficativas$predicciones_binarias <- ifelse(data_modelo_sficativas$probabilidades_predichas>0.5,1,0)
+# PRUEBAS PRELIMINARES
+data_modelo_a_probar$probabilidades_predichas <- predict(modelo_a_probar, type = "response")
+data_modelo_a_probar$predicciones_binarias <- ifelse(data_modelo_a_probar$probabilidades_predichas>0.5,1,0)
 
 # Matriz de confusión
-confusion_matrix <- table(data_modelo_sficativas$predicciones_binarias, data_modelo_sficativas$dico_hubo_debates)
+confusion_matrix <- table(data_modelo_a_probar$predicciones_binarias, data_modelo_a_probar$dico_hubo_debates)
 print(confusion_matrix)
 
 # Count R²: proporción de predicciones correctas
-count_r2 <- mean(data_modelo_sficativas$predicciones_binarias == data_modelo_sficativas$dico_hubo_debates)
+count_r2 <- mean(data_modelo_a_probar$predicciones_binarias == data_modelo_a_probar$dico_hubo_debates)
 # Precisión base: proporción de la clase mayoritaria
-baseline_accuracy <- max(table(data_modelo_sficativas$dico_hubo_debates)) / length(data_modelo_sficativas$dico_hubo_debates)
+baseline_accuracy <- max(table(data_modelo_a_probar$dico_hubo_debates)) / length(data_modelo_a_probar$dico_hubo_debates)
 # Adjusted Count R²
 adjusted_count_r2 <- (count_r2 - baseline_accuracy) / (1 - baseline_accuracy)
 #  The adjusted count R2 is the proportion of correct guesses beyond the number that would be correctly guessed by choosing the largest marginal
@@ -1190,6 +1302,7 @@ adjusted_count_r2 <- (count_r2 - baseline_accuracy) / (1 - baseline_accuracy)
 cat("Count R²:", count_r2, "\n")
 cat("Adjusted Count R²:", adjusted_count_r2, "\n")
 
+# PARA COMPARAR, DEFINO FUNCION
 #modelo <- modelo_0
 # para comparar
 funcion_count_R2 <- function(modelo, variable_dependiente){
@@ -1212,7 +1325,7 @@ funcion_count_R2 <- function(modelo, variable_dependiente){
                           modelo =   name )
 }
 
-countr20 <- funcion_count_R2(modelo_0, democracias$dico_hubo_debates)
+countr20 <- funcion_count_R2(modelo_0_reducido, data_reducida$dico_hubo_debates)
 countr21 <- funcion_count_R2(modelo_contingencia_reducido, data_reducida$dico_hubo_debates)
 countr22 <- funcion_count_R2(modelo_sistemico_reducido, data_reducida$dico_hubo_debates)
 countr23 <- funcion_count_R2(modelo_regulatorio_reducido, data_reducida$dico_hubo_debates)
@@ -1220,7 +1333,7 @@ countr24 <- funcion_count_R2(modelo_temporal_reducido, data_reducida$dico_hubo_d
 countr25 <- funcion_count_R2(modelo_sficativas_reducido, data_reducida$dico_hubo_debates)
 countr26 <- funcion_count_R2(modelo_sficativas_variantes_reducido, data_reducida$dico_hubo_debates)
 
-comparacion_count_r2_reducidas <- rbind(countr20 ,
+all_count_r2_reducidas <- rbind(countr20 ,
                               countr21 ,
                               countr22 ,
                               countr23 ,
@@ -1228,17 +1341,38 @@ comparacion_count_r2_reducidas <- rbind(countr20 ,
                               countr25 ,
                               countr26 )
 
+all_count_r2_reducidas <- all_count_r2_reducidas %>% 
+  pivot_longer(cols= c(countr2, adjcountr2), names_to = "stat", values_to = "value") %>% 
+  pivot_wider(names_from = modelo, values_from = value)
+
+#all_count_r2_reducidas %>% write_csv("anexos/countR2_values.csv")
+
+all_stats <- all_stats %>% 
+  rbind(all_count_r2_reducidas)
+
+
+all_stats %>% write_csv("anexos/stats_values.csv")
+
+# comentario
 # en este caso el modelo variante performa peor
 # los modelos completos mejoran la performance de los más incompletos
 
 # quizas vale la pena comparar versiones con mas datos
 # o hacer trabajo andidado de verdad, digamos
 
+# comparaciones sobre muestra completa #
 countr27 <- funcion_count_R2(modelo_sficativas, data_modelo_sficativas$dico_hubo_debates)
 countr28 <- funcion_count_R2(modelo_sficativas_variantes, data_modelo_sficativas$dico_hubo_debates)
 
-comparacion_count_r2_full <- rbind(countr27 ,
-                                   countr28 )
+all_count_r2_full <- rbind(countr27,   countr28 )
+
+countr2_modelo <- funcion_count_R2(modelo_a_probar, data_modelo_a_probar$dico_hubo_debates)
+
+stats_modelo <- stats_modelo %>% 
+  rbind( countr2_modelo %>% 
+          pivot_longer(cols= c(countr2, adjcountr2), names_to = "stat", values_to = "value")  )
+
+stats_modelo %>% write_csv("anexos/stats_modelo.csv")
 
 # idem: el desempeño de la variante es ligeramente peor
 
@@ -1475,6 +1609,169 @@ robust_se_cluster_modelo_sficativas_variantes_interactivo <- coeftest(modelo_sfi
                                                                                    #cluster = data$elecid))
                                                                                    cluster = democracias$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes_interactivo)
+
+## EXPORTO MODELOS #####
+
+# # para pasar a excel
+# robust_se_cluster_df <- robust_se_cluster_modelo_sficativas_variantes[,] %>% 
+#   as_tibble() %>%
+#   mutate(variable = rownames(robust_se_cluster_modelo_sficativas_variantes))
+# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
+
+# Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
+
+#mp_models <- texreg::list(modelo_a_interpretar)
+# htmlreg(mp_models,
+#         custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
+#         custom.coef.names = c("Intercepto", ".... " ),
+#         file="tabla_1.html") # nombre de su archivo html. Se guardará en tu  directorio de trabajo por defecto.
+# con funcion screenreg podemos chequear tablas antes de exportarlas
+
+lista1 <-  list(
+  robust_se_cluster_modelo_contingencia,
+  robust_se_cluster_modelo_sistemico,
+  robust_se_cluster_modelo_regulatorio,
+  robust_se_cluster_modelo_temporal,
+  robust_se_cluster_modelo_sficativas_variantes
+) 
+
+lista2 <-  list(
+  robust_se_cluster_modelo_sficativas_variantes,
+  robust_se_cluster_modelo_sficativas,
+  robust_se_cluster_modelo_sficativas_variantes_s_outliers
+) 
+
+# lista3 <-  list(robust_se_cluster_modelo_sficativas_variantes,
+#                 robust_se_cluster_modelo_multinivel,
+#                 robust_se_cluster_modelo_multinivel_interactivo)
+
+# https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
+
+texreg::htmlreg(lista1,
+                custom.model.names = c("Contingencia",
+                                       "Sistemico",
+                                       "Regulatorio",
+                                       "Temporal",
+                                       "Final")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                custom.coef.names = c("(Intercepto)",
+                                      "log Margen de victoria",
+                                      "log NEC",
+                                      "log Votos oficialista",
+                                      "Incumbente reelije",
+                                      
+                                      "Regulacion sobre debates",
+                                      "Cant. elecciones pasadas con debates",
+                                      "log PBI per Capita",
+                                      "Democracia electoral (VDEM)",
+                                      "Corrupcion de medios (VDEM)",
+                                      
+                                      "Alineamiento partidario",
+                                      "Prop. TV por hogar"		,
+                                      "Prop. individuos c internet",
+                                      "Prohibicion propaganda"	 ,
+                                      "Acceso gratuito",
+                                      "Prop. debates en Region",
+                                      "Prop. debates en USA" 
+                                      
+                ),
+                reorder.coef =  c(1,
+                                  2,
+                                  3,
+                                  4,
+                                  5,
+                                  
+                                  11,
+                                  12,
+                                  13,
+                                  14,
+                                  15,
+                                  16,
+                                  17,
+                                  
+                                  6,
+                                  7,
+                                  9,
+                                  10,
+                                  8
+                ),
+                file="anexos/tabla_1_bis.html",
+                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                center = T,
+                bold = 0.1)
+
+texreg::htmlreg(lista2,
+                custom.model.names = c("Final",
+                                       "Variante",
+                                       "Final s/ casos influyentes")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                custom.coef.names = c("(Intercepto)",
+                                      "log Margen de victoria",
+                                      "log NEC",
+                                      "log Votos oficialista",
+                                      "Incumbente reelije",
+                                      "Prop. individuos c internet",
+                                      "Acceso gratuito",
+                                      "Prop. debates en Region",
+                                      "Regulacion sobre debates",
+                                      "Cant. elecciones pasadas con debates",
+                                      "log PBI per Capita",
+                                      "Democracia electoral (VDEM)",
+                                      "Corrupcion de medios (VDEM)",
+                                      "Margen de victoria",
+                                      "NEC" ,
+                                      "Votos oficialista",
+                                      "Prop. debates en USA" ,
+                                      "PBI per Capita"
+                ),
+                reorder.coef =  c(1,
+                                  14,
+                                  2,
+                                  15,
+                                  3,
+                                  16,
+                                  4,
+                                  5,
+                                  
+                                  6,
+                                  7,
+                                  8,
+                                  17,
+                                  
+                                  9,
+                                  10,
+                                  18,
+                                  11,
+                                  12,
+                                  13
+                ),
+                file="anexos/tabla_2_bis.html",
+                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                center = T,
+                bold = 0.1)
+
+# texreg::htmlreg(lista3,
+#                 custom.model.names = c("Final con variantes",
+#                                        "Final con variantes sin outliers",
+#                                        "Multinivel",
+#                                        "Multinivel interactivo")  ,
+#                 stars = c(0.001, 0.01, 0.05, 0.1),
+#                 # custom.coef.names = c("Intercepto",                             
+#                 # "log Margen de victoria",
+#                 # "log NEC" ,
+#                 # "log Votos oficialista",
+#                 # "Incumbente reelije",
+#                 # "Regulacion sobre debates",
+#                 # "Cant. elecciones pasadas con debates",
+#                 # "log PBI per Capita",
+#                 # "Democracia electoral (VDEM)",
+#                 # "Corrupcion de medios (VDEM)"),
+#                 file="anexos/tabla_3_bis.html",
+#                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+#                 center = T,
+#                 bold = 0.1)
+
+
 
 ## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
 
@@ -2178,168 +2475,6 @@ modelo_non_nested <- lme4::glmer(paste(formula_modelo_sficativas_variantes,
 summary(modelo_non_nested)
 
 coef(modelo_non_nested)
-
-
-## EXPORTO MODELOS #####
-
-# # para pasar a excel
-# robust_se_cluster_df <- robust_se_cluster_modelo_sficativas_variantes[,] %>% 
-#   as_tibble() %>%
-#   mutate(variable = rownames(robust_se_cluster_modelo_sficativas_variantes))
-# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
-
-# Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
- 
-#mp_models <- texreg::list(modelo_a_interpretar)
-# htmlreg(mp_models,
-#         custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
-#         custom.coef.names = c("Intercepto", ".... " ),
-#         file="tabla_1.html") # nombre de su archivo html. Se guardará en tu  directorio de trabajo por defecto.
-# con funcion screenreg podemos chequear tablas antes de exportarlas
-
-lista1 <-  list(
-                robust_se_cluster_modelo_contingencia,
-                robust_se_cluster_modelo_sistemico,
-                robust_se_cluster_modelo_regulatorio,
-                robust_se_cluster_modelo_temporal,
-                robust_se_cluster_modelo_sficativas_variantes
-                ) 
-
-lista2 <-  list(
-                robust_se_cluster_modelo_sficativas_variantes,
-                robust_se_cluster_modelo_sficativas,
-                robust_se_cluster_modelo_sficativas_variantes_s_outliers
-                ) 
-
-lista3 <-  list(robust_se_cluster_modelo_sficativas_variantes,
-                robust_se_cluster_modelo_multinivel,
-                robust_se_cluster_modelo_multinivel_interactivo)
-
-# https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
-
-texreg::htmlreg(lista1,
-        custom.model.names = c("Contingencia",
-                               "Sistemico",
-                               "Regulatorio",
-                               "Temporal",
-                               "Final")  ,
-        stars = c(0.001, 0.01, 0.05, 0.1),
-        custom.coef.names = c("(Intercepto)",
-                              "log Margen de victoria",
-                              "log NEC",
-                              "log Votos oficialista",
-                              "Incumbente reelije",
-
-                              "Regulacion sobre debates",
-                              "Cant. elecciones pasadas con debates",
-                              "log PBI per Capita",
-                              "Democracia electoral (VDEM)",
-                              "Corrupcion de medios (VDEM)",
-
-                              "Alineamiento partidario",
-                              "Prop. TV por hogar"		,
-                              "Prop. individuos c internet",
-                              "Prohibicion propaganda"	 ,
-                              "Acceso gratuito",
-                              "Prop. debates en Region",
-                              "Prop. debates en USA" 
-
-                             ),
-       reorder.coef =  c(1,
-                         2,
-                         3,
-                         4,
-                         5,
-
-                         11,
-                         12,
-                         13,
-                         14,
-                         15,
-                         16,
-                         17,
-
-                         6,
-                         7,
-                         9,
-                         10,
-                         8
-                         ),
-        file="anexos/tabla_1_bis.html",
-       caption = "Todos los modelos están calculados con errores estándar agrupados por país",
-       center = T,
-       bold = 0.1)
-
-texreg::htmlreg(lista2,
-                custom.model.names = c("Final",
-                                       "Variante",
-                                       "Final s/ casos influyentes")  ,
-                stars = c(0.001, 0.01, 0.05, 0.1),
-                 custom.coef.names = c("(Intercepto)",
-                                       "log Margen de victoria",
-                                       "log NEC",
-                                       "log Votos oficialista",
-                                       "Incumbente reelije",
-                                       "Prop. individuos c internet",
-                                       "Acceso gratuito",
-                                       "Prop. debates en Region",
-                                       "Regulacion sobre debates",
-                                       "Cant. elecciones pasadas con debates",
-                                       "log PBI per Capita",
-                                       "Democracia electoral (VDEM)",
-                                       "Corrupcion de medios (VDEM)",
-                                       "Margen de victoria",
-                                       "NEC" ,
-                                       "Votos oficialista",
-                                       "Prop. debates en USA" ,
-                                       "PBI per Capita"
-                                      ),
-                reorder.coef =  c(1,
-                                  14,
-                                  2,
-                                  15,
-                                  3,
-                                  16,
-                                  4,
-                                  5,
-
-                                  6,
-                                  7,
-                                  8,
-                                  17,
-
-                                  9,
-                                  10,
-                                  18,
-                                  11,
-                                  12,
-                                  13
-                                  ),
-                file="anexos/tabla_2_bis.html",
-                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
-                center = T,
-                bold = 0.1)
-
-texreg::htmlreg(lista3,
-                custom.model.names = c("Final con variantes",
-                                       "Final con variantes sin outliers",
-                                       "Multinivel",
-                                       "Multinivel interactivo")  ,
-                stars = c(0.001, 0.01, 0.05, 0.1),
-                # custom.coef.names = c("Intercepto",                             
-                # "log Margen de victoria",
-                # "log NEC" ,
-                # "log Votos oficialista",
-                # "Incumbente reelije",
-                # "Regulacion sobre debates",
-                # "Cant. elecciones pasadas con debates",
-                # "log PBI per Capita",
-                # "Democracia electoral (VDEM)",
-                # "Corrupcion de medios (VDEM)"),
-                file="anexos/tabla_3_bis.html",
-                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
-                center = T,
-                bold = 0.1)
 
 
 # MODELOS 2: submuestra sin debates en la eleccion pasada. "Nueva práctica"  #####
