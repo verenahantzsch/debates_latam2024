@@ -17,7 +17,7 @@ base_controles <- read.csv("controles_elecciones.csv")
 base_candidatos <-  read.csv("indicadores_candidatos.csv")
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
-# ELECCIONES ##############################
+# ELECCIONES : ESTO ESTA PASADO EN LIMPIO A data_descriptiva_ene2025.R ##############################
 
 ## REPITO PARA VARIABLES SELECCIONADAS Y DATA FILTRADA (AGREGADO POSTERIORMENTE)  #####
 
@@ -1408,6 +1408,18 @@ base <- base_indicadores  %>%
   left_join(base_vdependiente)
 
 
+# para testear solo democracias
+democracias <- base_indicadores  %>% 
+  select(-starts_with("source_")) %>% 
+  select(-starts_with("X")) %>% 
+  select(-eng_cat_pais, -dico_debates_eleccion) %>% 
+  left_join(base_controles %>% 
+              select(-starts_with("source_")) %>% 
+              select(-X, -eng_cat_pais)) %>% 
+  left_join(base_vdependiente %>% select(-X)) %>% 
+  subset(democraciavdempolyarchy>0.45) 
+
+base <- democracias
 
 variable_dependiente <- base$dico_hubo_debates
 options(scipen=999)
@@ -2881,19 +2893,19 @@ summary(modelo_estandarizado)
 nombre_variable <- "Sesgo mediático hacia el gobierno (VDEM)"
 
 # preferido: vdem
-variable_control <-  democracias$mediaqualitybiasvdem 
+variable_control <-  controles$mediaqualitybiasvdem 
 standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
 
-summary_obj <- summary(variable_control) 
-summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
-  mutate(variable = nombre_variable)
+# summary_obj <- summary(variable_control) 
+# summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+#   mutate(variable = nombre_variable)
 
-std_dev <- tibble(Statistic = "Std. Dev",
-                  Value = sd(variable_control, na.rm = T),
-                  variable = nombre_variable )
-
-summary_tbl <- rbind(summary_tbl,
-                     std_dev)
+# std_dev <- tibble(Statistic = "Std. Dev",
+#                   Value = sd(variable_control, na.rm = T),
+#                   variable = nombre_variable )
+# 
+# summary_tbl <- rbind(summary_tbl,
+#                      std_dev)
 
 data <- tibble(variable_control = variable_control,
                variable_dependiente = variable_dependiente)
@@ -2910,14 +2922,14 @@ tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "
 tau_b
 
 pearson <- cor(variable_control, variable_dependiente, method = "pearson", use = "complete.obs")
-
-summary_tbl <- rbind(summary_tbl,
-                     tibble(Statistic = "Tau B",
-                            Value = tau_b,
-                            variable = nombre_variable),
-                     tibble(Statistic = "Pearson",
-                            Value = pearson,
-                            variable = nombre_variable))
+# 
+# summary_tbl <- rbind(summary_tbl,
+#                      tibble(Statistic = "Tau B",
+#                             Value = tau_b,
+#                             variable = nombre_variable),
+#                      tibble(Statistic = "Pearson",
+#                             Value = pearson,
+#                             variable = nombre_variable))
 
 mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
 mean_values
@@ -2926,52 +2938,52 @@ modelo <- glm(variable_dependiente ~ variable_control,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
-
-coef <- summary(modelo)$coefficients[2,c(1,4)]
-coef_tbl <- enframe(coef, 
-                    name = "Name", 
-                    value = "Value") %>% 
-  dplyr::rename("Statistic" = "Name") %>% 
-  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
-  mutate(variable = nombre_variable)
+# 
+# coef <- summary(modelo)$coefficients[2,c(1,4)]
+# coef_tbl <- enframe(coef, 
+#                     name = "Name", 
+#                     value = "Value") %>% 
+#   dplyr::rename("Statistic" = "Name") %>% 
+#   mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+#   mutate(variable = nombre_variable)
 
 modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
                             data = data,
                             family = "binomial")
 summary(modelo_estandarizado) # para ver si diferencia es significativa 
-
-coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
-coef_estandarizado_tbl <- enframe(coef_estandarizado, 
-                                  name = "Name", 
-                                  value = "Value") %>% 
-  dplyr::rename("Statistic" = "Name") %>% 
-  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
-  mutate(variable = nombre_variable)
-
-summary_tbl <- rbind(summary_tbl,
-                     coef_estandarizado_tbl,
-                     coef_tbl)
-
-data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
+# 
+# coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+# coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+#                                   name = "Name", 
+#                                   value = "Value") %>% 
+#   dplyr::rename("Statistic" = "Name") %>% 
+#   mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+#   mutate(variable = nombre_variable)
+# 
+# summary_tbl <- rbind(summary_tbl,
+#                      coef_estandarizado_tbl,
+#                      coef_tbl)
+# 
+# data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
 # VDEM perspectives #####
 
-nombre_variable <- "Representación de perspectivas en medios (VDEM)"
+#nombre_variable <- "Representación de perspectivas en medios (VDEM)"
 
 # preferido: vdem
-variable_control <-  democracias$mediaqualityperspectivesvdem
+variable_control <-  controles$mediaqualityperspectivesvdem
 standardized_variable_control <- (variable_control - mean(variable_control, na.rm = TRUE)) / sd(variable_control, na.rm = TRUE)
 
-summary_obj <- summary(variable_control) 
-summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
-  mutate(variable = nombre_variable)
-
-std_dev <- tibble(Statistic = "Std. Dev",
-                  Value = sd(variable_control, na.rm = T),
-                  variable = nombre_variable )
-
-summary_tbl <- rbind(summary_tbl,
-                     std_dev)
+# summary_obj <- summary(variable_control) 
+# summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+#   mutate(variable = nombre_variable)
+# 
+# std_dev <- tibble(Statistic = "Std. Dev",
+#                   Value = sd(variable_control, na.rm = T),
+#                   variable = nombre_variable )
+# 
+# summary_tbl <- rbind(summary_tbl,
+#                      std_dev)
 
 data <- tibble(variable_control = variable_control,
                variable_dependiente = variable_dependiente)
@@ -2988,14 +3000,14 @@ tau_b <- cor(variable_control, variable_dependiente, method = "kendall", use = "
 tau_b
 
 pearson <- cor(variable_control, variable_dependiente, method = "pearson", use = "complete.obs")
-
-summary_tbl <- rbind(summary_tbl,
-                     tibble(Statistic = "Tau B",
-                            Value = tau_b,
-                            variable = nombre_variable),
-                     tibble(Statistic = "Pearson",
-                            Value = pearson,
-                            variable = nombre_variable))
+# 
+# summary_tbl <- rbind(summary_tbl,
+#                      tibble(Statistic = "Tau B",
+#                             Value = tau_b,
+#                             variable = nombre_variable),
+#                      tibble(Statistic = "Pearson",
+#                             Value = pearson,
+#                             variable = nombre_variable))
 
 mean_values <- aggregate(variable_control ~ variable_dependiente, data, mean, na.rm = TRUE)
 mean_values
@@ -3004,33 +3016,33 @@ modelo <- glm(variable_dependiente ~ variable_control,
               data = data,
               family = "binomial")
 summary(modelo) # para ver si diferencia es significativa 
-
-coef <- summary(modelo)$coefficients[2,c(1,4)]
-coef_tbl <- enframe(coef, 
-                    name = "Name", 
-                    value = "Value") %>% 
-  dplyr::rename("Statistic" = "Name") %>% 
-  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
-  mutate(variable = nombre_variable)
+# 
+# coef <- summary(modelo)$coefficients[2,c(1,4)]
+# coef_tbl <- enframe(coef, 
+#                     name = "Name", 
+#                     value = "Value") %>% 
+#   dplyr::rename("Statistic" = "Name") %>% 
+#   mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+#   mutate(variable = nombre_variable)
 
 modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_control,
                             data = data,
                             family = "binomial")
 summary(modelo_estandarizado) # para ver si diferencia es significativa 
-
-coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
-coef_estandarizado_tbl <- enframe(coef_estandarizado, 
-                                  name = "Name", 
-                                  value = "Value") %>% 
-  dplyr::rename("Statistic" = "Name") %>% 
-  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
-  mutate(variable = nombre_variable)
-
-summary_tbl <- rbind(summary_tbl,
-                     coef_estandarizado_tbl,
-                     coef_tbl)
-
-data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
+# 
+# coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+# coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+#                                   name = "Name", 
+#                                   value = "Value") %>% 
+#   dplyr::rename("Statistic" = "Name") %>% 
+#   mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+#   mutate(variable = nombre_variable)
+# 
+# summary_tbl <- rbind(summary_tbl,
+#                      coef_estandarizado_tbl,
+#                      coef_tbl)
+# 
+# data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
 
 ## CORRELACIONES ENTRE VARIABLES INDEP #####
