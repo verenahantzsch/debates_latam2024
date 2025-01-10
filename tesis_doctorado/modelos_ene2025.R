@@ -159,7 +159,6 @@ formula_modelo_sistemico <- "dico_hubo_debates ~
                                     gdpxcapita +
                                     democraciavdemelectoralcomp +
                                     mediaqualitycorruptvdem"
-                                    #edadregimenbmr"
 
 modelo_sistemico <- glm(formula_modelo_sistemico,
                                   family = binomial(link = "logit"), 
@@ -180,7 +179,6 @@ formula_modelo_sistemico_bis <- "dico_hubo_debates ~
                                     lngdp +
                                     democraciavdemelectoralcomp +
                                     mediaqualitycorruptvdem"
-#edadregimenbmr"
 
 modelo_sistemico_bis <- glm(formula_modelo_sistemico_bis,
                         family = binomial(link = "logit"), 
@@ -641,6 +639,166 @@ print(robust_se_cluster_modelo_all)
 
 
 ## CONTROLES MODELO 1 ####
+
+### Otros modelos CONTROL ####
+
+#### volatility agregada ####
+##### modelo sistemico #####
+modelo_sistemico_control_convolatilidad <- glm(paste(formula_modelo_sistemico_bis,
+                                      "volatility", sep = "+"),
+                            family = binomial(link = "logit"), 
+                            #data = data 
+                            data = democracias)
+
+summary(modelo_sistemico_control_convolatilidad) # 
+
+robust_se_cluster_modelo_sistemico_control_convolatilidad <- coeftest(modelo_sistemico_control_convolatilidad, 
+                                               vcov = vcovCL(modelo_sistemico_control_convolatilidad,
+                                                             cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_sistemico_control_convolatilidad)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+sistemico_random_intercepts_control_convolatilidad <- lme4::glmer(
+  paste(formula_modelo_sistemico_bis,
+  "volatility + (1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(sistemico_random_intercepts_control_convolatilidad)
+
+##### modelo final #####
+modelo_final_control_convolatilidad <- glm(paste(formula_modelo_sficativas_variantes,
+                                      "volatility", sep = "+"),
+                                family = binomial(link = "logit"), 
+                                #data = data 
+                                data = democracias)
+
+summary(modelo_final_control_convolatilidad) # 
+
+robust_se_cluster_modelo_final_control_convolatilidad <- coeftest(modelo_final_control_convolatilidad, 
+                                                       vcov = vcovCL(modelo_final_control_convolatilidad,
+                                                                     cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_convolatilidad)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_convolatilidad <- lme4::glmer(
+  paste(formula_modelo_sficativas_variantes,
+        "volatility + (1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_convolatilidad)
+
+### alineamiento en modelo final #####
+
+modelo_final_control_conalienamiento <- glm(paste(formula_modelo_sficativas_variantes,
+                                  "alineamiento", sep = "+"),
+                            family = binomial(link = "logit"), 
+                            data = democracias)
+
+summary(modelo_final_control_conalienamiento) # 
+
+robust_se_cluster_modelo_final_control_conalienamiento <- coeftest(modelo_final_control_conalienamiento, 
+                                                   vcov = vcovCL(modelo_final_control_conalienamiento,
+                                                                 cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_conalienamiento)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_conalienamiento <- lme4::glmer(
+  paste(formula_modelo_sficativas_variantes,
+        "alineamiento + (1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_conalienamiento)
+
+#### final sin accesogratuito #####
+
+modelo_final_control_sinaccesogratuito <- glm(str_remove(formula_modelo_sficativas_variantes,
+                                                  " accesogratuito +"),
+                                            family = binomial(link = "logit"), 
+                                            data = democracias)
+
+summary(modelo_final_control_sinaccesogratuito) # 
+
+robust_se_cluster_modelo_final_control_sinaccesogratuito <- coeftest(modelo_final_control_sinaccesogratuito, 
+                                                                   vcov = vcovCL(modelo_final_control_sinaccesogratuito,
+                                                                                 cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_sinaccesogratuito)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_sinaccesogratuito <- lme4::glmer(
+  paste(str_remove(formula_modelo_sficativas_variantes,
+                   " accesogratuito +"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_sinaccesogratuito)
+
+#### lncumsum #####
+
+modelo_final_control_lncumsum <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                "cumsum_pastciclos", "lncumsumpastciclos"),
+                                     family = binomial(link = "logit"), 
+                                     data = democracias)
+
+summary(modelo_final_control_lncumsum) # 
+
+robust_se_cluster_modelo_final_control_lncumsum <- coeftest(modelo_final_control_lncumsum, 
+                                                            vcov = vcovCL(modelo_final_control_lncumsum,
+                                                                          cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_lncumsum)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_lncumsum <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "cumsum_pastciclos", "lncumsumpastciclos"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_lncumsum)
+
+
+
+
+#### dico_debates_pasados #####
+
+modelo_final_control_dicodebatespasteleeccion <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                                 "cumsum_pastciclos", "dico_debates_pastelection"),
+                                                     family = binomial(link = "logit"), 
+                                                     data = democracias)
+
+summary(modelo_final_control_dicodebatespasteleeccion) # 
+
+robust_se_cluster_modelo_final_control_dicodebatespasteleeccion <- coeftest(modelo_final_control_dicodebatespasteleeccion, 
+                                                                            vcov = vcovCL(modelo_final_control_dicodebatespasteleeccion,
+                                                                                          cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_dicodebatespasteleeccion)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_dicodebatespasteleeccion <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "cumsum_pastciclos", "dico_debates_pastelection"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_dicodebatespasteleeccion)
+
 ### Preparaciones ####
 #### defino data reducida ####
 data_reducida <- democracias %>% 
