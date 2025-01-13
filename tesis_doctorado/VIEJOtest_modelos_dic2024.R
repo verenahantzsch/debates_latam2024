@@ -678,6 +678,7 @@ text(x = influential_obs, y = data_modelo_a_probar$cooks_distances[influential_o
 
 # : Se suele trazar una línea de corte en 4 / n, donde n es el número de observaciones) para identificar observaciones que tienen una gran influencia en el modelo. Las observaciones por encima de esta línea pueden ser consideradas como influyentes.
 car::influencePlot(modelo_a_probar)
+data_modelo_a_probar[c(20,61,77,127,162),"obsid"]
 4/nrow(data_modelo_a_probar)
 car::influenceIndexPlot(modelo_a_probar, vars = c("Cook", "hat"))
 #data_modelo_a_probar[c(20,61,77,127, 162),]
