@@ -1,0 +1,8 @@
+"","nec","regulacion = 0","regulacion = 1","referencia"
+"1",0.38,0.08,0.24,"Promedio - dos desvío estandar"
+"2",1.53,0.38,0.69,"Valor mínimo observado"
+"3",1.68,0.42,0.72,"Promedio - un desvío estandar"
+"4",2.99,0.61,0.85,"Promedio observado"
+"5",4.29,0.72,0.91,"Promedio + un desvío estandar"
+"6",5.6,0.79,0.93,"Promedio + dos desvíos estandar"
+"7",9.34,0.89,0.97,"Valor máximo observado"

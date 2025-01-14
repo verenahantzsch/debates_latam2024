@@ -219,7 +219,7 @@ base_debates_tojoin <- data_debates %>%
          dico_org_mmc, dico_org_mmp, dico_org_osc) %>% 
   unique() %>% 
   mutate(orgosc = ifelse(dico_org_educ==T|dico_org_osc==T,1,0),
-         orgestado = ifelse(dico_org_estado==T|dico_org_mmc==T,1,0),
+         orgestado = ifelse(dico_org_estado==T|dico_org_mmp==T,1,0),
          orgmmc = ifelse(dico_org_mmc==T,1,0))
 
 tipo_debate <- base_debates_tojoin %>% 

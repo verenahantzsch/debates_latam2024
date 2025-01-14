@@ -72,6 +72,8 @@ data_encuestas_candidatos <- read.csv("base_candidatos_matcheados2023.csv")
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado/datav2023")
 
 # INDICADORES NIVEL ELECCION #####
+
+## pasos preliminares ####
 # vamos paso por paso. primero vamos a ver que datos de los importantes tenemos para el modelo 1 OBS POR ELECCION
 
 # join de bases disponibles # 
@@ -623,10 +625,14 @@ indicador_propinternet <- indicador_propinternet %>%
 ##### regulacion especifica debates ######
 
 indicador_regulacion <- data_normativa %>% 
-  select(cat_pais, ncat_eleccion, ncat_totreg) %>% 
+  select(cat_pais, ncat_eleccion, ncat_totreg, ncat_regcandidatos) %>% 
   mutate(ncat_eleccion = ifelse(cat_pais=="Guatemala"&ncat_eleccion==1990,1991,ncat_eleccion)) %>%  # peq ajuste manual
   mutate(regulaciondico = ifelse(ncat_totreg==0,0,
                                  ifelse(ncat_totreg>0,1,NA))) %>% 
+  mutate(regulacionobligatoriodico = ifelse(ncat_regcandidatos==3,1,0)) %>% 
+  mutate(regulaciongarantiasdico = ifelse(ncat_regcandidatos==2,1,0)) %>% 
+  mutate(regulacionposibilidaddico = ifelse(ncat_regcandidatos==1,1,0)) %>% 
+  select(-ncat_regcandidatos) %>% 
   dplyr::rename("regulacionordinal" = ncat_totreg) %>% 
   mutate(source_regulacion = "Franco H. (2022)")
 
@@ -860,7 +866,7 @@ indicador_lagged <- indicador_lagged %>%
          dico_7_eleccondebatesseguidos, 
          cumsum_pastciclos, source_lagged )
 
-### GURADADO INDICADORES chequeo y guardo lo disponible hasta ahora  #########################
+## GURADADO INDICADORES chequeo y guardo lo disponible hasta ahora  #########################
 
 summary(indicador_nec)
 indicador_nec %>% write.csv("indicador_nec.csv")
@@ -907,7 +913,7 @@ indicador_region %>% write.csv("indicador_region.csv")
 summary(indicador_lagged)
 indicador_lagged %>% write.csv("indicador_lagged.csv")
 
-### ARMADO DE BASE UNIFICADA INDICADORES #########################
+## ARMADO DE BASE UNIFICADA INDICADORES #########################
 data_base_elecciones <- read.csv("base_base_elecs.csv")  # creada en creacion_base_base.R
 
 indicador_nec <- read.csv("indicador_nec.csv") %>% select(-X)
@@ -961,6 +967,9 @@ data_gdp <- data_gdp %>%
 control_gdp <- data_gdp %>% 
   select(-X)
 
+
+# test <- data_gdp %>% 
+#   mutate(div = gdpxcapita / gdpxcapita2) # obvio que no funca pues tasa de cambio variable
 
 ##### Desarrollo/ Urbanizacion ######
 summary(qof_controles_desarrollo)

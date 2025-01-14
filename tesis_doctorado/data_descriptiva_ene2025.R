@@ -19,7 +19,7 @@ base_controles <- read.csv("controles_elecciones.csv")
 base_candidatos <-  read.csv("indicadores_candidatos.csv")
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
-# ELECCIONES ##############################
+# ELECCIONES PENDIENTE: AGREGAR VARIACION ENTRE CASOS Y EN EL TIEMPO ##############################
 
 democracias <- base_indicadores  %>% 
   select(-starts_with("source_")) %>% 
@@ -2008,10 +2008,244 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
+## Org es OSC  #######
+nombre_variable <- "OSC organizadora"
+
+# preferido: vdem
+variable_candidatos <-  base$orgosc
+standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
+
+summary_obj <- summary(variable_candidatos) 
+summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+  mutate(variable = nombre_variable)
+
+std_dev <- tibble(Statistic = "Std. Dev",
+                  Value = sd(variable_candidatos, na.rm = T),
+                  variable = nombre_variable )
+
+summary_tbl <- rbind(summary_tbl,
+                     std_dev)
+
+data <- tibble(variable_candidatos = variable_candidatos,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_candidatos)
+hist(variable_candidatos %>%  log())
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_candidatos))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_candidatos)))
+#table(variable_candidatos, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_candidatos, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+pearson <- cor(variable_candidatos, variable_dependiente, method = "pearson", use = "complete.obs")
+
+summary_tbl <- rbind(summary_tbl,
+                     tibble(Statistic = "Tau B",
+                            Value = tau_b,
+                            variable = nombre_variable),
+                     tibble(Statistic = "Pearson",
+                            Value = pearson,
+                            variable = nombre_variable))
+
+mean_values <- aggregate(variable_candidatos ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_candidatos,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+coef <- summary(modelo)$coefficients[2,c(1,4)]
+coef_tbl <- enframe(coef, 
+                    name = "Name", 
+                    value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+  mutate(variable = nombre_variable)
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_candidatos,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+                                  name = "Name", 
+                                  value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+  mutate(variable = nombre_variable)
+
+summary_tbl <- rbind(summary_tbl,
+                     coef_estandarizado_tbl,
+                     coef_tbl)
+
+data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
+
+
+## Org es MMC  #######
+nombre_variable <- "MMC organizadora"
+
+# preferido: vdem
+variable_candidatos <-  base$orgmmc
+standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
+
+summary_obj <- summary(variable_candidatos) 
+summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+  mutate(variable = nombre_variable)
+
+std_dev <- tibble(Statistic = "Std. Dev",
+                  Value = sd(variable_candidatos, na.rm = T),
+                  variable = nombre_variable )
+
+summary_tbl <- rbind(summary_tbl,
+                     std_dev)
+
+data <- tibble(variable_candidatos = variable_candidatos,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_candidatos)
+hist(variable_candidatos %>%  log())
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_candidatos))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_candidatos)))
+#table(variable_candidatos, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_candidatos, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+pearson <- cor(variable_candidatos, variable_dependiente, method = "pearson", use = "complete.obs")
+
+summary_tbl <- rbind(summary_tbl,
+                     tibble(Statistic = "Tau B",
+                            Value = tau_b,
+                            variable = nombre_variable),
+                     tibble(Statistic = "Pearson",
+                            Value = pearson,
+                            variable = nombre_variable))
+
+mean_values <- aggregate(variable_candidatos ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_candidatos,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+coef <- summary(modelo)$coefficients[2,c(1,4)]
+coef_tbl <- enframe(coef, 
+                    name = "Name", 
+                    value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+  mutate(variable = nombre_variable)
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_candidatos,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+                                  name = "Name", 
+                                  value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+  mutate(variable = nombre_variable)
+
+summary_tbl <- rbind(summary_tbl,
+                     coef_estandarizado_tbl,
+                     coef_tbl)
+
+data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
+
+
+
+## Org es E  #######
+nombre_variable <- "Estado organizador"
+
+# preferido: vdem
+variable_candidatos <-  base$orgestado
+standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
+
+summary_obj <- summary(variable_candidatos) 
+summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+  mutate(variable = nombre_variable)
+
+std_dev <- tibble(Statistic = "Std. Dev",
+                  Value = sd(variable_candidatos, na.rm = T),
+                  variable = nombre_variable )
+
+summary_tbl <- rbind(summary_tbl,
+                     std_dev)
+
+data <- tibble(variable_candidatos = variable_candidatos,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_candidatos)
+hist(variable_candidatos %>%  log())
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_candidatos))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_candidatos)))
+#table(variable_candidatos, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_candidatos, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+
+pearson <- cor(variable_candidatos, variable_dependiente, method = "pearson", use = "complete.obs")
+
+summary_tbl <- rbind(summary_tbl,
+                     tibble(Statistic = "Tau B",
+                            Value = tau_b,
+                            variable = nombre_variable),
+                     tibble(Statistic = "Pearson",
+                            Value = pearson,
+                            variable = nombre_variable))
+
+mean_values <- aggregate(variable_candidatos ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_candidatos,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+coef <- summary(modelo)$coefficients[2,c(1,4)]
+coef_tbl <- enframe(coef, 
+                    name = "Name", 
+                    value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+  mutate(variable = nombre_variable)
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_candidatos,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+                                  name = "Name", 
+                                  value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+  mutate(variable = nombre_variable)
+
+summary_tbl <- rbind(summary_tbl,
+                     coef_estandarizado_tbl,
+                     coef_tbl)
+
+data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
+
 # Resultados globales para pasar a word ######
 # en cuenta: variable dependiente debería haber sido descrita antes!
 
-# creo data para plotear
+## creo data para plotear #####
 data_to_plot <- base %>% 
   select(voteshare,
          v2pariglef_vdem,
@@ -2019,15 +2253,37 @@ data_to_plot <- base %>%
          ninvitaciones,
          dico_oficialista,
          dico_reeleccion,
-         propausenciaspasadasfilled)
+         propausenciaspasadasfilled,
+         orgosc,
+         orgmmc,
+         orgestado)
 
 data_to_plot_long <- data_to_plot %>% 
   pivot_longer(cols= everything())
 
+data_to_plot2 <- base %>% 
+  select(voteshare,
+         v2pariglef_vdem,
+         v2paactcom_vdem,
+         ninvitaciones,
+         dico_oficialista,
+         dico_reeleccion,
+         propausenciaspasadasfilled,
+         orgosc,
+         orgmmc,
+         orgestado,
+         dico_candidato_presente)
+
+data_to_plot_long2 <- data_to_plot2 %>% 
+  pivot_longer(cols= everything())
+
+data_to_plot_long3 <- data_to_plot2 %>% 
+  pivot_longer(cols= c(-dico_candidato_presente))
+
 # referencia
 skimr::skim(data_to_plot)
 
-# TABLA con data descriptiva
+## TABLA con data descriptiva ####
 
 data_descriptiva_wide <- data_descriptiva %>% 
   mutate(Value = Value %>%  round(2)) %>% 
@@ -2065,7 +2321,7 @@ data_descriptiva_bivariada_candidatos <- data_descriptiva_wide %>%
 data_descriptiva_univariada_candidatos %>% write.csv("anexos/data_descriptiva_univariada_candidatos.csv")
 data_descriptiva_bivariada_candidatos %>% write.csv("anexos/data_descriptiva_bivariada_candidatos.csv")
 
-# HISTOGRAMAS 
+## HISTOGRAMAS  #####
 
 custom_labels <- as_labeller(c(dico_oficialista = "Es oficialista",
                                dico_reeleccion = "Reelige",
@@ -2073,7 +2329,11 @@ custom_labels <- as_labeller(c(dico_oficialista = "Es oficialista",
                                propausenciaspasadasfilled  = "Prop. ausencias pasadas",
                                v2paactcom_vdem = "Fuerza organizacional",
                                v2pariglef_vdem = "Ideología izq.-der.",
-                               voteshare = "% votos"))
+                               voteshare = "% votos",
+                               dico_candidato_presente = "Presente en debate",
+                               orgosc = "OSC organizadora",
+                               orgmmc = "MMC organizador",
+                               orgestado = "Estado organizador"))
 
 
 histograms_candidatos <- data_to_plot_long %>% 
@@ -2081,15 +2341,32 @@ histograms_candidatos <- data_to_plot_long %>%
   geom_histogram(aes(value)) +
   facet_wrap(~ name, 
              scales = "free",
-             labeller = custom_labels) +
+             labeller = custom_labels,
+             nrow = 2) +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
+  theme_classic()  +
+  labs(title = "Distribución univariada de variables independientes",
+       caption = "Elaboración propia") +
+  theme(strip.text = element_text(size = 14))
+
+histograms_candidatos %>% ggsave(filename = "images/histogramas_vis_candidatos_univariados.jpg", 
+                      width = 15, height = 15)
+
+
+histograms_candidatos2 <- data_to_plot_long3 %>% 
+  ggplot() +
+  geom_histogram(aes(value, fill = as.factor(dico_candidato_presente)), position = "dodge") +
+  facet_wrap(~ name, 
+             scales = "free",
+             labeller = custom_labels,
+             nrow = 2) +
   scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
   labs(title = "Distribución univariada de variables independientes",
        caption = "Elaboración propia") +
   theme(strip.text = element_text(size = 14))
 
-
-# correlaciones entre variables independientes
+## correlaciones entre variables independientes ####
 
 correlation_matrix <- cor(data_to_plot , use = "pairwise.complete.obs" )
 
@@ -2102,7 +2379,7 @@ ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend 
 corr_plot <- corrplot::corrplot(
   correlation_matrix, 
   method = "circle",
-  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  col = colorRampPalette(c("red", "white", "green"))(8), 
   diag = FALSE, 
   plot = NULL # Capturar coordenadas
 )
@@ -2113,7 +2390,7 @@ n <- ncol(correlation_matrix) # Número de columnas/filas
 corrplot::corrplot(
   correlation_matrix, 
   method = "circle",
-  col = colorRampPalette(c("blue", "white", "red"))(8), 
+  col = colorRampPalette(c("red", "white", "green"))(8), 
   type = "lower",   # Muestra solo la parte inferior
   addgrid.col = "gray",
   diag = FALSE      # Ocultar diagonal

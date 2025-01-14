@@ -329,41 +329,6 @@ options(scipen=999)
 summary(modelo_sficativas_variantes)
 
 
-### Modelo final / sficativas variantes + interaccion ####
-# variantes modelo sficativas
-formula_modelo_sficativas_variantes_interactivo <- "dico_hubo_debates ~ 
-                        #dico_debates_primerosdos ~ 
-                        #dico_hubo_debate_mediatico ~ 
-                           lnmarginvic + # CAMBIE
-                           lnnec +
-                           #exapprovalnotsmoothed + 
-                           voteshareincumbent +
-                          #lnvoteshareincumbent +
-                           dico_reeleccion + 
-                           #proptv +
-                           propindivinternet +
-                           accesogratuito +
-                           avgpropdebatesregionxciclo + 
-                           #prop_elec_usa_ciclo +
-                           regulaciondico +
-                          regulaciondico*lnnec +
-                           cumsum_pastciclos +
-                           #dico_debates_pastelection +
-                           lngdp + # CAMBIE
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem#, #+
-                          # ncat_eleccion,
-                          #edadregimenbmr#, "
-
-
-modelo_sficativas_variantes_interactivo <- glm(formula_modelo_sficativas_variantes_interactivo,
-                                   family = binomial(link = "logit"), 
-                                   #data = data 
-                                   data = democracias)
-options(scipen=999)
-summary(modelo_sficativas_variantes_interactivo)
-
-
 
 ### Modelo all #####
 
@@ -397,95 +362,6 @@ summary(modelo_all)
 ## MODELOS ROBUSTOS #####
 
 #### https://www.geeksforgeeks.org/different-robust-standard-errors-of-logit-regression-in-stata-and-r/
-
-##### REESTIMACION sin outliers ##### 
-
-# # otros potenciales: Colombia 1998 1 , 
-# El salvador 2014 2 para arriba marginvic. 
-# Brasil 1980 2. 
-# Colombia 1986 1era . 
-
-
-data_s_outliers <- democracias %>% 
-  mutate(filtrar = ifelse(cat_pais=="Argentina"&ncat_eleccion==2003&ncat_ronda==1|
-                            cat_pais=="Brasil"&ncat_eleccion==2018&ncat_ronda==2|
-                            cat_pais=="Brasil"&ncat_eleccion==1989&ncat_ronda==2|
-                            cat_pais=="Bolivia"&ncat_eleccion==2019&ncat_ronda==1|
-                            cat_pais=="Colombia"&ncat_eleccion==2018&ncat_ronda==2|
-                            cat_pais=="Colombia"&ncat_eleccion==1998&ncat_ronda==1|
-                            cat_pais=="Costa Rica"&ncat_eleccion==2014&ncat_ronda==2|
-                            cat_pais=="Ecuador"&ncat_eleccion==2017&ncat_ronda==2|
-                            cat_pais=="Honduras"&ncat_eleccion==1993&ncat_ronda==1|
-                            cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
-                            cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
-                            cat_pais=="Republica Dominicana"&ncat_eleccion==2020&ncat_ronda==1|
-                            cat_pais=="Republica Dominicana"&ncat_eleccion== 2016&ncat_ronda==1,
-                          1, 0)) %>% 
-  subset(filtrar==0) %>% 
-  select(dico_hubo_debates,
-         cat_pais,
-         ncat_eleccion,
-         ncat_ronda,
-         elecid,
-         obsid,
-         marginvic,
-         nec,
-         voteshareincumbent,
-         dico_reeleccion,
-         # alineamiento,
-         # proptv,
-         propindivinternet,
-         # prohibicionpropaganda,
-         accesogratuito,
-         avgpropdebatesregionxciclo,
-         prop_elec_usa_ciclo,
-         regulaciondico,
-         cumsum_pastciclos,
-         gdpxcapita,
-         democraciavdemelectoralcomp,
-         mediaqualitycorruptvdem,
-         lnpropindivinternet,
-         lngdp,
-         lnmarginvic,
-         lnnec,
-         lnvoteshareincumbent) %>% 
-  na.omit()
-
-modelo_sficativas_s_outliers <- glm(formula_modelo_sficativas,
-                                    family = binomial(link = "logit"), 
-                                    #data = data 
-                                    data = data_s_outliers)
-summary(modelo_sficativas_s_outliers)
-summary(modelo_sficativas)
-
-
-# al quitar outliers... 
-# dico_reeleccion pierde sficancia
-# nec y regulaciondico mejoran ligeramente magnitud
-
-modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
-                                              family = binomial(link = "logit"), 
-                                              #data = data 
-                                              data = data_s_outliers)
-options(scipen=999)
-summary(modelo_sficativas_variantes_s_outliers)
-summary(modelo_sficativas_variantes)
-
-
-
-robust_se_cluster_modelo_sficativas_variantes_s_outliers <- coeftest(modelo_sficativas_variantes_s_outliers, 
-                                                                     vcov = vcovCL(modelo_sficativas_variantes_s_outliers, 
-                                                                                   #cluster = democracias$elecid))
-                                                                                   #cluster = data$elecid))
-                                                                                   cluster = data_s_outliers$cat_pais))
-print(robust_se_cluster_modelo_sficativas_variantes_s_outliers)
-# al quitar outliers... 
-# simil anterior: dico_reeleccion pierde sficancia
-# acceso gratuito gana sficancia 
-# simil anterior:nec y regulaciondico mejoran ligeramente magnitud
-
-# ppal conclusion: dico_reeleccion es SENSIBLE a algunos casos...
-
 
 ### Heteroscedasticity-Consistent Standard Errors ####
 
@@ -618,12 +494,6 @@ robust_se_cluster_modelo_sficativas_variantes <- coeftest(modelo_sficativas_vari
                                                                         cluster = democracias$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes)
 
-robust_se_cluster_modelo_sficativas_variantes_interactivo <- coeftest(modelo_sficativas_variantes_interactivo, 
-                                                                      vcov = vcovCL(modelo_sficativas_variantes_interactivo, 
-                                                                                    #cluster = democracias$elecid))
-                                                                                    #cluster = data$elecid))
-                                                                                    cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_sficativas_variantes_interactivo)
 
 #### Modelo all ####
 
@@ -634,254 +504,98 @@ robust_se_cluster_modelo_all <- coeftest(modelo_all,
 
 print(robust_se_cluster_modelo_all)
 
+### REESTIMACION sin outliers ##### 
+
+# # otros potenciales: Colombia 1998 1 , 
+# El salvador 2014 2 para arriba marginvic. 
+# Brasil 1980 2. 
+# Colombia 1986 1era . 
+
+
+data_s_outliers <- democracias %>% 
+  mutate(filtrar = ifelse(cat_pais=="Argentina"&ncat_eleccion==2003&ncat_ronda==1|
+                            cat_pais=="Brasil"&ncat_eleccion==2018&ncat_ronda==2|
+                            cat_pais=="Brasil"&ncat_eleccion==1989&ncat_ronda==2|
+                            cat_pais=="Bolivia"&ncat_eleccion==2019&ncat_ronda==1|
+                            cat_pais=="Colombia"&ncat_eleccion==2018&ncat_ronda==2|
+                            cat_pais=="Colombia"&ncat_eleccion==1998&ncat_ronda==1|
+                            cat_pais=="Costa Rica"&ncat_eleccion==2014&ncat_ronda==2|
+                            cat_pais=="Ecuador"&ncat_eleccion==2017&ncat_ronda==2|
+                            cat_pais=="Honduras"&ncat_eleccion==1993&ncat_ronda==1|
+                            cat_pais=="Nicaragua"&ncat_eleccion==1990&ncat_ronda==1|
+                            cat_pais=="Peru"&ncat_eleccion==1990&ncat_ronda==2|
+                            cat_pais=="Republica Dominicana"&ncat_eleccion==2020&ncat_ronda==1|
+                            cat_pais=="Republica Dominicana"&ncat_eleccion== 2016&ncat_ronda==1,
+                          1, 0)) %>% 
+  subset(filtrar==0) %>% 
+  select(dico_hubo_debates,
+         cat_pais,
+         ncat_eleccion,
+         ncat_ronda,
+         elecid,
+         obsid,
+         marginvic,
+         nec,
+         voteshareincumbent,
+         dico_reeleccion,
+         # alineamiento,
+         # proptv,
+         propindivinternet,
+         # prohibicionpropaganda,
+         accesogratuito,
+         avgpropdebatesregionxciclo,
+         prop_elec_usa_ciclo,
+         regulaciondico,
+         cumsum_pastciclos,
+         gdpxcapita,
+         democraciavdemelectoralcomp,
+         mediaqualitycorruptvdem,
+         lnpropindivinternet,
+         lngdp,
+         lnmarginvic,
+         lnnec,
+         lnvoteshareincumbent) %>% 
+  na.omit()
+
+modelo_sficativas_s_outliers <- glm(formula_modelo_sficativas,
+                                    family = binomial(link = "logit"), 
+                                    #data = data 
+                                    data = data_s_outliers)
+summary(modelo_sficativas_s_outliers)
+summary(modelo_sficativas)
+
+
+# al quitar outliers... 
+# dico_reeleccion pierde sficancia
+# nec y regulaciondico mejoran ligeramente magnitud
+
+modelo_sficativas_variantes_s_outliers <- glm(formula_modelo_sficativas_variantes,
+                                              family = binomial(link = "logit"), 
+                                              #data = data 
+                                              data = data_s_outliers)
+options(scipen=999)
+summary(modelo_sficativas_variantes_s_outliers)
+summary(modelo_sficativas_variantes)
+
+
+
+robust_se_cluster_modelo_sficativas_variantes_s_outliers <- coeftest(modelo_sficativas_variantes_s_outliers, 
+                                                                     vcov = vcovCL(modelo_sficativas_variantes_s_outliers, 
+                                                                                   #cluster = democracias$elecid))
+                                                                                   #cluster = data$elecid))
+                                                                                   cluster = data_s_outliers$cat_pais))
+print(robust_se_cluster_modelo_sficativas_variantes_s_outliers)
+# al quitar outliers... 
+# simil anterior: dico_reeleccion pierde sficancia
+# acceso gratuito gana sficancia 
+# simil anterior:nec y regulaciondico mejoran ligeramente magnitud
+
+# ppal conclusion: dico_reeleccion es SENSIBLE a algunos casos...
+
+
 
 ## CONTROLES MODELO 1 ####
 
-### OTROS MODELOS control ####
-
-#### volatility agregada ####
-##### modelo sistemico #####
-modelo_sistemico_control_convolatilidad <- glm(paste(formula_modelo_sistemico_bis,
-                                      "volatility", sep = "+"),
-                            family = binomial(link = "logit"), 
-                            #data = data 
-                            data = democracias)
-
-summary(modelo_sistemico_control_convolatilidad) # 
-
-robust_se_cluster_modelo_sistemico_control_convolatilidad <- coeftest(modelo_sistemico_control_convolatilidad, 
-                                               vcov = vcovCL(modelo_sistemico_control_convolatilidad,
-                                                             cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_sistemico_control_convolatilidad)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-sistemico_random_intercepts_control_convolatilidad <- lme4::glmer(
-  paste(formula_modelo_sistemico_bis,
-  "volatility + (1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(sistemico_random_intercepts_control_convolatilidad)
-
-##### modelo final #####
-modelo_final_control_convolatilidad <- glm(paste(formula_modelo_sficativas_variantes,
-                                      "volatility", sep = "+"),
-                                family = binomial(link = "logit"), 
-                                #data = data 
-                                data = democracias)
-
-summary(modelo_final_control_convolatilidad) # 
-
-robust_se_cluster_modelo_final_control_convolatilidad <- coeftest(modelo_final_control_convolatilidad, 
-                                                       vcov = vcovCL(modelo_final_control_convolatilidad,
-                                                                     cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_convolatilidad)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_convolatilidad <- lme4::glmer(
-  paste(formula_modelo_sficativas_variantes,
-        "volatility + (1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_convolatilidad)
-
-#### alineamiento en modelo final #####
-
-modelo_final_control_conalienamiento <- glm(paste(formula_modelo_sficativas_variantes,
-                                  "alineamiento", sep = "+"),
-                            family = binomial(link = "logit"), 
-                            data = democracias)
-
-summary(modelo_final_control_conalienamiento) # 
-
-robust_se_cluster_modelo_final_control_conalienamiento <- coeftest(modelo_final_control_conalienamiento, 
-                                                   vcov = vcovCL(modelo_final_control_conalienamiento,
-                                                                 cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_conalienamiento)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_conalienamiento <- lme4::glmer(
-  paste(formula_modelo_sficativas_variantes,
-        "alineamiento + (1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_conalienamiento)
-
-#### final sin accesogratuito #####
-
-modelo_final_control_sinaccesogratuito <- glm(str_remove(formula_modelo_sficativas_variantes,
-                                                  " accesogratuito +"),
-                                            family = binomial(link = "logit"), 
-                                            data = democracias)
-
-summary(modelo_final_control_sinaccesogratuito) # 
-
-robust_se_cluster_modelo_final_control_sinaccesogratuito <- coeftest(modelo_final_control_sinaccesogratuito, 
-                                                                   vcov = vcovCL(modelo_final_control_sinaccesogratuito,
-                                                                                 cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_sinaccesogratuito)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_sinaccesogratuito <- lme4::glmer(
-  paste(str_remove(formula_modelo_sficativas_variantes,
-                   " accesogratuito +"),
-        "(1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_sinaccesogratuito)
-
-#### lncumsum #####
-
-modelo_final_control_lncumsum <- glm(str_replace(formula_modelo_sficativas_variantes,
-                                                "cumsum_pastciclos", "lncumsumpastciclos"),
-                                     family = binomial(link = "logit"), 
-                                     data = democracias)
-
-summary(modelo_final_control_lncumsum) # 
-
-robust_se_cluster_modelo_final_control_lncumsum <- coeftest(modelo_final_control_lncumsum, 
-                                                            vcov = vcovCL(modelo_final_control_lncumsum,
-                                                                          cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_lncumsum)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_lncumsum <- lme4::glmer(
-  paste(str_replace(formula_modelo_sficativas_variantes,
-                    "cumsum_pastciclos", "lncumsumpastciclos"),
-        "(1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_lncumsum)
-
-
-
-
-#### dico_debates_pasados #####
-
-modelo_final_control_dicodebatespasteleeccion <- glm(str_replace(formula_modelo_sficativas_variantes,
-                                                                 "cumsum_pastciclos", "dico_debates_pastelection"),
-                                                     family = binomial(link = "logit"), 
-                                                     data = democracias)
-
-summary(modelo_final_control_dicodebatespasteleeccion) # 
-
-robust_se_cluster_modelo_final_control_dicodebatespasteleeccion <- coeftest(modelo_final_control_dicodebatespasteleeccion, 
-                                                                            vcov = vcovCL(modelo_final_control_dicodebatespasteleeccion,
-                                                                                          cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_dicodebatespasteleeccion)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_dicodebatespasteleeccion <- lme4::glmer(
-  paste(str_replace(formula_modelo_sficativas_variantes,
-                    "cumsum_pastciclos", "dico_debates_pastelection"),
-        "(1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_dicodebatespasteleeccion)
-
-#### Alternativa REGULACION #####
-
-modelo_final_control_regulacionalternativa <- glm(str_replace(formula_modelo_sficativas_variantes,
-                                                              "regulaciondico", "regulacionobligatoriodico + regulaciongarantiasdico"),
-                                                  family = binomial(link = "logit"), 
-                                                  data = democracias)
-
-summary(modelo_final_control_regulacionalternativa) # 
-
-robust_se_cluster_modelo_final_control_regulacionalternativa <- coeftest(modelo_final_control_regulacionalternativa, 
-                                                                         vcov = vcovCL(modelo_final_control_regulacionalternativa,
-                                                                                       cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_regulacionalternativa)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_regulacionalternativa <- lme4::glmer(
-  paste(str_replace(formula_modelo_sficativas_variantes,
-                    "regulaciondico", "regulacionobligatoriodico + regulaciongarantiasdico"),
-        "(1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_regulacionalternativa)
-
-# version 2
-
-democracias <- democracias %>% 
-  mutate(regulacionotradico = ifelse(regulaciongarantiasdico==1|regulacionposibilidaddico==1,
-                                     1,0))
-
-modelo_final_control_regulacionalternativa2 <- glm(str_replace(formula_modelo_sficativas_variantes,
-                                                               "regulaciondico", "regulacionobligatoriodico + regulacionotradico"),
-                                                   family = binomial(link = "logit"), 
-                                                   data = democracias)
-
-summary(modelo_final_control_regulacionalternativa2) # 
-
-robust_se_cluster_modelo_final_control_regulacionalternativa2 <- coeftest(modelo_final_control_regulacionalternativa2, 
-                                                                          vcov = vcovCL(modelo_final_control_regulacionalternativa2,
-                                                                                        cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_regulacionalternativa2)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_regulacionalternativa2 <- lme4::glmer(
-  paste(str_replace(formula_modelo_sficativas_variantes,
-                    "regulaciondico", "regulacionobligatoriodico + regulacionotradico"),
-        "(1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_regulacionalternativa2)
-
-
-# version ordinal
-
-democracias <- democracias %>% 
-  mutate(regulacionotradico = ifelse(regulaciongarantiasdico==1|regulacionposibilidaddico==1,
-                                     1,0))
-
-modelo_final_control_regulacionalternativa3 <- glm(str_replace(formula_modelo_sficativas_variantes,
-                                                               "regulaciondico", "regulacionordinal"),
-                                                   family = binomial(link = "logit"), 
-                                                   data = democracias)
-
-summary(modelo_final_control_regulacionalternativa3) # 
-
-robust_se_cluster_modelo_final_control_regulacionalternativa3 <- coeftest(modelo_final_control_regulacionalternativa3, 
-                                                                          vcov = vcovCL(modelo_final_control_regulacionalternativa3,
-                                                                                        cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_regulacionalternativa3)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_regulacionalternativa3 <- lme4::glmer(
-  paste(str_replace(formula_modelo_sficativas_variantes,
-                    "regulaciondico", "regulacionordinal"),
-        "(1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_regulacionalternativa3)
 
 ### Preparaciones p/ control estadistico ####
 #### defino data reducida ####
@@ -1029,7 +743,7 @@ summary(modelo_sficativas_variantes)
 
 #modelo_a_probar <- modelo_sficativas
 
-### Control de resiudos ####
+### Controles - Control de resiudos ####
 
 ##### Graficar los residuos ####
 # https://library.virginia.edu/data/articles/understanding-deviance-residuals
@@ -1129,7 +843,7 @@ dwtest(modelo_a_probar, alternative = "two.sided")
 # El valor de p constituye una medida de la credibilidad de la hipótesis nula. Cuanto menor sea, más nos inclinaremos a rechazar la hipótesis nula,
 # A p-value of 0.3608 for a Durbin-Watson test indicates that the null hypothesis of no autocorrelation is not rejected
 
-### Casos influyentes y outliers ####
+### Controles - Casos influyentes y outliers ####
 
 # https://stats.stackexchange.com/questions/22161/how-to-read-cooks-distance-plots
 
@@ -1481,14 +1195,14 @@ all_vifs <- all_vifs %>%
 all_vifs %>% write_csv("anexos/vifs_values.csv")
 
 #### otros? PENDIENTE ####
-### Missing data PENDIENTE ####
+### Controles - Missing data PENDIENTE ####
 # jack knife
 # imputacion: 
 # reemp x valor promedio, 
 # reemp x mediana, 
 # mcmc multiple imputation approach -> simulacion + iteraciones
 # comparar modelos 
-### Fit, Overall significance y comparaciones ####
+### Controles - Fit, Overall significance y comparaciones ####
 #### test de Wald ####
 
 #modelo_a_probar <- modelo_sficativas
@@ -1746,20 +1460,7 @@ stats_modelo %>% write_csv("anexos/stats_modelo.csv")
 
 ## EXPORTO MODELOS #####
 
-# # para pasar a excel
-# robust_se_cluster_df <- robust_se_cluster_modelo_sficativas_variantes[,] %>% 
-#   as_tibble() %>%
-#   mutate(variable = rownames(robust_se_cluster_modelo_sficativas_variantes))
-# writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
-
 # Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
-
-#mp_models <- texreg::list(modelo_a_interpretar)
-# htmlreg(mp_models,
-#         custom.model.names = c("Modelo 1", "Modelo 2", "Modelo 3"),
-#         custom.coef.names = c("Intercepto", ".... " ),
-#         file="tabla_1.html") # nombre de su archivo html. Se guardará en tu  directorio de trabajo por defecto.
-# con funcion screenreg podemos chequear tablas antes de exportarlas
 
 lista1 <-  list(
   robust_se_cluster_modelo_contingencia,
@@ -1769,17 +1470,6 @@ lista1 <-  list(
   robust_se_cluster_modelo_sficativas_variantes
 ) 
 
-lista2 <-  list(
-  robust_se_cluster_modelo_sficativas_variantes,
-  robust_se_cluster_modelo_sficativas,
-  robust_se_cluster_modelo_sficativas_variantes_s_outliers
-) 
-
-# lista3 <-  list(robust_se_cluster_modelo_sficativas_variantes,
-#                 robust_se_cluster_modelo_multinivel,
-#                 robust_se_cluster_modelo_multinivel_interactivo)
-
-# https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
 
 texreg::htmlreg(lista1,
                 custom.model.names = c("Contingencia",
@@ -1829,20 +1519,26 @@ texreg::htmlreg(lista1,
                                   10,
                                   8
                 ),
-                file="anexos/tabla_1_bis.html",
+                file="anexos/tabla_modelos_logit_robustos.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
                 bold = 0.1)
 
+lista2 <-  list(
+  robust_se_cluster_modelo_sficativas_variantes,
+  robust_se_cluster_modelo_sficativas,
+  robust_se_cluster_modelo_sficativas_variantes_s_outliers
+) 
+
 texreg::htmlreg(lista2,
                 custom.model.names = c("Final",
-                                       "Variante",
+                                       "Variante s/ variables log",
                                        "Final s/ casos influyentes")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
                                       "log Margen de victoria",
                                       "log NEC",
-                                      #"log Votos oficialista",
+                                      "Votos oficialista",
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
@@ -1854,62 +1550,38 @@ texreg::htmlreg(lista2,
                                       "Corrupcion de medios (VDEM)",
                                       "Margen de victoria",
                                       "NEC" ,
-                                      "Votos oficialista",
                                       "Prop. debates en USA" ,
                                       "PBI per Capita"
                 ),
                 reorder.coef =  c(1,
-                                  14,
-                                  2,
-                                  15,
-                                  3,
-                                  16,
-                                  4,
-                                  5,
-                                  
-                                  6,
-                                  7,
-                                  8,
-                                  17,
-                                  
-                                  9,
-                                  10,
-                                  18,
-                                  11,
-                                  12,
-                                  13
+                                  1+1,
+                                  13+1,
+                                  2+1,
+                                  14+1,
+                                  3+1,
+                                  4+1,
+
+                                  5+1,
+                                  6+1,
+                                  7+1,
+                                  15+1,
+                                  8+1,
+                                  9+1,
+                                  10+1,
+                                  16+1,
+                                  11+1,
+                                  12+1
                 ),
-                file="anexos/tabla_2_bis.html",
+                file="anexos/tabla_anexa_outliers_variantes.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
                 bold = 0.1)
-
-# texreg::htmlreg(lista3,
-#                 custom.model.names = c("Final con variantes",
-#                                        "Final con variantes sin outliers",
-#                                        "Multinivel",
-#                                        "Multinivel interactivo")  ,
-#                 stars = c(0.001, 0.01, 0.05, 0.1),
-#                 # custom.coef.names = c("Intercepto",                             
-#                 # "log Margen de victoria",
-#                 # "log NEC" ,
-#                 # "log Votos oficialista",
-#                 # "Incumbente reelije",
-#                 # "Regulacion sobre debates",
-#                 # "Cant. elecciones pasadas con debates",
-#                 # "log PBI per Capita",
-#                 # "Democracia electoral (VDEM)",
-#                 # "Corrupcion de medios (VDEM)"),
-#                 file="anexos/tabla_3_bis.html",
-#                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
-#                 center = T,
-#                 bold = 0.1)
 
 
 
 ## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
 
-### importante elegir ####
+### INTERPRETACION - importante elegir ####
 
 # modelo_a_interpretar <- modelo_sficativas_variantes_s_outliers
 # data_modelo_a_interpretar <- data_s_outliers 
@@ -1925,7 +1597,7 @@ vcov_modelo_a_interpretar <- vcovCL(modelo_sficativas_variantes,
 # t the coefficient for X is the difference in the log odds.  https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
 # In other words, for a one-unit increase in the math score, the expected change in log odds is .1563404.
 
-### ODDS RATIO #####
+### INTERPRETACION - ODDS RATIO #####
 
 # a diferencia de la proba predicha, que varia de manera no lineal,
 # el odds ratio es constante para distintos valores de x 
@@ -1984,7 +1656,7 @@ varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
                                                                  "modelo_sficativas_variantes_s_outliers"
                                                  ))
 
-### ESCENARIOS CON VALORES PREDICHOS #####
+### INTERPRETACION - ESCENARIOS CON VALORES PREDICHOS #####
 ### calculo de probas predichas # tengo que reducir la data para poder calcular asi nomas
 #data_modelo_a_interpretar$probabilidades_predichas <- predict(modelo_a_interpretar, type = "response")
 #data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpretar$probabilidades_predichas>0.5,1,0)
@@ -2232,7 +1904,36 @@ plot_interpretacion4 %>% ggsave(filename = "images/plot_interpretacion_varios_es
                                height = 9)
 
 
-### EFECTO MARGINAL #####
+plot_interpretacion4.1 <- ggplot(data_to_predict4) +
+  geom_line(aes(x = exp(lnnec), 
+                y = fitted,
+                colour = as.factor(regulaciondico))) +
+  geom_ribbon(aes(x = exp(lnnec), 
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted,
+                  fill = as.factor(regulaciondico)), alpha = 0.3) +
+  facet_wrap(~as.factor(dico_reeleccion)) 
+
+plot_interpretacion4.2 <- ggplot(data_to_predict4) +
+  geom_line(aes(x = exp(lnnec), 
+                y = fitted,
+                colour = as.factor(dico_reeleccion))) +
+  geom_ribbon(aes(x = exp(lnnec), 
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted,
+                  fill = as.factor(dico_reeleccion)), alpha = 0.3) +
+  facet_wrap(~as.factor(regulaciondico))
+
+plot_interpretacion4.3 <- ggplot(data_to_predict4) +
+  geom_line(aes(x = exp(lnnec), 
+                y = fitted,
+                colour = as.factor(escenario))) +
+  geom_ribbon(aes(x = exp(lnnec), 
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted,
+                  fill = as.factor(escenario)), alpha = 0.3)  
+
+### INTERPRETACION - EFECTO MARGINAL #####
 
 # chatgpt: 
 # En el contexto de un modelo logit, el efecto marginal se refiere a 
@@ -2383,20 +2084,7 @@ diff(pred_regulaciondico$predicted_probs)
 cat("Efecto marginal de regulaciondico 
     cuando el resto de las variables están en sus medias:", effect_regulacion, "\n")
 
-### visualizacion de interacciones para modelo INTERACTIVO ####
 
-persp(modelo_sficativas_variantes_interactivo, 
-      "regulaciondico", "lnnec", 
-      what = "prediction",
-      #ylab = "Desigualdad", xlab = "Crecimiento económico",
-      zlab = "Probabilidad predicha" )
-
-image(modelo_sficativas_variantes_interactivo,  
-      "regulaciondico", "lnnec")#, 
-      #xlab = "Crecimiento económico", ylab = "Desigualdad",
-      #zlab = "Probabilidad predicha")
-
-summary(modelo_sficativas_variantes_interactivo)
 
 ## MULTINIVEL MODELOS 1 ####
 #https://m-clark.github.io/mixed-models-with-R/random_intercepts.html
@@ -2582,7 +2270,7 @@ empty_model <- lme4::glmer(dico_hubo_debates ~
                     data = democracias)
 summary(empty_model)
 
-####  PASO 2 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY #### 
+####  REPORTADO PASO 2 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY #### 
 # varying-intercept model
 # Varying-intercept model with an individual-level predictor. 
 # M1 <- lmer (y ~ x + (1 | county))
@@ -2599,10 +2287,7 @@ contingencia_random_intercepts <- lme4::glmer(paste(formula_modelo_contingencia_
                                        # weights = NULL,
                                         control = control)
 summary(contingencia_random_intercepts)
-# vcov_cluster <- clubSandwich::vcovCR(contingencia_random_intercepts, 
-#                                       cluster = democracias$cat_pais, type = "CR4")
-# contingencia_random_intercepts_robust <- clubSandwich::coef_test(contingencia_random_intercepts, vcov_cluster))
-# print(contingencia_random_intercepts)
+
  
 
 sistemico_random_intercepts <- lme4::glmer(paste(formula_modelo_sistemico_bis, 
@@ -2709,24 +2394,27 @@ texreg::htmlreg(lista4,
                 center = T,
                 bold = 0.1)
 
-####  PASO 3 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY AND RANDOM SLOPES BY NEC) #### 
+####  PASO 3 MODELO MULTILEVEL: RANDOM INTERCEPTS AND RANDOM SLOPES BY COUNTRY #### 
 #  Varying intercepts and slopes
 # M3 <- lmer (y ~ x + (1 + x | county))
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
 
 modelo_random_slopes1 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
                                   # (1 + lnnec | cat_pais), 
                                     "(1 + regulaciondico | cat_pais)", sep = "+" ), 
                                  family=binomial("logit"), 
-                                 data = democracias)
+                                 data = democracias,
+                                 control = control)
 summary(modelo_random_slopes1)
 
 modelo_random_slopes2 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
                                            " (1 + lnnec | cat_pais)",  sep = "+" ), 
                                      family=binomial("logit"), 
-                                     data = democracias)
+                                     data = democracias,
+                                     control = control)
 summary(modelo_random_slopes2)
 
-coef(modelo_random_slopes2)
+#coef(modelo_random_slopes2)
 
 
 modelo_random_slopes3 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
@@ -2734,7 +2422,8 @@ modelo_random_slopes3 <- lme4::glmer(paste(formula_modelo_sficativas_variantes,
                                            lngdp + democraciavdemelectoralcomp + mediaqualitycorruptvdem +
                                            accesogratuito + propindivinternet | cat_pais)",  sep = "+" ), 
                                      family=binomial("logit"), 
-                                     data = democracias)
+                                     data = democracias,
+                                     control = control)
 summary(modelo_random_slopes3)
 
 coef(modelo_random_slopes3)
@@ -2744,7 +2433,7 @@ lme4::fixef(modelo_random_slopes) #to see the estimated average coeﬃcients (�
 lme4::ranef(modelo_random_slopes) #to see the estimated group-level errors (“random eﬀects”):  
 
 
-### PASO 4: NON NESTED #####
+#### PASO 4: NON NESTED #####
 
 modelo_fixed_effects <- glm(paste(formula_modelo_sficativas_variantes, 
                                           " as.factor(cat_pais) + ncat_eleccion",  sep = "+" ), 
@@ -2761,6 +2450,430 @@ summary(modelo_non_nested)
 
 coef(modelo_non_nested)
 
+# OTROS MODELOS control ####
+
+#### VOLATILITY agregada ####
+##### modelo sistemico #####
+modelo_sistemico_control_convolatilidad <- glm(paste(formula_modelo_sistemico_bis,
+                                                     "volatility", sep = "+"),
+                                               family = binomial(link = "logit"), 
+                                               #data = data 
+                                               data = democracias)
+
+summary(modelo_sistemico_control_convolatilidad) # 
+
+robust_se_cluster_modelo_sistemico_control_convolatilidad <- coeftest(modelo_sistemico_control_convolatilidad, 
+                                                                      vcov = vcovCL(modelo_sistemico_control_convolatilidad,
+                                                                                    cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_sistemico_control_convolatilidad)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+sistemico_random_intercepts_control_convolatilidad <- lme4::glmer(
+  paste(formula_modelo_sistemico_bis,
+        "volatility + (1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(sistemico_random_intercepts_control_convolatilidad)
+
+##### modelo final #####
+modelo_final_control_convolatilidad <- glm(paste(formula_modelo_sficativas_variantes,
+                                                 "volatility", sep = "+"),
+                                           family = binomial(link = "logit"), 
+                                           #data = data 
+                                           data = democracias)
+
+summary(modelo_final_control_convolatilidad) # 
+
+robust_se_cluster_modelo_final_control_convolatilidad <- coeftest(modelo_final_control_convolatilidad, 
+                                                                  vcov = vcovCL(modelo_final_control_convolatilidad,
+                                                                                cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_convolatilidad)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_convolatilidad <- lme4::glmer(
+  paste(formula_modelo_sficativas_variantes,
+        "volatility + (1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_convolatilidad)
+
+#### ALINEAMIENTO en modelo final #####
+
+modelo_final_control_conalienamiento <- glm(paste(formula_modelo_sficativas_variantes,
+                                                  "alineamiento", sep = "+"),
+                                            family = binomial(link = "logit"), 
+                                            data = democracias)
+
+summary(modelo_final_control_conalienamiento) # 
+
+robust_se_cluster_modelo_final_control_conalienamiento <- coeftest(modelo_final_control_conalienamiento, 
+                                                                   vcov = vcovCL(modelo_final_control_conalienamiento,
+                                                                                 cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_conalienamiento)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_conalienamiento <- lme4::glmer(
+  paste(formula_modelo_sficativas_variantes,
+        "alineamiento + (1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_conalienamiento)
+
+#### final sin ACCESOGRATUITO #####
+
+modelo_final_control_sinaccesogratuito <- glm(str_remove(formula_modelo_sficativas_variantes,
+                                                         " accesogratuito +"),
+                                              family = binomial(link = "logit"), 
+                                              data = democracias)
+
+summary(modelo_final_control_sinaccesogratuito) # 
+
+robust_se_cluster_modelo_final_control_sinaccesogratuito <- coeftest(modelo_final_control_sinaccesogratuito, 
+                                                                     vcov = vcovCL(modelo_final_control_sinaccesogratuito,
+                                                                                   cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_sinaccesogratuito)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_sinaccesogratuito <- lme4::glmer(
+  paste(str_remove(formula_modelo_sficativas_variantes,
+                   " accesogratuito +"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_sinaccesogratuito)
+
+#### Alternativa LNCUMSUM #####
+
+modelo_final_control_lncumsum <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                 "cumsum_pastciclos", "lncumsumpastciclos"),
+                                     family = binomial(link = "logit"), 
+                                     data = democracias)
+
+summary(modelo_final_control_lncumsum) # 
+
+robust_se_cluster_modelo_final_control_lncumsum <- coeftest(modelo_final_control_lncumsum, 
+                                                            vcov = vcovCL(modelo_final_control_lncumsum,
+                                                                          cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_lncumsum)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_lncumsum <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "cumsum_pastciclos", "lncumsumpastciclos"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_lncumsum)
+
+
+
+
+#### Alternativa DICO_DEBATES_PASADOS #####
+
+modelo_final_control_dicodebatespasteleeccion <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                                 "cumsum_pastciclos", "dico_debates_pastelection"),
+                                                     family = binomial(link = "logit"), 
+                                                     data = democracias)
+
+summary(modelo_final_control_dicodebatespasteleeccion) # 
+
+robust_se_cluster_modelo_final_control_dicodebatespasteleeccion <- coeftest(modelo_final_control_dicodebatespasteleeccion, 
+                                                                            vcov = vcovCL(modelo_final_control_dicodebatespasteleeccion,
+                                                                                          cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_dicodebatespasteleeccion)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_dicodebatespasteleeccion <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "cumsum_pastciclos", "dico_debates_pastelection"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_dicodebatespasteleeccion)
+
+#### Alternativa REGULACION #####
+
+modelo_final_control_regulacionalternativa <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                              "regulaciondico", "regulacionobligatoriodico + regulaciongarantiasdico"),
+                                                  family = binomial(link = "logit"), 
+                                                  data = democracias)
+
+summary(modelo_final_control_regulacionalternativa) # 
+
+robust_se_cluster_modelo_final_control_regulacionalternativa <- coeftest(modelo_final_control_regulacionalternativa, 
+                                                                         vcov = vcovCL(modelo_final_control_regulacionalternativa,
+                                                                                       cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_regulacionalternativa)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_regulacionalternativa <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "regulaciondico", "regulacionobligatoriodico + regulaciongarantiasdico"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_regulacionalternativa)
+
+# version 2
+
+democracias <- democracias %>% 
+  mutate(regulacionotradico = ifelse(regulaciongarantiasdico==1|regulacionposibilidaddico==1,
+                                     1,0))
+
+modelo_final_control_regulacionalternativa2 <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                               "regulaciondico", "regulacionobligatoriodico + regulacionotradico"),
+                                                   family = binomial(link = "logit"), 
+                                                   data = democracias)
+
+summary(modelo_final_control_regulacionalternativa2) # 
+
+robust_se_cluster_modelo_final_control_regulacionalternativa2 <- coeftest(modelo_final_control_regulacionalternativa2, 
+                                                                          vcov = vcovCL(modelo_final_control_regulacionalternativa2,
+                                                                                        cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_regulacionalternativa2)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_regulacionalternativa2 <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "regulaciondico", "regulacionobligatoriodico + regulacionotradico"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_regulacionalternativa2)
+
+
+# version ordinal
+
+democracias <- democracias %>% 
+  mutate(regulacionotradico = ifelse(regulaciongarantiasdico==1|regulacionposibilidaddico==1,
+                                     1,0))
+
+modelo_final_control_regulacionalternativa3 <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                               "regulaciondico", "regulacionordinal"),
+                                                   family = binomial(link = "logit"), 
+                                                   data = democracias)
+
+summary(modelo_final_control_regulacionalternativa3) # 
+
+robust_se_cluster_modelo_final_control_regulacionalternativa3 <- coeftest(modelo_final_control_regulacionalternativa3, 
+                                                                          vcov = vcovCL(modelo_final_control_regulacionalternativa3,
+                                                                                        cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_regulacionalternativa3)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_regulacionalternativa3 <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "regulaciondico", "regulacionordinal"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_regulacionalternativa3)
+
+
+#### Alternativa INTERACTIVO #####
+
+# variantes modelo sficativas
+formula_modelo_sficativas_variantes_interactivo <- "dico_hubo_debates ~ 
+                        #dico_debates_primerosdos ~ 
+                        #dico_hubo_debate_mediatico ~ 
+                           lnmarginvic + # CAMBIE
+                           lnnec +
+                           #exapprovalnotsmoothed + 
+                           voteshareincumbent +
+                          #lnvoteshareincumbent +
+                           dico_reeleccion + 
+                           #proptv +
+                           propindivinternet +
+                           accesogratuito +
+                           avgpropdebatesregionxciclo + 
+                           #prop_elec_usa_ciclo +
+                           regulaciondico +
+                          regulaciondico*lnnec +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           lngdp + # CAMBIE
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem "
+
+
+modelo_sficativas_variantes_interactivo <- glm(formula_modelo_sficativas_variantes_interactivo,
+                                               family = binomial(link = "logit"), 
+                                               #data = data 
+                                               data = democracias)
+options(scipen=999)
+summary(modelo_sficativas_variantes_interactivo)
+
+
+robust_se_cluster_modelo_sficativas_variantes_interactivo <- coeftest(modelo_sficativas_variantes_interactivo, 
+                                                                      vcov = vcovCL(modelo_sficativas_variantes_interactivo, 
+                                                                                    #cluster = democracias$elecid))
+                                                                                    #cluster = data$elecid))
+                                                                                    cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_sficativas_variantes_interactivo)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_interactivo <- lme4::glmer(
+  paste(formula_modelo_sficativas_variantes_interactivo,
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_interactivo)
+
+persp(modelo_sficativas_variantes_interactivo, 
+      "regulaciondico", "lnnec", 
+      what = "prediction",
+      #ylab = "Desigualdad", xlab = "Crecimiento económico",
+      zlab = "Probabilidad predicha" )
+
+image(modelo_sficativas_variantes_interactivo,  
+      "regulaciondico", "lnnec")#, 
+#xlab = "Crecimiento económico", ylab = "Desigualdad",
+#zlab = "Probabilidad predicha")
+
+summary(modelo_sficativas_variantes_interactivo)
+
+
+
+#### prop internet version VIEJA #####
+# YA QUEDO TODO ACTUALIZADO CON LA VERSION INTERPOLADA
+
+formula_propinternet2 <- "dico_hubo_debates ~ 
+                        #dico_debates_primerosdos ~ 
+                        #dico_hubo_debate_mediatico ~ 
+                           lnmarginvic + # CAMBIE
+                           lnnec +
+                           #exapprovalnotsmoothed + 
+                           lnvoteshareincumbent +
+                           dico_reeleccion + 
+                           #proptv +
+                           propindivinternet2 + #ACA!
+                           accesogratuito +
+                           avgpropdebatesregionxciclo + 
+                           #prop_elec_usa_ciclo +
+                           regulaciondico +
+                           cumsum_pastciclos +
+                           #dico_debates_pastelection +
+                           lngdp + # CAMBIE
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem#, #+
+                          # ncat_eleccion,
+                          #edadregimenbmr#, "
+
+
+modelo_propinternet2 <- glm(formula_propinternet2,
+                            family = binomial(link = "logit"), 
+                            #data = data 
+                            data = democracias)
+options(scipen=999)
+summary(modelo_propinternet2)
+
+robust_se_cluster_modelo_propinternet2 <- coeftest(modelo_propinternet2, 
+                                                   vcov = vcovCL(modelo_propinternet2, 
+                                                                 #cluster = democracias$elecid))
+                                                                 #cluster = data$elecid))
+                                                                 cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_propinternet2)
+
+
+#### Loop / prueba #### 
+### primera version de LOOP con DICO HUBO DEBATES para DICO DEBATES PASTELECCION  
+
+# para otra version: sustituyo NAs por 0, para tener mismo n en todas las corridas del loop
+
+data <- data %>% 
+  mutate(across(.cols = c(dico_debates_pastelection,
+                          dico_2_eleccondebatesseguidos,
+                          dico_3_eleccondebatesseguidos,
+                          dico_4_eleccondebatesseguidos,
+                          dico_5_eleccondebatesseguidos,
+                          dico_6_eleccondebatesseguidos,
+                          dico_7_eleccondebatesseguidos), 
+                .fns = ~ ifelse(is.na(.), 0, .)))
+
+# List of predictor variables to loop through
+predictors <- c(   "dico_debates_pastelection",
+                   "dico_2_eleccondebatesseguidos",
+                   "dico_3_eleccondebatesseguidos",
+                   "dico_4_eleccondebatesseguidos",
+                   "dico_5_eleccondebatesseguidos",
+                   "dico_6_eleccondebatesseguidos",
+                   "dico_7_eleccondebatesseguidos")
+
+# Create an empty list to store coefficients
+coef_results <- list()
+
+# Loop through each predictor
+for (var in predictors) {
+  # Construct the formula dynamically
+  formula <- as.formula(paste("dico_hubo_debates ~ 
+                           avgpropdebatesregionxciclo + 
+                           propindivinternet +
+                           marginvic + 
+                           nec +
+                           voteshareincumbent +
+                           dico_reeleccion + 
+                           regulaciondico +
+                           gdpxcapita +
+                           democraciavdemelectoralcomp +
+                           mediaqualitycorruptvdem +", var))
+  
+  # Perform the regression
+  model <- glm(formula,
+               family = binomial(link = "logit"),
+               data = data)
+  
+  robust_se_cluster <- coeftest(model, vcov = vcovCL(model, cluster = data$elecid))
+  
+  
+  # Save the coefficients
+  coef_results[[var]] <-data.frame(
+    Estimate = robust_se_cluster[, "Estimate"],
+    Std.Error = robust_se_cluster[, "Std. Error"],
+    #t.value = robust_se_cluster[, "t value"],
+    Pr = robust_se_cluster[, "Pr(>|z|)"]
+  )
+}
+
+
+# Extract the results for the desired predictor
+coef_for_predictor <- lapply(coef_results, function(x) x[rownames(x) %in% predictors, ])
+
+# Convert the list to a data frame for easy comparison
+comparison_df <- do.call(rbind, coef_for_predictor)
+rownames(comparison_df) <- NULL
+
+# View the comparison table
+comparison_df
 
 # MODELOS 2: submuestra sin debates en la eleccion pasada. "Nueva práctica"  #####
 ### preparo submuestra ####
@@ -2856,7 +2969,7 @@ modelo_sficativas2 <- glm(formula_modelo_sficativas,
                           #data = data2
                           data = democracias2)
 options(scipen=999)
-summary(modelo_sficativas2)
+#summary(modelo_sficativas2)
 
 robust_se_cluster_modelo_sficativas2 <- coeftest(modelo_sficativas2, 
                                                 vcov = vcovCL(modelo_sficativas2, 
@@ -2877,7 +2990,7 @@ modelo_sficativas_variantes2 <- glm(formula_modelo_sficativas_variantes,
                           #data = data2
                           data = democracias2)
 options(scipen=999)
-summary(modelo_sficativas_variantes2)
+#summary(modelo_sficativas_variantes2)
 
 robust_se_cluster_modelo_sficativas_variantes2 <- coeftest(modelo_sficativas_variantes2, 
                                                           vcov = vcovCL(modelo_sficativas_variantes2, 
@@ -2893,7 +3006,7 @@ modelo_sficativas_variantes2.2 <- glm(formula_modelo_sficativas_variantes,
                                     #data = data2
                                     data = democracias2.2)
 options(scipen=999)
-summary(modelo_sficativas_variantes2.2)
+#summary(modelo_sficativas_variantes2.2)
 
 robust_se_cluster_modelo_sficativas_variantes2.2 <- coeftest(modelo_sficativas_variantes2.2, 
                                                            vcov = vcovCL(modelo_sficativas_variantes2.2, 
@@ -2902,6 +3015,12 @@ robust_se_cluster_modelo_sficativas_variantes2.2 <- coeftest(modelo_sficativas_v
                                                                          cluster = democracias2.2$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes2.2)
 
+modelo_sficativas_variantes2_multinivel <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
+                                                     "(1|cat_pais)", sep = "+"),
+                                               family = binomial(link = "logit"), 
+                                               data = democracias2)
+options(scipen=999)
+summary(modelo_sficativas_variantes2_multinivel)
 
 ### MODELOS 3: subumuestra sin regulacion ####
 
@@ -2921,7 +3040,7 @@ modelo_contingencia3 <- glm(formula_modelo_contingencia_bis,
                             #data = data3
                             data = democracias3)
 options(scipen=999)
-summary(modelo_contingencia3)
+#summary(modelo_contingencia3)
 
 robust_se_cluster_modelo_contingencia3 <- coeftest(modelo_contingencia3, 
                                                    vcov = vcovCL(modelo_contingencia3, 
@@ -2940,7 +3059,7 @@ modelo_sistemico3 <- glm(formula_modelo_sistemico_bis,
                          #data = data3
                          data = democracias3)
 
-summary(modelo_sistemico3) 
+#summary(modelo_sistemico3) 
 
 robust_se_cluster_modelo_sistemico3 <- coeftest(modelo_sistemico3, 
                                                 vcov = vcovCL(modelo_sistemico3,
@@ -2957,7 +3076,7 @@ modelo_regulatorio3 <- glm(formula_modelo_regulatorio_bis,
                            #data = data3
                            data = democracias3)
 
-summary(modelo_regulatorio3)
+#summary(modelo_regulatorio3)
 
 robust_se_cluster_modelo_regulatorio3 <- coeftest(modelo_regulatorio3, 
                                                   vcov = vcovCL(modelo_regulatorio3, 
@@ -2974,7 +3093,7 @@ modelo_temporal3 <- glm(formula_modelo_temporal_bis,
                         #data = data3
                         data = democracias3)
 
-summary(modelo_temporal3)
+#summary(modelo_temporal3)
 
 robust_se_cluster_modelo_temporal3 <- coeftest(modelo_temporal3, 
                                                vcov = vcovCL(modelo_temporal3, 
@@ -2991,7 +3110,7 @@ modelo_sficativas3 <- glm(formula_modelo_sficativas,
                           #data = data3
                           data = democracias3)
 options(scipen=999)
-summary(modelo_sficativas3)
+#summary(modelo_sficativas3)
 
 robust_se_cluster_modelo_sficativas3 <- coeftest(modelo_sficativas3, 
                                                  vcov = vcovCL(modelo_sficativas3, 
@@ -3010,7 +3129,7 @@ modelo_sficativas_variantes3 <- glm(formula_modelo_sficativas_variantes,
                                     #data = data3
                                     data = democracias3)
 options(scipen=999)
-summary(modelo_sficativas_variantes3)
+#summary(modelo_sficativas_variantes3)
 
 robust_se_cluster_modelo_sficativas_variantes3 <- coeftest(modelo_sficativas_variantes3, 
                                                            vcov = vcovCL(modelo_sficativas_variantes3, 
@@ -3019,30 +3138,36 @@ robust_se_cluster_modelo_sficativas_variantes3 <- coeftest(modelo_sficativas_var
                                                                          cluster = democracias3$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes3)
 
-
+modelo_sficativas_variantes3_multinivel <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
+                                                     "(1|cat_pais)", sep = "+"),
+                                               family = binomial(link = "logit"), 
+                                               #data = data5
+                                               data = democracias3)
+options(scipen=999)
+summary(modelo_sficativas_variantes3_multinivel)
 
 ### MODELOS 4: submuestra con debates en eleccion anterior. "Interrupción de práctica"  #####
 ### preparo data ####
 data4 <- data %>% 
-  subset(dico_debates_pastelection==1) %>% 
-  mutate(dico_hubo_debates = ifelse(dico_hubo_debates==1,0,
-                                      ifelse(dico_hubo_debates==0,1,
-                                             NA)))
-summary(data4)
+  subset(dico_debates_pastelection==1) #%>% 
+  # mutate(dico_hubo_debates = ifelse(dico_hubo_debates==1,0,
+  #                                     ifelse(dico_hubo_debates==0,1,
+  #                                            NA)))
+#summary(data4)
 
 democracias4 <- democracias %>% 
-  subset(dico_debates_pastelection==1) %>% 
-  mutate(dico_hubo_debates = ifelse(dico_hubo_debates==1,0,
-                                      ifelse(dico_hubo_debates==0,1,
-                                             NA)))
-summary(democracias4)
+  subset(dico_debates_pastelection==1) #%>% 
+  # mutate(dico_hubo_debates = ifelse(dico_hubo_debates==1,0,
+  #                                     ifelse(dico_hubo_debates==0,1,
+  #                                            NA)))
+#summary(democracias4)
 
 democracias4.4 <- democracias %>% 
-  subset(cumsum_pastciclos>1) %>% 
-  mutate(dico_hubo_debates = ifelse(dico_hubo_debates==1,0,
-                                      ifelse(dico_hubo_debates==0,1,
-                                             NA)))
-summary(democracias4.4)
+  subset(cumsum_pastciclos>1) #%>% 
+  # mutate(dico_hubo_debates = ifelse(dico_hubo_debates==1,0,
+  #                                     ifelse(dico_hubo_debates==0,1,
+  #                                            NA)))
+#summary(democracias4.4)
 
 ##### Modelo contingencia  ####
 
@@ -3051,7 +3176,7 @@ modelo_contingencia4 <- glm(formula_modelo_contingencia_bis,
                             #data = data4
                             data = democracias4)
 options(scipen=999)
-summary(modelo_contingencia4)
+#summary(modelo_contingencia4)
 
 robust_se_cluster_modelo_contingencia4 <- coeftest(modelo_contingencia4, 
                                                    vcov = vcovCL(modelo_contingencia4, 
@@ -3070,7 +3195,7 @@ modelo_sistemico4 <- glm(formula_modelo_sistemico_bis,
                          #data = data4
                          data = democracias4)
 
-summary(modelo_sistemico4) 
+#summary(modelo_sistemico4) 
 
 robust_se_cluster_modelo_sistemico4 <- coeftest(modelo_sistemico4, 
                                                 vcov = vcovCL(modelo_sistemico4,
@@ -3087,7 +3212,7 @@ modelo_regulatorio4 <- glm(formula_modelo_regulatorio_bis,
                            #data = data4
                            data = democracias4)
 
-summary(modelo_regulatorio4)
+#summary(modelo_regulatorio4)
 
 robust_se_cluster_modelo_regulatorio4 <- coeftest(modelo_regulatorio4, 
                                                   vcov = vcovCL(modelo_regulatorio4, 
@@ -3104,7 +3229,7 @@ modelo_temporal4 <- glm(formula_modelo_temporal_bis,
                         #data = data4
                         data = democracias4)
 
-summary(modelo_temporal4)
+#summary(modelo_temporal4)
 
 robust_se_cluster_modelo_temporal4 <- coeftest(modelo_temporal4, 
                                                vcov = vcovCL(modelo_temporal4, 
@@ -3121,7 +3246,7 @@ modelo_sficativas4 <- glm(formula_modelo_sficativas,
                           #data = data4
                           data = democracias4)
 options(scipen=999)
-summary(modelo_sficativas4)
+#summary(modelo_sficativas4)
 
 robust_se_cluster_modelo_sficativas4 <- coeftest(modelo_sficativas4, 
                                                  vcov = vcovCL(modelo_sficativas4, 
@@ -3142,7 +3267,7 @@ modelo_sficativas_variantes4 <- glm(formula_modelo_sficativas_variantes,
                                     #data = data4
                                     data = democracias4)
 options(scipen=999)
-summary(modelo_sficativas_variantes4)
+#summary(modelo_sficativas_variantes4)
 
 robust_se_cluster_modelo_sficativas_variantes4 <- coeftest(modelo_sficativas_variantes4, 
                                                            vcov = vcovCL(modelo_sficativas_variantes4, 
@@ -3158,7 +3283,7 @@ modelo_sficativas_variantes4.4 <- glm(formula_modelo_sficativas_variantes,
                                     #data = data4
                                     data = democracias4.4)
 options(scipen=999)
-summary(modelo_sficativas_variantes4.4)
+#summary(modelo_sficativas_variantes4.4)
 
 robust_se_cluster_modelo_sficativas_variantes4.4 <- coeftest(modelo_sficativas_variantes4.4, 
                                                            vcov = vcovCL(modelo_sficativas_variantes4.4, 
@@ -3166,6 +3291,14 @@ robust_se_cluster_modelo_sficativas_variantes4.4 <- coeftest(modelo_sficativas_v
                                                                          #cluster = data$elecid))
                                                                          cluster = democracias4.4$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes4.4)
+
+modelo_sficativas_variantes4_multinivel <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
+                                                     "(1|cat_pais)", sep = "+"),
+                                               family = binomial(link = "logit"), 
+                                               #data = data5
+                                               data = democracias4)
+options(scipen=999)
+summary(modelo_sficativas_variantes4_multinivel)
 
 ### MODELOS 5: subumuestra sin regulacion y sin debates ####
 
@@ -3190,7 +3323,7 @@ modelo_contingencia5 <- glm(formula_modelo_contingencia_bis,
                             #data = data5
                             data = democracias5)
 options(scipen=999)
-summary(modelo_contingencia5)
+#summary(modelo_contingencia5)
 
 robust_se_cluster_modelo_contingencia5 <- coeftest(modelo_contingencia5, 
                                                    vcov = vcovCL(modelo_contingencia5, 
@@ -3209,7 +3342,7 @@ modelo_sistemico5 <- glm(formula_modelo_sistemico_bis,
                          #data = data5
                          data = democracias5)
 
-summary(modelo_sistemico5) 
+#summary(modelo_sistemico5) 
 
 robust_se_cluster_modelo_sistemico5 <- coeftest(modelo_sistemico5, 
                                                 vcov = vcovCL(modelo_sistemico5,
@@ -3226,7 +3359,7 @@ modelo_regulatorio5 <- glm(formula_modelo_regulatorio_bis,
                            #data = data5
                            data = democracias5)
 
-summary(modelo_regulatorio5)
+#summary(modelo_regulatorio5)
 
 robust_se_cluster_modelo_regulatorio5 <- coeftest(modelo_regulatorio5, 
                                                   vcov = vcovCL(modelo_regulatorio5, 
@@ -3243,7 +3376,7 @@ modelo_temporal5 <- glm(formula_modelo_temporal_bis,
                         #data = data5
                         data = democracias5)
 
-summary(modelo_temporal5)
+#summary(modelo_temporal5)
 
 robust_se_cluster_modelo_temporal5 <- coeftest(modelo_temporal5, 
                                                vcov = vcovCL(modelo_temporal5, 
@@ -3260,7 +3393,7 @@ modelo_sficativas5 <- glm(formula_modelo_sficativas,
                           #data = data5
                           data = democracias5)
 options(scipen=999)
-summary(modelo_sficativas5)
+#summary(modelo_sficativas5)
 
 robust_se_cluster_modelo_sficativas5 <- coeftest(modelo_sficativas5, 
                                                  vcov = vcovCL(modelo_sficativas5, 
@@ -3279,7 +3412,7 @@ modelo_sficativas_variantes5 <- glm(formula_modelo_sficativas_variantes,
                                     #data = data5
                                     data = democracias5)
 options(scipen=999)
-summary(modelo_sficativas_variantes5)
+#summary(modelo_sficativas_variantes5)
 
 robust_se_cluster_modelo_sficativas_variantes5 <- coeftest(modelo_sficativas_variantes5, 
                                                            vcov = vcovCL(modelo_sficativas_variantes5, 
@@ -3288,221 +3421,140 @@ robust_se_cluster_modelo_sficativas_variantes5 <- coeftest(modelo_sficativas_var
                                                                          cluster = democracias5$cat_pais))
 print(robust_se_cluster_modelo_sficativas_variantes5)
 
-### OTROS MODELOS ####
 
-### regulacion version separada PENDIENTE #####
-
-### prop internet version VIEJA #####
-# YA QUEDO TODO ACTUALIZADO CON LA VERSION INTERPOLADA
-
-formula_propinternet2 <- "dico_hubo_debates ~ 
-                        #dico_debates_primerosdos ~ 
-                        #dico_hubo_debate_mediatico ~ 
-                           lnmarginvic + # CAMBIE
-                           lnnec +
-                           #exapprovalnotsmoothed + 
-                           lnvoteshareincumbent +
-                           dico_reeleccion + 
-                           #proptv +
-                           propindivinternet2 + #ACA!
-                           accesogratuito +
-                           avgpropdebatesregionxciclo + 
-                           #prop_elec_usa_ciclo +
-                           regulaciondico +
-                           cumsum_pastciclos +
-                           #dico_debates_pastelection +
-                           lngdp + # CAMBIE
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem#, #+
-                          # ncat_eleccion,
-                          #edadregimenbmr#, "
-
-
-modelo_propinternet2 <- glm(formula_propinternet2,
-                                   family = binomial(link = "logit"), 
-                                   #data = data 
-                                   data = democracias)
+modelo_sficativas_variantes5.5 <- glm(formula_modelo_sficativas_variantes,
+                                    family = binomial(link = "logit"), 
+                                    #data = data5
+                                    data = democracias5.5)
 options(scipen=999)
-summary(modelo_propinternet2)
+#summary(modelo_sficativas_variantes5.5)
 
-robust_se_cluster_modelo_propinternet2 <- coeftest(modelo_propinternet2, 
-                                                          vcov = vcovCL(modelo_propinternet2, 
-                                                                        #cluster = democracias$elecid))
-                                                                        #cluster = data$elecid))
-                                                                        cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_propinternet2)
+robust_se_cluster_modelo_sficativas_variantes5.5 <- coeftest(modelo_sficativas_variantes5.5, 
+                                                           vcov = vcovCL(modelo_sficativas_variantes5.5, 
+                                                                         #cluster = democracias$elecid))
+                                                                         #cluster = data$elecid))
+                                                                         cluster = democracias5.5$cat_pais))
+print(robust_se_cluster_modelo_sficativas_variantes5.5)
 
-### borrador prueba Modelo lineal generalizado de efectos mixtos (ejemplo: binomial) ####
 
-# Estandarizar variables predictoras
-democracias_scaled <- democracias %>%
-  dplyr::mutate(across(c(marginvic, nec, voteshareincumbent, propindivinternet,
-                         avgpropdebatesregionxciclo, prop_elec_usa_ciclo, 
-                         gdpxcapita, democraciavdemelectoralcomp, mediaqualitycorruptvdem),
-                       ~ scale(.)))
-# Verificar colinealidad
-vif_model <- lm(dico_hubo_debates ~ marginvic + nec + voteshareincumbent + 
-                  dico_reeleccion + propindivinternet + accesogratuito + 
-                  avgpropdebatesregionxciclo + prop_elec_usa_ciclo + 
-                  regulaciondico + cumsum_pastciclos + gdpxcapita + 
-                  democraciavdemelectoralcomp + mediaqualitycorruptvdem, 
-                data = democracias)
-car::vif(vif_model)
-
-modelo_MLGEM <- lme4::glmer(dico_hubo_debates ~ 
-                              #dico_debates_primerosdos ~ 
-                              #dico_hubo_debate_mediatico ~ 
-                              marginvic + 
-                              nec +
-                              #exapprovalnotsmoothed + 
-                              voteshareincumbent +
-                              dico_reeleccion + 
-                              #proptv +
-                              propindivinternet +
-                              #accesogratuito +
-                              avgpropdebatesregionxciclo + 
-                              prop_elec_usa_ciclo +
-                              regulaciondico +
-                              cumsum_pastciclos +
-                              #dico_debates_pastelection +
-                              gdpxcapita +
-                              democraciavdemelectoralcomp +
-                              mediaqualitycorruptvdem +
-                              (1 | cat_pais) + (1| ncat_eleccion), 
-                            data = democracias_scaled, 
-                            family = binomial(link = "logit"),
-                            control = lme4::glmerControl(optimizer = "bobyqa", 
-                                                         optCtrl = list(maxfun = 2e5)))
-summary(modelo_MLGEM)
-# Calcular errores estándar robustos (Sandwich estimators)
-#table(democracias_scaled$cat_pais, useNA = "ifany")
-# democracias_scaled$cat_pais <- as.factor(democracias_scaled$cat_pais) # ESTOY TENIENDO ALGUN PROBLEMA QUE NO PUDE RESOLVER 
-# vcov_cr2 <- clubSandwich::vcovCL(modelo_MLGEM, cluster = democracias_scaled$cat_pais, type = "CR2")
-# robust_se <- clubSandwich::coef_test(modelo_MLGEM, vcov = vcov_cr2)
-# print(robust_se)
-# # Residuos y diagnósticos
-# plot(resid(modelo_MLGEM))
-
-modelo_sficativas_scaled <- glm(dico_hubo_debates ~ 
-                                  #dico_debates_primerosdos ~ 
-                                  #dico_hubo_debate_mediatico ~ 
-                                  avgpropdebatesregionxciclo + 
-                                  #proptv +
-                                  propindivinternet +
-                                  # accesogratuito + para tener menos missing
-                                  marginvic + 
-                                  nec +
-                                  #exapprovalnotsmoothed + 
-                                  voteshareincumbent +
-                                  dico_reeleccion + 
-                                  regulaciondico +
-                                  cumsum_pastciclos +
-                                  #dico_debates_pastelection +
-                                  gdpxcapita +
-                                  democraciavdemelectoralcomp +
-                                  mediaqualitycorruptvdem,#+
-                                #ncat_eleccion + #cuando agregamos año, internet desaparece
-                                #edadregimenbmr,
-                                family = binomial(link = "logit"), 
-                                data = data_scaled)
+modelo_sficativas_variantes5_multinivel <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
+                                                     "(1|cat_pais)", sep = "+"),
+                                    family = binomial(link = "logit"), 
+                                    #data = data5
+                                    data = democracias5)
 options(scipen=999)
-summary(modelo_sficativas_scaled)
-vif_values <- car::vif(modelo_sficativas_scaled) # cheq de multicolinealidad segun chatgpt
-print(vif_values) 
-# VIF < 5: The variable has low multicollinearity (no significant issue).
-#VIF between 5 and 10: The variable has moderate multicollinearity (requires further investigation).
-#VIF > 10: The variable has high multicollinearity (serious issue, consider mitigation techniques).
-robust_se_cluster <- coeftest(modelo_sficativas_scaled, vcov = vcovCL(modelo_sficativas_scaled, cluster = data$elecid))
+summary(modelo_sficativas_variantes5_multinivel)
 
-### Loop / prueba #### 
-### primera version de LOOP con DICO HUBO DEBATES para DICO DEBATES PASTELECCION  
+## Exporto modelos de interes ####
 
-# para otra version: sustituyo NAs por 0, para tener mismo n en todas las corridas del loop
+lista_extra <-  list(
+  robust_se_cluster_modelo_sficativas_variantes,
+  robust_se_cluster_modelo_sficativas_variantes2,
+  robust_se_cluster_modelo_sficativas_variantes2.2,
+  modelo_sficativas_variantes2_multinivel,
+  robust_se_cluster_modelo_sficativas_variantes3,
+  modelo_sficativas_variantes3_multinivel,
+  robust_se_cluster_modelo_sficativas_variantes4,
+  robust_se_cluster_modelo_sficativas_variantes4.4,
+  modelo_sficativas_variantes4_multinivel,
+  robust_se_cluster_modelo_sficativas_variantes5,
+  robust_se_cluster_modelo_sficativas_variantes5.5,
+  modelo_sficativas_variantes5_multinivel) 
 
-data <- data %>% 
-  mutate(across(.cols = c(dico_debates_pastelection,
-                          dico_2_eleccondebatesseguidos,
-                          dico_3_eleccondebatesseguidos,
-                          dico_4_eleccondebatesseguidos,
-                          dico_5_eleccondebatesseguidos,
-                          dico_6_eleccondebatesseguidos,
-                          dico_7_eleccondebatesseguidos), 
-                .fns = ~ ifelse(is.na(.), 0, .)))
+texreg::htmlreg(lista_extra,
+                custom.model.names = c(paste("Completa, n = ", length(modelo_sficativas_variantes$y)) ,
+                                       paste("S/debate inmed. anteror, n = ", length(modelo_sficativas_variantes2$y)),
+                                       paste("Nunca debates, n = ", length(modelo_sficativas_variantes2.2$y)),
+                                       paste("S/debate inmed. anteror multinivel, n = ", length(modelo_sficativas_variantes2$y)),
+                                       paste("S/ regulacion, n = ", length(modelo_sficativas_variantes3$y)),
+                                       paste("S/ regulacion multinivel, n = ", length(modelo_sficativas_variantes3$y)),
+                                       paste("C/ debate inmed. anterior, n = ", length(modelo_sficativas_variantes4$y)),
+                                       paste("Algun debate anterior, n = ", length(modelo_sficativas_variantes4.4$y)),
+                                       paste("C/ debate inmed. anterior multinivel, n = ", length(modelo_sficativas_variantes4$y)),
+                                       paste("S/ debate inmed. anteror ni regulacion, n = ", length(modelo_sficativas_variantes5$y)),
+                                       paste("Nunca debate ni regulacion, n = ", length(modelo_sficativas_variantes5.5$y)),
+                                       paste("S/ debate inmed. anteror ni regulacion multinivel, n = ", length(modelo_sficativas_variantes5$y))),
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                # custom.coef.names = c("(Intercepto)",
+                #                       "log Margen de victoria",
+                #                       "log NEC",
+                #                       "Votos oficialista",
+                #                       "Incumbente reelije",
+                #                       "Prop. individuos c internet",
+                #                       "Acceso gratuito",
+                #                       "Prop. debates en Region",
+                #                       "Regulacion sobre debates",
+                #                       "Cant. elecciones pasadas con debates",
+                #                       "log PBI per Capita",
+                #                       "Democracia electoral (VDEM)",
+                #                       "Corrupcion de medios (VDEM)",
+                #                       "Margen de victoria",
+                #                       "NEC" ,
+                #                       "Prop. debates en USA" ,
+                #                       "PBI per Capita"
+                # ),
+                # reorder.coef =  c(1,
+                #                   1+1,
+                #                   13+1,
+                #                   2+1,
+                #                   14+1,
+                #                   3+1,
+                #                   4+1,
+                #                   
+                #                   5+1,
+                #                   6+1,
+                #                   7+1,
+                #                   15+1,
+                #                   8+1,
+                #                   9+1,
+                #                   10+1,
+                #                   16+1,
+                #                   11+1,
+                #                   12+1
+                # ),
+                file="anexos/tabla_modelos_submuestras.html",
+                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                center = T,
+                bold = 0.1,
+                override.gof = list(n))
 
-# List of predictor variables to loop through
-predictors <- c(   "dico_debates_pastelection",
-                   "dico_2_eleccondebatesseguidos",
-                   "dico_3_eleccondebatesseguidos",
-                   "dico_4_eleccondebatesseguidos",
-                   "dico_5_eleccondebatesseguidos",
-                   "dico_6_eleccondebatesseguidos",
-                   "dico_7_eleccondebatesseguidos")
 
-# Create an empty list to store coefficients
-coef_results <- list()
-
-# Loop through each predictor
-for (var in predictors) {
-  # Construct the formula dynamically
-  formula <- as.formula(paste("dico_hubo_debates ~ 
-                           avgpropdebatesregionxciclo + 
-                           propindivinternet +
-                           marginvic + 
-                           nec +
-                           voteshareincumbent +
-                           dico_reeleccion + 
-                           regulaciondico +
-                           gdpxcapita +
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem +", var))
-  
-  # Perform the regression
-  model <- glm(formula,
-               family = binomial(link = "logit"),
-               data = data)
-  
-  robust_se_cluster <- coeftest(model, vcov = vcovCL(model, cluster = data$elecid))
-  
-  
-  # Save the coefficients
-  coef_results[[var]] <-data.frame(
-    Estimate = robust_se_cluster[, "Estimate"],
-    Std.Error = robust_se_cluster[, "Std. Error"],
-    #t.value = robust_se_cluster[, "t value"],
-    Pr = robust_se_cluster[, "Pr(>|z|)"]
-  )
-}
-
-
-# Extract the results for the desired predictor
-coef_for_predictor <- lapply(coef_results, function(x) x[rownames(x) %in% predictors, ])
-
-# Convert the list to a data frame for easy comparison
-comparison_df <- do.call(rbind, coef_for_predictor)
-rownames(comparison_df) <- NULL
-
-# View the comparison table
-comparison_df
-
+# ############################## ############################## ############################## ##############################
+# ############################## ############################## ############################## ##############################
 # CANDIDATOS ##############################
 ## PREPARO DATA #######
-
-data <- base_candidatos  %>% 
+data_candidatos <- base_candidatos  %>% 
   select(-starts_with("source_")) %>% 
   select(-X,
          -nombres_candidatos,
-         -v2pashname)
+         -v2pashname) %>% 
+  left_join(base_indicadores) %>% 
+  left_join(base_controles)
+
+fulldata_candidatos <- base_candidatos  %>% 
+  select(-starts_with("source_")) %>% 
+  select(-X,
+         -nombres_candidatos,
+         -v2pashname) %>% 
+  left_join(base_indicadores %>% 
+              select(-dico_reeleccion, -dico_oficialista)) %>% 
+  left_join(base_controles %>% 
+              select(-dico_debates_eleccion, -eng_cat_pais, -X))
 
 # creo variable para clusterizar SSEE
-data <- data %>% # en este caso tb tengo id_debate
+data_candidatos <- data_candidatos %>% # en este caso tb tengo id_debate
+  mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
+
+fulldata_candidatos <- fulldata_candidatos %>% # en este caso tb tengo id_debate
   mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
 
 # creo data estandarizada
-data_scaled <- data %>%
-  mutate(across(-c(dico_candidato_presente,
-                   cat_pais,
-                   elecid,
-                   id_debate), scale))
+# data_scaled <- data %>%
+#   mutate(across(-c(dico_candidato_presente,
+#                    cat_pais,
+#                    elecid,
+#                    id_debate,
+#                    eng_cat_pais), scale))
 
 ## Pruebo modelos ####
 
@@ -3515,19 +3567,75 @@ modelo_nivelindiv <- glm(dico_candidato_presente ~
                             ninvitaciones + 
                             propausenciaspasadasfilled,
                           family = binomial(link = "logit"),
-                          data = data)
+                          data = data_candidatos)
 options(scipen=999)
-summary(modelo_nivelindiv)
+#summary(modelo_nivelindiv)
+robust_se_cluster_modelo_indiv <- coeftest(modelo_nivelindiv, 
+                                           vcov = vcovCL(modelo_nivelindiv,
+                                                         cluster = data_candidatos$elecid))
+print(robust_se_cluster_modelo_indiv)
 
+modelo_nivelindiv_controles <- glm(dico_candidato_presente ~ 
+                           voteshare + 
+                           v2pariglef_vdem + 
+                           v2paactcom_vdem + 
+                           dico_reeleccion + 
+                           dico_oficialista + 
+                           ninvitaciones + 
+                           propausenciaspasadasfilled +
+                             log(nec) +
+                             mediaqualitycorruptvdem +
+                             log(gdpxcapita) +
+                             democraciavdemelectoralcomp +
+                             regulaciondico +
+                             cumsum_pastciclos,
+                         family = binomial(link = "logit"),
+                         data = fulldata_candidatos)
+options(scipen=999)
+#summary(modelo_nivelindiv_controles)
+
+robust_se_cluster_modelo_nivelindiv_controles <- coeftest(modelo_nivelindiv_controles, 
+                                               vcov = vcovCL(modelo_nivelindiv_controles,
+                                                             cluster = fulldata_candidatos$elecid))
+print(robust_se_cluster_modelo_nivelindiv_controles)
 
 modelo_niveldebate <- glm(dico_candidato_presente ~ 
                             orgosc + 
                             orgmmc + 
                             orgestado,
                   family = binomial(link = "logit"),
-                  data = data)
+                  data = data_candidatos)
 options(scipen=999)
-summary(modelo_niveldebate)
+#summary(modelo_niveldebate)
+
+robust_se_cluster_modelo_debate <- coeftest(modelo_niveldebate, 
+                                           vcov = vcovCL(modelo_niveldebate,
+                                                         cluster = data_candidatos$elecid))
+print(robust_se_cluster_modelo_debate)
+
+modelo_niveldebate_controles <- glm(dico_candidato_presente ~ 
+                                      orgosc + 
+                                      orgmmc + 
+                                      orgestado +
+                                    log(nec) +
+                                     mediaqualitycorruptvdem +
+                                      log(gdpxcapita) +
+                                     democraciavdemelectoralcomp +
+                                     regulaciondico +
+                                     cumsum_pastciclos,
+                                   family = binomial(link = "logit"),
+                                   data = fulldata_candidatos)
+options(scipen=999)
+#summary(modelo_niveldebate_controles)
+
+robust_se_cluster_modelo_niveldebate_controles <- coeftest(modelo_niveldebate_controles, 
+                                        vcov = vcovCL(modelo_niveldebate_controles,
+                                                      cluster = fulldata_candidatos$elecid))
+print(robust_se_cluster_modelo_niveldebate_controles)
+
+
+
+# OPCIONES PREFERIDAS 
 
 modelo_agregado <- glm(dico_candidato_presente ~ 
                             voteshare + 
@@ -3541,9 +3649,41 @@ modelo_agregado <- glm(dico_candidato_presente ~
                             orgmmc + 
                             orgestado,
                           family = binomial(link = "logit"),
-                          data = data)
+                          data = data_candidatos)
 options(scipen=999)
-summary(modelo_agregado)
+#summary(modelo_agregado)
+
+robust_se_cluster_modelo_agregado <- coeftest(modelo_agregado, 
+                                            vcov = vcovCL(modelo_agregado,
+                                                          cluster = data_candidatos$elecid))
+print(robust_se_cluster_modelo_agregado)
+
+modelo_agregado_controles <- glm(dico_candidato_presente ~ 
+                         voteshare + 
+                         v2pariglef_vdem + 
+                         v2paactcom_vdem + 
+                         dico_reeleccion + 
+                         dico_oficialista + 
+                         ninvitaciones + 
+                         propausenciaspasadasfilled + 
+                         orgosc + 
+                         orgmmc + 
+                         orgestado +
+                           log(nec) +
+                           mediaqualitycorruptvdem +
+                           log(gdpxcapita) +
+                           democraciavdemelectoralcomp +
+                           regulaciondico +
+                           cumsum_pastciclos,
+                       family = binomial(link = "logit"),
+                       data = fulldata_candidatos)
+options(scipen=999)
+#summary(modelo_agregado_controles)
+
+robust_se_cluster_modelo_agregado_controles <- coeftest(modelo_agregado_controles, 
+                                              vcov = vcovCL(modelo_agregado_controles,
+                                                            cluster = fulldata_candidatos$elecid))
+print(robust_se_cluster_modelo_agregado_controles)
 
 modelo_multinivel1 <- lme4::glmer(dico_candidato_presente ~ 
                             voteshare + 
@@ -3556,30 +3696,87 @@ modelo_multinivel1 <- lme4::glmer(dico_candidato_presente ~
                             orgosc + 
                             orgmmc + 
                             orgestado + 
-                            (1|id_debate),
+                            (1|elecid) ,
                           family = binomial(link = "logit"),
-                          data = data)
+                          data = data_candidatos)
 options(scipen=999)
-summary(modelo_multinivel1)
+#summary(modelo_multinivel1)
 
-modelo_multinivel2 <- lme4::glmer(dico_candidato_presente ~ 
-                            voteshare + 
-                            v2pariglef_vdem + 
-                            v2paactcom_vdem + 
-                            #dico_reeleccion + 
-                            dico_oficialista + 
-                            ninvitaciones + 
-                            propausenciaspasadasfilled + 
-                            orgosc + 
-                            #orgmmc + 
-                            orgestado + 
-                            (1 | id_debate) + 
-                            (1 | cat_pais) ,
-                          family = binomial(link = "logit"),
-                          data = data)
+modelo_multinivel1_controles <- lme4::glmer(dico_candidato_presente ~ 
+                                    voteshare + 
+                                    v2pariglef_vdem + 
+                                    v2paactcom_vdem + 
+                                    dico_reeleccion + 
+                                    dico_oficialista + 
+                                    ninvitaciones + 
+                                    propausenciaspasadasfilled + 
+                                    orgosc + 
+                                    orgmmc + 
+                                    orgestado + 
+                                      log(nec) +
+                                      mediaqualitycorruptvdem +
+                                      log(gdpxcapita) +
+                                      democraciavdemelectoralcomp +
+                                      regulaciondico +
+                                      cumsum_pastciclos +
+                                    (1|cat_pais) ,
+                                  family = binomial(link = "logit"),
+                                  data = fulldata_candidatos)
 options(scipen=999)
-summary(modelo_multinivel2)
+summary(modelo_multinivel1_controles)
 
-lmer(formula = y ~ black + female + black:female + v.prev.full +
-       (1 | age) + (1 | edu) + (1 | age.edu) + (1 | state) +
-       (1 | region.full), family = binomial(link = "logit"))
+## Exporto modelos de interes ####
+
+lista2 <-  list(
+  robust_se_cluster_modelo_nivelindiv_controles,
+  robust_se_cluster_modelo_niveldebate_controles,
+  robust_se_cluster_modelo_agregado_controles,
+  modelo_multinivel1_controles) 
+
+texreg::htmlreg(lista2,
+                custom.model.names = c("Niv. individual",
+                                       "Niv. debate",
+                                       "Agregado",
+                                       "Agregado multinivel")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                # custom.coef.names = c("(Intercepto)",
+                #                       "log Margen de victoria",
+                #                       "log NEC",
+                #                       "Votos oficialista",
+                #                       "Incumbente reelije",
+                #                       "Prop. individuos c internet",
+                #                       "Acceso gratuito",
+                #                       "Prop. debates en Region",
+                #                       "Regulacion sobre debates",
+                #                       "Cant. elecciones pasadas con debates",
+                #                       "log PBI per Capita",
+                #                       "Democracia electoral (VDEM)",
+                #                       "Corrupcion de medios (VDEM)",
+                #                       "Margen de victoria",
+                #                       "NEC" ,
+                #                       "Prop. debates en USA" ,
+                #                       "PBI per Capita"
+                # ),
+                # reorder.coef =  c(1,
+                #                   1+1,
+                #                   13+1,
+                #                   2+1,
+                #                   14+1,
+                #                   3+1,
+                #                   4+1,
+                #                   
+                #                   5+1,
+                #                   6+1,
+                #                   7+1,
+                #                   15+1,
+                #                   8+1,
+                #                   9+1,
+                #                   10+1,
+                #                   16+1,
+                #                   11+1,
+                #                   12+1
+                # ),
+                file="anexos/tabla_modelos_candidatos.html",
+                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                center = T,
+                bold = 0.1)
