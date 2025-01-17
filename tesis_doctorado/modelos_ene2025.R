@@ -1933,6 +1933,125 @@ plot_interpretacion4.3 <- ggplot(data_to_predict4) +
                   ymax =  fitted + 1.645*se.fitted,
                   fill = as.factor(escenario)), alpha = 0.3)  
 
+
+### MALICHIMO TEST DRIVE DE OTROS ESCENARIOS ######
+
+
+
+# version con mas valores para graficar 
+data_to_predict_cumsum_0_marginvic <- data.frame(
+  lnnec = rep(mean(data_modelo_a_interpretar$lnnec, na.rm = T)) ,
+  lnmarginvic = seq(min(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE), 
+                      mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
+                      length.out = 20),
+  voteshareincumbent = mean(data_modelo_a_interpretar$voteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = median(data_modelo_a_interpretar$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
+  accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = rep(c(0,1),each=20) ,
+  cumsum_pastciclos = 0,
+  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+data_to_predict_cumsum_0_voteshareincm <- data.frame(
+  lnnec = rep(mean(data_modelo_a_interpretar$lnnec, na.rm = T)) ,
+  voteshareincumbent = seq(min(data_modelo_a_interpretar$voteshareincumbent, na.rm = TRUE), 
+                    max(data_modelo_a_interpretar$voteshareincumbent, na.rm = TRUE),
+                    length.out = 10),
+  lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
+  dico_reeleccion = median(data_modelo_a_interpretar$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
+  accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = rep(c(0,1), each=10) ,
+  cumsum_pastciclos = 0,
+  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+
+# Predecir probabilidades
+# versiones viejas de calculo en test_modelos_dic2024.R 
+to_test <- data_to_predict_cumsum_0_voteshareincm
+
+predicted_probs <- margins::prediction(model = modelo_a_interpretar,
+                                       data = to_test,
+                                       type = "response",
+                                       vcov = vcov_modelo_a_interpretar,
+                                       calculate_se = TRUE)
+
+# grafico
+
+
+plot_interpretacion <- ggplot(predicted_probs) +
+  geom_line(aes(x = voteshareincumbent, #exp(lnmarginvic),
+                y = fitted, 
+                colour = as.factor(regulaciondico))) +
+  geom_ribbon(aes(x = voteshareincumbent, #exp(lnmarginvic), 
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted, 
+                  fill = as.factor(regulaciondico)), alpha = 0.3) +
+  theme_classic() 
+
+
+
+### TEST DRIVE INTERPRETACION MULTILEVEL ######
+paisesdf <-  democracias %>% 
+  subset(cat_pais!="Venezuela") %>% 
+  select(cat_pais) 
+
+paises <- paisesdf$cat_pais %>% 
+  unique()
+
+len <- length(paises)
+
+# version con mas valores para graficar 
+data_to_predict_interactivo <- data.frame(
+  cat_pais = rep(paises, 40),
+  lnnec = rep(rep(seq(min(data_modelo_a_interpretar$lnnec, na.rm = TRUE), 
+                  max(data_modelo_a_interpretar$lnnec, na.rm = TRUE),
+                  #mean(data_modelo_sficativas$lnnec, na.rm = TRUE),
+                  length.out = 20), 2), len), # Cambiar por los valores que quieras probar
+  lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
+  voteshareincumbent = mean(data_modelo_a_interpretar$voteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = median(data_modelo_a_interpretar$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
+  accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = rep(rep(c(0,1),each=20), len) ,
+  cumsum_pastciclos = mean(data_modelo_a_interpretar$cumsum_pastciclos, na.rm = TRUE),
+  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+
+# Predecir probabilidades
+# versiones viejas de calculo en test_modelos_dic2024.R 
+
+predicted_probs <- margins::prediction(model = final_random_intercepts,
+                                       data = data_to_predict_interactivo,
+                                       type = "response",
+                                       #vcov = vcov_modelo_a_interpretar,
+                                       calculate_se = TRUE)
+
+# grafico # ESTO PARECE HABER FUNCIONADO AUNQUE ESTA LEJOS DE ESTAR GENIAL
+
+plot_interpretacion <- ggplot(predicted_probs) +
+  geom_line(aes(x = exp(lnnec), 
+                y = fitted, 
+                colour = as.factor(cat_pais))) +
+  geom_ribbon(aes(x = exp(lnnec), 
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted, 
+                  fill = as.factor(cat_pais)), alpha = 0.3) +
+  theme_classic() +
+  facet_wrap( ~ regulaciondico)
+
 ### INTERPRETACION - EFECTO MARGINAL #####
 
 # chatgpt: 
@@ -2609,6 +2728,38 @@ final_random_intercepts_control_dicodebatespasteleeccion <- lme4::glmer(
 
 summary(final_random_intercepts_control_dicodebatespasteleeccion)
 
+#### Alternativa NUNCA DEBATES diconuncadebates #####
+
+democracias <- democracias %>% 
+  mutate(diconuncadebates = ifelse(cumsum_pastciclos==0|is.na(cumsum_pastciclos),
+                                   1,
+                                   0))
+
+modelo_final_control_diconuncadebates <- glm(str_replace(formula_modelo_sficativas_variantes,
+                                                                 "cumsum_pastciclos", "diconuncadebates"),
+                                                     family = binomial(link = "logit"), 
+                                                     data = democracias)
+
+#summary(modelo_final_control_diconuncadebates) # 
+
+robust_se_cluster_modelo_final_control_diconuncadebates <- coeftest(modelo_final_control_diconuncadebates, 
+                                                                            vcov = vcovCL(modelo_final_control_diconuncadebates,
+                                                                                          cluster = democracias$cat_pais))
+print(robust_se_cluster_modelo_final_control_diconuncadebates)
+
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+final_random_intercepts_control_diconuncadebates <- lme4::glmer(
+  paste(str_replace(formula_modelo_sficativas_variantes,
+                    "cumsum_pastciclos", "diconuncadebates"),
+        "(1 | cat_pais)", sep = "+"),
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts_control_diconuncadebates)
+
+
 #### Alternativa REGULACION #####
 
 modelo_final_control_regulacionalternativa <- glm(str_replace(formula_modelo_sficativas_variantes,
@@ -2749,6 +2900,8 @@ final_random_intercepts_interactivo <- lme4::glmer(
 
 summary(final_random_intercepts_interactivo)
 
+# PLOT DE INTERACCIONES SEGUN WEB 
+
 persp(modelo_sficativas_variantes_interactivo, 
       "regulaciondico", "lnnec", 
       what = "prediction",
@@ -2761,6 +2914,55 @@ image(modelo_sficativas_variantes_interactivo,
 #zlab = "Probabilidad predicha")
 
 summary(modelo_sficativas_variantes_interactivo)
+
+#  TEST DRIVE DE interaccion 
+
+
+# version con mas valores para graficar 
+data_to_predict_testdrive_interactivo <- data.frame(
+  lnnec = rep(seq(min(data_modelo_a_interpretar$lnnec, na.rm = TRUE), 
+                  max(data_modelo_a_interpretar$lnnec, na.rm = TRUE),
+                  #mean(data_modelo_sficativas$lnnec, na.rm = TRUE),
+                  length.out = 20), 2), # Cambiar por los valores que quieras probar
+  lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
+  voteshareincumbent = mean(data_modelo_a_interpretar$voteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = median(data_modelo_a_interpretar$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
+  accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = rep(c(0,1),each=20) ,
+  cumsum_pastciclos = 0,
+  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+
+# Predecir probabilidades
+# versiones viejas de calculo en test_modelos_dic2024.R 
+to_test <- data_to_predict_testdrive_interactivo
+
+predicted_probs <- margins::prediction(model = modelo_sficativas_variantes_interactivo,
+                                       data = to_test,
+                                       type = "response",
+                                       vcov = vcovCL(modelo_sficativas_variantes_interactivo, 
+                                                     cluster = democracias$cat_pais),
+                                       calculate_se = TRUE)
+
+# grafico
+
+
+plot_interpretacion <- ggplot(predicted_probs) +
+  geom_line(aes(x = exp(lnnec),
+                y = fitted, 
+                colour = as.factor(regulaciondico))) +
+  geom_ribbon(aes(x = exp(lnnec), 
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted, 
+                  fill = as.factor(regulaciondico)), alpha = 0.3) +
+  theme_classic() 
+
+# NO ME GUSTA NADA
 
 
 
