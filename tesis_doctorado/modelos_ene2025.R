@@ -594,6 +594,346 @@ print(robust_se_cluster_modelo_sficativas_variantes_s_outliers)
 
 
 
+## MULTINIVEL MODELOS 1 ####
+#https://m-clark.github.io/mixed-models-with-R/random_intercepts.html
+### PASO 0 COMENTADO Version artesanal (COMENTADO CON # ) ####
+# 
+# #### calculo de media dico_hubo_debates, en general y x pais
+# 
+# 
+# mean_dico_hubo_debates <- data_modelo_a_interpretar$dico_hubo_debates %>% mean()
+# 
+# mean_dico_hubo_debatesxpais <- data_modelo_a_interpretar %>% 
+#   group_by(cat_pais) %>% 
+#   summarise(mean_dico_hubo_debatesxpais = mean(dico_hubo_debates),
+#          diff_mean_general = mean_dico_hubo_debates - mean_dico_hubo_debatesxpais,
+#          abs_diff_mean_general = abs(diff_mean_general)) %>% 
+#   arrange(desc(abs_diff_mean_general))
+# 
+# 
+# # uruguay es nuestro país de referencia
+# 
+# #### creamos variables dico
+# data_modelo_a_interpretar$cat_pais %>% unique()
+# data_modelo_a_interpretar <- data_modelo_a_interpretar %>% 
+#   mutate(dico_argentina = ifelse(cat_pais=="Argentina",1,0),
+#          dico_bolivia = ifelse(cat_pais=="Bolivia",1,0),
+#          dico_brasil = ifelse(cat_pais=="Brasil",1,0),
+#          dico_chile = ifelse(cat_pais=="Chile",1,0),
+#          dico_colombia = ifelse(cat_pais=="Colombia",1,0),
+#          dico_crica = ifelse(cat_pais=="Costa Rica",1,0),
+#          dico_ecuador = ifelse(cat_pais=="Ecuador",1,0),
+#          dico_elslv = ifelse(cat_pais=="El Salvador",1,0),
+#          dico_guatemala = ifelse(cat_pais=="Guatemala",1,0),
+#          dico_honduras = ifelse(cat_pais=="Honduras",1,0),
+#          dico_mx = ifelse(cat_pais=="Mexico",1,0),
+#          dico_nicaragua = ifelse(cat_pais=="Nicaragua",1,0),
+#          dico_panama = ifelse(cat_pais=="Panama",1,0),
+#          dico_paraguay = ifelse(cat_pais=="Paraguay",1,0),
+#          dico_peru = ifelse(cat_pais=="Peru",1,0),
+#          dico_uruguay = ifelse(cat_pais=="Uruguay",1,0), # cat de referencia 
+#          dico_repdom = ifelse(cat_pais=="Republica Dominicana",1,0),
+#          dico_venezuela = ifelse(cat_pais=="Venezuela",1,0))
+# 
+# #### corremos modelo incluyendo dico_pais sin cat de referencia
+# formula_modelo_multinivel <- "dico_hubo_debates ~  # MODELO SFICATIVAS VARIANTES
+#                         #dico_debates_primerosdos ~ 
+#                         #dico_hubo_debate_mediatico ~ 
+#                            lnmarginvic + # CAMBIE
+#                            lnnec +
+#                            #exapprovalnotsmoothed + 
+#                            voteshareincumbent +
+#                            dico_reeleccion + 
+#                            #proptv +
+#                            propindivinternet +
+#                            accesogratuito +
+#                            avgpropdebatesregionxciclo + 
+#                            #prop_elec_usa_ciclo +
+#                            regulaciondico +
+#                            cumsum_pastciclos +
+#                            #dico_debates_pastelection +
+#                            lngdp + # CAMBIE
+#                            democraciavdemelectoralcomp +
+#                            mediaqualitycorruptvdem +
+#                           dico_argentina +
+#                           dico_bolivia +
+#                           dico_brasil +
+#                           dico_chile +
+#                           dico_colombia +
+#                           dico_crica +
+#                           dico_ecuador +
+#                           dico_elslv +
+#                           dico_guatemala +
+#                           dico_honduras +
+#                           dico_mx +
+#                           dico_nicaragua +
+#                           dico_panama+
+#                           dico_paraguay +
+#                           dico_peru +
+#                           dico_repdom +
+#                           dico_venezuela"
+# 
+# 
+# modelo_multinivel <- glm(formula_modelo_multinivel,
+#                          family = binomial(link = "logit"), 
+#                          #data = data 
+#                          data = data_modelo_a_interpretar)
+# options(scipen=999)
+# summary(modelo_multinivel)
+# 
+# # OJO no se si corresponde clusterizar por pais si ya incorporamos pais
+# robust_se_cluster_modelo_multinivel <- coeftest(modelo_multinivel, 
+#                                                 vcov = vcovCL(modelo_multinivel, 
+#                                                  cluster = data_modelo_a_interpretar$cat_pais))
+# print(robust_se_cluster_modelo_multinivel)
+# 
+# 
+# 
+# #### modelo interactivo
+# 
+# 
+# 
+# formula_modelo_multinivel_interactivo <- "dico_hubo_debates ~  # MODELO SFICATIVAS VARIANTES
+#                         #dico_debates_primerosdos ~ 
+#                         #dico_hubo_debate_mediatico ~ 
+#                            lnmarginvic + # CAMBIE
+#                            lnnec +
+#                            #exapprovalnotsmoothed + 
+#                            voteshareincumbent +
+#                            dico_reeleccion + 
+#                            #proptv +
+#                            propindivinternet +
+#                            accesogratuito +
+#                            avgpropdebatesregionxciclo + 
+#                            #prop_elec_usa_ciclo +
+#                            regulaciondico +
+#                            cumsum_pastciclos +
+#                            #dico_debates_pastelection +
+#                            lngdp + # CAMBIE
+#                            democraciavdemelectoralcomp +
+#                            mediaqualitycorruptvdem +
+#                          dico_argentina + # DICO POR PAIS
+#                          dico_bolivia +
+#                          dico_brasil +
+#                          dico_chile +
+#                          dico_colombia +
+#                          dico_crica +
+#                          dico_ecuador +
+#                          dico_elslv +
+#                          dico_guatemala +
+#                          dico_honduras +
+#                          dico_mx +
+#                          dico_nicaragua +
+#                          dico_panama+
+#                          dico_paraguay +
+#                          dico_peru +
+#                          dico_repdom +
+#                          dico_venezuela +  
+#                          dico_argentina*lnnec + # INTERACCIONES
+#                          dico_bolivia*lnnec +
+#                          dico_brasil*lnnec +
+#                          dico_chile*lnnec +
+#                          dico_colombia*lnnec +
+#                          dico_crica*lnnec +
+#                          dico_ecuador*lnnec +
+#                          dico_elslv*lnnec +
+#                          dico_guatemala*lnnec +
+#                          dico_honduras*lnnec +
+#                          dico_mx*lnnec +
+#                          dico_nicaragua*lnnec +
+#                          dico_panama*lnnec +
+#                          dico_paraguay*lnnec +
+#                          dico_peru*lnnec +
+#                          dico_uruguay*lnnec + # no estoy segura de si agregar
+#                          dico_repdom*lnnec +
+#                          dico_venezuela*lnnec  "
+# 
+# 
+# modelo_multinivel_interactivo <- glm(formula_modelo_multinivel_interactivo,
+#                          family = binomial(link = "logit"), 
+#                          #data = data 
+#                          data = data_modelo_a_interpretar)
+# options(scipen=999)
+# summary(modelo_multinivel_interactivo)
+# 
+# # OJO no se si corresponde clusterizar por pais si ya incorporamos pais
+# robust_se_cluster_modelo_multinivel_interactivo <- coeftest(modelo_multinivel_interactivo, 
+#                                                 vcov = vcovCL(modelo_multinivel_interactivo, 
+#                                                               cluster = data_modelo_a_interpretar$cat_pais))
+# print(robust_se_cluster_modelo_multinivel_interactivo)
+
+### Version formula #####
+# https://www.publichealth.columbia.edu/research/population-health-methods/multi-level-modeling
+
+
+####  PASO 1 MODELO MULTILEVEL: EMPTY #### 
+
+# Varying-intercept model with no predictors. 
+#   M0 <- lmer (y ~ 1 + (1 | county))
+# This model simply includes a constant term (the predictor “1”) and allows it to vary by county
+
+empty_model_paises <- lme4::glmer(dico_hubo_debates ~ 
+                                    1 + (1 | cat_pais), 
+                                  family=binomial("logit"), 
+                                  data = democracias)
+summary(empty_model_paises)
+
+mlmhelpr::icc(empty_model_paises)
+# The ICC represents the proportion of group-level variance to total variance. 
+# (para modelo emtpty: ) An ICC of 0.33 means that 33% of the variation in the outcome variable can be accounted for by the clustering stucture of the data. This provides evidence that a multilevel model may make a difference to the model estimates, in comparison with a non-multilevel model. Therefore, the use of multilevel models is necessary and warrantied.
+# https://en.wikipedia.org/wiki/Intraclass_correlation
+
+empty_model_years <- lme4::glmer(dico_hubo_debates ~ 
+                                   1 + (1 | ncat_eleccion), 
+                                 family=binomial("logit"), 
+                                 data = democracias)
+summary(empty_model_years)
+
+mlmhelpr::icc(empty_model_years)
+
+
+empty_model_paisyears <- lme4::glmer(dico_hubo_debates ~ 
+                                       1 + (1 | ncat_eleccion) + (1 | cat_pais), 
+                                     family=binomial("logit"), 
+                                     data = democracias)
+summary(empty_model_paisyears)
+
+mlmhelpr::icc(empty_model_paisyears)
+
+####  PASO 2 REPORTADO PASO 2 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY #### 
+# varying-intercept model
+# Varying-intercept model with an individual-level predictor. 
+# M1 <- lmer (y ~ x + (1 | county))
+# This expression starts with the no-pooling model, “y ~ x,” and then adds “(1 | county),” 
+# which allows the intercept (the coeﬃcient of the predictor “1,” which is  the column of ones—the constant term in the regression) to vary by county.
+
+#cluster <- democracias$cat_pais %>% as.factor()
+control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+contingencia_random_intercepts <- lme4::glmer(paste(formula_modelo_contingencia_bis, 
+                                                    "(1 | cat_pais)", sep = "+"), 
+                                              family=binomial("logit"), 
+                                              data = democracias,
+                                              # weights = NULL,
+                                              control = control)
+summary(contingencia_random_intercepts)
+
+
+
+sistemico_random_intercepts <- lme4::glmer(paste(formula_modelo_sistemico_bis, 
+                                                 "(1 | cat_pais)", sep = "+"), 
+                                           family=binomial("logit"), 
+                                           data = democracias,
+                                           control = control)
+summary(sistemico_random_intercepts)
+# vcov_cluster <- clubSandwich::vcovCR(sistemico_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
+# sistemico_random_intercepts_robust <- coef_test(sistemico_random_intercepts, vcov = vcov_cluster)
+
+regulatorio_random_intercepts <- lme4::glmer(paste(formula_modelo_regulatorio_bis, 
+                                                   "(1 | cat_pais)", sep = "+"), 
+                                             family=binomial("logit"), 
+                                             data = democracias,
+                                             control = control)
+summary(regulatorio_random_intercepts)
+# vcov_cluster <-  clubSandwich::vcovCR(regulatorio_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
+# regulatorio_random_intercepts_robust <- coef_test(regulatorio_random_intercepts, vcov = vcov_cluster)
+
+temporal_random_intercepts <- lme4::glmer(paste(formula_modelo_temporal_bis, 
+                                                "(1 | cat_pais)", sep = "+"), 
+                                          family=binomial("logit"), 
+                                          data = democracias,
+                                          control = control)
+summary(temporal_random_intercepts)
+# vcov_cluster <- clubSandwich::vcovCR(temporal_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
+# temporal_random_intercepts_robust <- coef_test(temporal_random_intercepts, vcov = vcov_cluster)
+
+final_random_intercepts <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+                                             "(1 | cat_pais)", sep = "+"), 
+                                       family=binomial("logit"), 
+                                       data = democracias,
+                                       control = control)
+summary(final_random_intercepts)
+# vcov_cluster <- clubSandwich::vcovCR(final_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
+# final_random_intercepts_robust <- coef_test(final_random_intercepts, vcov = vcov_cluster)
+
+mlmhelpr::icc(final_random_intercepts)
+# The ICC represents the proportion of group-level variance to total variance. 
+# (para modelo emtpty: ) An ICC of 0.33 means that 33% of the variation in the outcome variable can be accounted for by the clustering stucture of the data. This provides evidence that a multilevel model may make a difference to the model estimates, in comparison with a non-multilevel model. Therefore, the use of multilevel models is necessary and warrantied.
+
+modelo_random_intercepts <- final_random_intercepts
+coef(modelo_random_intercepts)
+lme4::fixef(modelo_random_intercepts)  # The estimated regression line in an average county
+# The term “ﬁxed eﬀects” is used for the regression coeﬃcients that do not vary by group (such as the coeﬃcient for x in this example) or for group-level coeﬃcients or group averages (such as the average intercept, μα in (12.3)).
+lme4::ranef(modelo_random_intercepts)  #  how much the intercept is shifted up or down in particular counties or county level errors
+#lme4::confint(gpa_mixed)
+
+
+####  PASO 3 COMENTADO NO CONVERGE PASO 3 MODELO MULTILEVEL: RANDOM INTERCEPTS AND RANDOM SLOPES BY COUNTRY #### 
+#  Varying intercepts and slopes
+# M3 <- lmer (y ~ x + (1 + x | county))
+# control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+# 
+# modelo_random_slopes1 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+#                                   # (1 + lnnec | cat_pais), 
+#                                     "(1 + regulaciondico | cat_pais)", sep = "+" ), 
+#                                  family=binomial("logit"), 
+#                                  data = democracias,
+#                                  control = control)
+# summary(modelo_random_slopes1)
+# 
+# modelo_random_slopes2 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+#                                            " (1 + lnnec | cat_pais)",  sep = "+" ), 
+#                                      family=binomial("logit"), 
+#                                      data = democracias,
+#                                      control = control)
+# summary(modelo_random_slopes2)
+# 
+# #coef(modelo_random_slopes2)
+# 
+# modelo_random_slopes3 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+#                                            " (1 + lnnec + regulaciondico | cat_pais)",  sep = "+" ), 
+#                                      family=binomial("logit"), 
+#                                      data = democracias)#,
+#                                      #control = control)
+# summary(modelo_random_slopes3) # NO CONVERGE
+# 
+# #coef(modelo_random_slopes2)
+# 
+# 
+# modelo_random_slopes4 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+#                                            " (1 + lnnec + regulaciondico + 
+#                                            lngdp + democraciavdemelectoralcomp + mediaqualitycorruptvdem +
+#                                            accesogratuito + propindivinternet | cat_pais)",  sep = "+" ), 
+#                                      family=binomial("logit"), 
+#                                      data = democracias,
+#                                      control = control)
+# summary(modelo_random_slopes4)
+# 
+# coef(modelo_random_slopes3)
+# 
+# 
+# lme4::fixef(modelo_random_slopes) #to see the estimated average coeﬃcients (“ﬁxed eﬀects”):
+# lme4::ranef(modelo_random_slopes) #to see the estimated group-level errors (“random eﬀects”):  
+
+
+#### PASO 4 COMENTADO NO CONVERGE PASO 4: NON NESTED NO CONVERGE #####
+# 
+# modelo_fixed_effects <- glm(paste(formula_modelo_sficativas_variantes, 
+#                                           " as.factor(cat_pais) + ncat_eleccion",  sep = "+" ), 
+#                                     family=binomial("logit"), 
+#                                     data = democracias)
+# 
+# summary(modelo_fixed_effects)
+# 
+# modelo_non_nested <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+#                                            " + (1 | cat_pais) + (1 | ncat_eleccion)",  sep = "+" ), 
+#                                      family=binomial("logit"), 
+#                                      data = democracias, 
+#                                  control = control)
+# summary(modelo_non_nested)
+# mlmhelpr::icc(modelo_non_nested)
+# coef(modelo_non_nested)
+
 ## CONTROLES MODELO 1 ####
 
 
@@ -1228,6 +1568,10 @@ lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_contingencia_redu
 
 # en gral el modelo mejora significativamente en todos los casos
 
+# COMPARACION MODELO MULTI VS SIMPLE
+
+#lmtest::waldtest(modelo1_reespecificado, final_random_intercepts)
+
 #### lr test (comparar modelos con = cantidad de data, sacando missing) ####
 # Chi-squared test of all coefficients An LR test of the hypothesis that all coefficients except the intercept(s) are zero can be computed by comparing the log likelihoods: LR= 2 ln L(MFull) − 2 ln L(MIntercept ). This statistic is sometimes designated as G2 . 
 #  First, the two models must be nested. Second, the two models must be estimated on exactly the same sample. 
@@ -1271,7 +1615,23 @@ lrtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
 
 # en todos los casos, el modelo full es mejor que el modelo más incompleto. 
 
+# COMPARACION SIMPLE MULTI
 
+lrtest(modelo_sficativas_variantes , final_random_intercepts)
+
+modelo1_reespecificado <- lme4::glmer(
+  dico_hubo_debates ~ lnmarginvic + lnnec + voteshareincumbent + 
+    dico_reeleccion + propindivinternet + accesogratuito + 
+    avgpropdebatesregionxciclo + regulaciondico + cumsum_pastciclos + 
+    lngdp + democraciavdemelectoralcomp + mediaqualitycorruptvdem + 
+    (1 | cat_pais),
+  data = democracias,
+  family = binomial,
+  control = control,
+  start = list(theta = c(0))) 
+
+lrtest(modelo1_reespecificado , final_random_intercepts)
+#anova(modelo_sficativas_variantes, final_random_intercepts, test="Chisq")
 
 #### fit: Pseudos R cuadrados, AIC y BIC ####
  
@@ -1354,6 +1714,11 @@ all_stats_full <- rbind(stats27,   stats28 )
 # stats modelo #
 stats_modelo <- stats(modelo_a_probar)
 
+# COMPARACION MULTINIVEL Y MODELO FINAL SIMPLE
+
+stats_simple <- stats(modelo_sficativas_variantes)
+stats_multi <- stats(final_random_intercepts )
+all_stats_multisimple <- rbind(stats_simple, stats_multi )
 
 #### fit: desempeño: accuracy ####
 
@@ -1457,8 +1822,18 @@ stats_modelo %>% write_csv("anexos/stats_modelo.csv")
 
 # idem: el desempeño de la variante es ligeramente peor
 
+# COMPARACION MULTINIVEL Y SIMPLE
 
-## EXPORTO MODELOS #####
+countr2_simple <- funcion_count_R2(modelo_sficativas_variantes, data_modelo_a_probar$dico_hubo_debates)
+countr2_multi <- funcion_count_R2(final_random_intercepts, data_modelo_a_probar$dico_hubo_debates)
+all_countr2_multisimple <- rbind(countr2_simple, countr2_multi )
+
+all_stats_multisimple <- all_stats_multisimple %>% 
+  rbind( all_countr2_multisimple %>% 
+           pivot_longer(cols= c(countr2, adjcountr2), names_to = "stat", values_to = "value")  )
+
+all_stats_multisimple %>% write_csv("anexos/all_stats_multisimple.csv")
+## EXPORTO MODELOS SIMPLES #####
 
 # Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
 
@@ -1577,6 +1952,69 @@ texreg::htmlreg(lista2,
                 center = T,
                 bold = 0.1)
 
+
+
+## EXPORTO MODELOS RANDOM INTERCEPT #####
+lista4 <-  list(contingencia_random_intercepts,
+                sistemico_random_intercepts,
+                regulatorio_random_intercepts,
+                temporal_random_intercepts,
+                final_random_intercepts)
+
+# https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
+
+texreg::htmlreg(lista4,
+                custom.model.names = c("Contingencia",
+                                       "Sistemico",
+                                       "Regulatorio",
+                                       "Temporal",
+                                       "Final")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                custom.coef.names = c("(Intercepto)",
+                                      "log Margen de victoria",
+                                      "log NEC",
+                                      "Votos oficialista",
+                                      "Incumbente reelije",
+                                      
+                                      "Regulacion sobre debates",
+                                      "Cant. elecciones pasadas con debates",
+                                      "log PBI per Capita",
+                                      "Democracia electoral (VDEM)",
+                                      "Corrupcion de medios (VDEM)",
+                                      
+                                      "Alineamiento partidario",
+                                      "Prop. TV por hogar"		,
+                                      "Prop. individuos c internet",
+                                      "Prohibicion propaganda"	 ,
+                                      "Acceso gratuito",
+                                      "Prop. debates en Region",
+                                      "Prop. debates en USA"
+                                      
+                ),
+                reorder.coef =  c(1,
+                                  2,
+                                  3,
+                                  4,
+                                  5,
+                                  
+                                  11,
+                                  12,
+                                  13,
+                                  14,
+                                  15,
+                                  16,
+                                  17,
+                                  
+                                  6,
+                                  7,
+                                  9,
+                                  10,
+                                  8
+                ),
+                file="anexos/tabla_random_intercepts.html",
+                caption = "Modelos estimados con efectos aleatorios por país",
+                center = T,
+                bold = 0.1)
 
 
 ## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
@@ -2205,369 +2643,6 @@ cat("Efecto marginal de regulaciondico
 
 
 
-## MULTINIVEL MODELOS 1 ####
-#https://m-clark.github.io/mixed-models-with-R/random_intercepts.html
-### Version artesanal ####
-
-#### calculo de media dico_hubo_debates, en general y x pais
-
-
-mean_dico_hubo_debates <- data_modelo_a_interpretar$dico_hubo_debates %>% mean()
-
-mean_dico_hubo_debatesxpais <- data_modelo_a_interpretar %>% 
-  group_by(cat_pais) %>% 
-  summarise(mean_dico_hubo_debatesxpais = mean(dico_hubo_debates),
-         diff_mean_general = mean_dico_hubo_debates - mean_dico_hubo_debatesxpais,
-         abs_diff_mean_general = abs(diff_mean_general)) %>% 
-  arrange(desc(abs_diff_mean_general))
-
-
-# uruguay es nuestro país de referencia
-
-#### creamos variables dico
-data_modelo_a_interpretar$cat_pais %>% unique()
-data_modelo_a_interpretar <- data_modelo_a_interpretar %>% 
-  mutate(dico_argentina = ifelse(cat_pais=="Argentina",1,0),
-         dico_bolivia = ifelse(cat_pais=="Bolivia",1,0),
-         dico_brasil = ifelse(cat_pais=="Brasil",1,0),
-         dico_chile = ifelse(cat_pais=="Chile",1,0),
-         dico_colombia = ifelse(cat_pais=="Colombia",1,0),
-         dico_crica = ifelse(cat_pais=="Costa Rica",1,0),
-         dico_ecuador = ifelse(cat_pais=="Ecuador",1,0),
-         dico_elslv = ifelse(cat_pais=="El Salvador",1,0),
-         dico_guatemala = ifelse(cat_pais=="Guatemala",1,0),
-         dico_honduras = ifelse(cat_pais=="Honduras",1,0),
-         dico_mx = ifelse(cat_pais=="Mexico",1,0),
-         dico_nicaragua = ifelse(cat_pais=="Nicaragua",1,0),
-         dico_panama = ifelse(cat_pais=="Panama",1,0),
-         dico_paraguay = ifelse(cat_pais=="Paraguay",1,0),
-         dico_peru = ifelse(cat_pais=="Peru",1,0),
-         dico_uruguay = ifelse(cat_pais=="Uruguay",1,0), # cat de referencia 
-         dico_repdom = ifelse(cat_pais=="Republica Dominicana",1,0),
-         dico_venezuela = ifelse(cat_pais=="Venezuela",1,0))
-
-#### corremos modelo incluyendo dico_pais sin cat de referencia
-formula_modelo_multinivel <- "dico_hubo_debates ~  # MODELO SFICATIVAS VARIANTES
-                        #dico_debates_primerosdos ~ 
-                        #dico_hubo_debate_mediatico ~ 
-                           lnmarginvic + # CAMBIE
-                           lnnec +
-                           #exapprovalnotsmoothed + 
-                           voteshareincumbent +
-                           dico_reeleccion + 
-                           #proptv +
-                           propindivinternet +
-                           accesogratuito +
-                           avgpropdebatesregionxciclo + 
-                           #prop_elec_usa_ciclo +
-                           regulaciondico +
-                           cumsum_pastciclos +
-                           #dico_debates_pastelection +
-                           lngdp + # CAMBIE
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem +
-                          dico_argentina +
-                          dico_bolivia +
-                          dico_brasil +
-                          dico_chile +
-                          dico_colombia +
-                          dico_crica +
-                          dico_ecuador +
-                          dico_elslv +
-                          dico_guatemala +
-                          dico_honduras +
-                          dico_mx +
-                          dico_nicaragua +
-                          dico_panama+
-                          dico_paraguay +
-                          dico_peru +
-                          dico_repdom +
-                          dico_venezuela"
-
-
-modelo_multinivel <- glm(formula_modelo_multinivel,
-                         family = binomial(link = "logit"), 
-                         #data = data 
-                         data = data_modelo_a_interpretar)
-options(scipen=999)
-summary(modelo_multinivel)
-
-# OJO no se si corresponde clusterizar por pais si ya incorporamos pais
-robust_se_cluster_modelo_multinivel <- coeftest(modelo_multinivel, 
-                                                vcov = vcovCL(modelo_multinivel, 
-                                                 cluster = data_modelo_a_interpretar$cat_pais))
-print(robust_se_cluster_modelo_multinivel)
-
-
-
-#### modelo interactivo
-
-
-
-formula_modelo_multinivel_interactivo <- "dico_hubo_debates ~  # MODELO SFICATIVAS VARIANTES
-                        #dico_debates_primerosdos ~ 
-                        #dico_hubo_debate_mediatico ~ 
-                           lnmarginvic + # CAMBIE
-                           lnnec +
-                           #exapprovalnotsmoothed + 
-                           voteshareincumbent +
-                           dico_reeleccion + 
-                           #proptv +
-                           propindivinternet +
-                           accesogratuito +
-                           avgpropdebatesregionxciclo + 
-                           #prop_elec_usa_ciclo +
-                           regulaciondico +
-                           cumsum_pastciclos +
-                           #dico_debates_pastelection +
-                           lngdp + # CAMBIE
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem +
-                         dico_argentina + # DICO POR PAIS
-                         dico_bolivia +
-                         dico_brasil +
-                         dico_chile +
-                         dico_colombia +
-                         dico_crica +
-                         dico_ecuador +
-                         dico_elslv +
-                         dico_guatemala +
-                         dico_honduras +
-                         dico_mx +
-                         dico_nicaragua +
-                         dico_panama+
-                         dico_paraguay +
-                         dico_peru +
-                         dico_repdom +
-                         dico_venezuela +  
-                         dico_argentina*lnnec + # INTERACCIONES
-                         dico_bolivia*lnnec +
-                         dico_brasil*lnnec +
-                         dico_chile*lnnec +
-                         dico_colombia*lnnec +
-                         dico_crica*lnnec +
-                         dico_ecuador*lnnec +
-                         dico_elslv*lnnec +
-                         dico_guatemala*lnnec +
-                         dico_honduras*lnnec +
-                         dico_mx*lnnec +
-                         dico_nicaragua*lnnec +
-                         dico_panama*lnnec +
-                         dico_paraguay*lnnec +
-                         dico_peru*lnnec +
-                         dico_uruguay*lnnec + # no estoy segura de si agregar
-                         dico_repdom*lnnec +
-                         dico_venezuela*lnnec  "
-
-
-modelo_multinivel_interactivo <- glm(formula_modelo_multinivel_interactivo,
-                         family = binomial(link = "logit"), 
-                         #data = data 
-                         data = data_modelo_a_interpretar)
-options(scipen=999)
-summary(modelo_multinivel_interactivo)
-
-# OJO no se si corresponde clusterizar por pais si ya incorporamos pais
-robust_se_cluster_modelo_multinivel_interactivo <- coeftest(modelo_multinivel_interactivo, 
-                                                vcov = vcovCL(modelo_multinivel_interactivo, 
-                                                              cluster = data_modelo_a_interpretar$cat_pais))
-print(robust_se_cluster_modelo_multinivel_interactivo)
-
-### Version formula #####
-# https://www.publichealth.columbia.edu/research/population-health-methods/multi-level-modeling
-
-
-####  PASO 1 MODELO MULTILEVEL: EMPTY #### 
-
-# Varying-intercept model with no predictors. 
-#   M0 <- lmer (y ~ 1 + (1 | county))
-# This model simply includes a constant term (the predictor “1”) and allows it to vary by county
-
-empty_model <- lme4::glmer(dico_hubo_debates ~ 
-                      1 + (1 | cat_pais), 
-                    family=binomial("logit"), 
-                    data = democracias)
-summary(empty_model)
-
-####  REPORTADO PASO 2 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY #### 
-# varying-intercept model
-# Varying-intercept model with an individual-level predictor. 
-# M1 <- lmer (y ~ x + (1 | county))
-# This expression starts with the no-pooling model, “y ~ x,” and then adds “(1 | county),” 
-# which allows the intercept (the coeﬃcient of the predictor “1,” which is  the column of ones—the constant term in the regression) to vary by county.
-
-#cluster <- democracias$cat_pais %>% as.factor()
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-contingencia_random_intercepts <- lme4::glmer(paste(formula_modelo_contingencia_bis, 
-                                              "(1 | cat_pais)", sep = "+"), 
-                                        family=binomial("logit"), 
-                                        data = democracias,
-                                       # weights = NULL,
-                                        control = control)
-summary(contingencia_random_intercepts)
-
- 
-
-sistemico_random_intercepts <- lme4::glmer(paste(formula_modelo_sistemico_bis, 
-                                              "(1 | cat_pais)", sep = "+"), 
-                                        family=binomial("logit"), 
-                                        data = democracias,
-                                        control = control)
-summary(sistemico_random_intercepts)
-# vcov_cluster <- clubSandwich::vcovCR(sistemico_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
-# sistemico_random_intercepts_robust <- coef_test(sistemico_random_intercepts, vcov = vcov_cluster)
-
-regulatorio_random_intercepts <- lme4::glmer(paste(formula_modelo_regulatorio_bis, 
-                                              "(1 | cat_pais)", sep = "+"), 
-                                        family=binomial("logit"), 
-                                        data = democracias,
-                                        control = control)
-summary(regulatorio_random_intercepts)
-# vcov_cluster <-  clubSandwich::vcovCR(regulatorio_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
-# regulatorio_random_intercepts_robust <- coef_test(regulatorio_random_intercepts, vcov = vcov_cluster)
-
-temporal_random_intercepts <- lme4::glmer(paste(formula_modelo_temporal_bis, 
-                                              "(1 | cat_pais)", sep = "+"), 
-                                        family=binomial("logit"), 
-                                        data = democracias,
-                                        control = control)
-summary(temporal_random_intercepts)
-# vcov_cluster <- clubSandwich::vcovCR(temporal_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
-# temporal_random_intercepts_robust <- coef_test(temporal_random_intercepts, vcov = vcov_cluster)
-
-final_random_intercepts <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
-                                              "(1 | cat_pais)", sep = "+"), 
-                                        family=binomial("logit"), 
-                                        data = democracias,
-                                       control = control)
-summary(final_random_intercepts)
-# vcov_cluster <- clubSandwich::vcovCR(final_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
-# final_random_intercepts_robust <- coef_test(final_random_intercepts, vcov = vcov_cluster)
-
-modelo_random_intercepts <- final_random_intercepts
-coef(modelo_random_intercepts)
-lme4::fixef(modelo_random_intercepts)  # The estimated regression line in an average county
-# The term “ﬁxed eﬀects” is used for the regression coeﬃcients that do not vary by group (such as the coeﬃcient for x in this example) or for group-level coeﬃcients or group averages (such as the average intercept, μα in (12.3)).
-lme4::ranef(modelo_random_intercepts)  #  how much the intercept is shifted up or down in particular counties or county level errors
-lme4::confint(gpa_mixed)
-
-lista4 <-  list(contingencia_random_intercepts,
-                sistemico_random_intercepts,
-                regulatorio_random_intercepts,
-                 temporal_random_intercepts,
-                 final_random_intercepts)
-
-# https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
-
-texreg::htmlreg(lista4,
-                custom.model.names = c("Contingencia",
-                                       "Sistemico",
-                                       "Regulatorio",
-                                       "Temporal",
-                                       "Final")  ,
-                stars = c(0.001, 0.01, 0.05, 0.1),
-                custom.coef.names = c("(Intercepto)",
-                                      "log Margen de victoria",
-                                      "log NEC",
-                                      "Votos oficialista",
-                                      "Incumbente reelije",
-
-                                      "Regulacion sobre debates",
-                                      "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
-                                      "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
-
-                                      "Alineamiento partidario",
-                                      "Prop. TV por hogar"		,
-                                      "Prop. individuos c internet",
-                                      "Prohibicion propaganda"	 ,
-                                      "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Prop. debates en USA"
-
-                ),
-                reorder.coef =  c(1,
-                                  2,
-                                  3,
-                                  4,
-                                  5,
-
-                                  11,
-                                  12,
-                                  13,
-                                  14,
-                                  15,
-                                  16,
-                                  17,
-
-                                  6,
-                                  7,
-                                  9,
-                                  10,
-                                  8
-                ),
-                file="anexos/tabla_random_intercepts.html",
-                caption = "Modelos estimados con efectos aleatorios por país",
-                center = T,
-                bold = 0.1)
-
-####  PASO 3 MODELO MULTILEVEL: RANDOM INTERCEPTS AND RANDOM SLOPES BY COUNTRY #### 
-#  Varying intercepts and slopes
-# M3 <- lmer (y ~ x + (1 + x | county))
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-modelo_random_slopes1 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
-                                  # (1 + lnnec | cat_pais), 
-                                    "(1 + regulaciondico | cat_pais)", sep = "+" ), 
-                                 family=binomial("logit"), 
-                                 data = democracias,
-                                 control = control)
-summary(modelo_random_slopes1)
-
-modelo_random_slopes2 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
-                                           " (1 + lnnec | cat_pais)",  sep = "+" ), 
-                                     family=binomial("logit"), 
-                                     data = democracias,
-                                     control = control)
-summary(modelo_random_slopes2)
-
-#coef(modelo_random_slopes2)
-
-
-modelo_random_slopes3 <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
-                                           " (1 + lnnec + regulaciondico + 
-                                           lngdp + democraciavdemelectoralcomp + mediaqualitycorruptvdem +
-                                           accesogratuito + propindivinternet | cat_pais)",  sep = "+" ), 
-                                     family=binomial("logit"), 
-                                     data = democracias,
-                                     control = control)
-summary(modelo_random_slopes3)
-
-coef(modelo_random_slopes3)
-
-
-lme4::fixef(modelo_random_slopes) #to see the estimated average coeﬃcients (“ﬁxed eﬀects”):
-lme4::ranef(modelo_random_slopes) #to see the estimated group-level errors (“random eﬀects”):  
-
-
-#### PASO 4: NON NESTED #####
-
-modelo_fixed_effects <- glm(paste(formula_modelo_sficativas_variantes, 
-                                          " as.factor(cat_pais) + ncat_eleccion",  sep = "+" ), 
-                                    family=binomial("logit"), 
-                                    data = democracias)
-
-summary(modelo_fixed_effects)
-
-modelo_non_nested <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
-                                           " + (1 | cat_pais) + (1 | ncat_eleccion)",  sep = "+" ), 
-                                     family=binomial("logit"), 
-                                     data = democracias)
-summary(modelo_non_nested)
-
-coef(modelo_non_nested)
 
 # OTROS MODELOS control ####
 
