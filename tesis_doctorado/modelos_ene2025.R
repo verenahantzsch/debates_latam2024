@@ -1615,23 +1615,6 @@ lrtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
 
 # en todos los casos, el modelo full es mejor que el modelo más incompleto. 
 
-# COMPARACION SIMPLE MULTI
-
-lrtest(modelo_sficativas_variantes , final_random_intercepts)
-
-modelo1_reespecificado <- lme4::glmer(
-  dico_hubo_debates ~ lnmarginvic + lnnec + voteshareincumbent + 
-    dico_reeleccion + propindivinternet + accesogratuito + 
-    avgpropdebatesregionxciclo + regulaciondico + cumsum_pastciclos + 
-    lngdp + democraciavdemelectoralcomp + mediaqualitycorruptvdem + 
-    (1 | cat_pais),
-  data = democracias,
-  family = binomial,
-  control = control,
-  start = list(theta = c(0))) 
-
-lrtest(modelo1_reespecificado , final_random_intercepts)
-#anova(modelo_sficativas_variantes, final_random_intercepts, test="Chisq")
 
 #### fit: Pseudos R cuadrados, AIC y BIC ####
  
@@ -1713,12 +1696,6 @@ all_stats_full <- rbind(stats27,   stats28 )
 
 # stats modelo #
 stats_modelo <- stats(modelo_a_probar)
-
-# COMPARACION MULTINIVEL Y MODELO FINAL SIMPLE
-
-stats_simple <- stats(modelo_sficativas_variantes)
-stats_multi <- stats(final_random_intercepts )
-all_stats_multisimple <- rbind(stats_simple, stats_multi )
 
 #### fit: desempeño: accuracy ####
 
@@ -1822,17 +1799,99 @@ stats_modelo %>% write_csv("anexos/stats_modelo.csv")
 
 # idem: el desempeño de la variante es ligeramente peor
 
+### Controles COMPARACION SIMPLE MULTI ######
+
+lrtest(modelo_sficativas_variantes , final_random_intercepts)
+
+# modelo1_reespecificado <- lme4::glmer(
+#   dico_hubo_debates ~ lnmarginvic + lnnec + voteshareincumbent + 
+#     dico_reeleccion + propindivinternet + accesogratuito + 
+#     avgpropdebatesregionxciclo + regulaciondico + cumsum_pastciclos + 
+#     lngdp + democraciavdemelectoralcomp + mediaqualitycorruptvdem + 
+#     (1 | cat_pais),
+#   data = democracias,
+#   family = binomial,
+#   control = control,
+#   start = list(theta = c(0))) 
+
+#lrtest(final_random_intercepts, modelo1_reespecificado)
+#anova(modelo1_reespecificado, final_random_intercepts, test="Chisq")
+#anova(m0, m1, test = "LRT")  # IGUAL RESULTADO QUE CON LRTEST
+
+# https://www.unige.ch/cisa/files/2317/1829/8308/CISA_BM_statsupport_20240617_Randomintercept.pdf
+#lmerTest::ranova(final_random_intercepts)
+#pchibarsq(6.454045,1,mix=0.5,lower.tail=FALSE)> 0.005535001
+#car::Anova(final_random_intercepts, type=3)
+#drop1(final_random_intercepts,test="Chisq")
+ 
+
+# BOOTSTRAP COMENTADO PORQUE TARDA MUCHO, RESULTADOS PEGADOS ABAJO 
+# m1 <- glm(dico_hubo_debates ~ 
+#             lnmarginvic + 
+#             lnnec +
+#             voteshareincumbent +
+#             dico_reeleccion + 
+#             propindivinternet +
+#             accesogratuito +
+#             avgpropdebatesregionxciclo + 
+#             regulaciondico +
+#             cumsum_pastciclos +
+#             lngdp + 
+#             democraciavdemelectoralcomp +
+#             mediaqualitycorruptvdem,
+#           family = binomial(link = "logit"), 
+#           data = democracias)
+# m0 <- lme4::glmer(dico_hubo_debates ~ 
+#                     lnmarginvic + 
+#                     lnnec +
+#                     voteshareincumbent +
+#                     dico_reeleccion + 
+#                     propindivinternet +
+#                     accesogratuito +
+#                     avgpropdebatesregionxciclo + 
+#                     regulaciondico +
+#                     cumsum_pastciclos +
+#                     lngdp + 
+#                     democraciavdemelectoralcomp +
+#                     mediaqualitycorruptvdem +
+#                     (1 | cat_pais),
+#                   family=binomial("logit"), 
+#                   data = democracias,
+#                   control =  lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+# 
+# summary(m0)
+# summary(m1)
+# pbgmmDg1 <- pbnm::pbnm(m0,
+#                        m1,
+#                        nsim=5000,tasks=10,cores=2,seed=4642782) 
+# summary(pbgmmDg1)
+# > summary(pbgmmDg1)
+# Parametric bootstrap testing: (Intercept) | cat_pais = 0 
+# from: lme4::glmer(formula = dico_hubo_debates ~ lnmarginvic + lnnec +  voteshareincumbent + dico_reeleccion + propindivinternet +  accesogratuito + avgpropdebatesregionxciclo + regulaciondico +  cumsum_pastciclos + lngdp + democraciavdemelectoralcomp +  mediaqualitycorruptvdem + (1 | cat_pais), data = democracias,  family = binomial("logit"), control = lme4::glmerControl(optimizer = "bobyqa",  optCtrl = list(maxfun = 100000))) 
+# 5000 samples were taken Tue Jan 21 18:25:54 2025 
+# 296 samples had warnings, 296 in alternate model 0 in null model 
+# 296 unused samples.  0.0046 <= P(abs((Intercept) | cat_pais) > |0.4531746|) <= 0.06
+
+# COMPARACION MULTINIVEL Y MODELO FINAL SIMPLE
+
+# https://www.unige.ch/cisa/files/2317/1829/8308/CISA_BM_statsupport_20240617_Randomintercept.pdf
+
+stats_simple <- stats(modelo_sficativas_variantes)
+stats_multi <- stats(final_random_intercepts )
+all_stats_multisimple <- rbind(stats_simple, stats_multi )
+
 # COMPARACION MULTINIVEL Y SIMPLE
 
 countr2_simple <- funcion_count_R2(modelo_sficativas_variantes, data_modelo_a_probar$dico_hubo_debates)
 countr2_multi <- funcion_count_R2(final_random_intercepts, data_modelo_a_probar$dico_hubo_debates)
 all_countr2_multisimple <- rbind(countr2_simple, countr2_multi )
 
-all_stats_multisimple <- all_stats_multisimple %>% 
-  rbind( all_countr2_multisimple %>% 
+all_stats_multisimple <- all_stats_multisimple %>%
+  rbind( all_countr2_multisimple %>%
            pivot_longer(cols= c(countr2, adjcountr2), names_to = "stat", values_to = "value")  )
 
 all_stats_multisimple %>% write_csv("anexos/all_stats_multisimple.csv")
+
 ## EXPORTO MODELOS SIMPLES #####
 
 # Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
