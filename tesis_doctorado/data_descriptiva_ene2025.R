@@ -1277,6 +1277,71 @@ data_to_plot_long2 <- data_to_plot_countrynames %>%
 # referencia
 skimr::skim(data_to_plot)
 
+## TABLA CON VARIACION WITHIN Y BETWEEN #####
+
+# Entre grupos (between): variación entre casos −i en diferentes momentos en el tiempo. Este tipo de comparación no controla por factores particulares para cada grupo.
+
+# Dentro grupos (within): variación dentro de un caso −i en diferentes momentos en el tiempo. Permite controlar factores propios de cada caso que no varían en el tiempo (factor fijo), y que podrían alternar la comparación entre grupos.
+
+
+xtsum <- xtsum::xtsum(
+  data_to_plot_countrynames,
+  variables = NULL,
+  id = "cat_pais",
+  t = "ncat_eleccion",
+  na.rm = T,
+  return.data.frame = T,
+  dec = 3
+)
+
+xtsum %>% write.csv("anexos/estadistica_descriptiva_panel.csv")
+
+# intentos parciales con mismo paquete
+# variacion entre casos
+
+# between_sd <- xtsum::between_sd(data_to_plot_countrynames, 
+#                                 variable = "nec", 
+#                                 id = "cat_pais", 
+#                                 t = "ncat_eleccion",
+#                                 na.rm=T)
+# 
+# # variacion en el tiempo
+# within_sd <- xtsum::within_sd(data_to_plot_countrynames, 
+#                               variable = "nec", 
+#                               id = "cat_pais", 
+#                               t = "ncat_eleccion",
+#                               na.rm=T
+# )
+
+
+# intento propio: no me da igual y no entiendo del todo por que
+
+
+# mean_within <- data_to_plot_countrynames %>% 
+#   select(-dico_hubo_debates) %>% 
+#   group_by(cat_pais) %>% 
+#   summarise(across(-ncat_eleccion, ~ mean(.x, na.rm = TRUE), .names = "mean_{col}")) 
+# 
+# variacion_within <- data_to_plot_countrynames %>% 
+#   select(-dico_hubo_debates) %>% 
+#   group_by(cat_pais) %>% 
+#   summarise(across(-ncat_eleccion, ~ sd(.x, na.rm = TRUE), .names = "sd_{col}"))
+# 
+# variacion_within$sd_nec %>% sd()
+# 
+# mean_between <- data_to_plot_countrynames %>% 
+#   select(-dico_hubo_debates) %>% 
+#   group_by(ncat_eleccion) %>% 
+#   summarise(across(-cat_pais, ~ mean(.x, na.rm = TRUE), .names = "mean_{col}")) 
+# 
+# variacion_between <- data_to_plot_countrynames %>% 
+#   select(-dico_hubo_debates) %>% 
+#   group_by(ncat_eleccion) %>% 
+#   summarise(across(-cat_pais, ~ sd(.x, na.rm = TRUE), .names = "sd_{col}"))
+# variacion_between$sd_nec %>% sd(na.rm=T)
+# 
+# democracias$nec %>% sd(na.rm=T)
+
 ## TABLA con data descriptiva ####
 
 data_descriptiva_wide <- data_descriptiva %>% 
@@ -1350,7 +1415,7 @@ histograms <- data_to_plot_long %>%
   theme(strip.text = element_text(size = 14))
 
 histograms %>% ggsave(filename = "images/histogramas_vis_elecciones_univariados.jpg", 
-                      width = 15, height = 15)
+                      width = 18, height = 12)
 
 histograms2 <- data_to_plot_long2 %>% 
   ggplot() +
@@ -1360,21 +1425,29 @@ histograms2 <- data_to_plot_long2 %>%
              labeller = custom_labels) +
   scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
-  labs(title = "Distribución univariada de variables independientes",
-       caption = "Elaboración propia") +
-  theme(strip.text = element_text(size = 14))
+  labs(title = "Distribución de variables independientes",
+       subtitle = "condicional a la ocurrencia o no de debates",
+       caption = "Elaboración propia" ) +
+  scale_fill_manual(values = c("slategray4", "salmon"),
+                      name= "Hubo debates?",
+                      breaks = c(0,1),
+                      labels = c("No", "Sí")
+                      ) +
+  theme(strip.text = element_text(size = 14))  
+
+histograms2 %>% ggsave(filename = "images/histogramas_vis_elecciones_condicionales.jpg", 
+                      width = 18, height = 12)
 
 ## Graficos x año x variable x país #####
 # chequeo visual
-
-# PENDIENTE: acomodar variables DICO en estos graficos. 
+ 
 for (i in colnames(data_to_plot_countrynames)) {
-  print(i)
-  
+  #print(i)
+ # i <- "nec"
   if (i != "ncat_eleccion" & i != "cat_pais") {
     # Generate the plot
     plot <- ggplot(data_to_plot_countrynames) +
-      geom_smooth(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i]), alpha = 0.1) +
+      geom_smooth(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i]), se = F, alpha = 0.1, color = "slategray1") +
       geom_point(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i], 
                      colour = dico_hubo_debates, shape = dico_hubo_debates), size = 5) +
       facet_wrap(~cat_pais, scales = "free", nrow = 3) +
@@ -1382,26 +1455,36 @@ for (i in colnames(data_to_plot_countrynames)) {
       xlab("Año") +
       ylab(i) +
       labs(title = "Evolución temporal de variable:",
-           subtitle = i)
+           subtitle = i) +
+      scale_colour_manual(values = c("slategray4", "salmon"),
+                        name= "Hubo debates?",
+                        breaks = c(0,1),
+                        labels = c("No", "Sí")) +
+    scale_shape_manual(values = c(4, 1),
+                        name= "Hubo debates?",
+                        breaks = c(0,1),
+                        labels = c("No", "Sí"))
+      
     
     # Save the plot
     ggsave(filename = paste("images/ev_variablexpais", i, ".jpg", sep = ""), 
            plot = plot, width = 12, height = 10)
     
-    # Generate the plot
-    plot <- ggplot(data_to_plot_countrynames) +
-      geom_point(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i], 
-                     shape = dico_hubo_debates, colour = cat_pais), size = 5) +
-      #geom_smooth(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i], colour = cat_pais), alpha = 0.3) +
-      theme_classic() +
-      xlab("Año") +
-      ylab(i) +
-      labs(title = "Evolución temporal de variable:",
-           subtitle = i)
-    
-    # Save the plot
-    ggsave(filename = paste("images/ev_variable_", i, ".jpg", sep = ""), 
-           plot = plot, width = 12, height = 10)
+    # COMENTO PORQUE NO ME GUSTARON ESTOS GRAFICOS
+    # # Generate the plot
+    # plot <- ggplot(data_to_plot_countrynames) +
+    #   geom_point(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i], 
+    #                  shape = dico_hubo_debates, colour = cat_pais), size = 5) +
+    #   #geom_smooth(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i], colour = cat_pais), alpha = 0.3) +
+    #   theme_classic() +
+    #   xlab("Año") +
+    #   ylab(i) +
+    #   labs(title = "Evolución temporal de variable:",
+    #        subtitle = i)
+    # 
+    # # Save the plot
+    # ggsave(filename = paste("images/ev_variable_", i, ".jpg", sep = ""), 
+    #        plot = plot, width = 12, height = 10)
   } else {
     print(i)
   }
