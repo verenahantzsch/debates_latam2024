@@ -401,6 +401,82 @@ summary_tbl <- rbind(summary_tbl,
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
 
+## incumbent: reelije WEAK NEGATIVE  + SFICATIVA #######
+
+nombre_variable <- "Presidente compite p/ reelección (dummy)"
+variable_independiente <- democracias$dico_reeleccion
+
+standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
+
+summary_obj <- summary(variable_independiente) 
+summary_tbl <- enframe(summary_obj, name = "Statistic", value = "Value") %>%  
+  mutate(variable = nombre_variable)
+
+std_dev <- tibble(Statistic = "Std. Dev",
+                  Value = sd(variable_independiente, na.rm = T),
+                  variable = nombre_variable )
+
+summary_tbl <- rbind(summary_tbl,
+                     std_dev)
+
+data <- tibble(variable_independiente = variable_independiente,
+               variable_dependiente = variable_dependiente)
+
+hist(variable_independiente)
+#hist(variable_independiente %>%  log())
+
+#ggplot(data) + geom_boxplot(aes(as.factor(variable_dependiente), variable_independiente))
+ggplot(data) + geom_jitter(aes(as.factor(variable_dependiente), as.factor(variable_independiente)))
+table(variable_independiente, variable_dependiente)
+
+# Calculate Kendall's Tau-b correlation
+tau_b <- cor(variable_independiente, variable_dependiente, method = "kendall", use = "complete.obs")
+tau_b
+pearson <- cor(variable_independiente, variable_dependiente, method = "pearson", use = "complete.obs")
+
+summary_tbl <- rbind(summary_tbl,
+                     tibble(Statistic = "Tau B",
+                            Value = tau_b,
+                            variable = nombre_variable),
+                     tibble(Statistic = "Pearson",
+                            Value = pearson,
+                            variable = nombre_variable))
+
+mean_values <- aggregate(variable_independiente ~ variable_dependiente, data, mean, na.rm = TRUE)
+mean_values
+
+modelo <- glm(variable_dependiente ~ variable_independiente,
+              data = data,
+              family = "binomial")
+summary(modelo) # para ver si diferencia es significativa 
+
+coef <- summary(modelo)$coefficients[2,c(1,4)]
+coef_tbl <- enframe(coef, 
+                    name = "Name", 
+                    value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef.")) %>% 
+  mutate(variable = nombre_variable)
+
+modelo_estandarizado <- glm(variable_dependiente ~ standardized_variable_independiente,
+                            data = data,
+                            family = "binomial")
+summary(modelo_estandarizado) # para ver si diferencia es significativa 
+
+coef_estandarizado <- summary(modelo_estandarizado)$coefficients[2,c(1,4)]
+coef_estandarizado_tbl <- enframe(coef_estandarizado, 
+                                  name = "Name", 
+                                  value = "Value") %>% 
+  dplyr::rename("Statistic" = "Name") %>% 
+  mutate(Statistic = paste(Statistic, "Coef. Estandarizado")) %>% 
+  mutate(variable = nombre_variable)
+
+summary_tbl <- rbind(summary_tbl,
+                     coef_estandarizado_tbl,
+                     coef_tbl)
+
+data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
+
 ## media : proptv - WEAK POSITIVE  + SFICATIVA #######
 nombre_variable <- "% hogares con TV"
 
@@ -1249,6 +1325,7 @@ data_to_plot_countrynames <- democracias %>%
          alineamiento,
          marginvic,
          voteshareincumbent,
+         dico_reeleccion,
          proptv,
          propindivinternet,
          prohibicionpropaganda,
@@ -1399,15 +1476,18 @@ custom_labels <- as_labeller(c(accesogratuito = "Acceso gratuito a TV",
                   propindivinternet = "% individuos c/Internet",
                   proptv = "% hogares con TV",
                   regulaciondico = "Debates regulados",
-                  voteshareincumbent = "% voto oficialista"))
+                  voteshareincumbent = "% voto oficialista",
+                  dico_reeleccion = "Presidente a reelección"))
 
   
 histograms <- data_to_plot_long %>% 
+  subset(name!="ncat_eleccion") %>% 
   ggplot() +
   geom_histogram(aes(value)) +
   facet_wrap(~ name, 
              scales = "free",
-             labeller = custom_labels) +
+             labeller = custom_labels,
+             nrow = 4) +
   scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
   labs(title = "Distribución univariada de variables independientes",
@@ -1418,11 +1498,13 @@ histograms %>% ggsave(filename = "images/histogramas_vis_elecciones_univariados.
                       width = 18, height = 12)
 
 histograms2 <- data_to_plot_long2 %>% 
+  subset(name!="ncat_eleccion") %>% 
   ggplot() +
   geom_histogram(aes(value, fill = dico_hubo_debates), position = "dodge") +
   facet_wrap(~ name, 
              scales = "free",
-             labeller = custom_labels) +
+             labeller = custom_labels,
+             nrow = 4) +
   scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
   labs(title = "Distribución de variables independientes",
@@ -1864,7 +1946,8 @@ data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 nombre_variable <- "Es oficialista (dummy)"
 
 # preferido: vdem
-variable_candidatos <-  base$dico_oficialista
+#variable_candidatos <-  base$dico_oficialista 
+variable_candidatos <-  base$dico_oficialistanoreeleccion
 standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
 
 summary_obj <- summary(variable_candidatos) 
@@ -2334,7 +2417,8 @@ data_to_plot <- base %>%
          v2pariglef_vdem,
          v2paactcom_vdem,
          ninvitaciones,
-         dico_oficialista,
+         #dico_oficialista,
+         dico_oficialistanoreeleccion,
          dico_reeleccion,
          propausenciaspasadasfilled,
          orgosc,
@@ -2349,7 +2433,8 @@ data_to_plot2 <- base %>%
          v2pariglef_vdem,
          v2paactcom_vdem,
          ninvitaciones,
-         dico_oficialista,
+        # dico_oficialista,
+         dico_oficialistanoreeleccion,
          dico_reeleccion,
          propausenciaspasadasfilled,
          orgosc,
@@ -2406,7 +2491,7 @@ data_descriptiva_bivariada_candidatos %>% write.csv("anexos/data_descriptiva_biv
 
 ## HISTOGRAMAS  #####
 
-custom_labels <- as_labeller(c(dico_oficialista = "Es oficialista",
+custom_labels <- as_labeller(c(dico_oficialistanoreeleccion = "Es oficialista",
                                dico_reeleccion = "Reelige",
                                ninvitaciones = "Cant. invitaciones",
                                propausenciaspasadasfilled  = "Prop. ausencias pasadas",
@@ -2433,7 +2518,7 @@ histograms_candidatos <- data_to_plot_long %>%
   theme(strip.text = element_text(size = 14))
 
 histograms_candidatos %>% ggsave(filename = "images/histogramas_vis_candidatos_univariados.jpg", 
-                      width = 15, height = 15)
+                      width = 18, height = 10)
 
 
 histograms_candidatos2 <- data_to_plot_long3 %>% 
@@ -2446,8 +2531,15 @@ histograms_candidatos2 <- data_to_plot_long3 %>%
   scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
   labs(title = "Distribución univariada de variables independientes",
-       caption = "Elaboración propia") +
+       caption = "Elaboración propia")  +
+  scale_fill_manual(values = c("slategray4", "salmon"),
+                    name= "¿Candidato presente?",
+                    breaks = c(0,1),
+                    labels = c("No", "Sí")  ) +
   theme(strip.text = element_text(size = 14))
+
+histograms_candidatos2 %>% ggsave(filename = "images/histogramas_vis_candidatos_condicional.jpg", 
+                                 width = 18, height = 10)
 
 ## correlaciones entre variables independientes ####
 
