@@ -3286,58 +3286,60 @@ data_escenarios <- data_modelo_a_interpretar %>%
            democraciavdemelectoralcomp,
            mediaqualitycorruptvdem ))
 
-# version con mas valores para graficar 
+# version con mas valores para graficar de manera exploratoria. LO COMENTO 
 #i <- "lnnec"
-for (i in colnames(data_escenarios)){
+# for (i in colnames(data_escenarios)){
+# 
+#   data_to_predict <- data.frame(
+#     cumsum_pastciclos = rep(0, each = nrow(data_escenarios)), 
+#     
+#   lnnec =mean(data_escenarios$lnnec, na.rm = TRUE),
+#   lnmarginvic =  mean(data_escenarios$lnmarginvic, na.rm = TRUE),
+#   voteshareincumbent = mean(data_escenarios$voteshareincumbent, na.rm = TRUE),
+#   dico_reeleccion = median(data_escenarios$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+#   propindivinternet = mean(data_escenarios$propindivinternet, na.rm = TRUE),
+#   accesogratuito = median(data_escenarios$accesogratuito, na.rm = TRUE),
+#   avgpropdebatesregionxciclo = mean(data_escenarios$avgpropdebatesregionxciclo, na.rm = TRUE),
+#   regulaciondico = median(data_escenarios$regulaciondico, na.rm = TRUE),
+#   lngdp = mean(data_escenarios$lngdp, na.rm = TRUE),
+#   democraciavdemelectoralcomp = mean(data_escenarios$democraciavdemelectoralcomp, na.rm = TRUE),
+#   mediaqualitycorruptvdem = mean(data_escenarios$mediaqualitycorruptvdem, na.rm = TRUE)
+#  )
+# 
+#   data_to_predict[,i] <- seq(min(data_escenarios[,i], na.rm = TRUE), 
+#                              max(data_escenarios[,i], na.rm = TRUE),
+#                              length.out = nrow(data_escenarios))
+#   
+#   predicted_probs <- margins::prediction(model = modelo_a_interpretar,
+#                                          data = data_to_predict,
+#                                          type = "response",
+#                                          vcov = vcov_modelo_a_interpretar,
+#                                          calculate_se = TRUE)
+#   
+#   
+#   plot_interpretacion <- ggplot(predicted_probs) +
+#     geom_line(aes(x = predicted_probs[,i], 
+#                   y = fitted)) +
+#     geom_ribbon(aes(x = predicted_probs[,i],
+#                     ymin =  fitted - 1.645*se.fitted, 
+#                     ymax =  fitted + 1.645*se.fitted), alpha = 0.3) +
+#     theme_classic()  +
+#     geom_hline(aes(yintercept = 0.5), linetype = 3, colour = "red3") +
+#     labs(title = "Probabilidad de ocurrencia de un debate",
+#          subtitle = paste("Cuando nunca hubo debates, para distintos valores de:" ,i ),
+#          x = i,
+#          y = "Probabilidad predicha",
+#          caption = "Elaboración propia con base en los resultados del modelo final preferido.
+#          La cantidad de debates antecedentes está fijada a cero.
+#          Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
+#          cuando nunca ocurrieron debates en el papis.
+#          El resto de las variables cuantitativas están fijadas en sus medias, las dicotómicas en sus modas.")
+#   
+#   plot_interpretacion %>% ggsave(filename = paste("images/test_cumsum0_", i, ".jpg", sep = ""))
+#   
+# } 
 
-  data_to_predict <- data.frame(
-    cumsum_pastciclos = rep(0, each = nrow(data_escenarios)), 
-    
-  lnnec =mean(data_escenarios$lnnec, na.rm = TRUE),
-  lnmarginvic =  mean(data_escenarios$lnmarginvic, na.rm = TRUE),
-  voteshareincumbent = mean(data_escenarios$voteshareincumbent, na.rm = TRUE),
-  dico_reeleccion = median(data_escenarios$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
-  propindivinternet = mean(data_escenarios$propindivinternet, na.rm = TRUE),
-  accesogratuito = median(data_escenarios$accesogratuito, na.rm = TRUE),
-  avgpropdebatesregionxciclo = mean(data_escenarios$avgpropdebatesregionxciclo, na.rm = TRUE),
-  regulaciondico = median(data_escenarios$regulaciondico, na.rm = TRUE),
-  lngdp = mean(data_escenarios$lngdp, na.rm = TRUE),
-  democraciavdemelectoralcomp = mean(data_escenarios$democraciavdemelectoralcomp, na.rm = TRUE),
-  mediaqualitycorruptvdem = mean(data_escenarios$mediaqualitycorruptvdem, na.rm = TRUE)
- )
-
-  data_to_predict[,i] <- seq(min(data_escenarios[,i], na.rm = TRUE), 
-                             max(data_escenarios[,i], na.rm = TRUE),
-                             length.out = nrow(data_escenarios))
-  
-  predicted_probs <- margins::prediction(model = modelo_a_interpretar,
-                                         data = data_to_predict,
-                                         type = "response",
-                                         vcov = vcov_modelo_a_interpretar,
-                                         calculate_se = TRUE)
-  
-  
-  plot_interpretacion <- ggplot(predicted_probs) +
-    geom_line(aes(x = predicted_probs[,i], 
-                  y = fitted)) +
-    geom_ribbon(aes(x = predicted_probs[,i],
-                    ymin =  fitted - 1.645*se.fitted, 
-                    ymax =  fitted + 1.645*se.fitted), alpha = 0.3) +
-    theme_classic()  +
-    geom_hline(aes(yintercept = 0.5), linetype = 3, colour = "red3") +
-    labs(title = "Probabilidad de ocurrencia de un debate",
-         subtitle = paste("Cuando nunca hubo debates, para distintos valores de:" ,i ),
-         x = i,
-         y = "Probabilidad predicha",
-         caption = "Elaboración propia con base en los resultados del modelo final preferido.
-         La cantidad de debates antecedentes está fijada a cero.
-         Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
-         cuando nunca ocurrieron debates en el papis.
-         El resto de las variables cuantitativas están fijadas en sus medias, las dicotómicas en sus modas.")
-  
-  plot_interpretacion %>% ggsave(filename = paste("images/test_cumsum0_", i, ".jpg", sep = ""))
-  
-} 
+# VARIANDO CUMSUM 
 
 data_to_predict_cumsum <- data.frame(
   cumsum_pastciclos = seq(min(data_modelo_a_interpretar$cumsum_pastciclos, na.rm=T),
@@ -3372,6 +3374,7 @@ plot_cumsum <- ggplot(predicted_probs) +
                   ymin =  fitted - 1.645*se.fitted, 
                   ymax =  fitted + 1.645*se.fitted), alpha = 0.3) +
   theme_classic()  +
+  scale_x_continuous(breaks = seq(0,10,1)) +
   geom_hline(aes(yintercept = 0.5), linetype = 3, colour = "red3") +
   labs(title = "Probabilidad de ocurrencia de un debate",
        subtitle = "según la cantidad de elecciones presidenciales antecedentes en las que hubo debates",
@@ -3382,7 +3385,162 @@ plot_cumsum <- ggplot(predicted_probs) +
 
 plot_cumsum %>% ggsave(filename = "images/plot_cumsum.jpg")
 
+table(data_modelo_a_interpretar$cumsum_pastciclos )
 
+tablita <- table(data_modelo_a_interpretar$dico_hubo_debates, 
+                 data_modelo_a_interpretar$cumsum_pastciclos) %>% data.frame() %>% 
+  pivot_wider(names_from = Var2, values_from = Freq) %>% 
+  dplyr::rename("Hubo debates" = Var1)
+
+tablita %>% write_csv("anexos/tabla_freq_debates_antecedentes.csv")
+
+# GRAFICOS DE EFECTOS CUANDO CUMSUM 0 MAS PROLIJOS
+
+# REGULACION
+data_to_predict_cumsum0_regulacion <- data.frame(
+  cumsum_pastciclos = rep(0, each = length(unique(data_escenarios$regulaciondico))), 
+  
+  lnnec = mean(data_escenarios$lnnec, na.rm = TRUE),
+  lnmarginvic =  mean(data_escenarios$lnmarginvic, na.rm = TRUE),
+  voteshareincumbent = mean(data_escenarios$voteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = median(data_escenarios$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_escenarios$propindivinternet, na.rm = TRUE),
+  accesogratuito = median(data_escenarios$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_escenarios$avgpropdebatesregionxciclo, na.rm = TRUE),
+  
+  regulaciondico = unique(data_escenarios$regulaciondico),
+  
+  lngdp = mean(data_escenarios$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_escenarios$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_escenarios$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+ 
+
+data_to_predict_cumsum0_regulacion <- margins::prediction(model = modelo_a_interpretar,
+                                       data = data_to_predict_cumsum0_regulacion,
+                                       type = "response",
+                                       vcov = vcov_modelo_a_interpretar,
+                                       calculate_se = TRUE)
+
+
+plot_data_to_predict_cumsum0_regulacion <- ggplot(data_to_predict_cumsum0_regulacion) +
+  geom_point(aes(x = as.factor(regulaciondico), 
+               y = fitted) ) +  
+  geom_errorbar(aes(x = as.factor(regulaciondico), 
+                    ymin = fitted - 1.645 * se.fitted, 
+                    ymax = fitted + 1.645 * se.fitted), 
+                width = 0.2, color = "black") +
+  theme_classic() +
+  geom_hline(aes(yintercept = 0.5), linetype = 3, colour = "red3") +
+  labs(title = "Probabilidad de ocurrencia de un debate",
+       subtitle = "dada la existncia o no de regulaciones sobre la práctica",
+       x = "Regulación",
+       y = "Probabilidad predicha",
+       caption = "Elaboración propia con base en los resultados del modelo final preferido. 
+         La cantidad de debates antecedentes está fijada a cero.
+         Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
+         cuando nunca ocurrieron debates en el país.
+         El resto de las variables cuantitativas están fijadas en sus medias, las dicotómicas en sus modas.")
+
+plot_data_to_predict_cumsum0_regulacion %>% ggsave(filename = "images/plot_cumsum0_regulacion.jpg")
+
+# VARIANDO NEC 
+
+data_to_predict_cumsum0_nec <- data.frame(
+  cumsum_pastciclos = rep(0, each = nrow(data_escenarios)), 
+  
+  lnnec = seq(min(data_escenarios$lnnec, na.rm = TRUE), 
+              max(data_escenarios$lnnec, na.rm = TRUE),
+              length.out = nrow(data_escenarios)),
+  lnmarginvic =  mean(data_escenarios$lnmarginvic, na.rm = TRUE),
+  voteshareincumbent = mean(data_escenarios$voteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = median(data_escenarios$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = mean(data_escenarios$propindivinternet, na.rm = TRUE),
+  accesogratuito = median(data_escenarios$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_escenarios$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = median(data_escenarios$regulaciondico, na.rm = TRUE),
+  lngdp = mean(data_escenarios$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_escenarios$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_escenarios$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+ 
+
+data_to_predict_cumsum0_nec <- margins::prediction(model = modelo_a_interpretar,
+                                       data = data_to_predict_cumsum0_nec,
+                                       type = "response",
+                                       vcov = vcov_modelo_a_interpretar,
+                                       calculate_se = TRUE)
+
+
+plot_data_to_predict_cumsum0_nec <- ggplot(data_to_predict_cumsum0_nec) +
+  geom_line(aes(x = exp(lnnec), 
+                y = fitted)) +
+  geom_ribbon(aes(x = exp(lnnec),
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted), alpha = 0.3) +
+  theme_classic()  +
+  geom_hline(aes(yintercept = 0.5), linetype = 3, colour = "red3") +
+  labs(title = "Probabilidad de ocurrencia de un debate",
+       subtitle = "Cuando nunca hubo debates, para distintos valores de NEC",
+       x = "NEC",
+       y = "Probabilidad predicha",
+       caption = "Elaboración propia con base en los resultados del modelo final preferido.
+         La cantidad de debates antecedentes está fijada a cero.
+         Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
+         cuando nunca ocurrieron debates en el país.
+         El resto de las variables cuantitativas están fijadas en sus medias, las dicotómicas en sus modas.")
+
+plot_data_to_predict_cumsum0_nec %>% ggsave(filename = "images/plot_cumsum0_nec.jpg")
+
+
+# VARIANDO PROPINDIVINTERNET
+
+data_to_predict_cumsum0_internet <- data.frame(
+  cumsum_pastciclos = rep(0, each = nrow(data_escenarios)), 
+  
+  lnnec =mean(data_escenarios$lnnec, na.rm = TRUE),
+  lnmarginvic =  mean(data_escenarios$lnmarginvic, na.rm = TRUE),
+  voteshareincumbent = mean(data_escenarios$voteshareincumbent, na.rm = TRUE),
+  dico_reeleccion = median(data_escenarios$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
+  propindivinternet = seq(min(data_escenarios$propindivinternet, na.rm = TRUE), 
+                          max(data_escenarios$propindivinternet, na.rm = TRUE),
+                          length.out = nrow(data_escenarios)),
+  accesogratuito = median(data_escenarios$accesogratuito, na.rm = TRUE),
+  avgpropdebatesregionxciclo = mean(data_escenarios$avgpropdebatesregionxciclo, na.rm = TRUE),
+  regulaciondico = median(data_escenarios$regulaciondico, na.rm = TRUE),
+  lngdp = mean(data_escenarios$lngdp, na.rm = TRUE),
+  democraciavdemelectoralcomp = mean(data_escenarios$democraciavdemelectoralcomp, na.rm = TRUE),
+  mediaqualitycorruptvdem = mean(data_escenarios$mediaqualitycorruptvdem, na.rm = TRUE)
+)
+
+ 
+data_to_predict_cumsum0_internet <- margins::prediction(model = modelo_a_interpretar,
+                                       data = data_to_predict_cumsum0_internet,
+                                       type = "response",
+                                       vcov = vcov_modelo_a_interpretar,
+                                       calculate_se = TRUE)
+
+
+plot_data_to_predict_cumsum0_internet <- ggplot(data_to_predict_cumsum0_internet) +
+  geom_line(aes(x = propindivinternet, 
+                y = fitted)) +
+  geom_ribbon(aes(x = propindivinternet,
+                  ymin =  fitted - 1.645*se.fitted, 
+                  ymax =  fitted + 1.645*se.fitted), alpha = 0.3) +
+  theme_classic()  +
+  geom_hline(aes(yintercept = 0.5), linetype = 3, colour = "red3") +
+  labs(title = "Probabilidad de ocurrencia de un debate",
+       subtitle = "Cuando nunca hubo debates, según la cantidad de individuos c/ acceso a internet",
+       x =  "% de individuos con acceso a internet",
+       y = "Probabilidad predicha",
+       caption = "Elaboración propia con base en los resultados del modelo final preferido.
+         La cantidad de debates antecedentes está fijada a cero.
+         Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
+         cuando nunca ocurrieron debates en el país.
+         El resto de las variables cuantitativas están fijadas en sus medias, las dicotómicas en sus modas.")
+
+plot_data_to_predict_cumsum0_internet %>% ggsave(filename = "images/plot_cumsum0_internet.jpg")
 
 #### OTROS INTERPRETACION MULTILEVEL ######
 paisesdf <-  democracias %>% 
@@ -3583,6 +3741,7 @@ fulldata_candidatos <- fulldata_candidatos %>% # en este caso tb tengo id_debate
 
 ## Pruebo modelos ####
 
+#### modelos parciales ###########
 modelo_nivelindiv <- glm(dico_candidato_presente ~ 
                             voteshare + 
                             v2pariglef_vdem + 
@@ -3662,7 +3821,7 @@ print(robust_se_cluster_modelo_niveldebate_controles)
 
 
 
-# OPCIONES PREFERIDAS 
+#### modelos con controles nivel eleccion #######
 
 modelo_agregado <- glm(dico_candidato_presente ~ 
                             voteshare + 
@@ -3710,7 +3869,7 @@ summary(modelo_agregado_controles)
 
 robust_se_cluster_modelo_agregado_controles <- coeftest(modelo_agregado_controles, 
                                               vcov = vcovCL(modelo_agregado_controles,
-                                                            cluster = fulldata_candidatos$elecid))
+                                                            cluster = fulldata_candidatos$ca_pais))
 print(robust_se_cluster_modelo_agregado_controles)
 
 
@@ -3739,9 +3898,10 @@ summary(modelo_agregado_controles_sNAs)
 
 robust_se_cluster_modelo_agregado_controles_sNAs <- coeftest(modelo_agregado_controles_sNAs, 
                                                         vcov = vcovCL(modelo_agregado_controles_sNAs,
-                                                                      cluster = fulldata_candidatos$elecid))
+                                                                      cluster = fulldata_candidatos$cat_pais))
 print(robust_se_cluster_modelo_agregado_controles_sNAs)
 
+#### multinivel ###########
 modelo_multinivel1 <- lme4::glmer(dico_candidato_presente ~ 
                             voteshare + 
                             v2pariglef_vdem + 
@@ -3814,19 +3974,57 @@ modelo_multinivel1_controles_sNAs <- lme4::glmer(dico_candidato_presente ~
 options(scipen=999)
 summary(modelo_multinivel1_controles_sNAs)
 
+
+## mini control vifs ######
+
+
+car::vif(modelo_agregado_controles)
+
+#car::vif(modelo_multinivel1_controles)
+
+
+control_s_cumsum <-  glm(dico_candidato_presente ~ 
+                                                       voteshare + 
+                                                       v2pariglef_vdem + 
+                                                       v2paactcom_vdem + 
+                                                       dico_reeleccion + 
+                                                       #dico_oficialista + 
+                                                       dico_oficialistanoreeleccion + 
+                                                       ninvitaciones + 
+                                                       propausenciaspasadasfilled + 
+                                                       orgosc + 
+                                                       orgmmc + 
+                                                       orgestado +
+                                                       log(nec) +
+                                                       mediaqualitycorruptvdem +
+                                                       log(gdpxcapita) +
+                                                       democraciavdemelectoralcomp +
+                                                       regulaciondico , #+
+                                                       #cumsum_pastciclos,
+                                                     family = binomial(link = "logit"),
+                                                     data = fulldata_candidatos)
+options(scipen=999)
+summary(control_s_cumsum)
+
+robust_se_control_s_cumsum <- coeftest(control_s_cumsum, 
+                                       vcov = vcovCL(control_s_cumsum,
+                                                     cluster = fulldata_candidatos$cat_pais))
+print(robust_se_control_s_cumsum)
+  
+  
 ## Exporto modelos de interes ####
 
 lista2 <-  list(
-  robust_se_cluster_modelo_nivelindiv_controles,
-  robust_se_cluster_modelo_niveldebate_controles,
+  #robust_se_cluster_modelo_nivelindiv_controles,
+  #robust_se_cluster_modelo_niveldebate_controles,
   robust_se_cluster_modelo_agregado_controles,
   modelo_multinivel1_controles,
   robust_se_cluster_modelo_agregado_controles_sNAs,
   modelo_multinivel1_controles_sNAs) 
 
 texreg::htmlreg(lista2,
-                custom.model.names = c("Niv. individual",
-                                       "Niv. debate",
+                custom.model.names = c(#"Niv. individual",
+                                       #"Niv. debate",
                                        "Agregado",
                                        "Agregado multinivel",
                                        "Agregado reducido",

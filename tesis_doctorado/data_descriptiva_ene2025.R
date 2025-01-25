@@ -2589,3 +2589,46 @@ for (j in 1:n) {
 
 
 
+
+## estadistica descriptiva variable dependiente ######
+length(unique(data_to_plot2$id_debate))
+
+
+summary(variable_dependiente)
+sd(variable_dependiente)
+
+descriptiva_VD_candidatos <- skimr::skim(variable_dependiente)
+
+variable_dependiente_reducida <- data_to_plot2 %>% 
+  na.omit() %>% 
+  select(dico_candidato_presente) 
+
+descriptiva_VD_candidatos_reducida <-  skimr::skim(variable_dependiente_reducida$dico_candidato_presente)
+
+variable_dependiente_reducida2 <- data_to_plot2 %>% 
+  select(-v2pariglef_vdem, -v2paactcom_vdem) %>% 
+  na.omit() %>% 
+  select(dico_candidato_presente) 
+
+descriptiva_VD_candidatos_reducida2 <-  skimr::skim(variable_dependiente_reducida2$dico_candidato_presente)
+
+descriptiva_VD_candidatos <- descriptiva_VD_candidatos %>% 
+  mutate(muestra = "muestra completa") %>% 
+  rbind(descriptiva_VD_candidatos_reducida  %>% 
+          mutate( muestra = "muestra reducida [1]")) %>% 
+  rbind(descriptiva_VD_candidatos_reducida2 %>% 
+          mutate( muestra =  "muestra reducida [2]") )
+
+descriptiva_VD_candidatos %>% write_csv("anexos/descriptiva_VD_candidatos.csv")
+
+
+histograma_VD_candidatos <- data_to_plot2 %>% 
+  ggplot() +
+  geom_histogram(aes(dico_candidato_presente)) +
+  theme_classic()  +
+  labs(title = "Distribución univariada de variable dependiente",
+       caption = "Elaboración propia",
+       x = "Presencia de candidato en debate") +
+  scale_x_continuous(breaks = c(0,1),
+                   labels = c("Ausente", "Presente"))
+  
