@@ -3706,13 +3706,14 @@ plot_interpretacion <- ggplot(predicted_probs) +
 # ############################## ############################## ############################## ##############################
 # CANDIDATOS ##############################
 ## PREPARO DATA #######
-data_candidatos <- base_candidatos  %>% 
-  select(-starts_with("source_")) %>% 
-  select(-X,
-         -nombres_candidatos,
-         -v2pashname) %>% 
-  left_join(base_indicadores) %>% 
-  left_join(base_controles)
+# data_candidatos <- base_candidatos  %>% 
+#   select(-starts_with("source_")) %>% 
+#   select(-X,
+#          -nombres_candidatos,
+#          -v2pashname) %>% 
+#   left_join(base_indicadores) %>% 
+#   left_join(base_controles) %>% 
+#   subset(democraciavdempolyarchy>0.45) 
 
 fulldata_candidatos <- base_candidatos  %>% 
   select(-starts_with("source_")) %>% 
@@ -3722,11 +3723,12 @@ fulldata_candidatos <- base_candidatos  %>%
   left_join(base_indicadores %>% 
               select(-dico_reeleccion, -dico_oficialista)) %>% 
   left_join(base_controles %>% 
-              select(-dico_debates_eleccion, -eng_cat_pais, -X))
+              select(-dico_debates_eleccion, -eng_cat_pais, -X)) %>% 
+  subset(democraciavdempolyarchy>0.45) 
 
 # creo variable para clusterizar SSEE
-data_candidatos <- data_candidatos %>% # en este caso tb tengo id_debate
-  mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
+# data_candidatos <- data_candidatos %>% # en este caso tb tengo id_debate
+#   mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
 
 fulldata_candidatos <- fulldata_candidatos %>% # en este caso tb tengo id_debate
   mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
@@ -3752,12 +3754,12 @@ modelo_nivelindiv <- glm(dico_candidato_presente ~
                             ninvitaciones + 
                             propausenciaspasadasfilled,
                           family = binomial(link = "logit"),
-                          data = data_candidatos)
+                          data = fulldata_candidatos)
 options(scipen=999)
 #summary(modelo_nivelindiv)
 robust_se_cluster_modelo_indiv <- coeftest(modelo_nivelindiv, 
                                            vcov = vcovCL(modelo_nivelindiv,
-                                                         cluster = data_candidatos$elecid))
+                                                         cluster = fulldata_candidatos$elecid))
 print(robust_se_cluster_modelo_indiv)
 
 modelo_nivelindiv_controles <- glm(dico_candidato_presente ~ 
@@ -3790,13 +3792,13 @@ modelo_niveldebate <- glm(dico_candidato_presente ~
                             orgmmc + 
                             orgestado,
                   family = binomial(link = "logit"),
-                  data = data_candidatos)
+                  data = fulldata_candidatos)
 options(scipen=999)
 #summary(modelo_niveldebate)
 
 robust_se_cluster_modelo_debate <- coeftest(modelo_niveldebate, 
                                            vcov = vcovCL(modelo_niveldebate,
-                                                         cluster = data_candidatos$elecid))
+                                                         cluster = fulldata_candidatos$elecid))
 print(robust_se_cluster_modelo_debate)
 
 modelo_niveldebate_controles <- glm(dico_candidato_presente ~ 
@@ -3835,13 +3837,13 @@ modelo_agregado <- glm(dico_candidato_presente ~
                             orgmmc + 
                             orgestado,
                           family = binomial(link = "logit"),
-                          data = data_candidatos)
+                          data = fulldata_candidatos)
 options(scipen=999)
 #summary(modelo_agregado)
 
 robust_se_cluster_modelo_agregado <- coeftest(modelo_agregado, 
                                             vcov = vcovCL(modelo_agregado,
-                                                          cluster = data_candidatos$elecid))
+                                                          cluster = fulldata_candidatos$elecid))
 print(robust_se_cluster_modelo_agregado)
 
 modelo_agregado_controles <- glm(dico_candidato_presente ~ 
@@ -3916,7 +3918,7 @@ modelo_multinivel1 <- lme4::glmer(dico_candidato_presente ~
                             orgestado + 
                             (1|elecid) ,
                           family = binomial(link = "logit"),
-                          data = data_candidatos)
+                          data = fulldata_candidatos)
 options(scipen=999)
 #summary(modelo_multinivel1)
 
@@ -4014,7 +4016,7 @@ print(robust_se_control_s_cumsum)
   
 ## Exporto modelos de interes ####
 
-lista2 <-  list(
+listac1 <-  list(
   #robust_se_cluster_modelo_nivelindiv_controles,
   #robust_se_cluster_modelo_niveldebate_controles,
   robust_se_cluster_modelo_agregado_controles,
@@ -4022,7 +4024,7 @@ lista2 <-  list(
   robust_se_cluster_modelo_agregado_controles_sNAs,
   modelo_multinivel1_controles_sNAs) 
 
-texreg::htmlreg(lista2,
+texreg::htmlreg(listac1,
                 custom.model.names = c(#"Niv. individual",
                                        #"Niv. debate",
                                        "Agregado",
@@ -4050,6 +4052,40 @@ texreg::htmlreg(lista2,
 
                 ),
                 file="anexos/tabla_modelos_candidatos.html",
+                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                center = T,
+                bold = 0.1)
+
+
+
+
+listac2 <-  list(robust_se_control_s_cumsum) 
+
+texreg::htmlreg(listac2,
+                custom.model.names = c(#"Niv. individual",
+                  #"Niv. debate",
+                  "Control s/ debates antecedentes")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                custom.coef.names = c("(Intercepto)",
+                                      "% de votos obtenidos",
+                                      "Ideología izq - der",
+                                      "Penetración territorial",
+                                      "Es presidente",
+                                      "Es oficialista",
+                                      "Cant. invitaciones",
+                                      "Prop. ausencias pasadas",
+                                      "OSC organiza",
+                                      "Medio privado organiza",
+                                      "Estado organiza",
+                                      "log NEC",
+                                      "Corrupcion de medios (VDEM)",
+                                      "log PBI per Cápita" ,
+                                      "Democracia electoral (VDEM)" ,
+                                      "Regulación sobre debates"#,
+                                      #"Cant. elecciones pasadas con debates"
+                                      
+                ),
+                file="anexos/tabla_modelos_candidatos_control_s_cumsum.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
                 bold = 0.1)
