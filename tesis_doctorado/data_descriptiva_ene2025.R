@@ -1630,7 +1630,10 @@ for (j in 1:n) {
 
 base <- base_candidatos %>% 
   select(-starts_with("source_")) %>% 
-  select(-X) 
+  select(-X) %>% 
+  left_join(base_controles %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, democraciavdempolyarchy))%>% 
+  subset(democraciavdempolyarchy>0.45) 
 
 variable_dependiente <- base$dico_candidato_presente
 
@@ -2591,12 +2594,12 @@ for (j in 1:n) {
 
 
 ## estadistica descriptiva variable dependiente ######
-length(unique(data_to_plot2$id_debate))
+length(unique(base$id_debate))
 
 
 summary(variable_dependiente)
 sd(variable_dependiente)
-
+length(variable_dependiente)
 descriptiva_VD_candidatos <- skimr::skim(variable_dependiente)
 
 variable_dependiente_reducida <- data_to_plot2 %>% 
@@ -2604,6 +2607,7 @@ variable_dependiente_reducida <- data_to_plot2 %>%
   select(dico_candidato_presente) 
 
 descriptiva_VD_candidatos_reducida <-  skimr::skim(variable_dependiente_reducida$dico_candidato_presente)
+nrow(variable_dependiente_reducida)
 
 variable_dependiente_reducida2 <- data_to_plot2 %>% 
   select(-v2pariglef_vdem, -v2paactcom_vdem) %>% 
@@ -2611,6 +2615,7 @@ variable_dependiente_reducida2 <- data_to_plot2 %>%
   select(dico_candidato_presente) 
 
 descriptiva_VD_candidatos_reducida2 <-  skimr::skim(variable_dependiente_reducida2$dico_candidato_presente)
+nrow(variable_dependiente_reducida2)
 
 descriptiva_VD_candidatos <- descriptiva_VD_candidatos %>% 
   mutate(muestra = "muestra completa") %>% 
