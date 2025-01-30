@@ -418,7 +418,7 @@ sum(oscsstreaming$dico_streaming, na.rm=T)/length(oscsstreaming$dico_streaming)*
 
 # t evolucion temporal de tipo de organizador #####
 
-cuenta_tipos_por_decada <- base_organizadores %>% 
+cuenta_tipos_por_decada <- democracias_organizadores %>% 
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
   group_by(decada) %>%
   mutate(n_debates_en_decada = n_distinct(id_debate)) %>% 

@@ -13,8 +13,12 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 # DATA VD
 base_vdependiente <- read.csv("./datav2023/variables_dependientes_elecciones.csv")
+
+# DATA VIS
 # para filtrar por democracias
 base_controles <- read.csv("./datav2023/controles_elecciones.csv")
+# para extraer cantidad de inviados
+base_indicadores <- read.csv("./datav2023/indicadores_elecciones.csv")
 
 # DATA DESCRIPTIVA
 
@@ -50,6 +54,8 @@ setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 democracias_ronda_full <- base_vdependiente %>% 
   select(-X) %>% 
+  left_join(base_indicadores %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, nec, ntc)) %>% 
   left_join(base_controles %>% 
               select(cat_pais, ncat_eleccion, ncat_ronda, democraciavdempolyarchy)) %>% 
   subset(democraciavdempolyarchy>0.45) %>% 
@@ -809,7 +815,7 @@ sum(mmcstreaming$dico_streaming, na.rm=T)/length(mmcstreaming$dico_streaming)*10
 
 ####################################################################################
 ##########################################################################################
-# VARIABLE CUALI: FORMATOS #############
+# FORMATOS #############
 
 # cuentas simples #
 
@@ -865,7 +871,7 @@ tipos_formatos_decada <- democracias_formatos %>%
 tipos_formatos_decada_wide <- tipos_formatos_decada %>% 
   select(-n_formato_en_decada) %>% 
   pivot_wider(names_from=cat_tipo_formato, values_from = pr_formato_en_decada) %>% 
-  arrange(decada)%>% 
+  arrange(decada) %>% 
   mutate(across(everything(), ~ ifelse(is.na(.), 0, .))) %>% 
   select("decada", "n_debates_cregistro_en_decada",
          "pr_formatoduelo", "pr_formatolibre",
@@ -908,4 +914,300 @@ tipos_formatos_pais_wide <- tipos_formatos_pais %>%
          "pr_formatopresentes","pr_formatovirtuales")
 
 tipos_formatos_pais_wide %>% write_csv("anexos/tipos_formatos_pais_wide.csv")
+
+### ANEXO ordinal patrones de interaccion PENDIENTE COMENTARIO  ####
+
+
+#### competencia ####
+
+democracias_basedebates$ncat_competencia %>% summary()
+democracias_basedebates$ncat_competencia %>% sd(na.rm=T)
+
+ev_t_ncat_competencia <- democracias_basedebates %>% 
+  group_by(ncat_eleccion) %>% 
+  summarise(mean_ncat_competencia_year = mean(ncat_competencia, na.rm=T),
+            sd_ncat_competencia_year = sd(ncat_competencia, na.rm=T),
+            n = n()) %>% 
+  mutate(
+    SE = sd_ncat_competencia_year / sqrt(n),
+    CI_Lower = mean_ncat_competencia_year - qt(0.975, n - 1) * SE,
+    CI_Upper = mean_ncat_competencia_year + qt(0.975, n - 1) * SE
+  )
+
+ 
+
+# por decadas
+
+ev_ncat_competencia_decadas <- base %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  summarise(mean_ncat_competencia_decadas = mean(ncat_competencia, na.rm=T),
+            sd_ncat_competencia_decadas = sd(ncat_competencia, na.rm=T),
+            n = n()) 
+
+ev_ncat_competencia_decadas <- ev_ncat_competencia_decadas %>% 
+  mutate(
+    SE = sd_ncat_competencia_decadas / sqrt(n),
+    CI_Lower = mean_ncat_competencia_decadas - qt(0.975, n - 1) * SE,
+    CI_Upper = mean_ncat_competencia_decadas + qt(0.975, n - 1) * SE
+  )
+ 
+
+# competencia por pais 
+
+democracias_basedebates$ncat_competencia %>% summary()
+democracias_basedebates$ncat_competencia %>% sd(na.rm=T)
+
+ncat_competencia_por_pais <- democracias_basedebates %>% 
+  group_by(cat_pais) %>% 
+  summarise(mean_ncat_competencia_pais = mean(ncat_competencia, na.rm=T),
+            sd_ncat_competencia_pais = sd(ncat_competencia, na.rm=T),
+            n = n()) %>% 
+  mutate(
+    SE = sd_ncat_competencia_pais / sqrt(n),
+    CI_Lower = mean_ncat_competencia_pais - qt(0.975, n - 1) * SE,
+    CI_Upper = mean_ncat_competencia_pais + qt(0.975, n - 1) * SE
+  )
+
+plot_ncat_competencia_por_pais1 <- ncat_competencia_por_pais %>% 
+  ggplot(aes(x = cat_pais, y = mean_ncat_competencia_pais)) +
+  geom_point(color = "blue", size = 3) +
+  geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "blue") +
+  labs(title = "Mean Values with Confidence Intervals by Country",
+       x = "Country",
+       y = "Mean Value") +
+  theme_classic()
+
+
+#### participacion   ####
+
+
+democracias_basedebates$ncat_ppac %>% summary()
+democracias_basedebates$ncat_ppac %>% sd(na.rm=T)
+
+ev_t_ncat_ppac <- democracias_basedebates %>% 
+  group_by(ncat_eleccion) %>% 
+  summarise(mean_ncat_ppac_year = mean(ncat_ppac, na.rm=T),
+            sd_ncat_ppac_year = sd(ncat_ppac, na.rm=T),
+            n = n()) %>% 
+  mutate(
+    SE = sd_ncat_ppac_year / sqrt(n),
+    CI_Lower = mean_ncat_ppac_year - qt(0.975, n - 1) * SE,
+    CI_Upper = mean_ncat_ppac_year + qt(0.975, n - 1) * SE
+  )
+
+
+# por decadas
+
+ev_ncat_ppac_decadas <- base %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  summarise(mean_ncat_ppac_decadas = mean(ncat_ppac, na.rm=T),
+            sd_ncat_ppac_decadas = sd(ncat_ppac, na.rm=T),
+            n = n()) 
+
+ev_ncat_ppac_decadas <- ev_ncat_ppac_decadas %>% 
+  mutate(
+    SE = sd_ncat_ppac_decadas / sqrt(n),
+    CI_Lower = mean_ncat_ppac_decadas - qt(0.975, n - 1) * SE,
+    CI_Upper = mean_ncat_ppac_decadas + qt(0.975, n - 1) * SE
+  )
+
+ 
+
+# participacion por pais  
+
+ncat_ppac_por_pais <- democracias_basedebates %>% 
+  group_by(cat_pais) %>% 
+  summarise(mean_ncat_ppac_pais = mean(ncat_ppac, na.rm=T),
+            sd_ncat_ppac_pais = sd(ncat_ppac, na.rm=T),
+            n = n()) %>% 
+  mutate(
+    SE = sd_ncat_ppac_pais / sqrt(n),
+    CI_Lower = mean_ncat_ppac_pais - qt(0.975, n - 1) * SE,
+    CI_Upper = mean_ncat_ppac_pais + qt(0.975, n - 1) * SE
+  )
+
+
+plot_ncat_ppac_por_pais1 <- ncat_ppac_por_pais %>% 
+  ggplot(aes(x = cat_pais, y = mean_ncat_ppac_pais)) +
+  geom_point(color = "blue", size = 3) +
+  geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "blue") +
+  labs(title = "Mean Values with Confidence Intervals by Country",
+       x = "Country",
+       y = "Mean Value") +
+  theme_classic()
+
+## Temas ############
+
+
+### cuentas simples #####
+
+n <- nrow(democracias_basedebates)
+n - length(unique(democracias_temas$id_debate)) # missings
+(n - length(unique(democracias_temas$id_debate)))/n
+
+democracias_basedebates %>% subset(dico_temas_libre==1) %>% nrow()
+democracias_basedebates %>% subset(dico_temas_libre==1) %>% nrow()/n
+
+democracias_basedebates %>% subset(dico_temas_bloques==1) %>% nrow()
+democracias_basedebates %>% subset(dico_temas_bloques==1) %>% nrow()/n
+
+democracias_basedebates %>% subset(dico_temas_puntuales==1) %>% nrow()
+democracias_basedebates %>% subset(dico_temas_puntuales==1) %>% nrow()/n
+
+democracias_basedebates %>% subset(dico_temas_monotema==1) %>% nrow()
+democracias_basedebates %>% subset(dico_temas_monotema==1) %>% nrow()/n
+
+
+### ev t  temas x decada ####
+
+tipos_temas_decada <- democracias_temas %>%  
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  mutate(n_debates_cregistro_en_decada = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(cat_tipo_tema, decada, n_debates_cregistro_en_decada) %>% 
+  summarise(n_tema_en_decada = n()) %>% 
+  ungroup() %>% 
+  mutate(pr_tema_en_decada = n_tema_en_decada/ n_debates_cregistro_en_decada *100)  
+
+tipos_temas_decada_wide <- tipos_temas_decada %>% 
+  select(-n_tema_en_decada) %>% 
+  pivot_wider(names_from=cat_tipo_tema, values_from = pr_tema_en_decada) %>% 
+  arrange(decada) %>% 
+  mutate(across(everything(), ~ ifelse(is.na(.), 0, .))) %>% 
+  select("decada", "n_debates_cregistro_en_decada",
+         "pr_temalibre","pr_temabloques",
+         "pr_temapuntuales","pr_temamonotema")
+
+tipos_temas_decada_wide %>% write_csv("anexos/tipos_temas_decada_wide.csv")
+
+
+### ev e temas x pais #####
+
+# para calcular tabla
+
+tipos_temas_pais <- democracias_temas %>% 
+  group_by(cat_pais) %>% 
+  mutate(n_debates_cregistro_en_decada = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
+  group_by(cat_pais, n_debates_cregistro_en_decada, cat_tipo_tema) %>% 
+  summarise(n_peso_tema_xdebate = sum(n_peso_tema_xdebate, na.rm=TRUE),
+            n_tema_en_pais = n()) %>% 
+  mutate(pr_tema_en_pais = n_tema_en_pais/ n_debates_cregistro_en_decada )
+
+
+# tabla de distribucion por pais, para calcular
+
+tipos_temas_pais_wide <- tipos_temas_pais %>% 
+  select(-c(n_peso_tema_xdebate, n_tema_en_pais)) %>% 
+  pivot_wider(names_from=cat_tipo_tema, values_from = pr_tema_en_pais) %>% 
+  mutate(across(everything(), ~ ifelse(is.na(.), 0, .))) %>% 
+  mutate(across(starts_with("pr_tema"), ~.*100)) %>% 
+  #arrange(n_debates_cregistro_en_decada) %>% 
+  select("cat_pais", "n_debates_cregistro_en_decada",
+         "pr_temalibre","pr_temabloques",
+         "pr_temapuntuales","pr_temamonotema")
+
+tipos_temas_pais_wide %>% write_csv("anexos/tipos_temas_pais_wide.csv")
+
+
+
+### betw- with no creo que reporte ####
+
+temastsum <- xtsum::xtsum(
+  democracias_basedebates,
+  variables = c("dico_temas_libre",
+                "dico_temas_bloques",
+                "dico_temas_puntuales",
+                "dico_temas_monotema"),
+  id = "cat_pais",
+  t = "ncat_eleccion",
+  na.rm = T,
+  return.data.frame = T,
+  dec = 3
+)
+temastsum
+
+
+## Invitaciones ####
+
+### n candidatos, nueva variable tematica ###############################
+
+hist(democracias_basedebates$n_invitados)
+summary(democracias_basedebates$n_invitados)
+max(democracias_basedebates$n_invitados, na.rm = T)
+min(democracias_basedebates$n_invitados, na.rm = T)
+
+#PENDIENTE: REVISAR MISSING DATA: #
+
+missing_n_invitados <- democracias_basedebates %>% subset(is.na(n_invitados))
+# aclarar que cuenta considera PRESENCIAS Y AUSENCIAS, para armar invitados
+# tb podemos repe para presentes / ausentes
+
+base_n_candidatos_año_pais <- democracias_basedebates %>% 
+ # subset(n_invitados!=42) %>%  # descartamos un outlier
+  group_by(ncat_eleccion, cat_pais, ncat_ronda) %>% 
+  summarise(n_debates_año_pais = n_distinct(id_debate),
+            mean_n_invitados = mean(n_invitados, na.rm = T),
+            mean_n_ausentes = mean(n_ausentes, na.rm=T),
+            mean_n_presentes = mean(n_presentes, na.rm=T))
+
+
+base_n_candidatos_año_pais <- democracias_ronda_full  %>% 
+  left_join(base_n_candidatos_año_pais)  
+
+base_n_candidatos_año_pais <- base_anual_full  %>% 
+  left_join(base_n_candidatos_año_pais) %>% 
+  mutate(n_debates_año_pais = ifelse(is.na(n_debates_año_pais),0,n_debates_año_pais))
+
+
+# HORRIBLE; TE QUEDASTE ACA #######################
+ev_t_n_candidatos <- base_n_candidatos_año_pais %>% 
+  group_by(ncat_eleccion, ncat_ronda) %>% 
+  summarise(n_debates_año = sum(n_debates_año_pais),
+            mean_n_invitados = mean(mean_n_invitados, na.rm = T),
+            mean_n_ausentes = mean(mean_n_ausentes, na.rm=T),
+            mean_n_presentes = mean(mean_n_presentes, na.rm=T))
+
+plot_ev_t_n_candidatos_solo1 <- ev_t_n_candidatos %>% 
+  select(ncat_eleccion, mean_n_invitados, mean_n_presentes) %>% 
+  pivot_longer( cols = c(mean_n_invitados, mean_n_presentes) , 
+                names_to = "categoria_asistencia", values_to =  "mean_n") %>% 
+  ggplot() +
+  geom_line(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
+  #geom_smooth(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
+  theme_minimal()
+
+# por decadas
+
+ev_t_n_candidatos_decada <- ev_t_n_candidatos %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  summarise(n_debates_decada = sum(n_debates_año),
+            mean_n_invitados = mean(mean_n_invitados, na.rm = T),
+            mean_n_ausentes = mean(mean_n_ausentes, na.rm=T),
+            mean_n_presentes = mean(mean_n_presentes, na.rm=T))
+
+# por paises 
+
+
+ev_e_n_candidatos <- base_n_candidatos_año_pais %>% 
+  group_by(cat_pais) %>% 
+  summarise(n_debates_pais = sum(n_debates_año_pais),
+            mean_n_invitados = mean(mean_n_invitados, na.rm = T),
+            mean_n_ausentes = mean(mean_n_ausentes, na.rm=T),
+            mean_n_presentes = mean(mean_n_presentes, na.rm=T)) %>% 
+  arrange(n_debates_pais)
+
+
+plot_ev_t_n_candidatos <- ev_t_n_candidatos %>% 
+  select(ncat_eleccion, mean_n_invitados, mean_n_presentes) %>% 
+  pivot_longer( cols = c(mean_n_invitados, mean_n_presentes) , 
+                names_to = "categoria_asistencia", values_to =  "mean_n") %>% 
+  ggplot() +
+  geom_line(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
+  #geom_smooth(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
+  theme_minimal()
 
