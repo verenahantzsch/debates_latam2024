@@ -915,7 +915,7 @@ tipos_formatos_pais_wide <- tipos_formatos_pais %>%
 
 tipos_formatos_pais_wide %>% write_csv("anexos/tipos_formatos_pais_wide.csv")
 
-### ANEXO ordinal patrones de interaccion PENDIENTE COMENTARIO  ####
+### ANEXO ordinal patrones de interaccion PENDIENTE COMENTARIO Y PASAR A TABLA EN VEZ DE GRAFICO  ####
 
 
 #### competencia ####
@@ -1038,6 +1038,24 @@ plot_ncat_ppac_por_pais1 <- ncat_ppac_por_pais %>%
        y = "Mean Value") +
   theme_classic()
 
+
+#### variedad patrones #####
+
+
+patronesvariedad <- democracias_basedebates %>%  
+  mutate(n_patrones =    as.numeric(dico_formato_duelo)+
+                              as.numeric(dico_formato_libre)+
+                              as.numeric(dico_formato_moderadores)+
+                              as.numeric(dico_formato_periodistas)+
+                              as.numeric(dico_formato_expertos)+
+                              as.numeric(dico_formato_sectores)+
+                              as.numeric(dico_formato_virtuales)+
+                              as.numeric(dico_formato_presentes) +
+                              as.numeric(dico_formato_expositivo )) %>%
+  group_by(cat_pais) %>% 
+  summarise(mean_n_patrones = mean(n_patrones, na.rm=T)) %>% 
+  arrange(mean_n_patrones)
+ 
 ## Temas ############
 
 
@@ -1133,81 +1151,151 @@ temastsum
 
 ## Invitaciones ####
 
-### n candidatos, nueva variable tematica ###############################
-
+ 
 hist(democracias_basedebates$n_invitados)
 summary(democracias_basedebates$n_invitados)
 max(democracias_basedebates$n_invitados, na.rm = T)
 min(democracias_basedebates$n_invitados, na.rm = T)
 
 #PENDIENTE: REVISAR MISSING DATA: #
-
+n <- nrow(democracias_basedebates)
 missing_n_invitados <- democracias_basedebates %>% subset(is.na(n_invitados))
-# aclarar que cuenta considera PRESENCIAS Y AUSENCIAS, para armar invitados
-# tb podemos repe para presentes / ausentes
+nrow(missing_n_invitados)
+ 
 
-base_n_candidatos_año_pais <- democracias_basedebates %>% 
- # subset(n_invitados!=42) %>%  # descartamos un outlier
+base_n_candidatos_año_pais <- democracias_basedebates %>%  
   group_by(ncat_eleccion, cat_pais, ncat_ronda) %>% 
   summarise(n_debates_año_pais = n_distinct(id_debate),
             mean_n_invitados = mean(n_invitados, na.rm = T),
             mean_n_ausentes = mean(n_ausentes, na.rm=T),
-            mean_n_presentes = mean(n_presentes, na.rm=T))
+            mean_n_presentes = mean(n_presentes, na.rm=T)) 
 
 
 base_n_candidatos_año_pais <- democracias_ronda_full  %>% 
-  left_join(base_n_candidatos_año_pais)  
-
-base_n_candidatos_año_pais <- base_anual_full  %>% 
-  left_join(base_n_candidatos_año_pais) %>% 
-  mutate(n_debates_año_pais = ifelse(is.na(n_debates_año_pais),0,n_debates_año_pais))
+  left_join(base_n_candidatos_año_pais)  %>% 
+  mutate(mean_prop_invitados = mean_n_invitados/ntc)   
 
 
-# HORRIBLE; TE QUEDASTE ACA #######################
+cor(base_n_candidatos_año_pais$mean_n_invitados, base_n_candidatos_año_pais$ntc, method = "pearson", use ="complete.obs")
+cor(base_n_candidatos_año_pais$mean_n_invitados, base_n_candidatos_año_pais$nec, method = "pearson", use ="complete.obs")
+
+
+#### en el tiempo #####
+
 ev_t_n_candidatos <- base_n_candidatos_año_pais %>% 
   group_by(ncat_eleccion, ncat_ronda) %>% 
-  summarise(n_debates_año = sum(n_debates_año_pais),
+  summarise(n_debates_año = sum(n_debates_año_pais, na.rm = T),
             mean_n_invitados = mean(mean_n_invitados, na.rm = T),
             mean_n_ausentes = mean(mean_n_ausentes, na.rm=T),
-            mean_n_presentes = mean(mean_n_presentes, na.rm=T))
+            mean_n_presentes = mean(mean_n_presentes, na.rm=T),
+            mean_ntc = mean(ntc, na.rm=T),
+            mean_nec = mean(nec, na.rm= T),
+            mean_prop_invitados = mean(mean_prop_invitados, na.rm=T))   
 
-plot_ev_t_n_candidatos_solo1 <- ev_t_n_candidatos %>% 
-  select(ncat_eleccion, mean_n_invitados, mean_n_presentes) %>% 
-  pivot_longer( cols = c(mean_n_invitados, mean_n_presentes) , 
-                names_to = "categoria_asistencia", values_to =  "mean_n") %>% 
-  ggplot() +
-  geom_line(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
-  #geom_smooth(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
-  theme_minimal()
-
-# por decadas
 
 ev_t_n_candidatos_decada <- ev_t_n_candidatos %>% 
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
-  group_by(decada) %>% 
+  group_by(decada, ncat_ronda) %>% 
   summarise(n_debates_decada = sum(n_debates_año),
             mean_n_invitados = mean(mean_n_invitados, na.rm = T),
             mean_n_ausentes = mean(mean_n_ausentes, na.rm=T),
-            mean_n_presentes = mean(mean_n_presentes, na.rm=T))
+            mean_n_presentes = mean(mean_n_presentes, na.rm=T),
+            mean_ntc = mean(mean_ntc, na.rm=T),
+            mean_nec = mean(mean_nec, na.rm= T),
+            mean_prop_invitados = mean(mean_prop_invitados, na.rm=T))
 
-# por paises 
+ev_t_n_candidatos_final <- ev_t_n_candidatos_decada %>% 
+  subset(ncat_ronda==1) %>% 
+  dplyr::rename("n_debates_ronda1_decada" = n_debates_decada) %>% 
+  select(-ncat_ronda) %>% 
+  left_join(ev_t_n_candidatos_decada %>% 
+              subset(ncat_ronda==2) %>% 
+              select(decada, n_debates_decada) %>% 
+              dplyr::rename("n_debates_ronda2_decada" = n_debates_decada)) %>% 
+  select("decada", "n_debates_ronda1_decada", "n_debates_ronda2_decada",
+         "mean_ntc", "mean_nec", 
+         "mean_n_invitados", "mean_n_presentes", "mean_n_ausentes", "mean_prop_invitados") %>% 
+  mutate(across(everything(), ~ ifelse(is.na(.),0,.))) 
+
+ev_t_n_candidatos_final %>% write.csv("anexos/ev_t_n_candidatos_decada.csv")
+
+# cor(ev_t_n_candidatos$mean_n_invitados, ev_t_n_candidatos$mean_ntc, method = "pearson", use ="complete.obs")
+# cor(ev_t_n_candidatos$mean_n_invitados, ev_t_n_candidatos$mean_nec, method = "pearson", use ="complete.obs")
+
+
+### por paises  ####
 
 
 ev_e_n_candidatos <- base_n_candidatos_año_pais %>% 
-  group_by(cat_pais) %>% 
-  summarise(n_debates_pais = sum(n_debates_año_pais),
+  group_by(cat_pais, ncat_ronda) %>% 
+  summarise(n_debates_pais = sum(n_debates_año_pais, na.rm = T),
             mean_n_invitados = mean(mean_n_invitados, na.rm = T),
             mean_n_ausentes = mean(mean_n_ausentes, na.rm=T),
-            mean_n_presentes = mean(mean_n_presentes, na.rm=T)) %>% 
-  arrange(n_debates_pais)
+            mean_n_presentes = mean(mean_n_presentes, na.rm=T),
+            mean_ntc = mean(ntc, na.rm=T),
+            mean_nec = mean(nec, na.rm= T),
+            mean_prop_invitados = mean(mean_prop_invitados, na.rm=T))   
+
+ev_e_n_candidatos_final <- ev_e_n_candidatos %>% 
+  subset(ncat_ronda==1) %>% 
+  dplyr::rename("n_debates_ronda1_pais" = n_debates_pais) %>% 
+  select(-ncat_ronda) %>% 
+  left_join(ev_e_n_candidatos %>% 
+              subset(ncat_ronda==2) %>% 
+              select(cat_pais, n_debates_pais) %>% 
+              dplyr::rename("n_debates_ronda2_pais" = n_debates_pais)) %>% 
+  select("cat_pais", "n_debates_ronda1_pais", "n_debates_ronda2_pais",
+                "mean_ntc", "mean_nec", 
+                "mean_n_invitados", "mean_n_presentes", "mean_n_ausentes", "mean_prop_invitados") %>% 
+  mutate(across(everything(), ~ ifelse(is.na(.),0,.))) 
+
+ev_e_n_candidatos_final %>% write.csv("anexos/ev_e_n_candidatos_pais.csv")
+
+# cor(ev_e_n_candidatos$mean_n_invitados, ev_e_n_candidatos$mean_ntc, method = "pearson", use ="complete.obs")
+# cor(ev_e_n_candidatos$mean_n_invitados, ev_e_n_candidatos$mean_nec, method = "pearson", use ="complete.obs")
+
+### grafico anexo #####
 
 
-plot_ev_t_n_candidatos <- ev_t_n_candidatos %>% 
-  select(ncat_eleccion, mean_n_invitados, mean_n_presentes) %>% 
-  pivot_longer( cols = c(mean_n_invitados, mean_n_presentes) , 
-                names_to = "categoria_asistencia", values_to =  "mean_n") %>% 
+plot_prop_invitados_pais <- democracias_basedebates %>% 
+  #subset(n_invitados!=42) %>%
+  subset(ncat_ronda==1) %>% 
+  left_join(democracias_ronda_full) %>% 
+  mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
+  mutate(prop_invitados =  as.numeric(n_invitados)/n_candidaturas) %>% 
+  #select(cat_pais, ncat_eleccion, prop_invitados, cols_18, str_organizador) %>% 
   ggplot() +
-  geom_line(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
-  #geom_smooth(aes(ncat_eleccion, mean_n, colour = categoria_asistencia)) +
-  theme_minimal()
+  geom_boxplot(aes(as.factor(cat_pais), prop_invitados, fill = cols_18)) +
+  #facet_wrap(~ ncat_ronda) +
+  theme_classic() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90),
+        axis.title.y = element_text(margin = margin(r = 5),size = 8))  +
+  labs(x = "", y = "Proporción de candidatos invitados",
+       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
+       Se exponen solo los debates realizados de manera previa a la primera ronda electoral. 
+       Los valores superiores a 1 se deben por excepcionalmente numerosas bajas de candidatos durante el curso de la campaña. 
 
+       *Rep. Dom. = República Dominicana.",
+       title = "Prop invitados",
+       subtitle = "por país")
+
+plotnumber <- plotnumber + 1
+plotname <- "hist_propinvitados"
+filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+### betw- with no creo que reporte ####
+
+ncandtsum <- xtsum::xtsum(
+  democracias_basedebates,
+  variables = c("n_invitados"),
+  id = "cat_pais",
+  t = "ncat_eleccion",
+  na.rm = T,
+  return.data.frame = T,
+  dec = 3
+)
+ncandtsum
