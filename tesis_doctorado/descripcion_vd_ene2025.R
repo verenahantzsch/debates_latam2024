@@ -93,7 +93,8 @@ democracias_formatos <- base_formatos %>%
   subset(id_debate%in%democracias_basedebates$id_debate)
 democracias_temas <- base_temas %>% 
   subset(id_debate%in%democracias_basedebates$id_debate)
-#base_normativa <- readxl::read_xlsx("./datav2023/base_debates_limpiav2023.xlsx", sheet = "debates_normativo")
+democracias_normativa <- democracias_anual_full %>% 
+  left_join(base_normativa)
 #base_anual <- readxl::read_xlsx("./datav2023/base_anualv2023.xlsx")
 
 # NOTAS
@@ -923,37 +924,42 @@ tipos_formatos_pais_wide %>% write_csv("anexos/tipos_formatos_pais_wide.csv")
 democracias_basedebates$ncat_competencia %>% summary()
 democracias_basedebates$ncat_competencia %>% sd(na.rm=T)
 
-ev_t_ncat_competencia <- democracias_basedebates %>% 
-  group_by(ncat_eleccion) %>% 
-  summarise(mean_ncat_competencia_year = mean(ncat_competencia, na.rm=T),
-            sd_ncat_competencia_year = sd(ncat_competencia, na.rm=T),
-            n = n()) %>% 
-  mutate(
-    SE = sd_ncat_competencia_year / sqrt(n),
-    CI_Lower = mean_ncat_competencia_year - qt(0.975, n - 1) * SE,
-    CI_Upper = mean_ncat_competencia_year + qt(0.975, n - 1) * SE
-  )
+##### por decadas #####
 
- 
-
-# por decadas
-
-ev_ncat_competencia_decadas <- base %>% 
+ev_ncat_competencia_decadas <- democracias_basedebates %>% 
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
   group_by(decada) %>% 
   summarise(mean_ncat_competencia_decadas = mean(ncat_competencia, na.rm=T),
             sd_ncat_competencia_decadas = sd(ncat_competencia, na.rm=T),
-            n = n()) 
-
-ev_ncat_competencia_decadas <- ev_ncat_competencia_decadas %>% 
+            n_debates_año_pais = n()) %>% 
   mutate(
-    SE = sd_ncat_competencia_decadas / sqrt(n),
+    SE = sd_ncat_competencia_decadas / sqrt(n_debates_año_pais),
     CI_Lower = mean_ncat_competencia_decadas - qt(0.975, n - 1) * SE,
     CI_Upper = mean_ncat_competencia_decadas + qt(0.975, n - 1) * SE
   )
- 
 
-# competencia por pais 
+plot_ncat_competencia_decadas <- ev_ncat_competencia_decadas %>% 
+  ggplot(aes(x = decada, y = mean_ncat_competencia_decadas)) +
+  geom_point(color = "blue", size = 3) +
+  geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "blue") +
+  labs(title = "Promedio en el nivel de competencia por década",
+       subtitle = "Junto a su intervalo de confianza (95%)",
+       x = "Década",
+       y = "Nivel de competencia promedio",
+       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       El nivel de competencia por debate se mide en una escala que va del 0 = nula interacción entre candidatos, al 4 = mucha") +
+  theme_classic() +
+  scale_x_continuous(breaks = seq(1960,2020,10)) +
+  scale_y_continuous(limits=c(min(democracias_basedebates$ncat_competencia, na.rm=T),max(democracias_basedebates$ncat_competencia, na.rm=T)), 
+                     breaks=c(min(democracias_basedebates$ncat_competencia, na.rm=T):max(democracias_basedebates$ncat_competencia, na.rm=T)))
+
+
+plotnumber <- plotnumber + 1
+plotname <- "competencia_decadas"
+filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+##### por pais  #####
 
 democracias_basedebates$ncat_competencia %>% summary()
 democracias_basedebates$ncat_competencia %>% sd(na.rm=T)
@@ -969,15 +975,26 @@ ncat_competencia_por_pais <- democracias_basedebates %>%
     CI_Upper = mean_ncat_competencia_pais + qt(0.975, n - 1) * SE
   )
 
-plot_ncat_competencia_por_pais1 <- ncat_competencia_por_pais %>% 
+plot_ncat_competencia_por_pais <- ncat_competencia_por_pais %>% 
   ggplot(aes(x = cat_pais, y = mean_ncat_competencia_pais)) +
   geom_point(color = "blue", size = 3) +
   geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "blue") +
-  labs(title = "Mean Values with Confidence Intervals by Country",
-       x = "Country",
-       y = "Mean Value") +
-  theme_classic()
+  labs(title = "Promedio en el nivel de competencia por país",
+       subtitle = "Junto a su intervalo de confianza (95%)",
+       x = "País",
+       y = "Nivel de competencia promedio",
+       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       El nivel de competencia por debate se mide en una escala que va del 0 = nula interacción entre candidatos, al 4 = mucha") +
+  theme_classic() +
+  scale_y_continuous(limits=c(min(democracias_basedebates$ncat_competencia, na.rm=T),max(democracias_basedebates$ncat_competencia, na.rm=T)), 
+                     breaks=c(min(democracias_basedebates$ncat_competencia, na.rm=T):max(democracias_basedebates$ncat_competencia, na.rm=T))) +
+  theme(axis.text.x = element_text(angle=90)) 
 
+
+plotnumber <- plotnumber + 1
+plotname <- "competencia_pais"
+filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
 
 #### participacion   ####
 
@@ -985,20 +1002,7 @@ plot_ncat_competencia_por_pais1 <- ncat_competencia_por_pais %>%
 democracias_basedebates$ncat_ppac %>% summary()
 democracias_basedebates$ncat_ppac %>% sd(na.rm=T)
 
-ev_t_ncat_ppac <- democracias_basedebates %>% 
-  group_by(ncat_eleccion) %>% 
-  summarise(mean_ncat_ppac_year = mean(ncat_ppac, na.rm=T),
-            sd_ncat_ppac_year = sd(ncat_ppac, na.rm=T),
-            n = n()) %>% 
-  mutate(
-    SE = sd_ncat_ppac_year / sqrt(n),
-    CI_Lower = mean_ncat_ppac_year - qt(0.975, n - 1) * SE,
-    CI_Upper = mean_ncat_ppac_year + qt(0.975, n - 1) * SE
-  )
-
-
-# por decadas
-
+##### decadas #####
 ev_ncat_ppac_decadas <- base %>% 
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
   group_by(decada) %>% 
@@ -1013,9 +1017,28 @@ ev_ncat_ppac_decadas <- ev_ncat_ppac_decadas %>%
     CI_Upper = mean_ncat_ppac_decadas + qt(0.975, n - 1) * SE
   )
 
- 
+plot_ev_ncat_ppac_decadas <- ev_ncat_ppac_decadas %>% 
+  ggplot(aes(x = decada, y = mean_ncat_ppac_decadas)) +
+  geom_point(color = "blue", size = 3) +
+  geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "blue") +
+  labs(title = "Promedio en el nivel de participación por década",
+       subtitle = "Junto a su intervalo de confianza (95%)",
+       x = "Décadas",
+       y = "Nivel de participación promedio",
+       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       El nivel de participación por debate se mide en una escala que va del 0 = nula participación del público, al 4 = mucha") +
+  scale_x_continuous(breaks = seq(1960,2020,10)) +
+  scale_y_continuous(limits=c(min(democracias_basedebates$ncat_ppac, na.rm=T),max(democracias_basedebates$ncat_ppac, na.rm=T)), 
+                     breaks=c(min(democracias_basedebates$ncat_ppac, na.rm=T):max(democracias_basedebates$ncat_ppac, na.rm=T))) +
+  theme_classic()
 
-# participacion por pais  
+
+plotnumber <- plotnumber + 1
+plotname <- "ppac_decadas"
+filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+##### por pais   ######
 
 ncat_ppac_por_pais <- democracias_basedebates %>% 
   group_by(cat_pais) %>% 
@@ -1029,15 +1052,25 @@ ncat_ppac_por_pais <- democracias_basedebates %>%
   )
 
 
-plot_ncat_ppac_por_pais1 <- ncat_ppac_por_pais %>% 
+plot_ncat_ppac_por_pais <- ncat_ppac_por_pais %>% 
   ggplot(aes(x = cat_pais, y = mean_ncat_ppac_pais)) +
-  geom_point(color = "blue", size = 3) +
+  geom_point(color = "blue", size = 3) + # poner color pais
   geom_errorbar(aes(ymin = CI_Lower, ymax = CI_Upper), width = 0.2, color = "blue") +
-  labs(title = "Mean Values with Confidence Intervals by Country",
-       x = "Country",
-       y = "Mean Value") +
-  theme_classic()
+  labs(title = "Promedio en el nivel de participación por país",
+       subtitle = "Junto a su intervalo de confianza (95%)",
+       x = "País",
+       y = "Nivel de participación promedio",
+       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       El nivel de participación por debate se mide en una escala que va del 0 = nula participación del público, al 4 = mucha") +
+  theme_classic() +
+  scale_y_continuous(limits=c(min(democracias_basedebates$ncat_ppac, na.rm=T),max(democracias_basedebates$ncat_ppac, na.rm=T)), 
+                     breaks=c(min(democracias_basedebates$ncat_ppac, na.rm=T):max(democracias_basedebates$ncat_ppac, na.rm=T))) +
+  theme(axis.text.x = element_text(angle=90)) 
 
+plotnumber <- plotnumber + 1
+plotname <- "ppac_pais"
+filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
 
 #### variedad patrones #####
 
@@ -1299,3 +1332,295 @@ ncandtsum <- xtsum::xtsum(
   dec = 3
 )
 ncandtsum
+
+
+######################################################################
+######################################################################
+# REGULACION #############
+
+# 41. punto de vista de los candidatos a través del tiempo ######
+
+plot_normativa1 <- democracias_normativa %>% 
+  mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
+  ggplot() +
+  geom_point(aes(ncat_eleccion,
+                 fct_relevel(cat_regcandidatos,
+                             "NADA", "POSIBILIDAD", "GARANTÍAS", "OBLIGACION"),
+                 colour = cat_regcandidatos)) +
+  facet_wrap( ~ as.factor(cat_pais) 
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              , 
+              ncol = 6) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90)) + 
+  scale_x_continuous(breaks = seq(1950,2021,10)) +
+  labs(x = "",
+       y = "",
+       title = "Evolución de la normativa",
+       subtitle = "Desde el punto de vista de los candidatos,
+       através el tiempo, por país",
+       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación")
+
+plotnumber <- plotnumber + 1
+filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+# 4.2 punto de vista del Estado a través del tiempo #####
+
+plot_normativa2 <- base_normativa %>% 
+  mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
+  ggplot() +
+  geom_point(aes(ncat_eleccion,
+                 fct_relevel(cat_regestado, "NADA", "POSIBILIDAD", "FISCALIZAR", "GARANTIZAR", "ORGANIZAR"),
+                 colour = cat_regestado)) +
+  facet_wrap( ~ as.factor(cat_pais) 
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              , 
+              ncol = 6) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90)) + 
+  scale_x_continuous(breaks = seq(1950,2021,10)) +
+  labs(x = "",
+       y = "",
+       title = "Evolución de la normativa",
+       subtitle = "Desde el punto de vista del Estado,
+       através el tiempo, por país",
+       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación")
+
+plotnumber <- plotnumber + 1
+filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+# 4.3 punto de vista de los medios a través del tiempo ##########
+
+plot_normativa3 <- base_normativa %>% 
+  mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.")) %>% 
+  ggplot() +
+  geom_point(aes(ncat_eleccion,
+                 fct_relevel(cat_regmedios,
+                             "NADA", "POSIBILIDAD", "OPORTUNIDAD", "LIMITACIONES", "OBLIGACIONES"),
+                 colour = cat_regmedios)) +
+  facet_wrap( ~ as.factor(cat_pais)
+              # %>% 
+              #   fct_relevel("Peru", "Mexico", "Costa Rica", "Brasil", "Colombia", "Chile",
+              #               "Guatemala",  "Paraguay", "Rep. Dom.",  "Honduras", "El Salvador",  "Nicaragua", 
+              #               "Venezuela", "Bolivia", "Panama", "Ecuador",  "Uruguay", "Argentina")
+              ,
+              ncol = 6) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90)) + 
+  scale_x_continuous(breaks = seq(1950,2021,10)) +
+  labs(x = "",
+       y = "",
+       title = "Evolución de la normativa",
+       subtitle = "Desde el punto de vista de medios y organizadores,
+       através el tiempo, por país",
+       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación")
+
+plotnumber <- plotnumber + 1
+filename <- paste("images/plot_", plotnumber, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+# alternativa. tablita#### 
+
+normativa_tabla <- democracias_normativa %>% 
+  group_by(
+    cat_pais, 
+    cat_regestado,
+    cat_regmedios,
+    cat_regcandidatos) %>% 
+  summarise(min_year = min(ncat_eleccion),
+            max_year = max(ncat_eleccion)) %>% 
+  mutate(elecciones_vigencia_all = paste(min_year, max_year, sep = " - ")) %>% 
+  select(cat_pais,  
+         cat_regestado,
+         cat_regmedios,
+         cat_regcandidatos,
+         elecciones_vigencia_all) %>% 
+  arrange(cat_pais , elecciones_vigencia_all)
+
+normativa_tabla %>% write.csv("anexos/normativa_tabla.csv")
+
+######################################################################
+######################################################################
+# CRUCES ENTRE VARIABLES ###############
+
+### metodo propio ####
+  
+matriz_cor_all <-  democracias_basedebates %>% 
+  mutate(prop_invitados = n_invitados/n_candidaturas) %>%  
+  select(ncat_eleccion,
+         ncat_ronda,
+         prop_invitados,
+         n_presentes,
+         n_ausentes,
+         dico_org_mmc,
+         dico_org_mmp,
+         dico_org_estado,
+         dico_org_osc,
+         dico_org_educ,
+         dico_formato_libre,
+         dico_formato_duelo,
+         dico_formato_expositivo,
+         dico_formato_moderadores,
+         dico_formato_periodistas,
+         dico_formato_expertos,
+         dico_formato_sectores,
+         dico_formato_presentes,
+         dico_formato_virtuales,
+         dico_temas_libre,
+         dico_temas_bloques,
+         dico_temas_puntuales,
+         dico_temas_monotema,
+         ncat_regmedios,
+         ncat_regestado,
+         ncat_regcandidatos)
+
+data_clean <- na.omit(matriz_cor_all)
+correlation_matrix <- cor(data_clean, method = "kendall")
+
+# Visualize the correlation matrix
+# corrplot::corrplot(correlation_matrix, method = "square", type = "upper", 
+#                    tl.col = "black", tl.srt = 45, addCoef.col = "black")
+
+
+# otra funcion de grafico
+ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
+
+# Generar el gráfico con coordenadas capturadas
+corr_plot <- corrplot::corrplot(
+  correlation_matrix, 
+  method = "circle",
+  col = colorRampPalette(c("red", "white", "green"))(8), 
+  diag = FALSE, 
+  plot = NULL # Capturar coordenadas
+)
+# Crear el gráfico de correlación (parte inferior)
+n <- ncol(correlation_matrix) # Número de columnas/filas
+
+# Graficar la matriz de correlación
+corrplot::corrplot(
+  correlation_matrix, 
+  method = "circle",
+  col = colorRampPalette(c("red", "white", "green"))(8), 
+  type = "lower",   # Muestra solo la parte inferior
+  addgrid.col = "gray",
+  diag = FALSE      # Ocultar diagonal
+)
+
+# Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
+for (j in 1:n) {
+  for (i in 1:n) {
+    if (i > j) { # Solo trabaja en el triángulo inferior (evita asteriscos en la parte oculta)
+      # Resaltar valores entre 0.25 y 0.5
+      if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
+        text(j, n - i + 1, "*", col = "black", cex = 1.5)
+      }
+      # Resaltar valores mayores a 0.5
+      if (abs(correlation_matrix[i, j]) > 0.5) {
+        text(j, n - i + 1, "**", col = "black", cex = 1.5)
+      }
+    }
+  }
+}
+
+
+### metodo CHATGPT ####
+# 
+# library(Hmisc)
+# # Clasificación de variables
+# ordinales <- c("ncat_eleccion", "ncat_ronda", "ncat_regmedios", "ncat_regestado", "ncat_regcandidatos")
+# dicotomicas <- c("dico_org_mmc", "dico_org_mmp", "dico_org_estado", "dico_org_osc", 
+#                  "dico_org_educ", "dico_formato_libre", "dico_formato_duelo", 
+#                  "dico_formato_expositivo", "dico_formato_moderadores", "dico_formato_periodistas", 
+#                  "dico_formato_expertos", "dico_formato_sectores", "dico_formato_presentes", 
+#                  "dico_formato_virtuales", "dico_temas_libre", "dico_temas_bloques", 
+#                  "dico_temas_puntuales", "dico_temas_monotema")
+# continuas <- c("prop_invitados", "n_presentes", "n_ausentes")
+# 
+# # Filtrar y limpiar datos
+# data_clean <- democracias_basedebates %>%
+#   mutate(prop_invitados = n_invitados / n_candidaturas) %>%
+#   select(all_of(c(ordinales, dicotomicas, continuas))) %>%
+#   na.omit()
+# 
+# # Función para calcular correlaciones adecuadas
+# correlation_table <- function(data) {
+#   var_names <- colnames(data)
+#   results <- data.frame(Var1 = character(), Var2 = character(), Correlation = numeric(), Method = character())
+#   
+#   for (i in seq_along(var_names)) {
+#     for (j in i:length(var_names)) {
+#       var1 <- var_names[i]
+#       var2 <- var_names[j]
+#       if (i != j) {
+#         if (i %in% ordinales | j %in% ordinales) {
+#           cor_value <- cor(data[[var1]], data[[var2]], method = "kendall")
+#           method <- "Kendall"
+#         } else if (i %in% continuas | j %in% continuas) {
+#           cor_value <- cor(data[[var1]], data[[var2]], method = "pearson")
+#           method <- "Pearson"
+#         } else (i %in% dicotomicas | j %in% dicotomicas) 
+#           cor_value <- cor(data[[var1]], data[[var2]], method = "kendall") # Phi se calcula como Pearson para dicotómicas
+#           method <- "Kendall"
+#          
+#         results <- rbind(results, data.frame(Var1 = var1, Var2 = var2, Correlation = cor_value, Method = method))
+#       }
+#     }
+#   }
+#   return(results)
+# }
+# 
+# # Generar tabla de correlaciones
+# tabla_correlaciones <- correlation_table(data_clean)
+# 
+# # Convertir tabla de correlaciones en formato largo
+# tabla_correlaciones_larga <- tabla_correlaciones %>%
+#   mutate(AbsCorrelation = abs(Correlation)) %>%
+#   mutate(Significance = case_when(
+#     AbsCorrelation > 0.5 ~ "**",
+#     AbsCorrelation > 0.25 ~ "*",
+#     TRUE ~ ""
+#   ))
+# 
+# # Filtrar solo la mitad inferior (Var1 > Var2)
+# tabla_correlaciones_larga_filtrada <- tabla_correlaciones_larga %>%
+#   filter(Var1 > Var2)
+# 
+# # Crear el gráfico con ggplot2 (mitad inferior)
+# ggplot(tabla_correlaciones_larga_filtrada, aes(x = Var1, y = Var2, fill = Correlation)) +
+#   geom_tile(color = "white") +
+#   scale_fill_gradient2(low = "red", mid = "white", high = "green", midpoint = 0) +
+#   geom_text(aes(label = Significance), color = "black", size = 4) +
+#   theme_minimal() +
+#   theme(
+#     axis.text.x = element_text(angle = 45, hjust = 1),
+#     axis.text.y = element_text(angle = 0, hjust = 1),
+#     axis.title.x = element_blank(),
+#     axis.title.y = element_blank()
+#   ) +
+#   labs(
+#     title = "Matriz de correlaciones (mitad inferior)",
+#     fill = "Correlación"
+#   )
+######################################################################
+######################################################################
+
+
+
+
