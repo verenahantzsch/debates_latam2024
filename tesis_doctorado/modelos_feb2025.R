@@ -230,7 +230,7 @@ summary(modelo_regulatorio_bis)
 
 ### Modelo geo/temp ####
 
-formula_modelo_temporal <- "dico_hubo_debates ~ 
+formula_modelo_difusion <- "dico_hubo_debates ~ 
                          avgpropdebatesregionxciclo + 
                          prop_elec_usa_ciclo +
                          regulaciondico +
@@ -240,14 +240,14 @@ formula_modelo_temporal <- "dico_hubo_debates ~
                          democraciavdemelectoralcomp +
                          mediaqualitycorruptvdem"
 
-modelo_temporal <- glm(formula_modelo_temporal,
+modelo_difusion <- glm(formula_modelo_difusion,
                          family = binomial(link = "logit"), 
                        #data = data 
                        data = democracias)
 
-summary(modelo_temporal)
+summary(modelo_difusion)
 
-formula_modelo_temporal_bis <- "dico_hubo_debates ~ 
+formula_modelo_difusion_bis <- "dico_hubo_debates ~ 
                          avgpropdebatesregionxciclo + 
                          prop_elec_usa_ciclo +
                          regulaciondico +
@@ -257,12 +257,12 @@ formula_modelo_temporal_bis <- "dico_hubo_debates ~
                          democraciavdemelectoralcomp +
                          mediaqualitycorruptvdem"
 
-modelo_temporal_bis <- glm(formula_modelo_temporal_bis,
+modelo_difusion_bis <- glm(formula_modelo_difusion_bis,
                        family = binomial(link = "logit"), 
                        #data = data 
                        data = democracias)
 
-summary(modelo_temporal_bis)
+summary(modelo_difusion_bis)
 
 ### Modelo final / sficativas ####
 
@@ -391,9 +391,9 @@ print(robust_se_modelo_regulatorio)
 
 ##### Modelo geo/temp ####
 
-robust_se_modelo_temporal <- coeftest(modelo_temporal, 
-                                      vcovHC(modelo_temporal, type = "HC0"))
-print(robust_se_modelo_temporal)
+robust_se_modelo_difusion <- coeftest(modelo_difusion, 
+                                      vcovHC(modelo_difusion, type = "HC0"))
+print(robust_se_modelo_difusion)
 
 
 ##### Modelo final / sficativas ####
@@ -458,17 +458,17 @@ print(robust_se_cluster_modelo_regulatorio)
 
 ##### Modelo geo/temp ####
 
-robust_se_cluster_modelo_temporal <- coeftest(modelo_temporal_bis, 
-                                              vcov = vcovCL(modelo_temporal_bis, 
+robust_se_cluster_modelo_difusion <- coeftest(modelo_difusion_bis, 
+                                              vcov = vcovCL(modelo_difusion_bis, 
                                                             #cluster = democracias$elecid))
                                                             #cluster = data$elecid))
                                                             cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_temporal)
+print(robust_se_cluster_modelo_difusion)
 
 # # para pasar a excel
-# robust_se_cluster_df <- robust_se_cluster_modelo_temporal[,] %>% 
+# robust_se_cluster_df <- robust_se_cluster_modelo_difusion[,] %>% 
 #   as_tibble() %>%
-#   mutate(variable = rownames(robust_se_cluster_modelo_temporal))
+#   mutate(variable = rownames(robust_se_cluster_modelo_difusion))
 # writexl::write_xlsx(robust_se_cluster_df, "robust_se_cluster.xlsx")
 
 ##### Modelo sficativas ####
@@ -838,14 +838,14 @@ summary(regulatorio_random_intercepts)
 # vcov_cluster <-  clubSandwich::vcovCR(regulatorio_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
 # regulatorio_random_intercepts_robust <- coef_test(regulatorio_random_intercepts, vcov = vcov_cluster)
 
-temporal_random_intercepts <- lme4::glmer(paste(formula_modelo_temporal_bis, 
+difusion_random_intercepts <- lme4::glmer(paste(formula_modelo_difusion_bis, 
                                                 "(1 | cat_pais)", sep = "+"), 
                                           family=binomial("logit"), 
                                           data = democracias,
                                           control = control)
-summary(temporal_random_intercepts)
-# vcov_cluster <- clubSandwich::vcovCR(temporal_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
-# temporal_random_intercepts_robust <- coef_test(temporal_random_intercepts, vcov = vcov_cluster)
+summary(difusion_random_intercepts)
+# vcov_cluster <- clubSandwich::vcovCR(difusion_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
+# difusion_random_intercepts_robust <- coef_test(difusion_random_intercepts, vcov = vcov_cluster)
 
 final_random_intercepts <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
                                              "(1 | cat_pais)", sep = "+"), 
@@ -1017,7 +1017,7 @@ modelo_sistemico_reducido <- glm(formula_modelo_sistemico_bis,
 modelo_regulatorio_reducido <- glm(formula_modelo_regulatorio_bis, 
                 family = binomial(link = "logit"), 
                 data = data_reducida)
-modelo_temporal_reducido <- glm(formula_modelo_temporal_bis, 
+modelo_difusion_reducido <- glm(formula_modelo_difusion_bis, 
                 family = binomial(link = "logit"), 
                 data = data_reducida)
 modelo_sficativas_reducido <- glm(formula_modelo_sficativas, 
@@ -1040,7 +1040,7 @@ modelo_sistemico_reducido <- glm(formula_modelo_sistemico_bis,
 modelo_regulatorio_reducido <- glm(formula_modelo_regulatorio_bis, 
                                    family = binomial(link = "logit"), 
                                    data = data_reducida)
-modelo_temporal_reducido <- glm(formula_modelo_temporal_bis, 
+modelo_difusion_reducido <- glm(formula_modelo_difusion_bis, 
                                 family = binomial(link = "logit"), 
                                 data = data_reducida)
 modelo_sficativas_reducido <- glm(formula_modelo_sficativas, 
@@ -1063,7 +1063,7 @@ modelo_sistemico_reducido_sficativas <- glm(formula_modelo_sistemico,
 modelo_regulatorio_reducido_sficativas <- glm(formula_modelo_regulatorio, 
                                    family = binomial(link = "logit"), 
                                    data = data_modelo_sficativas)
-modelo_temporal_reducido_sficativas <- glm(formula_modelo_temporal, 
+modelo_difusion_reducido_sficativas <- glm(formula_modelo_difusion, 
                                 family = binomial(link = "logit"), 
                                 data = data_modelo_sficativas)
 modelo_varaintes_reducido <- glm(formula_modelo_sficativas_variantes, 
@@ -1171,6 +1171,7 @@ qqline(residuals_dev, col = "red")
 # si parece haber dos observaciones potencialmente problemáticas (outliers o con leverage)
 # COLOMBIA Y BRASIL 2018
 # Tambien parece haber mas residuos de un signo que del otro (no me queda claro bien cual)
+
 
 ##### Durbin-Watson para autocorrelacion de errores ####
 # prueba de Durbin-Watson (verificar autocorrelación en los residuos).
@@ -1513,8 +1514,8 @@ vifs_2 <- vifs(modelo_sistemico)
 vifs_2_bis <- vifs(modelo_sistemico_bis)
 vifs_3 <- vifs(modelo_regulatorio)
 vifs_3_bis <- vifs(modelo_regulatorio_bis)
-vifs_4 <- vifs(modelo_temporal)
-vifs_4_bis <- vifs(modelo_temporal_bis)
+vifs_4 <- vifs(modelo_difusion)
+vifs_4_bis <- vifs(modelo_difusion_bis)
 vifs_5 <- vifs(modelo_sficativas)
 vifs_6 <- vifs(modelo_sficativas_variantes)
 
@@ -1563,7 +1564,7 @@ lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_0_reducido)
 lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
 # lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
 # lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
-# lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido) # pendiente
+# lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_difusion_reducido) # pendiente
 # lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido) # Pendiente
 
 # en gral el modelo mejora significativamente en todos los casos
@@ -1586,14 +1587,14 @@ logLik(modelo_a_probar)
 # lrtest(modelo_contingencia_reducido, modelo_sficativas_variantes_reducido)
 # # lrtest(modelo_sistemico_reducido_sficativas, modelo_sficativas) # pendiente
 # lrtest(modelo_regulatorio_reducido_sficativas, modelo_sficativas) # pendiente
-#lrtest(modelo_temporal_reducido_sficativas, modelo_sficativas)
+#lrtest(modelo_difusion_reducido_sficativas, modelo_sficativas)
 
 lrtest(modelo_a_probar)
 lrtest(modelo_sficativas_variantes_reducido , modelo_0_reducido)
 lrtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
 # lrtest(modelo_sficativas_variantes_reducido , modelo_sistemico_reducido) # pendiente
 # lrtest(modelo_sficativas_variantes_reducido , modelo_regulatorio_reducido) # pendiente
-#lrtest(modelo_sficativas_variantes_reducido , modelo_temporal_reducido) # ojo no estan anidados
+#lrtest(modelo_sficativas_variantes_reducido , modelo_difusion_reducido) # ojo no estan anidados
 #lrtest(modelo_sficativas_variantes_reducido , modelo_sficativas_reducido) # ojo no estan anidados
 
 # Model 1 : represents the null model, which includes only the intercept.
@@ -1665,7 +1666,7 @@ stats0 <- stats( modelo_0_reducido)
 stats1 <- stats( modelo_contingencia_reducido)
 stats2 <- stats( modelo_sistemico_reducido)
 stats3 <- stats( modelo_regulatorio_reducido)
-stats4 <- stats( modelo_temporal_reducido)
+stats4 <- stats( modelo_difusion_reducido)
 stats5 <- stats( modelo_sficativas_reducido)
 stats6 <- stats( modelo_sficativas_variantes_reducido)
 
@@ -1749,7 +1750,7 @@ countr20 <- funcion_count_R2(modelo_0_reducido, data_reducida$dico_hubo_debates)
 countr21 <- funcion_count_R2(modelo_contingencia_reducido, data_reducida$dico_hubo_debates)
 countr22 <- funcion_count_R2(modelo_sistemico_reducido, data_reducida$dico_hubo_debates)
 countr23 <- funcion_count_R2(modelo_regulatorio_reducido, data_reducida$dico_hubo_debates)
-countr24 <- funcion_count_R2(modelo_temporal_reducido, data_reducida$dico_hubo_debates)
+countr24 <- funcion_count_R2(modelo_difusion_reducido, data_reducida$dico_hubo_debates)
 countr25 <- funcion_count_R2(modelo_sficativas_reducido, data_reducida$dico_hubo_debates)
 countr26 <- funcion_count_R2(modelo_sficativas_variantes_reducido, data_reducida$dico_hubo_debates)
 
@@ -2120,7 +2121,7 @@ final_random_intercepts_control_diconuncadebates <- lme4::glmer(
 summary(final_random_intercepts_control_diconuncadebates)
 
 
-#### Regulacion (tres variantes) #####
+#### Regulación (tres variantes) #####
 
 modelo_final_control_regulacionalternativa <- glm(str_replace(formula_modelo_sficativas_variantes,
                                                               "regulaciondico", "regulacionobligatoriodico + regulaciongarantiasdico"),
@@ -2412,16 +2413,16 @@ lista1 <-  list(
   robust_se_cluster_modelo_contingencia,
   robust_se_cluster_modelo_sistemico,
   robust_se_cluster_modelo_regulatorio,
-  robust_se_cluster_modelo_temporal,
+  robust_se_cluster_modelo_difusion,
   robust_se_cluster_modelo_sficativas_variantes
 ) 
 
 
 texreg::htmlreg(lista1,
                 custom.model.names = c("Contingencia",
-                                       "Sistemico",
+                                       "Sistémico",
                                        "Regulatorio",
-                                       "Temporal",
+                                       "Difusión",
                                        "Final")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
@@ -2430,18 +2431,18 @@ texreg::htmlreg(lista1,
                                       "Votos oficialista",
                                       "Incumbente reelije",
                                       
-                                      "Regulacion sobre debates",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       
                                       "Alineamiento partidario",
                                       "Prop. TV por hogar"		,
                                       "Prop. individuos c internet",
-                                      "Prohibicion propaganda"	 ,
+                                      "Prohibición propaganda"	 ,
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
+                                      "Prop. debates en región",
                                       "Prop. debates en USA" 
                                       
                 ),
@@ -2474,16 +2475,16 @@ texreg::htmlreg(lista1,
 lista1bis <-  list(contingencia_random_intercepts,
                    sistemico_random_intercepts,
                    regulatorio_random_intercepts,
-                   temporal_random_intercepts,
+                   difusion_random_intercepts,
                    final_random_intercepts)
 
 # https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
 
 texreg::htmlreg(lista1bis,
                 custom.model.names = c("Contingencia",
-                                       "Sistemico",
+                                       "Sistémico",
                                        "Regulatorio",
-                                       "Temporal",
+                                       "Difusión",
                                        "Final")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
@@ -2492,18 +2493,18 @@ texreg::htmlreg(lista1bis,
                                       "Votos oficialista",
                                       "Incumbente reelije",
                                       
-                                      "Regulacion sobre debates",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       
                                       "Alineamiento partidario",
                                       "Prop. TV por hogar"		,
                                       "Prop. individuos c internet",
-                                      "Prohibicion propaganda"	 ,
+                                      "Prohibición propaganda"	 ,
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
+                                      "Prop. debates en región",
                                       "Prop. debates en USA"
                                       
                 ),
@@ -2552,12 +2553,12 @@ texreg::htmlreg(lista2,
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Regulacion sobre debates",
+                                      "Prop. debates en región",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)") ,
+                                      "Corrupción de medios (VDEM)") ,
                 file="anexos/tabla_anexa_outliers.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
@@ -2590,12 +2591,12 @@ texreg::htmlreg(lista3,
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Regulacion sobre debates",
+                                      "Prop. debates en región",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       "Alineamiento partidario",
                                       "Prop. TV por hogar",		
                                       "Volatilidad"
@@ -2637,16 +2638,16 @@ texreg::htmlreg(lista4,
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Regulacion sobre debates",
+                                      "Prop. debates en región",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       "Margen de victoria",
                                       "NEC" ,
                                       "Prop. debates en USA" ,
-                                      "PBI per Capita"
+                                      "PBI per Cápita"
                 ),
                 reorder.coef =  c(1,
                                   1+1,
@@ -2690,12 +2691,12 @@ texreg::htmlreg(lista5,
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Regulacion sobre debates",
+                                      "Prop. debates en región",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       "Elección pasada c/ debates",
                                       "log Cant. elecciones pasadas c/ debates"
                 ),
@@ -2739,12 +2740,12 @@ texreg::htmlreg(lista5bis,
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Regulacion sobre debates",
+                                      "Prop. debates en región",
+                                      "Regulación sobre debates",
                                       #"Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       "Elección pasada c/ debates"
                                       #"log Cant. elecciones pasadas c/ debates"
                 ),
@@ -2773,12 +2774,12 @@ texreg::htmlreg(lista6,
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Regulacion sobre debates",
+                                      "Prop. debates en región",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       "Regulación: debates obligatorios",
                                       "Regulación: otra regulación",
                                       "Exigencia de regulación"
@@ -2821,13 +2822,13 @@ texreg::htmlreg(lista7,
                                       "Incumbente reelije",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
-                                      "Prop. debates en Region",
-                                      "Regulacion sobre debates",
+                                      "Prop. debates en región",
+                                      "Regulación sobre debates",
                                       "Cant. elecciones pasadas con debates",
-                                      "log PBI per Capita",
+                                      "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
-                                      "Corrupcion de medios (VDEM)",
-                                      "Regulacion * log NEC"
+                                      "Corrupción de medios (VDEM)",
+                                      "Regulación * log NEC"
                 ),
                 file="anexos/tabla_anexa_interactivo.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
@@ -2895,7 +2896,7 @@ odds_ratios <- jtools::plot_summs(modelo_a_interpretar, #modelo_contingencia,
 varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
                                                  modelo_sistemico,
                                                  modelo_regulatorio,
-                                               #  modelo_temporal, # vemos el efecto sobredeterminado de prop_elec_usa-....
+                                               #  modelo_difusion, # vemos el efecto sobredeterminado de prop_elec_usa-....
                                                 # modelo_sficativas,
                                                  modelo_sficativas_variantes,
                                                  modelo_sficativas_variantes_s_outliers,
@@ -2906,7 +2907,7 @@ varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
                                                  model.names = c("modelo_contingencia",
                                                                  "modelo_sistemico",
                                                                  "modelo_regulatorio",
-                                                               #  "modelo_temporal",
+                                                               #  "modelo_difusion",
                                                                  #"modelo_sficativas",
                                                                  "modelo_sficativas_variantes",
                                                                  "modelo_sficativas_variantes_s_outliers"
@@ -4044,7 +4045,7 @@ texreg::htmlreg(listac1,
                                       "Medio privado organiza",
                                       "Estado organiza",
                                       "log NEC",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       "log PBI per Cápita" ,
                                       "Democracia electoral (VDEM)" ,
                                       "Regulación sobre debates",
@@ -4078,7 +4079,7 @@ texreg::htmlreg(listac2,
                                       "Medio privado organiza",
                                       "Estado organiza",
                                       "log NEC",
-                                      "Corrupcion de medios (VDEM)",
+                                      "Corrupción de medios (VDEM)",
                                       "log PBI per Cápita" ,
                                       "Democracia electoral (VDEM)" ,
                                       "Regulación sobre debates"#,
