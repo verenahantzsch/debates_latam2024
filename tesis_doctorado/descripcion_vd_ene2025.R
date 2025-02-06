@@ -408,7 +408,7 @@ conversion_log <- tibble(n_debates_año_pais = n_debates_año_pais,
                          log = log)
 
 
-########################################################################
+ 
 ######################################################################
 # ORGANIZADORES #################
 
@@ -520,13 +520,14 @@ plot_cuenta_subtipos_gral_2 <- cuenta_subtipos_gral_2  %>%
                        ", colorespais$cat_pais[11:18] %>% toString()
        ),
        title = "Tipos y subtipos de organizadores",
-       subtitle = "Cantidad absoluta, para la base de datos en su conjunto")
+       subtitle = "Cantidad absoluta, para la base de datos en su conjunto") +
+  theme(legend.position = "bottom")
 
 
-plotnumber <- plotnumber + 1
+#plotnumber <- plotnumber + 1
 plotname <- "_anexo_distrib_orgsysubtipos"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
-ggsave(filename, width = 10, height = 7)
+ggsave(filename, width = 12, height = 7)
 
 
 
@@ -814,7 +815,7 @@ sum(mmcstreaming$dico_streaming, na.rm=T)/length(mmcstreaming$dico_streaming)*10
 
 
 
-####################################################################################
+ 
 ##########################################################################################
 # FORMATOS #############
 
@@ -1072,7 +1073,21 @@ plotname <- "ppac_pais"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
 ggsave(filename, width = 10, height = 7)
 
-#### variedad patrones #####
+#### between within NO REPORTO #####
+
+ordinalxtsum <- xtsum::xtsum(
+  democracias_basedebates,
+  variables = c("ncat_ppac",
+                "ncat_competencia"),
+  id = "cat_pais",
+  t = "ncat_eleccion",
+  na.rm = T,
+  return.data.frame = T,
+  dec = 3
+)
+ordinalxtsum
+
+### variedad patrones #####
 
 patronesvariedad_t <- democracias_basedebates %>%  
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>%  
@@ -1100,8 +1115,9 @@ patronesvariedad_e <- democracias_basedebates %>%
                               as.numeric(dico_formato_presentes) +
                               as.numeric(dico_formato_expositivo )) %>%
   group_by(cat_pais) %>% 
-  summarise(mean_n_patrones = mean(n_patrones, na.rm=T)) %>% 
-  arrange(mean_n_patrones)
+  summarise(mean_n_patrones = mean(n_patrones, na.rm=T),
+            n_debates_pais = n())# %>% 
+ # arrange(mean_n_patrones)
  
 ## Temas ############
 
@@ -1177,7 +1193,21 @@ tipos_temas_pais_wide <- tipos_temas_pais %>%
 
 tipos_temas_pais_wide %>% write_csv("anexos/tipos_temas_pais_wide.csv")
 
+### betw- with no creo que reporte ####
 
+temastsum <- xtsum::xtsum(
+  democracias_basedebates,
+  variables = c("dico_temas_libre",
+                "dico_temas_bloques",
+                "dico_temas_puntuales",
+                "dico_temas_monotema"),
+  id = "cat_pais",
+  t = "ncat_eleccion",
+  na.rm = T,
+  return.data.frame = T,
+  dec = 3
+)
+temastsum
 
 ### variedad temas #####
 
@@ -1197,24 +1227,9 @@ esquemasvariedad_e <- democracias_basedebates %>%
            as.numeric(dico_temas_puntuales)+
            as.numeric(dico_temas_bloques)) %>%
   group_by(cat_pais) %>% 
-  summarise(mean_n_esquemas = mean(n_esquemas, na.rm=T)) %>% 
-  arrange(mean_n_esquemas)
-
-### betw- with no creo que reporte ####
-
-temastsum <- xtsum::xtsum(
-  democracias_basedebates,
-  variables = c("dico_temas_libre",
-                "dico_temas_bloques",
-                "dico_temas_puntuales",
-                "dico_temas_monotema"),
-  id = "cat_pais",
-  t = "ncat_eleccion",
-  na.rm = T,
-  return.data.frame = T,
-  dec = 3
-)
-temastsum
+  summarise(mean_n_esquemas = mean(n_esquemas, na.rm=T),
+            n_debates_pais = n())# %>% 
+  #arrange(mean_n_esquemas)
 
 ### agrego variedad de temas y patrones ####
 
@@ -1222,7 +1237,11 @@ variedad_t <- patronesvariedad_t %>%
   left_join(esquemasvariedad_t)
 
 variedad_e <- patronesvariedad_e %>% 
-  left_join(esquemasvariedad_e)
+  left_join(esquemasvariedad_e) %>% 
+  select(cat_pais,
+         n_debates_pais, 
+         mean_n_patrones, 
+         mean_n_esquemas)
 
 variedad_t %>% write.csv("anexos/variedad_formatos_t.csv")
 variedad_e %>% write.csv("anexos/variedad_formatos_e.csv")
@@ -1379,7 +1398,7 @@ ncandtsum <- xtsum::xtsum(
 ncandtsum
 
 
-######################################################################
+ 
 ######################################################################
 # REGULACION #############
 
@@ -1402,7 +1421,7 @@ normativa_tabla <- democracias_normativa %>%
 
 normativa_tabla %>% write.csv("anexos/normativa_tabla.csv")
 
-######################################################################
+ 
 ######################################################################
 # NO USO CRUCES ENTRE VARIABLES ###############
 # 
@@ -1564,9 +1583,4 @@ normativa_tabla %>% write.csv("anexos/normativa_tabla.csv")
 # #     title = "Matriz de correlaciones (mitad inferior)",
 # #     fill = "Correlación"
 # #   )
-# ######################################################################
-# ######################################################################
-# 
-# 
-# 
-# 
+ 

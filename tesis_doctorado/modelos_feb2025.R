@@ -19,6 +19,7 @@ base_vdependiente <- read.csv("variables_dependientes_elecciones.csv")
 base_indicadores <- read.csv("indicadores_elecciones.csv")
 base_controles <- read.csv("controles_elecciones.csv")
 base_candidatos <-  read.csv("indicadores_candidatos.csv")
+diccionario_indicadores <- read.csv("diccionario_indicadores_etiquetas.csv")
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 # ELECCIONES ##############################
@@ -1530,10 +1531,13 @@ all_vifs <- rbind(vifs_1,
                   vifs_5 ,
                   vifs_6 )
 
-all_vifs <- all_vifs %>% 
-  pivot_wider(names_from = Modelo, values_from = Vif_value)
+all_vifs2 <- all_vifs %>% 
+  left_join(diccionario_indicadores) %>% 
+  select(-Indicador) %>% 
+  pivot_wider(names_from = Modelo, values_from = Vif_value)  
+  
 
-all_vifs %>% write_csv("anexos/vifs_values.csv")
+all_vifs2 %>% write_csv("anexos/vifs_values.csv")
 
 #### otros? PENDIENTE ####
 ### Controles - Missing data PENDIENTE ####
@@ -2469,7 +2473,30 @@ texreg::htmlreg(lista1,
                 file="anexos/tabla_modelos_logit_robustos.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
-                bold = 0.1)
+                bold = 0.1,
+                #. For example, list("Random effects" = c("YES", "YES", "NO"), Observations = c(25, 25, 26))
+                custom.gof.rows = list("AIC" = c(AIC(modelo_contingencia_bis),
+                                                 AIC(modelo_sistemico_bis),
+                                                 AIC(modelo_regulatorio_bis),
+                                                 AIC(modelo_difusion_bis),
+                                                 AIC(modelo_sficativas_variantes)),
+                                       "BIC" = c(BIC(modelo_contingencia_bis),
+                                                 BIC(modelo_sistemico_bis),
+                                                 BIC(modelo_regulatorio_bis),
+                                                 BIC(modelo_difusion_bis),
+                                                 BIC(modelo_sficativas_variantes)),
+                                       "Log Likelihood" = c(as.numeric(logLik(modelo_contingencia_bis)),
+                                                            as.numeric(logLik(modelo_sistemico_bis)),
+                                                            as.numeric(logLik(modelo_regulatorio_bis)),
+                                                            as.numeric(logLik(modelo_difusion_bis)),
+                                                            as.numeric(logLik(modelo_sficativas_variantes))),
+                                       "Num. obs" = c(nobs(modelo_contingencia_bis),
+                                                      nobs(modelo_sistemico_bis),
+                                                      nobs(modelo_regulatorio_bis),
+                                                      nobs(modelo_difusion_bis),
+                                                      nobs(modelo_sficativas_variantes)) ) )   
+ 
+ 
 
 ## EXPORTO MODELOS RANDOM INTERCEPT #####
 lista1bis <-  list(contingencia_random_intercepts,
@@ -3041,10 +3068,11 @@ plot_interpretacion <- ggplot(predicted_probs) +
   xlab("Número Efectivo de Candidatos") +
   ylab("Probabilidad predicha de que ocurra un debate") +
   scale_x_continuous(breaks= seq(1, 10, 0.5)) +
-  scale_fill_discrete(labels = c("No hay", "Hay"), breaks = c(0,1)) +
-  scale_colour_discrete(labels = c("No hay", "Hay"), breaks = c(0,1)) +
+  scale_fill_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey40", "lawngreen")) +
+  scale_colour_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey30", "limegreen")) +
   geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2)
+  geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2) +
+  theme(legend.position = "bottom")
  
 plot_interpretacion %>% ggsave(filename = "images/plot_interpretacion_nec_regulacion.jpg",
                                width = 12,
@@ -3243,10 +3271,13 @@ marginals_df$AME["dico_reeleccion"] * 100
 (marginals_df$AME["dico_reeleccion"] - 1.64485*marginals_df$SE["Var_dydx_dico_reeleccion"]) * 100
 (marginals_df$AME["dico_reeleccion"] + 1.64485*marginals_df$SE["Var_dydx_dico_reeleccion"]) * 100
 
+marginals_df <- marginals_df %>% 
+  left_join(diccionario_indicadores %>% 
+              dplyr::rename("factor" = "Indicador"))
 
 plot_margins <- ggplot(marginals_df) +
-  geom_point( aes(x = factor, y = AME)) +
-  geom_errorbar(aes(x = factor, ymin = AME-1.64485*SE, ymax = AME+1.64485*SE), width = 0.2) +
+  geom_point( aes(x = Nombre, y = AME)) +
+  geom_errorbar(aes(x = Nombre, ymin = AME-1.64485*SE, ymax = AME+1.64485*SE), width = 0.2) +
   geom_hline(aes(yintercept = 0), colour = "gray50", linetype = 2) +
   # geom_hline(aes(yintercept = 0.25), colour = "red2", linetype = 2, alpha = 0.1) +
   coord_flip() +
@@ -3257,9 +3288,10 @@ plot_margins <- ggplot(marginals_df) +
        y = "Efectos marginales promedio",
        caption = "Elaboración propia sobre la base de modelo final, estimado con regresión logística con errores estándar agrupados por país.
        Intervalos de confianza estimados al 90%") +
-  theme_classic() 
+  theme_classic() +
+  theme(axis.text.y = element_text(size = 12))
 
-plot_margins %>% ggsave(filename = "images/plot_margins.jpg", width = 8, height = 8)
+plot_margins %>% ggsave(filename = "images/plot_margins.jpg", width = 12, height = 8)
 
 #margins::marginal_effects(margins::margins(modelo_a_interpretar))
 

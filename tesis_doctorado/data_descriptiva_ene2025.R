@@ -3268,11 +3268,12 @@ histograms_candidatos2 <- data_to_plot_long3 %>%
   theme_classic() +
   labs(title = "Distribución univariada de variables independientes",
        caption = "Elaboración propia")  +
-  scale_fill_manual(values = c("slategray4", "salmon"),
-                    name= "¿Candidato presente?",
+  scale_fill_manual(values = c("grey10", "green"),
+                    name= "",
                     breaks = c(0,1),
-                    labels = c("No", "Sí")  ) +
-  theme(strip.text = element_text(size = 14))
+                    labels = c("Ausente", "Presente")  ) +
+  theme(strip.text = element_text(size = 14),
+        legend.position = "bottom")
 
 histograms_candidatos2 %>% ggsave(filename = "images/histogramas_vis_candidatos_condicional.jpg", 
                                  width = 18, height = 10)
