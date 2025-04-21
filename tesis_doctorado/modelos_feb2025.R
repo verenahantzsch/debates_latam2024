@@ -2888,6 +2888,7 @@ texreg::htmlreg(lista7,
                 bold = 0.1)
 
 
+## HASTA ACA LLEGUE EN LA INCORPORACION DE COMENTARIOS CELES ######
 ## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
 
 #### INTERPRETACION - importante elegir ####
