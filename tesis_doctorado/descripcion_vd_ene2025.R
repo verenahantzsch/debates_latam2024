@@ -183,11 +183,13 @@ base_elecciones_conysindebates_t <- democracias_ronda_full %>%
 
 base_plot_elecciones_conysindebates_t <- base_elecciones_conysindebates_t %>% 
   pivot_longer(cols= c(n_elecciones_con_debates, n_elecciones_sin_debates), 
-               names_to = "dico_debates", values_to = "n_dico_debates")
+               names_to = "dico_debates", values_to = "n_dico_debates") %>% 
+  mutate(porcentaje_elecciones_con_debates = paste(round(prop_elecciones_con_debates*100), "%"))
 
 plot_elecciones_conysindebates_t <- base_plot_elecciones_conysindebates_t %>% 
   ggplot() + 
   geom_col(aes(ncat_eleccion, n_dico_debates, fill = dico_debates), colour = "grey80", position = "dodge") +
+  #geom_text(aes(x = ncat_eleccion, y = n_dico_debates, label = porcentaje_elecciones_con_debates)) +
   theme_classic() +
   scale_fill_manual(breaks = c("n_elecciones_con_debates", "n_elecciones_sin_debates"),
                     labels =c("Elecciones con debates", "Elecciones sin debates"),
@@ -224,11 +226,16 @@ base_elecciones_conysindebates_e <- democracias_ronda_full %>%
 
 base_plot_elecciones_conysindebates_e <- base_elecciones_conysindebates_e %>% 
   pivot_longer(cols= c(n_elecciones_con_debates, n_elecciones_sin_debates), 
-               names_to = "dico_debates", values_to = "n_dico_debates")
+               names_to = "dico_debates", values_to = "n_dico_debates") %>% 
+  mutate(porcentaje_elecciones_con_debates = paste(round(prop_elecciones_con_debates*100), "%")) %>% 
+  group_by(cat_pais) %>% 
+  mutate(y_porcentaje = sum(n_dico_debates)) %>% 
+  ungroup() 
 
 plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # reordenarn en f de elec sin debates
   ggplot() + 
   geom_col(aes(cat_pais, n_dico_debates, fill = dico_debates), colour = "grey80", position = "stack") +
+  geom_text(aes(x = cat_pais, y = y_porcentaje, label = porcentaje_elecciones_con_debates)) +
   theme_classic() +
   scale_fill_manual(breaks = c("n_elecciones_con_debates", "n_elecciones_sin_debates"),
                     labels =c("Elecciones con debates", "Elecciones sin debates"),
@@ -240,7 +247,8 @@ plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # 
        x = "País",
        caption = "Elaboración propia.
        La primera y segunda ronda de las elecciones presidenciales se cuentan de manera separada cuando aplica.
-       Se consideran únicamente elecciones ocurridas bajo regímenes democraticos (>0.45 en índice de poliarquía de V-Dem)") +
+       Se consideran únicamente elecciones ocurridas bajo regímenes democraticos (>0.45 en índice de poliarquía de V-Dem).
+       Los porcentajes indican la cantidad de elecciones CON debates sobre el total") +
   theme(legend.position = "bottom",
         axis.text.x = element_text(angle=90, size = 12))
 
@@ -412,6 +420,12 @@ conversion_log <- tibble(n_debates_año_pais = n_debates_año_pais,
 ######################################################################
 # ORGANIZADORES #################
 
+## aparte: check nombres internacionales #####
+internacionales <- democracias_organizadores %>% 
+  subset(ncat_subtipov2=="ong_internacional"|ncat_subtipov2=="publico_internacional"|ncat_subtipov2=="educ_internacional"|ncat_subtipov2=="tv_internacional"| str_detect(nombres_organizadores, "CNN"))
+internacionales$nombres_organizadores %>% unique()
+internacionales$id_debate %>% unique() %>% length()
+####### PENDIENTE IMPORTANTE ALGUNOS CAMBIOS EN ROJO EN BASE DEBATES LIMPIA MAL ARRASTRADOS ###############
 ## incidencia de categorias ####
 ### cuentas de orgs #############
 
