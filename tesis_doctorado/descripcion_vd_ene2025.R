@@ -157,7 +157,21 @@ descriptive_anexas3 <- descriptive_anexas %>%
 
 descriptive_anexas3 %>% write.csv("anexos/descriptiva_VD_anexo.csv")
 
+## diferencia de proporciones ###########
 
+
+no_democracias_anual_full <- base_anual_full %>%
+  left_join(base_controles %>% 
+              group_by(cat_pais, ncat_eleccion) %>% 
+              summarise(democraciavdempolyarchy = mean(democraciavdempolyarchy, na.rm=T))) %>% 
+  subset(democraciavdempolyarchy<0.45) %>% 
+  subset(ncat_eleccion!=2024)  
+
+prop.test(x = c(sum(democracias_anual_full$dico_hubo_debates),
+                sum(no_democracias_anual_full$dico_hubo_debates)),
+          n = c(nrow(democracias_anual_full),
+                nrow(no_democracias_anual_full)))
+  
 ## between - within ######
 
 
@@ -318,37 +332,70 @@ ev_t_mean_n_debatesxeleccion <- democracias_ronda_full %>%
 
 head(ev_t_mean_n_debatesxeleccion)
 
+# promedio sobre tot elecciones
 ev_decada_mean_n_debatesxeleccion <- democracias_ronda_full %>% 
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
   group_by(decada) %>% 
   summarise(mean_n_debates_decada = mean(n_debates_año_pais_ronda, na.rm = T),
             n_elecciones = n())  
 
+# promedio sobre elec con debates
+ev_decada_mean_n_debatesxeleccion_eleccdebates <- democracias_ronda_full %>% 
+  subset(dico_hubo_debates ==1 ) %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>% 
+  summarise(mean_n_debates_decada_eleccdebates = mean(n_debates_año_pais_ronda, na.rm = T))
+
+# prop elec con debates
 ev_decada_mean_dico_debatesxeleccion <- democracias_ronda_full %>% 
   mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
   group_by(decada) %>% 
-  summarise(mean_dico_debates_decada = mean(dico_hubo_debates, na.rm = T),
-            n_elecciones = n())  
+  summarise(mean_dico_debates_decada = mean(dico_hubo_debates, na.rm = T))  
+
 
 ev_decadas <- ev_decada_mean_n_debatesxeleccion %>% 
+  left_join(ev_decada_mean_n_debatesxeleccion_eleccdebates) %>% 
   left_join(ev_decada_mean_dico_debatesxeleccion)
+
+ev_decadas <- ev_decadas %>% 
+  select(decada ,
+         n_elecciones, 
+         mean_n_debates_decada,
+         mean_n_debates_decada_eleccdebates,
+         mean_dico_debates_decada ) %>% 
+  arrange(decada)  %>% 
+  mutate(across(starts_with("mean"), ~round(., 2)))
 
 ev_decadas %>% write.csv("anexos/evolucion_decadas.csv")
 
 ev_e_mean_n_debatesxeleccion <- democracias_ronda_full %>% 
   group_by(cat_pais) %>% 
   summarise(mean_n_debates_pais = mean(n_debates_año_pais_ronda, na.rm = T),
-            n_elecciones = n()) %>% 
-  arrange(mean_n_debates_pais)  
+            n_elecciones = n())   
+
+ev_e_mean_n_debatesxeleccion_eleccdebates <- democracias_ronda_full %>% 
+  subset(dico_hubo_debates ==1 ) %>% 
+  group_by(cat_pais) %>% 
+  summarise(mean_n_debates_pais_eleccdebates = mean(n_debates_año_pais_ronda, na.rm = T))  
 
 ev_e_mean_dico_debatesxeleccion <- democracias_ronda_full %>% 
   group_by(cat_pais) %>%
   summarise(mean_dico_debates_pais = mean(dico_hubo_debates, na.rm = T),
             n_elecciones = n())  
 
-ev_e <- ev_e_mean_n_debatesxeleccion %>% 
+ev_e <- ev_e_mean_n_debatesxeleccion  %>% 
+  left_join(ev_e_mean_n_debatesxeleccion_eleccdebates) %>% 
   left_join(ev_e_mean_dico_debatesxeleccion)
 
+ev_e <- ev_e %>% 
+  select(cat_pais ,
+         n_elecciones, 
+         mean_n_debates_pais,
+         mean_n_debates_pais_eleccdebates,
+         mean_dico_debates_pais ) %>% 
+  arrange(mean_dico_debates_pais)  %>% 
+  mutate(across(starts_with("mean"), ~round(., 2)))
+  
 ev_e %>% write.csv("anexos/evolucion_paises.csv")
 
 
@@ -575,7 +622,7 @@ tabla_cuenta_tipos_por_decada_debates <- cuenta_tipos_por_decada %>%
   arrange(decada) %>% 
   pivot_wider(names_from = cat_tipoorgv2, values_from = pr_debates_en_participaron) %>% 
   mutate(across(everything(), ~ ifelse(is.na(.), 0, .))) %>% 
-  mutate(prom_entxdebate = round(n_entidades_total_decada/ n_debates_en_decada, 2)) %>% 
+  mutate(prom_entxdebate = round(n_entidades_total_decada/ n_debates_en_decada, 1)) %>% 
   select(   "decada",
             "n_debates_en_decada",
             "n_entidades_total_decada", 
@@ -624,7 +671,7 @@ tabla_cuenta_tipos_por_pais_debates <- cuenta_tipos_por_cat_pais %>%
   arrange(cat_pais) %>% 
   pivot_wider(names_from = cat_tipoorgv2, values_from = pr_debates_en_participaron) %>% 
   mutate(across(everything(), ~ ifelse(is.na(.), 0, .))) %>% 
-  mutate(prom_entxdebate = round(n_entidades_total_pais/ n_debates_en_pais, 2)) %>% 
+  mutate(prom_entxdebate = round(n_entidades_total_pais/ n_debates_en_pais, 1)) %>% 
   select(   "cat_pais",
             "n_debates_en_pais",
             "n_entidades_total_pais",
@@ -792,6 +839,9 @@ alianzas_cuenta_meandecada %>%
 streaming <- democracias_basedebates %>% 
   filter(dico_streaming == TRUE) 
 
+nrow(streaming)/nrow(democracias_basedebates)
+
+# de los transmitidos streaming, X% contó con X actor
 streaming_tipos <- streaming %>% 
   mutate(dico_cattipo_mmc = ifelse(n_cattipo_mmc==0,0,1),
          dico_cattipo_osc = ifelse(n_cattipo_osc==0,0,1),
@@ -812,13 +862,21 @@ streamingtotals["dico_cattipo_mmp"]/sum(streamingtotals)*100 # NA
 sum(streamingtotals)
 length(streaming$id_debate)/length(democracias_basedebates$id_debate)*100 #  
 
+# puesto al reves: de los que participaron... un XX fue transmitido solo x streaming 
 oscsstreaming <- democracias_basedebates %>% 
   filter(n_cattipo_osc>0) %>% 
   select(dico_streaming, n_cattipo_osc) %>% 
   mutate(dico_streaming = ifelse(dico_streaming==TRUE,1,0))
 
 sum(oscsstreaming$dico_streaming, na.rm=T)/length(oscsstreaming$dico_streaming)*100
-# ojo, emprolijar NAs, en general equivalen a streaming == F. Creo que a los fines de na.rm el resultado seria el mismo
+
+educstreaming <- democracias_basedebates %>% 
+  filter(n_cattipo_educ>0) %>% 
+  select(dico_streaming, n_cattipo_educ) %>% 
+  mutate(dico_streaming = ifelse(dico_streaming==TRUE,1,0))
+
+sum(educstreaming$dico_streaming, na.rm=T)/length(educstreaming$dico_streaming)*100
+
 
 mmcstreaming <- democracias_basedebates %>% 
   filter(n_cattipo_mmc>0) %>% 
@@ -1259,6 +1317,17 @@ variedad_e <- patronesvariedad_e %>%
 
 variedad_t %>% write.csv("anexos/variedad_formatos_t.csv")
 variedad_e %>% write.csv("anexos/variedad_formatos_e.csv")
+
+## debates s ausentes ##
+summary(democracias_basedebates$dico_ausencias)
+debates_s_ausentes <- democracias_basedebates %>% 
+  subset(n_ausentes==0)
+debates_c_ausentes <- democracias_basedebates %>% 
+  subset(n_ausentes>0)
+
+nrow(debates_s_ausentes)/nrow(democracias_basedebates)
+
+nrow(debates_c_ausentes)/nrow(democracias_basedebates)
 
 ## Invitaciones ####
 
