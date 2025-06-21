@@ -474,6 +474,32 @@ internacionales$nombres_organizadores %>% unique()
 internacionales$id_debate %>% unique() %>% length()
 ####### PENDIENTE IMPORTANTE ALGUNOS CAMBIOS EN ROJO EN BASE DEBATES LIMPIA MAL ARRASTRADOS ###############
 ## incidencia de categorias ####
+
+### cuenta de macro-orgs #############
+democracias_organizadores <- democracias_organizadores %>% 
+  mutate(macro_orgs =ifelse(cat_tipoorgv2%in%c("mmp","estado","osc","educ"), "no mediáticos",
+                            ifelse(cat_tipoorgv2=="mmc", "mediáticos",
+                                   NA)))
+
+
+porcentaje_orgs_mediaticos <- nrow(democracias_organizadores[democracias_organizadores$macro_orgs=="mediáticos",]) / nrow(democracias_organizadores)
+porcentaje_orgs_no_mediaticos <- nrow(democracias_organizadores[democracias_organizadores$macro_orgs=="no mediáticos",]) / nrow(democracias_organizadores)
+
+n_debates <- length(unique(democracias_organizadores$id_debate))
+
+ppaciones_mediaticos <- nrow( 
+  unique(
+    democracias_organizadores[democracias_organizadores$macro_orgs=="mediáticos","id_debate"]
+  ))
+
+ppaciones_no_mediaticos <- nrow( 
+  unique(
+    democracias_organizadores[democracias_organizadores$macro_orgs=="no mediáticos","id_debate"]
+  ))
+
+porcentaje_ppaciones_mediaticos <- ppaciones_mediaticos / n_debates
+porcentaje_ppaciones_no_mediaticos <- ppaciones_no_mediaticos / n_debates
+  
 ### cuentas de orgs #############
 
 n_tot_individuos <- nrow(democracias_organizadores)
@@ -539,8 +565,6 @@ cuenta_subtipos_osc <- democracias_organizadores %>%
   arrange(desc(pr))
 
 
-
-
 ### grafico ANEXO subtipos y tipos ####
 
 cuenta_subtipos_gral_2 <- democracias_organizadores  %>%
@@ -548,7 +572,7 @@ cuenta_subtipos_gral_2 <- democracias_organizadores  %>%
   summarise(n_subtipo = n()) %>% 
   arrange(desc(cat_tipoorgv2), desc(n_subtipo)) %>%  
   ungroup() %>% 
-  mutate(ncat_subtipov2_2 = ifelse(n_subtipo > 3, ncat_subtipov2, "otros")) %>%
+  mutate(ncat_subtipov2_2 = ifelse(n_subtipo > 3, ncat_subtipov2, paste("otros", cat_tipoorgv2))) %>%
   group_by(cat_tipoorgv2) %>% 
   mutate(n_cat = sum(n_subtipo)) %>% 
   ungroup() %>% 
@@ -556,12 +580,18 @@ cuenta_subtipos_gral_2 <- democracias_organizadores  %>%
 
 plot_cuenta_subtipos_gral_2 <- cuenta_subtipos_gral_2  %>% 
   left_join(nombres_subtipos %>% rename(ncat_subtipov2_2 = "ncat_subtipov2")) %>% 
-  mutate(str_subtipo = ifelse(is.na(str_subtipo), "Otros", str_subtipo)) %>%  
+  mutate(str_subtipo = ifelse(is.na(str_subtipo),  paste("Otros", cat_tipoorgv2), str_subtipo)) %>%  
+  mutate(str_subtipo = ifelse(str_subtipo=="Otros mmc", "Otros medios privados",
+                              ifelse(str_subtipo=="Otros mmp", "Otros medios públicos",
+                                     ifelse(str_subtipo=="Otros educ", "Otros sector educativo",
+                                            ifelse(str_subtipo=="Otros osc", "Otros OSCs",
+                                                   ifelse(str_subtipo=="Otros estado", "Otros Estado",
+                                                          str_subtipo)))))) %>% 
   na.omit() %>% 
   arrange(n_cat, n_subtipo) %>% 
   mutate(order = row_number()) %>% 
   mutate(str_subtipo = fct_reorder(str_subtipo, order))  %>%
-  mutate(str_subtipo = fct_relevel(str_subtipo, "Otros", after = Inf))  %>%
+ # mutate(str_subtipo = fct_relevel(str_subtipo, "Otros", after = Inf))  %>%
   ggplot() +
   geom_col(aes(str_subtipo, n_subtipo, fill = cat_tipoorgv2)) +
   coord_flip() +
@@ -886,8 +916,6 @@ mmcstreaming <- democracias_basedebates %>%
 sum(mmcstreaming$dico_streaming, na.rm=T)/length(mmcstreaming$dico_streaming)*100
 
 
-
- 
 ##########################################################################################
 # FORMATOS #############
 
