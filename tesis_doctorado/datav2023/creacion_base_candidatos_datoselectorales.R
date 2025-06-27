@@ -97,10 +97,11 @@ indicador_incumbentes_firstround <- data_base_candidatos_tojoin %>%
 indicador_incumbentes_firstround <- indicador_incumbentes_firstround %>% 
   select(c(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, nombre_presidente, nombre_oficialista)) %>% 
   mutate(dico_reeleccion = ifelse(nombres_candidatos==nombre_presidente, 1,0)) %>% 
-  mutate(dico_oficialista = ifelse(nombres_candidatos==nombre_oficialista,1,0))
+  mutate(dico_oficialista = ifelse(nombres_candidatos==nombre_oficialista,1,0)) %>% 
+  mutate(dico_oficialistanoreeleccion = ifelse(dico_reeleccion==0&dico_oficialista==1,1,0))
 
 indicador_incumbentes_firstround <- indicador_incumbentes_firstround %>% 
-  select(c(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, dico_reeleccion, dico_oficialista))
+  select(c(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, dico_reeleccion, dico_oficialista, dico_oficialistanoreeleccion))
 
 # ahora agregamos segundas rondas
 data_incumbentes_secondround_tojoin <- data_incumbentes %>% 
@@ -117,10 +118,11 @@ data_incumbentes_secondround <- data_base_candidatos_tojoin %>%
 indicador_incumbentes_secondround <- data_incumbentes_secondround %>% 
   select(c(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, nombre_presidente, nombre_oficialista)) %>% 
   mutate(dico_reeleccion = ifelse(nombres_candidatos==nombre_presidente, 1,0)) %>% 
-  mutate(dico_oficialista = ifelse(nombres_candidatos==nombre_oficialista,1,0)) 
+  mutate(dico_oficialista = ifelse(nombres_candidatos==nombre_oficialista,1,0)) %>% 
+  mutate(dico_oficialistanoreeleccion = ifelse(dico_reeleccion==0&dico_oficialista==1,1,0))
 
 indicador_incumbentes_secondround <- indicador_incumbentes_secondround %>% 
-  select(c(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, dico_reeleccion, dico_oficialista))
+  select(c(cat_pais, ncat_eleccion, ncat_ronda, nombres_candidatos, dico_reeleccion, dico_oficialista, dico_oficialistanoreeleccion))
 
 
 indicador_incumbentes <- indicador_incumbentes_firstround %>% 
@@ -174,7 +176,7 @@ indicador_participaciones <- data_anual %>%
   mutate(dicopresenciaspasadas = ifelse(npresenciaspasadas==0, 0, 1),
          dicoausenciaspasadas = ifelse(nausenciaspasadas==0, 0, 1),
          propausenciaspasadas = nausenciaspasadas/ninvitacionespasadas) %>% 
-  mutate(propausenciaspasadasfilled = ifelse(is.na(propausenciaspasadas),0,1)) %>% 
+  mutate(propausenciaspasadasfilled = ifelse(is.na(propausenciaspasadas),0,propausenciaspasadas)) %>% 
   select(cat_pais, ncat_eleccion, nombres_candidatos, 
          npresenciaspasadas, nausenciaspasadas,
          dicopresenciaspasadas, dicoausenciaspasadas,
@@ -220,10 +222,12 @@ base_debates_tojoin <- data_debates %>%
   unique() %>% 
   mutate(orgosc = ifelse(dico_org_educ==T|dico_org_osc==T,1,0),
          orgestado = ifelse(dico_org_estado==T|dico_org_mmp==T,1,0),
-         orgmmc = ifelse(dico_org_mmc==T,1,0))
+         orgmmc = ifelse(dico_org_mmc==T,1,0),
+         orgestadosp = ifelse(dico_org_estado==T,1,0),
+         orgmmcyp = ifelse(dico_org_mmc==T|dico_org_mmp==T,1,0))
 
 tipo_debate <- base_debates_tojoin %>% 
-  select(id_debate, orgosc, orgestado, orgmmc) %>% 
+  select(id_debate, orgosc, orgestado, orgmmc, orgestadosp, orgmmcyp) %>% 
   mutate(source_orgdebate = "Elaboracion propia con base en Franco Hanztsch (2023)")
 
 

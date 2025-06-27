@@ -3792,13 +3792,14 @@ fulldata_candidatos <- base_candidatos  %>%
 fulldata_candidatos <- fulldata_candidatos %>% # en este caso tb tengo id_debate
   mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
 
-# creo data estandarizada
-# data_scaled <- data %>%
-#   mutate(across(-c(dico_candidato_presente,
-#                    cat_pais,
-#                    elecid,
-#                    id_debate,
-#                    eng_cat_pais), scale))
+#creo data estandarizada
+reserva <- fulldata_candidatos
+fulldata_candidatos <- fulldata_candidatos %>%
+  mutate(across(-c(dico_candidato_presente,
+                   cat_pais,
+                   elecid,
+                   id_debate,
+                   eng_cat_pais), scale))
 
 ## Pruebo modelos ####
 
