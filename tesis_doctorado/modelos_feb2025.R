@@ -3794,7 +3794,9 @@ fulldata_candidatos <- fulldata_candidatos %>% # en este caso tb tengo id_debate
 
 #creo data estandarizada
 reserva <- fulldata_candidatos
+
 fulldata_candidatos <- fulldata_candidatos %>%
+  select(-starts_with("source_")) %>% 
   mutate(across(-c(dico_candidato_presente,
                    cat_pais,
                    elecid,
@@ -3935,6 +3937,37 @@ robust_se_cluster_modelo_agregado_controles <- coeftest(modelo_agregado_controle
 print(robust_se_cluster_modelo_agregado_controles)
 
 
+# alternativa: medios publicos aglutinados con medios
+modelo_agregado_controles2 <- glm(dico_candidato_presente ~ 
+                                   voteshare + 
+                                   v2pariglef_vdem + 
+                                   v2paactcom_vdem + 
+                                   dico_reeleccion + 
+                                   #dico_oficialista + 
+                                   dico_oficialistanoreeleccion + 
+                                   ninvitaciones + 
+                                   propausenciaspasadasfilled + 
+                                   orgosc + 
+                                   orgmmcyp + 
+                                   orgestadosp +
+                                   log(nec) +
+                                   mediaqualitycorruptvdem +
+                                   log(gdpxcapita) +
+                                   democraciavdemelectoralcomp +
+                                   regulaciondico +
+                                   cumsum_pastciclos,
+                                 family = binomial(link = "logit"),
+                                 data = fulldata_candidatos)
+options(scipen=999)
+summary(modelo_agregado_controles2)
+
+robust_se_cluster_modelo_agregado_controles2 <- coeftest(modelo_agregado_controles2, 
+                                                        vcov = vcovCL(modelo_agregado_controles2,
+                                                                      cluster = fulldata_candidatos$ca_pais))
+print(robust_se_cluster_modelo_agregado_controles2)
+
+
+# control sin variables VDEM (sin NAS) 
 modelo_agregado_controles_sNAs <- glm(dico_candidato_presente ~ 
                                    voteshare + 
                                    #v2pariglef_vdem + 
@@ -3962,6 +3995,36 @@ robust_se_cluster_modelo_agregado_controles_sNAs <- coeftest(modelo_agregado_con
                                                         vcov = vcovCL(modelo_agregado_controles_sNAs,
                                                                       cluster = fulldata_candidatos$cat_pais))
 print(robust_se_cluster_modelo_agregado_controles_sNAs)
+
+
+# control sin variables VDEM (sin NAS) + reasignando mpp a mmc, en lugarde a E
+modelo_agregado_controles_sNAs2 <- glm(dico_candidato_presente ~ 
+                                        voteshare + 
+                                        #v2pariglef_vdem + 
+                                        #v2paactcom_vdem + 
+                                        dico_reeleccion + 
+                                        #dico_oficialista + 
+                                        dico_oficialistanoreeleccion + 
+                                        ninvitaciones + 
+                                        propausenciaspasadasfilled + 
+                                        orgosc + 
+                                        orgmmcyp + 
+                                        orgestadosp +
+                                        log(nec) +
+                                        mediaqualitycorruptvdem +
+                                        log(gdpxcapita) +
+                                        democraciavdemelectoralcomp +
+                                        regulaciondico +
+                                        cumsum_pastciclos,
+                                      family = binomial(link = "logit"),
+                                      data = fulldata_candidatos)
+options(scipen=999)
+summary(modelo_agregado_controles_sNAs2)
+
+robust_se_cluster_modelo_agregado_controles_sNAs2 <- coeftest(modelo_agregado_controles_sNAs2, 
+                                                             vcov = vcovCL(modelo_agregado_controles_sNAs2,
+                                                                           cluster = fulldata_candidatos$cat_pais))
+print(robust_se_cluster_modelo_agregado_controles_sNAs2)
 
 #### multinivel ###########
 modelo_multinivel1 <- lme4::glmer(dico_candidato_presente ~ 
@@ -4009,8 +4072,33 @@ modelo_multinivel1_controles <- lme4::glmer(dico_candidato_presente ~
 options(scipen=999)
 summary(modelo_multinivel1_controles)
 
+# alutinando medios c y p, sacando medios p de E
+modelo_multinivel1_controles2 <- lme4::glmer(dico_candidato_presente ~ 
+                                              voteshare + 
+                                              v2pariglef_vdem + 
+                                              v2paactcom_vdem + 
+                                              dico_reeleccion + 
+                                              #dico_oficialista + 
+                                              dico_oficialistanoreeleccion +
+                                              ninvitaciones + 
+                                              propausenciaspasadasfilled + 
+                                              orgosc + 
+                                              orgmmcyp + 
+                                              orgestadosp + 
+                                              log(nec) +
+                                              mediaqualitycorruptvdem +
+                                              log(gdpxcapita) +
+                                              democraciavdemelectoralcomp +
+                                              regulaciondico +
+                                              cumsum_pastciclos +
+                                              (1|cat_pais), #+ (1|elecid), #PROBLEMAS DE CONVERGENCIA
+                                            family = binomial(link = "logit"),
+                                            data = fulldata_candidatos,
+                                            control = control)
+options(scipen=999)
+summary(modelo_multinivel1_controles2)
 
-
+# sacando variables VDEM
 modelo_multinivel1_controles_sNAs <- lme4::glmer(dico_candidato_presente ~ 
                                               voteshare + 
                                               #v2pariglef_vdem + 
@@ -4036,6 +4124,31 @@ modelo_multinivel1_controles_sNAs <- lme4::glmer(dico_candidato_presente ~
 options(scipen=999)
 summary(modelo_multinivel1_controles_sNAs)
 
+# sacando variables VDEM + reagrupando medios publicos c medios priv / aparte del E
+modelo_multinivel1_controles_sNAs2 <- lme4::glmer(dico_candidato_presente ~ 
+                                                   voteshare + 
+                                                   #v2pariglef_vdem + 
+                                                   #v2paactcom_vdem + 
+                                                   dico_reeleccion + 
+                                                   #dico_oficialista + 
+                                                   dico_oficialistanoreeleccion +
+                                                   ninvitaciones + 
+                                                   propausenciaspasadasfilled + 
+                                                   orgosc + 
+                                                   orgmmcyp + 
+                                                   orgestadosp + 
+                                                   log(nec) +
+                                                   mediaqualitycorruptvdem +
+                                                   log(gdpxcapita) +
+                                                   democraciavdemelectoralcomp +
+                                                   regulaciondico +
+                                                   cumsum_pastciclos +
+                                                   (1|cat_pais), #+ (1|elecid), #PROBLEMAS DE CONVERGENCIA
+                                                 family = binomial(link = "logit"),
+                                                 data = fulldata_candidatos,
+                                                 control = control)
+options(scipen=999)
+summary(modelo_multinivel1_controles_sNAs2)
 
 ## mini control vifs ######
 
@@ -4116,8 +4229,34 @@ texreg::htmlreg(listac1,
                 center = T,
                 bold = 0.1)
 
+listatest <-  list(
+  #robust_se_cluster_modelo_nivelindiv_controles,
+  #robust_se_cluster_modelo_niveldebate_controles,
+  robust_se_cluster_modelo_agregado_controles,
+  modelo_multinivel1_controles,
+  robust_se_cluster_modelo_agregado_controles_sNAs,
+  modelo_multinivel1_controles_sNAs,
+  robust_se_cluster_modelo_agregado_controles2,
+  modelo_multinivel1_controles2,
+  robust_se_cluster_modelo_agregado_controles_sNAs2,
+  modelo_multinivel1_controles_sNAs2)
 
-
+texreg::htmlreg(listatest,
+                custom.model.names = c(#"Niv. individual",
+                  #"Niv. debate",
+                  "Agregado",
+                  "Agregado multinivel",
+                  "Agregado reducido",
+                  "Agregado reducido multinivel",
+                  "Agregado 2",
+                  "Agregado multinivel 2",
+                  "Agregado reducido 2",
+                  "Agregado reducido multinivel 2")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                file="anexos/tabla_modelos_candidatos2.html",
+                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                center = T,
+                bold = 0.1)
 
 listac2 <-  list(robust_se_control_s_cumsum) 
 
