@@ -20,6 +20,12 @@ base_indicadores <- read.csv("indicadores_elecciones.csv")
 base_controles <- read.csv("controles_elecciones.csv")
 base_candidatos <-  read.csv("indicadores_candidatos.csv")
 diccionario_indicadores <- read.csv("diccionario_indicadores_etiquetas.csv")
+base_debates <- read_csv("base_final3v2023.csv") %>% select(-"...1", -"...2") %>% 
+  subset(dico_certidumbre==1) %>%
+  left_join(base_controles %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, democraciavdempolyarchy)) %>% 
+  subset(democraciavdempolyarchy>0.45) %>% 
+  subset(ncat_eleccion!=2024) 
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 
 # ELECCIONES ##############################
@@ -101,10 +107,15 @@ democracias <- democracias %>%
                    ncat_ronda, #excluyo algunas variables de id
                    ncat_eleccion,
                    obsid), scale))
-  
+
+democracias_reservaescalada <- democracias  
 ### mini exploracion ####
 
 skimr::skim(democracias)
+
+## check cor vdem
+
+cor(democracias$democraciavdemelectoralcomp, democracias$democraciavdempolyarchy)
 # problemas de missing en propindiv internet (seguro se puede completar)
 # problemas de missing en acceso gratuito (tratar de completar)
 # problemas de missing en gdp (una picardia total)
@@ -958,6 +969,9 @@ lme4::ranef(modelo_random_intercepts)  #  how much the intercept is shifted up o
 
 
 ### Preparaciones p/ control estadistico ####
+#### aca trabajo con data NO estandarizada ######
+democracias <- democracias_reservanoescalada 
+
 #### defino data reducida ####
 data_reducida <- democracias %>% 
   select(dico_hubo_debates,
@@ -1102,6 +1116,23 @@ modelo_a_probar <-glm(formula_modelo_sficativas_variantes,
 options(scipen=999)
 summary(modelo_a_probar)
 summary(modelo_sficativas_variantes)
+
+#### reestimo modelos finales con data no escalada ####
+
+modelo_sficativas <- glm(formula_modelo_sficativas,
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = democracias)
+modelo_sficativas_variantes <- glm(formula_modelo_sficativas_variantes,
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = democracias)
+
+final_random_intercepts <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+                                             "(1 | cat_pais)", sep = "+"), 
+                                       family=binomial("logit"), 
+                                       data = democracias,
+                                       control = control)
 
 #modelo_a_probar <- modelo_sficativas
 
@@ -1645,7 +1676,7 @@ lrtest(modelo_sficativas_variantes_reducido , modelo_contingencia_reducido)
 #### fit: Pseudos R cuadrados, AIC y BIC ####
  
 #modelo_a_probar <- modelo_sficativas
-modelo_a_probar <- modelo_sficativas_variantes
+#modelo_a_probar <- modelo_sficativas_variantes
 
 # PRUEBAS PRELIMINARES 
 # pseudo R cuadrados. #Mas alto, mejores
@@ -1715,8 +1746,8 @@ all_stats <- all_stats %>%
 # en todos los casos de pseudos R2, el modelo completo es mejor que los más incompletos, y la variante completa mejor que el completo
 
 # comparaciones sobre muestra completa #
-stats27 <- stats(modelo_sficativas )
-stats28 <- stats(modelo_sficativas_variantes )
+stats27 <- stats(modelo_sficativas )  # 
+stats28 <- stats(modelo_sficativas_variantes ) #  
 
 all_stats_full <- rbind(stats27,   stats28 )
 
@@ -1836,7 +1867,7 @@ empty_model_paises_reducido <- lme4::glmer(dico_hubo_debates ~
 #summary(empty_model_paises)
 
 # LR TEST ##
-lrtest(modelo_sficativas_variantes , final_random_intercepts)
+lrtest(modelo_sficativas_variantes , final_random_intercepts) # los dos con data no escalada de acuerdo con la logica del script
 
 # modelo1_reespecificado <- lme4::glmer(
 #   dico_hubo_debates ~ lnmarginvic + lnnec + voteshareincumbent + 
@@ -1956,6 +1987,9 @@ all_stats_multisimple <- all_stats_multisimple %>%
 all_stats_multisimple %>% write_csv("anexos/all_stats_multisimple.csv")
 
 ## OTROS MODELOS control ####
+
+#### vuelvo a la data escalada estandarizada #####
+democracias <- democracias_reservaescalada 
 
 #### Volatility agregada ####
 ##### modelo sistemico #####
@@ -2084,8 +2118,6 @@ final_random_intercepts_control_lncumsum <- lme4::glmer(
   control = control)
 
 summary(final_random_intercepts_control_lncumsum)
-
-
 
 
 #### Dico_debates_pasados #####
@@ -2322,7 +2354,7 @@ print(robust_se_cluster_modelo_propinternet2)
 ### primera version de LOOP con DICO HUBO DEBATES para DICO DEBATES PASTELECCION  
 
 # para otra version: sustituyo NAs por 0, para tener mismo n en todas las corridas del loop
-
+democracias <- democracias_reservanoescalada
 data_loop <- democracias %>% 
   mutate(across(.cols = c(dico_debates_pastelection,
                           dico_2_eleccondebatesseguidos,
@@ -2424,6 +2456,25 @@ options(scipen=999)
 summary(modelo_sficativas_variantes2.2_multinivel)
 
 ## EXPORTO MODELOS SIMPLES #####
+
+# reestimo modelos escalados
+
+democracias <- democracias_reservaescalada
+
+modelo_sficativas <- glm(formula_modelo_sficativas,
+                         family = binomial(link = "logit"), 
+                         #data = data 
+                         data = democracias)
+modelo_sficativas_variantes <- glm(formula_modelo_sficativas_variantes,
+                                   family = binomial(link = "logit"), 
+                                   #data = data 
+                                   data = democracias)
+
+final_random_intercepts <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+                                             "(1 | cat_pais)", sep = "+"), 
+                                       family=binomial("logit"), 
+                                       data = democracias,
+                                       control = control)
 
 # Una vez que estimamos los modelos que irán en la tabla, los agrupamos en una lista usando la función list. Esto ahorra tiempo, porque en lugar de tener que escribir el nombre de los modelos, simplemente nos referiremos a la lista mp_models:
 
@@ -2893,6 +2944,19 @@ texreg::htmlreg(lista7,
 
 #### INTERPRETACION - importante elegir ####
 
+# reestimo modelo no escalado estandarizado 
+democracias <- democracias_reservanoescalada
+
+modelo_sficativas_variantes <- glm(formula_modelo_sficativas_variantes,
+                                   family = binomial(link = "logit"), 
+                                   #data = data 
+                                   data = democracias)
+
+final_random_intercepts <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
+                                             "(1 | cat_pais)", sep = "+"), 
+                                       family=binomial("logit"), 
+                                       data = democracias,
+                                       control = control)
 # modelo_a_interpretar <- modelo_sficativas_variantes_s_outliers
 # data_modelo_a_interpretar <- data_s_outliers 
 
@@ -2945,26 +3009,26 @@ odds_ratios <- jtools::plot_summs(modelo_a_interpretar, #modelo_contingencia,
                           model.names = c("modelo 1"#, #"modelo 2" ....
                                           ))
 # no entiendo bien pq variables que son sficativas acá aparecen como que no
-
-varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
-                                                 modelo_sistemico,
-                                                 modelo_regulatorio,
-                                               #  modelo_difusion, # vemos el efecto sobredeterminado de prop_elec_usa-....
-                                                # modelo_sficativas,
-                                                 modelo_sficativas_variantes,
-                                                 modelo_sficativas_variantes_s_outliers,
-                                                 exp=T, 
-                                                 scale = T,
-                                                 inner_ci_level = .9,
-                                                 # coefs = c("nombre coef" =  "variable",           ....),
-                                                 model.names = c("modelo_contingencia",
-                                                                 "modelo_sistemico",
-                                                                 "modelo_regulatorio",
-                                                               #  "modelo_difusion",
-                                                                 #"modelo_sficativas",
-                                                                 "modelo_sficativas_variantes",
-                                                                 "modelo_sficativas_variantes_s_outliers"
-                                                 ))
+# ojo, algunos escalados otros no, corregir eventualmente, igual NO usado
+# varios_modelos_odds_ratios <- jtools::plot_summs(modelo_contingencia,
+#                                                  modelo_sistemico,
+#                                                  modelo_regulatorio,
+#                                                #  modelo_difusion, # vemos el efecto sobredeterminado de prop_elec_usa-....
+#                                                 # modelo_sficativas,
+#                                                  modelo_sficativas_variantes,
+#                                                  modelo_sficativas_variantes_s_outliers,
+#                                                  exp=T, 
+#                                                  scale = T,
+#                                                  inner_ci_level = .9,
+#                                                  # coefs = c("nombre coef" =  "variable",           ....),
+#                                                  model.names = c("modelo_contingencia",
+#                                                                  "modelo_sistemico",
+#                                                                  "modelo_regulatorio",
+#                                                                #  "modelo_difusion",
+#                                                                  #"modelo_sficativas",
+#                                                                  "modelo_sficativas_variantes",
+#                                                                  "modelo_sficativas_variantes_s_outliers"
+#                                                  ))
 
 #### INTERPRETACION - ESCENARIOS CON VALORES PREDICHOS #####
 ### calculo de probas predichas # tengo que reducir la data para poder calcular asi nomas
@@ -3696,7 +3760,7 @@ plot_ranint %>% ggsave(filename = "images/random_intercepts.jpg", width = 10)
 
 #### OTROS INTEPRETACION INTERACCIONES #########
 #PLOT DE INTERACCIONES SEGUN WEB 
-
+# ESTE MODELO ESTA CALCULADO SOBRE DATA ESTANDARIZADA, EVENTUALMENTE CORREGIR , IGUAL NO USO
 persp(modelo_sficativas_variantes_interactivo, 
       "regulaciondico", "lnnec", 
       what = "prediction",
@@ -3792,16 +3856,45 @@ fulldata_candidatos <- base_candidatos  %>%
 fulldata_candidatos <- fulldata_candidatos %>% # en este caso tb tengo id_debate
   mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
 
-#creo data estandarizada
+### creo data estandarizada ####
+
+# correr despues de archivo democracias
 reserva <- fulldata_candidatos
 
-fulldata_candidatos <- fulldata_candidatos %>%
-  select(-starts_with("source_")) %>% 
+fulldata_candidatos <- base_candidatos  %>%
+  select(-starts_with("source_")) %>%
+  select(-X,
+         -nombres_candidatos,
+         -v2pashname) %>%
   mutate(across(-c(dico_candidato_presente,
                    cat_pais,
-                   elecid,
-                   id_debate,
-                   eng_cat_pais), scale))
+                   ncat_eleccion,
+                   ncat_ronda,
+                   id_debate), scale))
+
+fulldata_candidatos <- fulldata_candidatos %>%
+  left_join(democracias %>%
+              select(-dico_reeleccion,
+                     -dico_oficialista,
+                     -dico_debates_eleccion)) %>%
+  subset(!is.na( democraciavdempolyarchy )  ) %>% # en este caso tb tengo id_debate
+  mutate(elecid = paste(cat_pais, ncat_eleccion) %>% as.factor())
+
+
+
+# fulldata_candidatos <- fulldata_candidatos %>%
+#   select(-starts_with("source_")) %>% 
+#   mutate(across(-c(dico_candidato_presente,
+#                    cat_pais,
+#                    elecid,
+#                    ncat_ronda, #excluyo algunas variables de id
+#                    ncat_eleccion,
+#                    eng_cat_pais), scale))
+
+#fulldata_candidatos <- reserva
+# 
+# hist(fulldata_candidatos$nec, breaks = 20)
+# hist(reserva$nec, breaks = 20)
 
 ## Pruebo modelos ####
 
@@ -3833,9 +3926,9 @@ modelo_nivelindiv_controles <- glm(dico_candidato_presente ~
                              dico_oficialistanoreeleccion +
                            ninvitaciones + 
                            propausenciaspasadasfilled +
-                             log(nec) +
+                             lnnec + # log(nec) +
                              mediaqualitycorruptvdem +
-                             log(gdpxcapita) +
+                             lngdp +# log(gdpxcapita) +
                              democraciavdemelectoralcomp +
                              regulaciondico +
                              cumsum_pastciclos,
@@ -3867,9 +3960,9 @@ modelo_niveldebate_controles <- glm(dico_candidato_presente ~
                                       orgosc + 
                                       orgmmc + 
                                       orgestado +
-                                    log(nec) +
-                                     mediaqualitycorruptvdem +
-                                      log(gdpxcapita) +
+                                      lnnec + # log(nec) +
+                                      mediaqualitycorruptvdem +
+                                      lngdp +# log(gdpxcapita) +
                                      democraciavdemelectoralcomp +
                                      regulaciondico +
                                      cumsum_pastciclos,
@@ -3920,9 +4013,9 @@ modelo_agregado_controles <- glm(dico_candidato_presente ~
                          orgosc + 
                          orgmmc + 
                          orgestado +
-                           log(nec) +
+                           lnnec + # log(nec) +
                            mediaqualitycorruptvdem +
-                           log(gdpxcapita) +
+                           lngdp +# log(gdpxcapita) +
                            democraciavdemelectoralcomp +
                            regulaciondico +
                            cumsum_pastciclos,
@@ -3950,9 +4043,9 @@ modelo_agregado_controles2 <- glm(dico_candidato_presente ~
                                    orgosc + 
                                    orgmmcyp + 
                                    orgestadosp +
-                                   log(nec) +
-                                   mediaqualitycorruptvdem +
-                                   log(gdpxcapita) +
+                                    lnnec + # log(nec) +
+                                    mediaqualitycorruptvdem +
+                                    lngdp +# log(gdpxcapita) +
                                    democraciavdemelectoralcomp +
                                    regulaciondico +
                                    cumsum_pastciclos,
@@ -3980,9 +4073,9 @@ modelo_agregado_controles_sNAs <- glm(dico_candidato_presente ~
                                    orgosc + 
                                    orgmmc + 
                                    orgestado +
-                                   log(nec) +
-                                   mediaqualitycorruptvdem +
-                                   log(gdpxcapita) +
+                                     lnnec + # log(nec) +
+                                     mediaqualitycorruptvdem +
+                                     lngdp +# log(gdpxcapita) +
                                    democraciavdemelectoralcomp +
                                    regulaciondico +
                                    cumsum_pastciclos,
@@ -4010,9 +4103,9 @@ modelo_agregado_controles_sNAs2 <- glm(dico_candidato_presente ~
                                         orgosc + 
                                         orgmmcyp + 
                                         orgestadosp +
-                                        log(nec) +
-                                        mediaqualitycorruptvdem +
-                                        log(gdpxcapita) +
+                                         lnnec + # log(nec) +
+                                         mediaqualitycorruptvdem +
+                                         lngdp + # log(gdpxcapita) +
                                         democraciavdemelectoralcomp +
                                         regulaciondico +
                                         cumsum_pastciclos,
@@ -4059,9 +4152,9 @@ modelo_multinivel1_controles <- lme4::glmer(dico_candidato_presente ~
                                     orgosc + 
                                     orgmmc + 
                                     orgestado + 
-                                      log(nec) +
+                                      lnnec + # log(nec) +
                                       mediaqualitycorruptvdem +
-                                      log(gdpxcapita) +
+                                      lngdp + # log(gdpxcapita) +
                                       democraciavdemelectoralcomp +
                                       regulaciondico +
                                       cumsum_pastciclos +
@@ -4085,9 +4178,9 @@ modelo_multinivel1_controles2 <- lme4::glmer(dico_candidato_presente ~
                                               orgosc + 
                                               orgmmcyp + 
                                               orgestadosp + 
-                                              log(nec) +
-                                              mediaqualitycorruptvdem +
-                                              log(gdpxcapita) +
+                                               lnnec + # log(nec) +
+                                               mediaqualitycorruptvdem +
+                                               lngdp + # log(gdpxcapita) +
                                               democraciavdemelectoralcomp +
                                               regulaciondico +
                                               cumsum_pastciclos +
@@ -4111,9 +4204,9 @@ modelo_multinivel1_controles_sNAs <- lme4::glmer(dico_candidato_presente ~
                                               orgosc + 
                                               orgmmc + 
                                               orgestado + 
-                                              log(nec) +
-                                              mediaqualitycorruptvdem +
-                                              log(gdpxcapita) +
+                                                lnnec + # log(nec) +
+                                                mediaqualitycorruptvdem +
+                                                lngdp + # log(gdpxcapita) +
                                               democraciavdemelectoralcomp +
                                               regulaciondico +
                                               cumsum_pastciclos +
@@ -4137,9 +4230,9 @@ modelo_multinivel1_controles_sNAs2 <- lme4::glmer(dico_candidato_presente ~
                                                    orgosc + 
                                                    orgmmcyp + 
                                                    orgestadosp + 
-                                                   log(nec) +
-                                                   mediaqualitycorruptvdem +
-                                                   log(gdpxcapita) +
+                                                    lnnec + # log(nec) +
+                                                    mediaqualitycorruptvdem +
+                                                    lngdp + # log(gdpxcapita) +
                                                    democraciavdemelectoralcomp +
                                                    regulaciondico +
                                                    cumsum_pastciclos +
@@ -4150,14 +4243,16 @@ modelo_multinivel1_controles_sNAs2 <- lme4::glmer(dico_candidato_presente ~
 options(scipen=999)
 summary(modelo_multinivel1_controles_sNAs2)
 
-## mini control vifs ######
+## mini controles ######
 
-
-car::vif(modelo_agregado_controles)
+## vifs
+car::vif(modelo_agregado_controles) # ver que huevas esta fallando
 
 #car::vif(modelo_multinivel1_controles)
 
 
+
+## control sin cumsum
 control_s_cumsum <-  glm(dico_candidato_presente ~ 
                                                        voteshare + 
                                                        v2pariglef_vdem + 
@@ -4170,9 +4265,9 @@ control_s_cumsum <-  glm(dico_candidato_presente ~
                                                        orgosc + 
                                                        orgmmc + 
                                                        orgestado +
-                                                       log(nec) +
-                                                       mediaqualitycorruptvdem +
-                                                       log(gdpxcapita) +
+                           lnnec + # log(nec) +
+                           mediaqualitycorruptvdem +
+                           lngdp + # log(gdpxcapita) +
                                                        democraciavdemelectoralcomp +
                                                        regulaciondico , #+
                                                        #cumsum_pastciclos,
@@ -4185,8 +4280,27 @@ robust_se_control_s_cumsum <- coeftest(control_s_cumsum,
                                        vcov = vcovCL(control_s_cumsum,
                                                      cluster = fulldata_candidatos$cat_pais))
 print(robust_se_control_s_cumsum)
-  
-  
+
+## comparacion por categorias descriptiva
+
+base_comparacion <- base_debates  %>% 
+  select(dico_org_educ,
+        dico_org_osc,
+        dico_org_estado,
+        dico_org_mmp,
+        dico_org_mmc,
+        n_invitados,
+        n_ausentes) %>% 
+  pivot_longer(cols = starts_with("dico_org_"),
+               names_to = "cat_org",
+               values_to = "dico") %>% 
+  subset(dico==TRUE) %>% 
+  mutate(prop_ausentes = n_ausentes/n_invitados) %>% 
+  group_by(cat_org) %>% 
+  summarise(mean_prop_ausentes = mean(prop_ausentes, na.rm=T))
+
+
+base_comparacion %>% write.csv("anexos/tabla_comparacion_prop_ausencias.csv")
 ## Exporto modelos de interes ####
 
 listac1 <-  list(
