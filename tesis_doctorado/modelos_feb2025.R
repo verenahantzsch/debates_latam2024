@@ -2939,7 +2939,6 @@ texreg::htmlreg(lista7,
                 bold = 0.1)
 
 
-## HASTA ACA LLEGUE EN LA INCORPORACION DE COMENTARIOS CELES ######
 ## INTERPRETACION MODELOS 1 VARIOS PENDIENTES ####
 
 #### INTERPRETACION - importante elegir ####
@@ -3044,7 +3043,10 @@ valores_relevantes <- c(log(min(data_modelo_a_interpretar$nec)),
                         log(mean(data_modelo_a_interpretar$nec) + sd(data_modelo_a_interpretar$nec)),
                         log(mean(data_modelo_a_interpretar$nec) + 2*sd(data_modelo_a_interpretar$nec)),
                         log(mean(data_modelo_a_interpretar$nec) - sd(data_modelo_a_interpretar$nec)),
-                        log(mean(data_modelo_a_interpretar$nec) - 2*sd(data_modelo_a_interpretar$nec)))
+                        log(mean(data_modelo_a_interpretar$nec) - 2*sd(data_modelo_a_interpretar$nec)),
+                        log(1),
+                        log(2),
+                        log(3))
 
 data_to_predict1 <- data.frame(
   lnnec = rep(valores_relevantes, 2), # Cambiar por los valores que quieras probar
@@ -3076,14 +3078,20 @@ referencias <- tibble(
             round(mean(data_modelo_a_interpretar$nec) + sd(data_modelo_a_interpretar$nec), 2),
             round(mean(data_modelo_a_interpretar$nec) + 2*sd(data_modelo_a_interpretar$nec), 2),
             round(mean(data_modelo_a_interpretar$nec) - sd(data_modelo_a_interpretar$nec), 2),
-            round(mean(data_modelo_a_interpretar$nec) - 2*sd(data_modelo_a_interpretar$nec), 2)),
+            round(mean(data_modelo_a_interpretar$nec) - 2*sd(data_modelo_a_interpretar$nec), 2),
+           1,
+           2,
+           3),  
   referencia = c("Valor mínimo observado",
                  "Valor máximo observado",
                  "Promedio observado",
                  "Promedio + un desvío estandar",
                  "Promedio + dos desvíos estandar",
                  "Promedio - un desvío estandar",
-                 "Promedio - dos desvío estandar"))
+                 "Promedio - dos desvío estandar",
+                 "Partido dominante (NEC = 1)",
+                 "Bipartidismo (NEC = 2)",
+                 "Multipartidismo (NEC = 3)"))  
 
 tabla_data_to_predict <- data_to_predict1 %>% 
   mutate(nec = exp(lnnec)) %>% 
@@ -3247,12 +3255,12 @@ data_to_predict4 <- data_to_predict4 %>%
 
 plot_interpretacion4 <- ggplot(data_to_predict4) +
   geom_line(aes(x = exp(lnnec), 
-                y = fitted))+#, 
-                #colour = as.factor(regulaciondico))) +
+                y = fitted , 
+                 colour = as.factor(regulaciondico) )) +
   geom_ribbon(aes(x = exp(lnnec), 
                   ymin =  fitted - 1.645*se.fitted, 
-                  ymax =  fitted + 1.645*se.fitted), alpha = 0.3)+#, 
-                  #fill = as.factor(regulaciondico)), alpha = 0.3) +
+                  ymax =  fitted + 1.645*se.fitted, 
+                  fill = as.factor(regulaciondico)), alpha = 0.3) +
   facet_wrap(~as.factor(escenario)) +
   theme_classic() +
   labs(
@@ -3269,8 +3277,8 @@ plot_interpretacion4 <- ggplot(data_to_predict4) +
   xlab("Número Efectivo de Candidatos") +
   ylab("Probabilidad predicha de que ocurra un debate") +
   scale_x_continuous(breaks= seq(1, 10, 0.5)) +
-  #scale_fill_discrete(labels = c("No hay", "Hay"), breaks = c(0,1)) +
-  #scale_colour_discrete(labels = c("No hay", "Hay"), breaks = c(0,1)) +
+  scale_fill_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey40", "lawngreen")) +
+  scale_colour_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey30", "limegreen")) +
   geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2) #+
   #geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2)
 
@@ -4263,8 +4271,8 @@ control_s_cumsum <-  glm(dico_candidato_presente ~
                                                        ninvitaciones + 
                                                        propausenciaspasadasfilled + 
                                                        orgosc + 
-                                                       orgmmc + 
-                                                       orgestado +
+                           orgmmcyp + 
+                           orgestadosp +
                            lnnec + # log(nec) +
                            mediaqualitycorruptvdem +
                            lngdp + # log(gdpxcapita) +
@@ -4306,18 +4314,18 @@ base_comparacion %>% write.csv("anexos/tabla_comparacion_prop_ausencias.csv")
 listac1 <-  list(
   #robust_se_cluster_modelo_nivelindiv_controles,
   #robust_se_cluster_modelo_niveldebate_controles,
-  robust_se_cluster_modelo_agregado_controles,
-  modelo_multinivel1_controles,
-  robust_se_cluster_modelo_agregado_controles_sNAs,
-  modelo_multinivel1_controles_sNAs) 
+  robust_se_cluster_modelo_agregado_controles2,
+  modelo_multinivel1_controles2,
+  robust_se_cluster_modelo_agregado_controles_sNAs2,
+  modelo_multinivel1_controles_sNAs2) 
 
 texreg::htmlreg(listac1,
                 custom.model.names = c(#"Niv. individual",
                                        #"Niv. debate",
-                                       "Agregado",
-                                       "Agregado multinivel",
-                                       "Agregado reducido",
-                                       "Agregado reducido multinivel")  ,
+                                       "Todas las variables",
+                                       "Todas las variables multinivel",
+                                       "Excluyendo variables",
+                                       "Excluyendo variables multinivel")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
                                       "% de votos obtenidos",
@@ -4328,7 +4336,7 @@ texreg::htmlreg(listac1,
                                       "Cant. invitaciones",
                                       "Prop. ausencias pasadas",
                                       "OSC organiza",
-                                      "Medio privado organiza",
+                                      "Medio (público o privado) organiza",
                                       "Estado organiza",
                                       "log NEC",
                                       "Corrupción de medios (VDEM)",
@@ -4349,24 +4357,40 @@ listatest <-  list(
   robust_se_cluster_modelo_agregado_controles,
   modelo_multinivel1_controles,
   robust_se_cluster_modelo_agregado_controles_sNAs,
-  modelo_multinivel1_controles_sNAs,
-  robust_se_cluster_modelo_agregado_controles2,
-  modelo_multinivel1_controles2,
-  robust_se_cluster_modelo_agregado_controles_sNAs2,
-  modelo_multinivel1_controles_sNAs2)
+  modelo_multinivel1_controles_sNAs 
+  )
 
 texreg::htmlreg(listatest,
                 custom.model.names = c(#"Niv. individual",
                   #"Niv. debate",
-                  "Agregado",
-                  "Agregado multinivel",
-                  "Agregado reducido",
-                  "Agregado reducido multinivel",
-                  "Agregado 2",
-                  "Agregado multinivel 2",
-                  "Agregado reducido 2",
-                  "Agregado reducido multinivel 2")  ,
+# robust_se_cluster_modelo_agregado_controles2,
+#   modelo_multinivel1_controles2,
+#   robust_se_cluster_modelo_agregado_controles_sNAs2,
+#   modelo_multinivel1_controles_sNAs2
+                  "Todas las variables 2",
+                  "Todas las variables multinivel 2",
+                  "Excluyendo variables 2",
+                  "Excluyendo variables multinivel 2")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
+custom.coef.names = c("(Intercepto)",
+                      "% de votos obtenidos",
+                      "Ideología izq - der",
+                      "Penetración territorial",
+                      "Es presidente",
+                      "Es oficialista",
+                      "Cant. invitaciones",
+                      "Prop. ausencias pasadas",
+                      "OSC organiza",
+                      "Medio privado organiza",
+                      "Estado o medio público organiza",
+                      "log NEC",
+                      "Corrupción de medios (VDEM)",
+                      "log PBI per Cápita" ,
+                      "Democracia electoral (VDEM)" ,
+                      "Regulación sobre debates",
+                      "Cant. elecciones pasadas con debates"
+                      
+),
                 file="anexos/tabla_modelos_candidatos2.html",
                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
                 center = T,
@@ -4388,7 +4412,7 @@ texreg::htmlreg(listac2,
                                       "Cant. invitaciones",
                                       "Prop. ausencias pasadas",
                                       "OSC organiza",
-                                      "Medio privado organiza",
+                                      "Medio (público o privado) organiza",
                                       "Estado organiza",
                                       "log NEC",
                                       "Corrupción de medios (VDEM)",
