@@ -3360,6 +3360,17 @@ descriptiva_VD_candidatos <- descriptiva_VD_candidatos %>%
 
 descriptiva_VD_candidatos %>% write_csv("anexos/descriptiva_VD_candidatos.csv")
 
+## test de diferencia de proporciones ############
+prop1 <- descriptiva_VD_candidatos$numeric.mean[1]
+prop2 <- descriptiva_VD_candidatos$numeric.mean[2]
+n1 <- length(variable_dependiente)
+n2 <- nrow(variable_dependiente_reducida)
+success1 <- prop1*n1
+success2 <- prop2*n2
+prop.test(x = c(success1, success2),
+          n = c(n1, n2),
+          alternative = "two.sided", correct = TRUE)
+
 
 histograma_VD_candidatos <- data_to_plot2 %>% 
   ggplot() +

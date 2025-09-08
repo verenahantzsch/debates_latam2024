@@ -3270,16 +3270,17 @@ plot_interpretacion4 <- ggplot(data_to_predict4) +
     Intervalos de confianza ploteados al 90%.
     Escenarios predichos cuando el resto de las variables se encuentra:
     -en su media (para el caso de los indicadores continuos),
-    -en su moda (para el caso de los indicadores dicotómicos)."#,
-    #fill = "Regulación sobre debates",
-    #colour = "Regulación sobre debates"
+    -en su moda (para el caso de los indicadores dicotómicos).",
+    fill = "Regulación sobre debates",
+    colour = "Regulación sobre debates"
   ) +
   xlab("Número Efectivo de Candidatos") +
   ylab("Probabilidad predicha de que ocurra un debate") +
   scale_x_continuous(breaks= seq(1, 10, 0.5)) +
   scale_fill_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey40", "lawngreen")) +
   scale_colour_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey30", "limegreen")) +
-  geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2) #+
+  geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2)  +
+  theme(legend.position = "bottom")#+
   #geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2)
 
 plot_interpretacion4 %>% ggsave(filename = "images/plot_interpretacion_varios_escenarios.jpg",
@@ -4253,12 +4254,34 @@ summary(modelo_multinivel1_controles_sNAs2)
 
 ## mini controles ######
 
+# cant regulaciones
+control_regulaciones <- fulldata_candidatos %>% 
+  select(cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  left_join(base_indicadores %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, regulaciondico))
+
+summary(control_regulaciones)
+## varianza efecto aleatorio sficativa
+
+#Ajusta un modelo con el efecto aleatorio: modelo_con_re <- lmer(y ~ x + (1|grupo), data = tu_data). 
+#Ajusta un modelo sin el efecto aleatorio: modelo_sin_re <- lmer(y ~ x, data = tu_data) o lm(y ~ x, data = tu_data). 
+#anova(modelo_agregado_controles2, modelo_multinivel1_controles2)
+
+lme4::ranef(modelo_multinivel1_controles2)
+lme4::ranef(modelo_multinivel1_controles_sNAs2)
+
 ## vifs
-car::vif(modelo_agregado_controles) # ver que huevas esta fallando
-
+#car::vif(modelo_agregado_controles) # ver que huevas esta fallando
 #car::vif(modelo_multinivel1_controles)
+car::vif(modelo_agregado_controles2)
+car::vif(modelo_multinivel1_controles2)
+car::vif(modelo_agregado_controles_sNAs2)
+car::vif(modelo_multinivel1_controles_sNAs2)
 
+# con FUNCION DEFINIDA ARRIBA
+vifs_candidatos <- vifs(modelo_agregado_controles2)
 
+vifs_candidatos %>% write.csv("anexos/vifs_candidatos.csv")
 
 ## control sin cumsum
 control_s_cumsum <-  glm(dico_candidato_presente ~ 

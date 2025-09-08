@@ -1532,7 +1532,14 @@ normativa_tabla <- democracias_normativa %>%
 
 normativa_tabla %>% write.csv("anexos/normativa_tabla.csv")
 
- 
+
+### cruce org - formato #####
+
+cor(democracias_basedebates$dico_org_mmc, democracias_basedebates$dico_formato_periodistas, 
+    use = "complete.obs",
+    method = "kendall")
+
+
 ######################################################################
 # NO USO CRUCES ENTRE VARIABLES ###############
 # 
