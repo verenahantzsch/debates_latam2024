@@ -4261,6 +4261,7 @@ control_regulaciones <- fulldata_candidatos %>%
               select(cat_pais, ncat_eleccion, ncat_ronda, regulaciondico))
 
 summary(control_regulaciones)
+ 
 ## varianza efecto aleatorio sficativa
 
 #Ajusta un modelo con el efecto aleatorio: modelo_con_re <- lmer(y ~ x + (1|grupo), data = tu_data). 

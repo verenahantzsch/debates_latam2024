@@ -168,6 +168,13 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
+nec_crica <- democracias %>% 
+  select(nec, ntc,
+         cat_pais, ncat_eleccion, ncat_ronda) %>% 
+  subset(ncat_ronda==1) %>% 
+  group_by(cat_pais) %>% 
+  mutate(mean_ntc = mean(ntc, na.rm=T)) %>% 
+  ungroup()
 
 ## desalineamiento (% personas que YES se identifican con partido). MODERATE NEGATIVE COR + SFICATIVA  #######
 nombre_variable <- "Alineamiento partidario"

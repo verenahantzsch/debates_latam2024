@@ -438,14 +438,14 @@ plot_point_anual2 <- democracias_anual_full %>%
   scale_x_continuous(breaks = seq(1955,2025,10)) +
   scale_y_continuous(breaks = c(0,1,2,3) , labels = c(0, exp(1) %>% round(), exp(2) %>% round(), exp(3) %>% round())) +
   labs(x = "Año", y = "Cantidad de debates",
-       title = "Debates a través del tiempo",
+       title = "Gráfico Anexo 4.II. Debates a través del tiempo",
        subtitle = "Cuántos se hicieron y cuándo, por país",
        caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
        
-       Las x representan elecciones sin debates.
-       Para una mejor visualización, la cantidad de debates (eje vertical) está representada en su versión logarítmica,
-       pero los valores señalados en el eje vertical indican la equivalencia traducida nuevamente a cantidad absoluta de debates.
-       El máximo real se ubica en 24 debates anuales (Costa Rica), que equivale a un log de 3.17, el mínimo en 0.
+       Las x indican elecciones sin debates.
+       Para facilitar la visualización, el eje vertical se basa en el cálculo en escala logarítmica, 
+       pero los valores de referencia corresponden a la cantidad absoluta de debates por elección.
+       El máximo real corresponde a 24 debates anuales (Costa Rica), equivalentes a un log de 3.17; el mínimo es 0.
        
        *Rep. Dom. = República Dominicana.")
 
