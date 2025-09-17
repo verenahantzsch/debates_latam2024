@@ -576,10 +576,17 @@ cuenta_subtipos_gral_2 <- democracias_organizadores  %>%
   group_by(cat_tipoorgv2) %>% 
   mutate(n_cat = sum(n_subtipo)) %>% 
   ungroup() %>% 
-  mutate(pr_cat = n_subtipo/n_cat*100) 
+  group_by(ncat_subtipov2_2, cat_tipoorgv2, n_cat) %>%
+  summarise(n_subtipo = sum(n_subtipo)) %>%
+  ungroup() %>%
+  mutate(pr_subsobrecat = round(n_subtipo/n_cat*100)) %>% 
+  mutate(pr_subsobretot = round(n_subtipo/nrow(democracias_organizadores)*100)) %>% 
+  mutate(pr_catsobretot = round(n_cat/nrow(democracias_organizadores)*100)) %>% 
+  mutate(nr_to_plot = paste(pr_subsobrecat, "% (" , pr_subsobretot, "%)", sep = ""))
 
 plot_cuenta_subtipos_gral_2 <- cuenta_subtipos_gral_2  %>% 
   left_join(nombres_subtipos %>% rename(ncat_subtipov2_2 = "ncat_subtipov2")) %>% 
+  mutate(str_subtipo = ifelse(ncat_subtipov2_2=="ong_ambiente", "ONG ambientalista", str_subtipo)) %>% # parchecito
   mutate(str_subtipo = ifelse(is.na(str_subtipo),  paste("Otros", cat_tipoorgv2), str_subtipo)) %>%  
   mutate(str_subtipo = ifelse(str_subtipo=="Otros mmc", "Otros medios privados",
                               ifelse(str_subtipo=="Otros mmp", "Otros medios públicos",
@@ -594,28 +601,36 @@ plot_cuenta_subtipos_gral_2 <- cuenta_subtipos_gral_2  %>%
  # mutate(str_subtipo = fct_relevel(str_subtipo, "Otros", after = Inf))  %>%
   ggplot() +
   geom_col(aes(str_subtipo, n_subtipo, fill = cat_tipoorgv2)) +
+  geom_text(aes(str_subtipo, n_subtipo, label = nr_to_plot), size = 2.3, hjust = 0.25) +
   coord_flip() +
   theme_classic() +
   scale_fill_manual(breaks=c("educ", "estado", "mmc","mmp", "osc", "NA"),
                     labels=c("Sector educativo", "Estado", "Medios comerciales","Medios públicos", "OSCs", "S/ Datos"),
                     values = c("#F2E947", "#2CD74F",  "#F42AF3","#23B0C2","#F1B61B","#C6C5C5")) + 
-  labs(y = "n subtipo*", x = "Subtipo de organizador", fill = "Tipo de organizador",
+  labs(y = "n subtipo*", 
+       x = "Subtipo de organizador", 
+       fill = "Tipo de organizador",
        caption = paste("Fuente: elaboración propia, con datos recopilados para la presente investigación.
        
        *Cada unidad representa un organizador-debate.
-       Si un organizador participó de dos debates, se lo contabiliza dos veces.
-       Hay 5 debates para los que desconcemos el carácter del organizador.
+       Si un organizador participó en dos debates, se lo contabiliza dos veces.
+       Los porcentajes representan la incidencia de cada subtipo respecto de su tipo,
+       y, entre paréntesis (), de cada subtipo respecto del total de organizadores registrados.
        
-       La cuenta contempla los debates de todos los países estudiados que se hayan efectuado bajo regímenes mínimamente democráticos: 
+       Se contemplan los organizadores de todos los debates celebrados bajo regímenes mínimamente democráticos en la muestra:
                        ", colorespais$cat_pais[1:10] %>% toString(), "
-                       ", colorespais$cat_pais[11:18] %>% toString()
+                       ", colorespais$cat_pais[11:18] %>% toString(), 
+                       
+                       "
+                       
+                       No se dispone de datos para cinco debates."
        ),
-       title = "Tipos y subtipos de organizadores",
+       title = "Gráfico Anexo 4.III.A Tipos y subtipos de organizadores",
        subtitle = "Cantidad absoluta, para la base de datos en su conjunto") +
   theme(legend.position = "bottom")
 
 
-#plotnumber <- plotnumber + 1
+plotnumber <- plotnumber + 1
 plotname <- "_anexo_distrib_orgsysubtipos"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
 ggsave(filename, width = 12, height = 7)
@@ -763,9 +778,15 @@ base_tipos_ungrouped <- democracias_organizadores %>%
 
 # base agrupada por año y pais
 base_tipos_countryear <- base_tipos_ungrouped %>% 
+  group_by(ncat_eleccion, cat_pais) %>% 
+  mutate(n_debate_year = n_distinct(id_debate)) %>% 
+  ungroup() %>% 
   group_by(ncat_eleccion, cat_pais, cat_tipoorgv2) %>% 
-  summarise(n_prppaccatorg = sum(n_prppaccatorg, na.rm = T),
-            n_prppacorg = sum(n_prppacorg, na.rm = T) )
+  summarise(meann_debate_year = mean(n_debate_year),
+            n_prppaccatorg = sum(n_prppaccatorg, na.rm = T),
+            n_prppacorg = sum(n_prppacorg, na.rm = T)/ meann_debate_year)
+
+# CIRCULO PROPORCIONAL A INCIDENCIA
 
 tipos_organizadores_ev_anual_paisv2 <- base_tipos_countryear %>% 
   mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.*")) %>% 
@@ -773,7 +794,7 @@ tipos_organizadores_ev_anual_paisv2 <- base_tipos_countryear %>%
   ggplot(aes(ncat_eleccion, as.factor(cat_tipoorgv2) %>% 
                fct_relevel("estado", "mmp","osc", "educ", "mmc" ), 
              colour = cat_tipoorgv2, 
-             size= n_prppaccatorg,
+             size= n_prppacorg,
              shape= as.factor(cat_tipoorgv2) %>% 
                fct_relevel("estado", "mmp","osc", "educ", "mmc", "S/ Datos")))  +
   geom_point() +
@@ -802,16 +823,53 @@ tipos_organizadores_ev_anual_paisv2 <- base_tipos_countryear %>%
   scale_y_discrete(labels = c( "Estado","M.** Públicos","OSCs","Educativo","M.** Comerciales", "Sin Datos")) +
   labs(x = "Año",
        y = "Tipo de organizador",
-       title = "Tipo de organizador de los debates ",
+       title = "Gráfico Anexo 4.III.B Tipo de organizador de los debates ",
        subtitle = "A través el tiempo, por país",
        caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación. 
        
-               El tamaño de los círculos es proporcional a la cantidad de debates hechos en un año dado.
-       Si un debate fue organizado por más de un tipo de organizador, se lo contabiliza dos veces.
+               El tamaño de los círculos es proporcional a la cantidad de debates celebrados en un determinado año. 
+               Si un debate fue organizado por más de un tipo de organizador, se lo contabiliza dos veces. 
        
        *Rep. Dom. = República Dominicana.
        **M. = Medios.")
 #
+
+
+tipos_organizadores_ev_anual_paisv3 <- base_tipos_countryear %>% 
+  mutate(cat_pais = str_replace(cat_pais,"Republica Dominicana", "Rep. Dom.*")) %>% 
+  mutate(cat_tipoorgv2 = ifelse(is.na(cat_tipoorgv2)|cat_tipoorgv2=="NA", "S/ Datos", cat_tipoorgv2)) %>% 
+  ggplot(aes(x= ncat_eleccion, y = n_prppacorg, 
+             fill = as.factor(cat_tipoorgv2) %>% 
+               fct_relevel("S/ Datos", "mmc", "mmp","estado","osc", "educ")))  +
+  geom_col(position = "stack", width = 3, linewidth = 0.1, color = "black") +
+  facet_wrap( ~ as.factor(cat_pais), ncol = 6) +
+  theme_classic() +
+  theme(legend.position = "bottom",
+        plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90),
+        axis.title.y = element_text(size = 8),
+        axis.title.x = element_text(margin = margin(t = 10), size = 8, hjust = 0)) + 
+  scale_x_continuous(breaks = seq(1955,2025,10)) +
+  scale_fill_manual(breaks = c("S/ Datos", "mmc", "mmp", "estado","osc", "educ"),
+                      values = c("#C6C5C5","#F42AF3", "#23B0C2","#2CD74F","#F1B61B", "#F2E947"),
+                    labels = c( "Sin Datos","M.** Comerciales","M.** Públicos", "Estado","OSCs","Educativo" )) +
+  #scale_y_discrete(labels = c( "Estado","M.** Públicos","OSCs","Educativo","M.** Comerciales", "Sin Datos")) +
+  labs(x = "Año",
+       y = "Incidencia proporcional",
+       fill = "Tipo de organizador",
+       title = "Gráfico Anexo 4.III.B Tipo de organizador de los debates ",
+       subtitle = "Incidencia relativa a lo largo del tiempo, por país",
+       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación. 
+       
+               Se calcula la incidencia de cada tipo de organizador sobre el total de debates realizados en un determinado año.
+               El gráfico no permite visualizar la cantidad absoluta de debates realizados. 
+       
+       *Rep. Dom. = República Dominicana.
+       **M. = Medios.")
+
+
+
 plotnumber <- plotnumber + 1
 plotname <- "anexo_ev_t_e_organizadores"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
@@ -867,7 +925,7 @@ alianzas_cuenta_meandecada %>%
 ## streaming (N AL PIE PENDIENTE) #######
 # PENDIENTE CORREGIR , PARECEN ESTAR MAL LOS DATOS SOBRE STREAMING !
 streaming <- democracias_basedebates %>% 
-  filter(dico_streaming == TRUE) 
+  filter(dico_streaming == TRUE | dico_streaming == 1) 
 
 nrow(streaming)/nrow(democracias_basedebates)
 
