@@ -1496,7 +1496,7 @@ histograms <- data_to_plot_long %>%
              nrow = 4) +
   scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
-  labs(title = "Distribución univariada de variables independientes",
+  labs(title = "Gráfico Anexo 6.II.A Histogramas de distribución de las variables independientes",
        caption = "Elaboración propia") +
   theme(strip.text = element_text(size = 14))
 
@@ -1513,7 +1513,7 @@ histograms2 <- data_to_plot_long2 %>%
              nrow = 4) +
   scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
-  labs(title = "Distribución de variables independientes",
+  labs(title = "Gráfico Anexo 6.II.B Distribución de las variables independientes",
        subtitle = "condicional a la ocurrencia o no de debates",
        caption = "Elaboración propia" ) +
   scale_fill_manual(breaks = c("1", "0"),
@@ -1528,32 +1528,101 @@ histograms2 %>% ggsave(filename = "images/histogramas_vis_elecciones_condicional
 
 ## Graficos x año x variable x país #####
 # chequeo visual
+labels <- tibble(breaks = c("accesogratuito", 
+              "alineamiento",  
+              "avgpropdebatesregionxciclo",  
+              "cumsum_pastciclos", 
+              "democraciavdemelectoralcomp" ,
+              "gdpxcapita" ,
+              "marginvic"  ,
+              "mediaqualitycorruptvdem"  ,
+              "ncat_eleccion"  ,
+              "nec"  ,
+              "prohibicionpropaganda"  ,
+              "prop_elec_usa_ciclo" ,
+              "propindivinternet" ,
+              "proptv"  ,
+              "regulaciondico"  ,
+              "voteshareincumbent" ,
+              "dico_reeleccion",
+              "dico_hubo_debates"),
+              label = c( 
+              "Acceso gratuito a TV",
+                         "Alineamiento partidario",
+                         "Prop. elecciones c/debates región",
+                         "Cant. elecciones pasadas c/debates",
+                         "N. democracia electoral (VDEM)",
+                         "PBI x capita",
+                          "Margen de victoria",
+                        "N. corrupción en medios (VDEM)",
+                        "Año electoral",
+                        "N.E.C.",
+                        "Propaganda prohibida",
+                      "Prop. elecciones c/debates USA",
+                         "% individuos c/Internet",
+                        "% hogares con TV",
+                         "Debates regulados",
+                         "% voto oficialista",
+                         "Presidente a reelección",
+              "Hubo debates"))
+
  
 for (i in colnames(data_to_plot_countrynames)) {
   #print(i)
- # i <- "nec"
+  #i <- "nec"
+  #i <- "dico_reeleccion"
+  label <- labels %>% 
+    subset(breaks==i) %>% 
+    select(label)
+  
   if (i != "ncat_eleccion" & i != "cat_pais") {
-    # Generate the plot
-    plot <- ggplot(data_to_plot_countrynames) +
+    if (str_detect(i, "dico|accesogratuito|prohibicionpropaganda|prop_elec_usa_ciclo")){
+    # Generate the plot # DICOS
+      plot <- ggplot(data_to_plot_countrynames) +
+       # geom_smooth(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i]), se = F, alpha = 0.1, color = "grey90") +
+        geom_point(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i], 
+                        colour = dico_hubo_debates, shape = dico_hubo_debates), size = 5) +
+        #scale_x_continuous(breaks = seq(min(ncat_eleccion)-1,max(ncat_eleccion)+1,5)) +
+       scale_y_continuous(breaks = c(1, 0)) +
+        facet_wrap(~cat_pais, scales = "free_x", nrow = 3) +
+         theme_classic() +
+        xlab("Año") +
+        ylab(label) +
+        labs(title = "Evolución temporal de variable:",
+            subtitle = label) +
+       scale_colour_manual(breaks = c(1, 0),
+                        labels =c("Hubo debates", "No hubo debates"),
+                        values = c("green", "grey10"),
+                        name = "") +
+       scale_shape_manual(values = c( 19, 4),
+                       name = "",
+                       breaks = c(1, 0),
+                       labels =c("Hubo debates", "No hubo debates")) +
+                  theme(legend.position = "bottom", 
+                        axis.text.x = element_text(angle = 90)) 
+    
+      } else if (!str_detect(i, "dico")){
+      plot <- ggplot(data_to_plot_countrynames) +
       geom_smooth(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i]), se = F, alpha = 0.1, color = "grey90") +
       geom_point(aes(x = ncat_eleccion, y = data_to_plot_countrynames[,i], 
                      colour = dico_hubo_debates, shape = dico_hubo_debates), size = 5) +
       facet_wrap(~cat_pais, scales = "free", nrow = 3) +
       theme_classic() +
       xlab("Año") +
-      ylab(i) +
+      ylab(label) +
       labs(title = "Evolución temporal de variable:",
-           subtitle = i) +
+           subtitle = label) +
       scale_colour_manual(breaks = c(1, 0),
-                        labels =c("Hubo debates", "No hubo debates"),
-                        values = c("green", "grey10"),
-                        name = "") +
-    scale_shape_manual(values = c( 19, 4),
-                       name = "",
-                       breaks = c(1, 0),
-                       labels =c("Hubo debates", "No hubo debates")) +
-      theme(legend.position = "bottom") 
-      
+                          labels =c("Hubo debates", "No hubo debates"),
+                          values = c("green", "grey10"),
+                          name = "") +
+      scale_shape_manual(values = c( 19, 4),
+                         name = "",
+                         breaks = c(1, 0),
+                         labels =c("Hubo debates", "No hubo debates")) +
+        theme(legend.position = "bottom", 
+              axis.text.x = element_text(angle = 90))  
+  }
     
     # Save the plot
     ggsave(filename = paste("images/ev_variablexpais", i, ".jpg", sep = ""), 
@@ -1566,6 +1635,29 @@ for (i in colnames(data_to_plot_countrynames)) {
 
 
 ## correlaciones entre variables independientes #####
+
+# renombro cols # podria haber hecho esto antes
+
+
+data_to_plot <- data_to_plot %>% 
+  dplyr::rename( "Acceso gratuito a TV" = accesogratuito,
+                 "Alineamiento partidario" = alineamiento,
+                "Prop. elecciones c/debates región" = avgpropdebatesregionxciclo ,
+                "Cant. elecciones pasadas c/debates" = cumsum_pastciclos ,
+                "N. democracia electoral (VDEM)" = democraciavdemelectoralcomp ,
+                "PBI x capita" = gdpxcapita ,
+                "Margen de victoria" = marginvic,
+                "N. corrupción en medios (VDEM)" = mediaqualitycorruptvdem ,
+                "Año electoral" = ncat_eleccion,
+                 "N.E.C." = nec ,
+                "Propaganda prohibida" = prohibicionpropaganda ,
+                "Prop. elecciones c/debates USA" =  prop_elec_usa_ciclo ,
+                "% individuos c/Internet" = propindivinternet ,
+                "% hogares con TV" = proptv ,
+                 "Debates regulados" = regulaciondico,
+                "% voto oficialista" = voteshareincumbent,
+                 "Presidente a reelección" =  dico_reeleccion )
+
 
 correlation_matrix <- cor(data_to_plot , use = "pairwise.complete.obs" )
 
@@ -1594,8 +1686,11 @@ corrplot::corrplot(
   method = "circle",
   col = colorRampPalette(c("blue", "white", "red"))(8), 
   type = "lower",   # Muestra solo la parte inferior
-  addgrid.col = "gray",
-  diag = FALSE      # Ocultar diagonal
+  addgrid.col = "gray90",
+  diag = FALSE  ,    # Ocultar diagonal  ,
+  tl.col = "gray10",
+  tl.cex = 0.8
+ # na.label.col = "gray80"
 )
 
 # Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **

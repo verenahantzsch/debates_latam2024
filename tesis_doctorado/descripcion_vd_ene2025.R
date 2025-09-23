@@ -1105,8 +1105,9 @@ plot_ncat_competencia_decadas <- ev_ncat_competencia_decadas %>%
        subtitle = "Junto a su intervalo de confianza (95%)",
        x = "Década",
        y = "Nivel de competencia promedio",
-       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
-       El nivel de competencia por debate se mide en una escala que va del 0 = nula interacción entre candidatos, al 4 = mucha") +
+       # caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       # El nivel de competencia por debate se mide en una escala de 0 (nula interacción entre candidatos) a 4 (máxima interacción)"
+       ) +
   theme_classic() +
   scale_x_continuous(breaks = seq(1960,2020,10)) +
   scale_y_continuous(limits=c(min(democracias_basedebates$ncat_competencia, na.rm=T),max(democracias_basedebates$ncat_competencia, na.rm=T)), 
@@ -1116,7 +1117,7 @@ plot_ncat_competencia_decadas <- ev_ncat_competencia_decadas %>%
 plotnumber <- plotnumber + 1
 plotname <- "competencia_decadas"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
-ggsave(filename, width = 10, height = 7)
+ggsave(filename, width = 7, height = 7)
 
 ##### por pais  #####
 
@@ -1142,8 +1143,9 @@ plot_ncat_competencia_por_pais <- ncat_competencia_por_pais %>%
        subtitle = "Junto a su intervalo de confianza (95%)",
        x = "País",
        y = "Nivel de competencia promedio",
-       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
-       El nivel de competencia por debate se mide en una escala que va del 0 = nula interacción entre candidatos, al 4 = mucha") +
+       # caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       # El nivel de competencia por debate se mide en una escala que va del 0 = nula interacción entre candidatos, al 4 = mucha"
+       ) +
   theme_classic() +
   scale_y_continuous(limits=c(min(democracias_basedebates$ncat_competencia, na.rm=T),max(democracias_basedebates$ncat_competencia, na.rm=T)), 
                      breaks=c(min(democracias_basedebates$ncat_competencia, na.rm=T):max(democracias_basedebates$ncat_competencia, na.rm=T))) +
@@ -1153,7 +1155,7 @@ plot_ncat_competencia_por_pais <- ncat_competencia_por_pais %>%
 plotnumber <- plotnumber + 1
 plotname <- "competencia_pais"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
-ggsave(filename, width = 10, height = 7)
+ggsave(filename, width = 7, height = 7)
 
 #### participacion   ####
 
@@ -1184,8 +1186,9 @@ plot_ev_ncat_ppac_decadas <- ev_ncat_ppac_decadas %>%
        subtitle = "Junto a su intervalo de confianza (95%)",
        x = "Décadas",
        y = "Nivel de participación promedio",
-       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
-       El nivel de participación por debate se mide en una escala que va del 0 = nula participación del público, al 4 = mucha") +
+       # caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       # El nivel de participación por debate se mide en una escala que va del 0 = nula participación del público, al 4 = mucha"
+       ) +
   scale_x_continuous(breaks = seq(1960,2020,10)) +
   scale_y_continuous(limits=c(min(democracias_basedebates$ncat_ppac, na.rm=T),max(democracias_basedebates$ncat_ppac, na.rm=T)), 
                      breaks=c(min(democracias_basedebates$ncat_ppac, na.rm=T):max(democracias_basedebates$ncat_ppac, na.rm=T))) +
@@ -1195,7 +1198,7 @@ plot_ev_ncat_ppac_decadas <- ev_ncat_ppac_decadas %>%
 plotnumber <- plotnumber + 1
 plotname <- "ppac_decadas"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
-ggsave(filename, width = 10, height = 7)
+ggsave(filename, width = 7, height = 7)
 
 ##### por pais   ######
 
@@ -1219,8 +1222,9 @@ plot_ncat_ppac_por_pais <- ncat_ppac_por_pais %>%
        subtitle = "Junto a su intervalo de confianza (95%)",
        x = "País",
        y = "Nivel de participación promedio",
-       caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
-       El nivel de participación por debate se mide en una escala que va del 0 = nula participación del público, al 4 = mucha") +
+       # caption = "Elaboración propia con base en los datos de Franco Häntzsch (2022).
+       # El nivel de participación por debate se mide en una escala que va del 0 = nula participación del público, al 4 = mucha"
+       ) +
   theme_classic() +
   scale_y_continuous(limits=c(min(democracias_basedebates$ncat_ppac, na.rm=T),max(democracias_basedebates$ncat_ppac, na.rm=T)), 
                      breaks=c(min(democracias_basedebates$ncat_ppac, na.rm=T):max(democracias_basedebates$ncat_ppac, na.rm=T))) +
@@ -1229,7 +1233,7 @@ plot_ncat_ppac_por_pais <- ncat_ppac_por_pais %>%
 plotnumber <- plotnumber + 1
 plotname <- "ppac_pais"
 filename <- paste("images/plot_", plotnumber, plotname, ".jpg", sep = "")
-ggsave(filename, width = 10, height = 7)
+ggsave(filename, width = 7, height = 7)
 
 #### between within NO REPORTO #####
 
@@ -1539,13 +1543,14 @@ plot_prop_invitados_pais <- democracias_basedebates %>%
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 90),
         axis.title.y = element_text(margin = margin(r = 5),size = 8))  +
-  labs(x = "", y = "Proporción de candidatos invitados",
+  labs(x = "", title = "Gráfico Anexo 4.VII Proporción de candidatos invitados",
        caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
-       Se exponen solo los debates realizados de manera previa a la primera ronda electoral. 
-       Los valores superiores a 1 se deben por excepcionalmente numerosas bajas de candidatos durante el curso de la campaña. 
+       
+       Se contemplan únicamente los debates previos a la primera ronda electoral. 
+       Los valores superiores a 1 se explican por el retiro de candidatos durante el curso de la campaña. 
 
        *Rep. Dom. = República Dominicana.",
-       title = "Prop invitados",
+       y = "Proporción de invitados",
        subtitle = "por país")
 
 plotnumber <- plotnumber + 1
