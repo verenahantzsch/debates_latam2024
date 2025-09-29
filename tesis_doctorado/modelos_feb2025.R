@@ -394,11 +394,11 @@ summary(modelo_all)
 
 #### https://www.geeksforgeeks.org/different-robust-standard-errors-of-logit-regression-in-stata-and-r/
 
-# ### Heteroscedasticity-Consistent Standard Errors COMENTADO, NO USADO ####
+#### Heteroscedasticity-Consistent Standard Errors COMENTADO, NO USADO ####
 # 
 # # robust_se <- coeftest(model, vcov = vcovHC(model, type = "HC0"))
 # 
-# ##### Modelo contingencia  ####
+###### Modelo contingencia  ####
 # 
 # robust_se_modelo_contingencia <- coeftest(modelo_contingencia,  
 #                                           vcovHC(modelo_contingencia, type = "HC0"))
@@ -406,34 +406,34 @@ summary(modelo_all)
 # print(robust_se_modelo_contingencia)
 # 
 # 
-# ##### Modelo sistemico ####
+###### Modelo sistemico ####
 # 
 # robust_se_modelo_sistemico <- coeftest(modelo_sistemico, 
 #                                        vcovHC(modelo_sistemico, type = "HC0"))
 # print(robust_se_modelo_sistemico)
 # 
 # 
-# ##### Modelo marco regulatorio ####
+###### Modelo marco regulatorio ####
 # 
 # robust_se_modelo_regulatorio <- coeftest(modelo_regulatorio, 
 #                                          vcovHC(modelo_regulatorio, type = "HC0"))
 # print(robust_se_modelo_regulatorio)
 # 
 # 
-# ##### Modelo geo/temp ####
+###### Modelo geo/temp ####
 # 
 # robust_se_modelo_difusion <- coeftest(modelo_difusion, 
 #                                       vcovHC(modelo_difusion, type = "HC0"))
 # print(robust_se_modelo_difusion)
 # 
 # 
-# ##### Modelo final / sficativas ####
+###### Modelo final / sficativas ####
 # 
 # robust_se_modelo_sficativas <- coeftest(modelo_sficativas, 
 #                                         vcovHC(modelo_sficativas, type = "HC0"))
 # print(robust_se_modelo_sficativas)
 # 
-# ##### Modelo final / sficativas variantes ####
+###### Modelo final / sficativas variantes ####
 # 
 # robust_se_modelo_sficativas <- coeftest(modelo_sficativas_variantes, 
 #                                         vcovHC(modelo_sficativas_variantes, type = "HC0"))
@@ -1158,7 +1158,10 @@ par(mfrow = c(2, 2))
 # Response
 # raw residuals
 raw_residuals <- residuals(modelo_a_probar, type = "response") 
-plot(raw_residuals, main = "Residuos Raw", ylab = "Residuos", xlab = "Índice de observación")
+plot(raw_residuals, main = "",
+     ylab = "", xlab = "" )
+mtext("6.III.C.1.1 Residuos Raw", 
+      side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 abline(h = 0, col = "red3", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(raw_residuals), y = raw_residuals, 
@@ -1166,7 +1169,10 @@ text(x = 1:length(raw_residuals), y = raw_residuals,
 
 # Residuos deviance
 residuals_dev <- residuals(modelo_a_probar, type = "deviance")
-plot(residuals_dev, main = "Residuos Deviance", ylab = "Residuos", xlab = "Índice de observación")
+plot(residuals_dev, main = "", 
+     ylab = "", xlab = "")
+mtext("6.III.C.1.2 Residuos Deviance",
+      side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 abline(h = 0, col = "red3", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuals_dev), y = residuals_dev, 
@@ -1179,7 +1185,10 @@ text(x = 1:length(residuals_dev), y = residuals_dev,
 #Another type of residual is the Pearson residual. It is the raw residual divided by the estimated standard deviation of a binomial distribution with number of trials equal to 1 and p equal to 
 # The Pearson residual is basically a rescaled version of the raw residual.  
 residuals_pearson <- residuals(modelo_a_probar, type = "pearson")
-plot(residuals_pearson, main = "Residuos de Pearson", ylab = "Residuos", xlab = "Índice de observación")
+plot(residuals_pearson, main = "", 
+     ylab = "", xlab = "")
+mtext("6.III.C.1.3 Residuos de Pearson",
+      side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 abline(h = 0, col = "red3", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuals_pearson), y = residuals_pearson, 
@@ -1191,23 +1200,53 @@ text(x = 1:length(residuals_pearson), y = residuals_pearson,
 # importantes porque tienen en cuenta el leverage!!
 hat_values <- hatvalues(modelo_a_probar)  # Leverage
 residuos_pearson_est <- residuals_pearson / sqrt(1 - hat_values)
-plot(residuos_pearson_est, main = "Residuos de Pearson Estandarizados", ylab = "Residuos", xlab = "Índice de observación")
+plot(residuos_pearson_est, 
+     main = "", 
+     ylab = "", xlab = "")
+mtext("6.III.C.1.4 Residuos de Pearson Estandarizados",
+      side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 abline(h = 0, col = "red3", lty = 2)
 # Añadir los IDs junto a los puntos
 text(x = 1:length(residuos_pearson_est), y = residuos_pearson_est, 
      labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue4")  # Ajusta 'pos' para la posición del texto
 
+
+#side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
+mtext("Gráfico Anexo 6.III.C.1 Residuos del Modelo", font = 2, side = 3, cex = 1.2, line = -1.2, outer = TRUE )
+mtext("Magnitud de Residuos", side = 2, line = -2, cex = 0.8, outer = TRUE )
+mtext("Elaboración propia. 
+      El eje horizontal representa el índice de cada observación. 
+      Cada panel (6.III.C.1 a 6.III.C.4) grafica la magnitud de un tipo de residuo en específico. ", 
+      side = 1, line = -1.2, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
+
+
+## ------------------------- ##
+
 par(mfrow = c(1,2))
-plot(modelo_a_probar, which = 1)#, 
+plot(modelo_a_probar, 
+     which = 1, caption = "", main = "", sub.caption = "",
+     labels.id = data_modelo_a_probar$obsid,)
+title(main = "", xlab= "", ylab = "" ) # borra título
+mtext("6.III.C.2.1 Residuos vs. valores predichos",
+      side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
+#title(xlab = "Log odds predichas", ylab = "Residuos de Pearson estandarizados")  # tu versión en español
+ 
     # main = "Residuos vs valores predichos",), ylab = "Residuos de Pearson estandarizados", xlab = "Log odds predichas") # Standardized Pearson residuals are plotted on the y-axis versus predicted log-odds on the x-axis. 
 # SI EN EJE VERTICAL PUNTO APARECE MUY ABAJO: PREDIGO ALTA PROBA PERO FALLO, SE OBSERVA NO OCURRENCIA
 # SI EN EJE VERTICAL PUNTO APARECE MUY ARRIBA: PREDIGO BAJA PROBA PERO FALLO, SE OBSERVA OCURRENCIA
 #Me aplica: It appears at the lower predicted values, we’re under-fitting The observed proportions are larger than the predicted proportions. 
 # At the medium predicted values, we're over-fitting for a couple of observations. The observed proportions are much smaller than the predicted proportions.
+plot(modelo_a_probar, which = 2, caption = "", main = "", sub.caption = "",
+     labels.id = data_modelo_a_probar$obsid,)
+mtext("6.III.C.2.2 Residuos vs. valores predichos",
+      side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 
+#side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
+mtext("Gráfico Anexo 6.III.C.2 Diagnóstico visual de residuos del modelo", font = 2, side = 3, cex = 1.2, line = -1.2, outer = TRUE )
+mtext("Elaboración propia, con ayuda de la función plot(). ", 
+      side = 1, line = -1.2, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
 
-plot(modelo_a_probar, which = 2)
-
+## ------------------------- ##
 
 data_modelo_a_probar$pred <- predict(modelo_a_probar, type = "response")
 data_modelo_a_probar$deviance <- residuals(modelo_a_probar)
@@ -1217,8 +1256,8 @@ data_modelo_a_probar[c(161,39,72,90),]
 # Earlier we mentioned that standardized Pearson residuals have an approximate standard normal distribution if the model fits. This implies looking at a QQ Plot of residuals can provide some assessment of model fit. We can produce this plot using plot() with which = 2. Again the plot created with the group-level model is more informative than the plot created with the subject-level model.
 # This suggests our model is holding well in the middle range of predicted values but is maybe suspect in the extremities. It’s worth mentioning that binomial logistic regression models have no error term or normality assumptions. In a standard linear model, this plot assesses normality of residuals, which is one of the assumptions of a linear model. But in a binary logistic regression model, normality of residuals is simply evidence of a decent fitting model. There is no assumption that residuals are random draws from a normal distribution.
 
-qqnorm(residuals_dev, main = "QQ Plot - Residuos de Deviance")
-qqline(residuals_dev, col = "red")
+#qqnorm(residuals_dev, main = "QQ Plot - Residuos de Deviance")
+#qqline(residuals_dev, col = "red")
 
 # no parecen detectarse patrones claros que indiquen violaciones a supuesto de variable omitida o heterocedasticidad
 # si parece haber dos observaciones potencialmente problemáticas (outliers o con leverage)
@@ -1257,13 +1296,14 @@ tabla_cook %>% write.csv("anexos/tabla_cook.csv")
 # Graficar las estadísticas de Cook
 par(mfrow = c(1,1))
 
-plot(data_modelo_a_probar$cooks_distances, main = "Estadísticas de Cook", ylab = "Cook's Distance", xlab = "Índice de observación")
+plot(data_modelo_a_probar$cooks_distances, 
+     main = "Estadísticas de Cook", ylab = "Cook's Distance", xlab = "Índice de observación")
 abline(h = umbral #- 14 - 1) 
        , col = "red", lty = 2)  # Línea de corte común (influencia alta)
 # Identificar observaciones influyentes (por encima del umbral)
 influential_obs <- which(data_modelo_a_probar$cooks_distances > (4 / nrow(data_modelo_a_probar)))
 text(x = influential_obs, y = data_modelo_a_probar$cooks_distances[influential_obs], 
-     labels = data_modelo_a_probar$obsid[influential_obs], pos = 4, cex = 0.7, col = "blue")
+     labels = data_modelo_a_probar$obsid[influential_obs], pos = 4, cex = 0.7, col = "blue4")
 #?text
 
 # costa rica 1986 parece ser la mas problematica
@@ -1294,25 +1334,50 @@ umbral <- 2 / sqrt(nrow(data_modelo_a_probar))
 #par(mfrow=c(2,1))
 
 dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+#colnames(dfbetas)
+labels <- tibble( indicador = colnames(dfbetas),
+                  label = c("Intercepto",
+                            "log Margen de victoria",
+                            "log NEC",
+                            "% voto oficialista",
+                            "Presidente a reelección",
+                            "Prop. individuos c internet",
+                            "Acceso gratuito a medios",        
+                            "Prop. debates en región" ,
+                            "Debates regulados" ,
+                            "Cant. elecc. pasadas c debates" ,
+                            "log PBI per Cápita" ,
+                            "N° Democracia electoral",
+                            "N° Corrupción en medios" )  )
 
 
-par(mfrow = c(3, 4), mar = c(4, 4, 2, 1))
-
-
+par(mfrow = c(3, 4), mar = c(2, 4, 2, 1))
+# x defecto par(mar = c(1, 0.8, 0.8, 0.4) + 0.02)
+#c(abajo, izquierda, arriba, derecha)
+#i <- 1
 for (i in seq(2, ncol(dfbetas))) { # Iterar sobre columnas de dfbetas
   
   plot(dfbetas[[i]],   
-       main = paste("Coeficiente:" , colnames(dfbetas)[i]), # Agregar el nombre de la variable como título
-       xlab = "Índice de observaciones", ylab = "DFBETAs")
-  
-  abline(h = umbral, lty = 2, col = "gray50")
-  abline(h = -umbral, lty = 2, col = "gray50")
+       main = "", 
+       xlab = "", ylab = "")
+  mtext(paste("6.III.D." , i-1," ", labels$label[i], sep = ""), # Agregar el nombre de la variable como título
+        side = 3, line = 0.5, adj = 0, cex = 0.7, font = 1)
+  abline(h = umbral, lty = 2, col = "gray30")
+  abline(h = -umbral, lty = 2, col = "gray30")
   
   # Agregar etiquetas de texto a los puntos
   text(seq_along(dfbetas[[i]]), dfbetas[[i]],
-       labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue3")
+       labels = data_modelo_a_probar$obsid, pos = 4, cex = 0.7, col = "blue4")
 }
 
+#side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
+#mtext("Gráfico Anexo 6.III.D", font = 2, side = 3, cex = 1.2, line = -1, outer = TRUE )
+mtext("DFBETAs", side = 2, line = -2, cex = 0.8, outer = TRUE )
+# mtext("Elaboración propia. 
+#       El eje horizontal representa el índice de cada observación. 
+#       Cada panel (6.III.D.1 a 6.III.C.12) grafica los DFBETAs para cada uno de los coeficientes del modelo. ", 
+#       side = 1, line = -1, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
+#  
 #### comentario ####
 
 # de cook:
@@ -1367,6 +1432,7 @@ corr_modelo_a_probar <- data_modelo_a_probar %>%
          marginvic,
          lnmarginvic,
          nec,
+         lnnec,
          voteshareincumbent,
          lnvoteshareincumbent,
          dico_reeleccion,
@@ -1383,7 +1449,30 @@ corr_modelo_a_probar <- data_modelo_a_probar %>%
          lngdp,
          gdpxcapita,
          democraciavdemelectoralcomp,
-         mediaqualitycorruptvdem)
+         mediaqualitycorruptvdem) %>% 
+  dplyr::rename( "Acceso gratuito a TV" = accesogratuito,
+                 "Alineamiento partidario" = alineamiento,
+                 "Prop. elecciones c/debates región" = avgpropdebatesregionxciclo ,
+                 "Cant. elecciones pasadas c/debates" = cumsum_pastciclos ,
+                 "N° democracia electoral" = democraciavdemelectoralcomp ,
+                 "PBI x capita" = gdpxcapita ,
+                 "log PBI x capita" = lngdp ,
+                 "Margen de victoria" = marginvic, 
+                 "log Margen de victoria" = lnmarginvic, 
+                 "N° corrupción en medios" = mediaqualitycorruptvdem ,
+                 "Año electoral" = ncat_eleccion,
+                 "N.E.C." = nec ,
+                 "Propaganda prohibida" = prohibicionpropaganda ,
+                 "Prop. elecciones c/debates USA" =  prop_elec_usa_ciclo ,
+                 "% individuos c/Internet" = propindivinternet ,
+                 "log % individuos c/Internet" = lnpropindivinternet ,
+                 "% hogares con TV" = proptv ,
+                 "Debates regulados" = regulaciondico,
+                 "% voto oficialista" = voteshareincumbent,
+                 "log % voto oficialista" = lnvoteshareincumbent,
+                 "Presidente a reelección" =  dico_reeleccion ,
+                 "log N.E.C." = lnnec)
+
 
 summary(corr_modelo_a_probar)
 correlation_matrix <- cor(corr_modelo_a_probar , use = "pairwise.complete.obs" )
@@ -1394,28 +1483,51 @@ correlation_matrix <- cor(corr_modelo_a_probar , use = "pairwise.complete.obs" )
 # reorden manual por bloque teorico (abajo hay codigo para un reorden automatico con CHATGPT)
 
 # Define el nuevo orden de las variables basado en bloques teóricos
-new_order <- c(
-         "ncat_eleccion",
-         "accesogratuito",
-         "prohibicionpropaganda",
-         "regulaciondico",
-         "avgpropdebatesregionxciclo",
-         "cumsum_pastciclos",
-         "prop_elec_usa_ciclo",
-         "proptv",
-         "lnpropindivinternet",
-         "propindivinternet",
-         "lngdp",
-         "gdpxcapita",
-         "alineamiento",
-         "democraciavdemelectoralcomp",
-         "mediaqualitycorruptvdem",
-         "marginvic",
-         "lnmarginvic",
-         "nec",
-         "voteshareincumbent",
-         "lnvoteshareincumbent",
-         "dico_reeleccion") 
+# new_order <- c(
+#          "ncat_eleccion",#--
+#          "accesogratuito",#
+#          "prohibicionpropaganda",#
+#          "regulaciondico",#
+#          "avgpropdebatesregionxciclo", #
+#          "cumsum_pastciclos", #
+#          "prop_elec_usa_ciclo",#
+#          "proptv",#
+#          "lnpropindivinternet",  # OJO
+#          "propindivinternet", #
+#          "lngdp", #
+#          "gdpxcapita",#
+#          "alineamiento",#
+#          "democraciavdemelectoralcomp",#
+#          "mediaqualitycorruptvdem",#
+#          "marginvic",#
+#          "lnmarginvic",#
+#          "nec",#
+#          "voteshareincumbent",#
+#          "lnvoteshareincumbent",
+#          "dico_reeleccion") 
+new_order <- c("Año electoral",
+               "Acceso gratuito a TV",
+               "Propaganda prohibida",
+               "Debates regulados" ,
+               "Prop. elecciones c/debates región",
+               "Cant. elecciones pasadas c/debates",
+               "Prop. elecciones c/debates USA",
+               "% hogares con TV",
+               "% individuos c/Internet" ,
+               "log % individuos c/Internet",
+               "PBI x capita" ,
+               "log PBI x capita",
+               "Alineamiento partidario" ,
+               "N° democracia electoral",
+               "N° corrupción en medios",
+               "Margen de victoria",
+               "log Margen de victoria",
+               "N.E.C.",
+               "log N.E.C.",
+               "% voto oficialista",
+               "log % voto oficialista",
+               "Presidente a reelección")
+
 # Reemplaza con los nombres reales de tus variables
 
 # Reorganiza la matriz de correlación manualmente
@@ -1432,15 +1544,18 @@ corr_plot <- corrplot::corrplot(
 )
 # Crear el gráfico de correlación (parte inferior)
 n <- ncol(correlation_matrix) # Número de columnas/filas
-
+par(mfrow = c(1, 1), mar = c(1, 1, 1, 1))
 # Graficar la matriz de correlación
 corrplot::corrplot(
   correlation_matrix, 
   method = "circle",
   col = colorRampPalette(c("red", "white", "green"))(8), 
   type = "lower",   # Muestra solo la parte inferior
-  addgrid.col = "gray",
-  diag = FALSE      # Ocultar diagonal
+  addgrid.col = "gray90",
+  diag = FALSE  ,    # Ocultar diagonal  ,
+  tl.col = "gray10",
+  tl.cex = 0.8
+  # na.label.col = "gray80"
 )
 
 # Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
@@ -1463,7 +1578,22 @@ for (j in 1:n) {
     }
   }
 }
+ 
+#side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
+mtext("Gráfico Anexo 6.III.E Correlación entre variables independientes", font = 2, side = 3, cex = 1.2, line = -2, outer = F )
+ 
+# mtext("Elaboración propia.
+#   El color y tamaño de los círculos representan las correlaciones de Pearson entre predictores del modelo,
+#   calculados sobre la muestra efectivamente utilizada en el modelo final (n=171).
+#   El color rojo indica coeficientes de correlación negativos; el verde, positivos.
+#   El doble asterisco, “**”, representa un coeficiente de Pearson mayor a 0.5 absoluto; el “*”, uno mayor a 0.25.
+#   Se reacomodó manualmente el orden de las variables a los fines de aprximar los indicadores de un mismo bloque teórico entre sí. ",
+#       side = 1, line = 6, cex = 0.7, outer = F, adj = 1, font = 3 )
+ 
 
+
+
+#----------#
 # otra funcion de grafico
 ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
 
@@ -1591,7 +1721,6 @@ all_vifs2 <- all_vifs %>%
 
 all_vifs2 %>% write_csv("anexos/vifs_values.csv")
 
-#### otros? PENDIENTE ####
 ### Controles - Missing data PENDIENTE ####
 # jack knife
 # imputacion: 
@@ -1636,6 +1765,10 @@ lmtest::waldtest(modelo_sficativas_variantes_reducido , modelo_contingencia_redu
 
 # Obtener Log-Likelihood, mas alto mejor. solo se pueden comparar modelos anidados
 logLik(modelo_a_probar)
+# log lik intepretacion #MAS ALTO, MEJOR
+# The log-likelihood value of a regression model is a way to measure the goodness of fit for a model. The higher the value of the log-likelihood, the better a model fits a dataset.
+##The log-likelihood value for a given model can range from negative infinity to positive infinity. The actual log-likelihood value for a given model is mostly meaningless, but it’s useful for comparing two or more models.
+##In practice, we often fit several regression models to a dataset and choose the model with the highest log-likelihood value as the model that fits the data best.
 
 # para hacer directamente el test
 # lrtest(modelo_0_reducido_sficativas, modelo_sficativas ) # -73.106 (pero mas parametros)
@@ -1692,6 +1825,10 @@ BIC(modelo_a_probar)
 AIC(modelo_sficativas_variantes_reducido)
 BIC(modelo_sficativas_variantes_reducido)
 
+
+
+
+
 # DEFINO FUNCION COMPARATIVA
 
 # para comparar modelos con igual n, creo funcion 
@@ -1705,14 +1842,18 @@ stats <- function(modelo){
   rownames(pseudoR2) <- NULL
   
   aic <- data.frame(value = AIC(modelo),
-                       stat = "AIC")
+                       stat = "Criterio de información de Akaike (AIC)")
   
   bic <- data.frame(value = BIC(modelo),
-                       stat = "BIC")
+                       stat = "Criterio de Información Bayesiano (BIC)")
+  
+  logLik <- data.frame(value = logLik(modelo),
+                    stat = "Log-verosimilitud")
   
   data <- rbind(pseudoR2,
                 aic,
-                bic)
+                bic,
+                logLik)
   
   data$modelo <- deparse(substitute(modelo))  
   
@@ -1960,14 +2101,18 @@ pseudoR2$stat <- c("McFadden", "CoxSnell", "Nagelkerke")
 rownames(pseudoR2) <- NULL
 
 aic <- data.frame(value = AIC(final_random_intercepts),
-                  stat = "AIC")
+                  stat = "Criterio de información de Akaike (AIC)")
 
 bic <- data.frame(value = BIC(final_random_intercepts),
-                  stat = "BIC")
+                  stat = "Criterio de Información Bayesiano (BIC)")
+
+logLik <- data.frame(value = logLik(final_random_intercepts),
+                     stat = "Log-verosimilitud")
 
 stats_multi <- rbind(pseudoR2,
               aic,
-              bic)
+              bic,
+              logLik)
 
 stats_multi$modelo <- deparse(substitute(final_random_intercepts)) 
 
@@ -2633,26 +2778,45 @@ lista2 <-  list(
   robust_se_cluster_modelo_sficativas_variantes_s_outliers
 ) 
 
+# Número de observaciones
+n_obs <- c(nobs(modelo_sficativas_variantes),
+           nobs(modelo_sficativas_variantes_s_outliers))
+
+# Log likelihood
+log_lik <- c(logLik(modelo_sficativas_variantes),
+             logLik(modelo_sficativas_variantes_s_outliers))
+
+
 texreg::htmlreg(lista2,
-                custom.model.names = c("Final",
-                                       "Final s/ casos influyentes")  ,
+                custom.model.names = c("Final muestra completa",
+                                       "Final s/ obs. influyentes")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
                                       "log Margen de victoria",
                                       "log NEC",
-                                      "Votos oficialista",
-                                      "Incumbente reelije",
+                                      "% votos oficialista",
+                                      "Presidente a reelección",
                                       "Prop. individuos c internet",
                                       "Acceso gratuito",
                                       "Prop. debates en región",
                                       "Regulación sobre debates",
-                                      "Cant. elecciones pasadas con debates",
+                                      "Cant. elecciones pasadas c debates",
                                       "log PBI per Cápita",
-                                      "Democracia electoral (VDEM)",
-                                      "Corrupción de medios (VDEM)") ,
+                                      "N° Democracia electoral",
+                                      "N° Corrupción de medios") ,
+                custom.gof.rows = list("Log-verosimilitud" = log_lik,
+                                       "n" = n_obs),
                 file="anexos/tabla_anexa_outliers.html",
-                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
-                center = T,
+                # caption = "Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país",
+                # center = T,
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Tabla Anexa 6.III.D.2 Modelo final reestimado
+               </div>
+               Se presentan los resultados del modelo final estimado sobre la muestra completa (columna izquierda) y sobre una muestra excluyendo las observaciones potencialmente influyentes (columna derecha). Ambos emplean regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas. 
+             </div>",
+                caption.above = TRUE,
+                center = FALSE,
                 bold = 0.1)
 
 # kable(tabla, format = "latex", align = "c") %>%
@@ -3733,16 +3897,18 @@ ranint <- ranint %>%
 # Graficar
 plot_ranint <- ggplot(ranint, aes(x = condval, y = reorder(grp, condval))) +
   geom_point() +  # Puntos para los interceptos aleatorios
-  geom_errorbarh(aes(xmin = lower_ci, xmax = upper_ci), height = 0.2) +  # Intervalos de confianza
+  geom_errorbarh(aes(xmin = lower_ci, xmax = upper_ci), colour = "gray20", height = 0.2) +  # Intervalos de confianza
   theme_minimal() +
   labs(x = "Interceptos Aleatorios", y = "Países") +
   theme_classic() + 
-  theme(axis.text.y = element_text(size = 8)) +
+  theme(axis.text.y = element_text(size = 10)) +
   geom_vline(aes(xintercept = 0), linetype = 3, colour = "blue4") +
-  labs(title = "Interceptos aleatorios estimados en el modelo final multinivel",
-       subtitle = "Por país, junto a su desvío estándar condicional")
+  labs(title = "Gráfico Anexo 6.III.A Interceptos aleatorios estimados",
+       subtitle = "por país, junto a su desvío estándar condicional",
+       caption = "Elaboración propia, con base en los resultados del modelo final multinivel")
 
-plot_ranint %>% ggsave(filename = "images/random_intercepts.jpg", width = 10)
+plot_ranint %>% ggsave(filename = "images/random_intercepts.jpg", 
+                       width = 10, height = 6)
 
 # ME QUEDO CON EL DE ARRIBA PERO ESTÁ ESTA ALTERNATIVA
 # Crear etiquetas al final de cada curva

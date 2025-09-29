@@ -1551,11 +1551,11 @@ labels <- tibble(breaks = c("accesogratuito",
                          "Alineamiento partidario",
                          "Prop. elecciones c/debates región",
                          "Cant. elecciones pasadas c/debates",
-                         "N. democracia electoral (VDEM)",
+                         "N. democracia electoral (V-DEM)",
                          "PBI x capita",
                           "Margen de victoria",
-                        "N. corrupción en medios (VDEM)",
-                        "Año electoral",
+                        "N. corrupción en medios (V-DEM)",
+                        "zAño electoral",
                         "N.E.C.",
                         "Propaganda prohibida",
                       "Prop. elecciones c/debates USA",
@@ -1564,8 +1564,11 @@ labels <- tibble(breaks = c("accesogratuito",
                          "Debates regulados",
                          "% voto oficialista",
                          "Presidente a reelección",
-              "Hubo debates"))
+              "zHubo debates"))
 
+labels <- labels %>% 
+  arrange(label) %>% 
+  mutate(nr= row_number())
  
 for (i in colnames(data_to_plot_countrynames)) {
   #print(i)
@@ -1574,6 +1577,10 @@ for (i in colnames(data_to_plot_countrynames)) {
   label <- labels %>% 
     subset(breaks==i) %>% 
     select(label)
+  
+  nr <- labels %>% 
+    subset(breaks==i) %>% 
+    select(nr)
   
   if (i != "ncat_eleccion" & i != "cat_pais") {
     if (str_detect(i, "dico|accesogratuito|prohibicionpropaganda|prop_elec_usa_ciclo")){
@@ -1588,7 +1595,7 @@ for (i in colnames(data_to_plot_countrynames)) {
          theme_classic() +
         xlab("Año") +
         ylab(label) +
-        labs(title = "Evolución temporal de variable:",
+        labs(title = paste("Gráfico 6.II.C.", nr, ": Evolución temporal de variable:", sep = ""),
             subtitle = label) +
        scale_colour_manual(breaks = c(1, 0),
                         labels =c("Hubo debates", "No hubo debates"),
@@ -1610,7 +1617,7 @@ for (i in colnames(data_to_plot_countrynames)) {
       theme_classic() +
       xlab("Año") +
       ylab(label) +
-      labs(title = "Evolución temporal de variable:",
+      labs(title = paste("Gráfico 6.II.C.", nr, ": Evolución temporal de variable:", sep = ""),
            subtitle = label) +
       scale_colour_manual(breaks = c(1, 0),
                           labels =c("Hubo debates", "No hubo debates"),
@@ -1625,7 +1632,7 @@ for (i in colnames(data_to_plot_countrynames)) {
   }
     
     # Save the plot
-    ggsave(filename = paste("images/ev_variablexpais", i, ".jpg", sep = ""), 
+    ggsave(filename = paste("images/ev_variablexpais", nr, i, ".jpg", sep = ""), 
            plot = plot, width = 12, height = 10)
     
   } else {
@@ -1634,83 +1641,96 @@ for (i in colnames(data_to_plot_countrynames)) {
 }
 
 
-## correlaciones entre variables independientes #####
-
-# renombro cols # podria haber hecho esto antes
-
-
-data_to_plot <- data_to_plot %>% 
-  dplyr::rename( "Acceso gratuito a TV" = accesogratuito,
-                 "Alineamiento partidario" = alineamiento,
-                "Prop. elecciones c/debates región" = avgpropdebatesregionxciclo ,
-                "Cant. elecciones pasadas c/debates" = cumsum_pastciclos ,
-                "N. democracia electoral (VDEM)" = democraciavdemelectoralcomp ,
-                "PBI x capita" = gdpxcapita ,
-                "Margen de victoria" = marginvic,
-                "N. corrupción en medios (VDEM)" = mediaqualitycorruptvdem ,
-                "Año electoral" = ncat_eleccion,
-                 "N.E.C." = nec ,
-                "Propaganda prohibida" = prohibicionpropaganda ,
-                "Prop. elecciones c/debates USA" =  prop_elec_usa_ciclo ,
-                "% individuos c/Internet" = propindivinternet ,
-                "% hogares con TV" = proptv ,
-                 "Debates regulados" = regulaciondico,
-                "% voto oficialista" = voteshareincumbent,
-                 "Presidente a reelección" =  dico_reeleccion )
-
-
-correlation_matrix <- cor(data_to_plot , use = "pairwise.complete.obs" )
-
-# Generar el gráfico con resaltado
-
-# otra funcion de grafico
-corrplot <- ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
-
-corrplot %>% ggsave(filename = "images/corrplot_indicadores_elecciones.jpg",
-                    width = 15, height = 15)
-
-# Generar el gráfico con coordenadas capturadas
-corr_plot <- corrplot::corrplot(
-  correlation_matrix, 
-  method = "circle",
-  col = colorRampPalette(c("blue", "white", "red"))(8), 
-  diag = FALSE, 
-  plot = NULL # Capturar coordenadas
-)
-# Crear el gráfico de correlación (parte inferior)
-n <- ncol(correlation_matrix) # Número de columnas/filas
-
-# Graficar la matriz de correlación
-corrplot::corrplot(
-  correlation_matrix, 
-  method = "circle",
-  col = colorRampPalette(c("blue", "white", "red"))(8), 
-  type = "lower",   # Muestra solo la parte inferior
-  addgrid.col = "gray90",
-  diag = FALSE  ,    # Ocultar diagonal  ,
-  tl.col = "gray10",
-  tl.cex = 0.8
- # na.label.col = "gray80"
-)
-
-# Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
-for (j in 1:n) {
-  for (i in 1:n) {
-    if (i > j) { # Solo trabaja en el triángulo inferior (evita asteriscos en la parte oculta)
-      # Resaltar valores entre 0.25 y 0.5
-      if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
-        text(j, n - i + 1, "*", col = "black", cex = 1.5)
-      }
-      # Resaltar valores mayores a 0.5
-      if (abs(correlation_matrix[i, j]) > 0.5) {
-        text(j, n - i + 1, "**", col = "black", cex = 1.5)
-      }
-    }
-  }
-}
-
-
-
+## correlaciones entre variables independientes AL FINAL HAGO EN MODELOS_FEB 2025 #####
+# 
+# # renombro cols # podria haber hecho esto antes
+# 
+# 
+# data_to_plot <- data_to_plot %>% 
+#   dplyr::rename( "Acceso gratuito a TV" = accesogratuito,
+#                  "Alineamiento partidario" = alineamiento,
+#                 "Prop. elecciones c/debates región" = avgpropdebatesregionxciclo ,
+#                 "Cant. elecciones pasadas c/debates" = cumsum_pastciclos ,
+#                 "N° democracia electoral" = democraciavdemelectoralcomp ,
+#                 "PBI x capita" = gdpxcapita ,
+#                 "Margen de victoria" = marginvic,
+#                 "N° corrupción en medios" = mediaqualitycorruptvdem ,
+#                 "Año electoral" = ncat_eleccion,
+#                  "N.E.C." = nec ,
+#                 "Propaganda prohibida" = prohibicionpropaganda ,
+#                 "Prop. elecciones c/debates USA" =  prop_elec_usa_ciclo ,
+#                 "% individuos c/Internet" = propindivinternet ,
+#                 "% hogares con TV" = proptv ,
+#                  "Debates regulados" = regulaciondico,
+#                 "% voto oficialista" = voteshareincumbent,
+#                  "Presidente a reelección" =  dico_reeleccion )
+# 
+# 
+# correlation_matrix <- cor(data_to_plot , use = "pairwise.complete.obs" )
+# 
+# # Generar el gráfico con resaltado
+# 
+# # otra funcion de grafico
+# corrplot <- ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
+# 
+# corrplot %>% ggsave(filename = "images/corrplot_indicadores_elecciones.jpg",
+#                     width = 15, height = 15)
+# 
+# 
+# # gráfico de correlaciones manual
+# 
+# 
+# 
+# # Generar el gráfico con coordenadas capturadas
+# corr_plot <- corrplot::corrplot(
+#   correlation_matrix, 
+#   method = "circle",
+#   col = colorRampPalette(c("blue", "white", "red"))(8), 
+#   diag = FALSE, 
+#   plot = NULL # Capturar coordenadas
+# )
+# # Crear el gráfico de correlación (parte inferior)
+# n <- ncol(correlation_matrix) # Número de columnas/filas
+# par(mfrow = c(1, 1), mar = c(1, 1, 1, 1))
+# # Graficar la matriz de correlación
+# corrplot::corrplot(
+#   correlation_matrix, 
+#   method = "circle",
+#   col = colorRampPalette(c("blue", "white", "red"))(8), 
+#   type = "lower",   # Muestra solo la parte inferior
+#   addgrid.col = "gray90",
+#   diag = FALSE  ,    # Ocultar diagonal  ,
+#   tl.col = "gray10",
+#   tl.cex = 0.8
+#  # na.label.col = "gray80"
+# )
+# 
+# # Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
+# for (j in 1:n) {
+#   for (i in 1:n) {
+#     if (i > j) { # Solo trabaja en el triángulo inferior (evita asteriscos en la parte oculta)
+#       # Resaltar valores entre 0.25 y 0.5
+#       if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
+#         text(j, n - i + 1, "*", col = "black", cex = 1.5)
+#       }
+#       # Resaltar valores mayores a 0.5
+#       if (abs(correlation_matrix[i, j]) > 0.5) {
+#         text(j, n - i + 1, "**", col = "black", cex = 1.5)
+#       }
+#     }
+#   }
+# }
+# 
+# #side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
+# mtext("Gráfico Anexo 6.III.E Correlación entre variables independientes", font = 2, side = 3, cex = 1.2, line = -2, outer = TRUE )
+# mtext("Elaboración propia. 
+#   El color y tamaño de los círculos representan las correlaciones de Pearson entre predictores del modelo, 
+#   calculados sobre la muestra efectivamente utilizada en el modelo final (n=171). 
+#   El color rojo indica coeficientes de correlación negativos; el verde, positivos. 
+#   El doble asterisco, “**”, representa un coeficiente de Pearson mayor a 0.5 absoluto; el “*”, uno mayor a 0.25. 
+#   Se reacomodó manualmente el orden de las variables a los fines de aprximar los indicadores de un mismo bloque teórico entre sí. ", 
+#       side = 1, line = 0, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
+# 
 
 # Excluidos de control #####
 
@@ -1793,11 +1813,12 @@ summary_tbl <- rbind(summary_tbl,
 data_excluida <- summary_tbl
 #data_excluida <- data_excluida %>% rbind(summary_tbl)
 
-## ntc #####
 
-nombre_variable <- "Número total de candidatos"
+## descontento ####
 
-variable_independiente <-  democracias$ntc
+nombre_variable <- "Descontento"
+
+variable_independiente <-  democracias$satisfaccion
 standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 summary_obj <- summary(variable_independiente) 
@@ -1871,11 +1892,12 @@ summary_tbl <- rbind(summary_tbl,
 #data_excluida <- summary_tbl
 data_excluida <- data_excluida %>% rbind(summary_tbl)
 
-## descontento ####
 
-nombre_variable <- "Descontento"
+## ntc #####
 
-variable_independiente <-  democracias$satisfaccion
+nombre_variable <- "Número total de candidatos"
+
+variable_independiente <-  democracias$ntc
 standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
 
 summary_obj <- summary(variable_independiente) 
