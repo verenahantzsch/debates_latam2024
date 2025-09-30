@@ -2292,35 +2292,35 @@ final_random_intercepts_control_dicodebatespasteleeccion <- lme4::glmer(
 summary(final_random_intercepts_control_dicodebatespasteleeccion)
 
 #### (no usada) nunca debates diconuncadebates #####
-
-democracias <- democracias %>% 
-  mutate(diconuncadebates = ifelse(cumsum_pastciclos==0|is.na(cumsum_pastciclos),
-                                   1,
-                                   0))
-
-modelo_final_control_diconuncadebates <- glm(str_replace(formula_modelo_sficativas_variantes,
-                                                         "cumsum_pastciclos", "diconuncadebates"),
-                                             family = binomial(link = "logit"), 
-                                             data = democracias)
-
-#summary(modelo_final_control_diconuncadebates) # 
-
-robust_se_cluster_modelo_final_control_diconuncadebates <- coeftest(modelo_final_control_diconuncadebates, 
-                                                                    vcov = vcovCL(modelo_final_control_diconuncadebates,
-                                                                                  cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_final_control_diconuncadebates)
-
-control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
-
-final_random_intercepts_control_diconuncadebates <- lme4::glmer(
-  paste(str_replace(formula_modelo_sficativas_variantes,
-                    "cumsum_pastciclos", "diconuncadebates"),
-        "(1 | cat_pais)", sep = "+"),
-  family=binomial("logit"), 
-  data = democracias,
-  control = control)
-
-summary(final_random_intercepts_control_diconuncadebates)
+# 
+# democracias <- democracias %>% 
+#   mutate(diconuncadebates = ifelse(cumsum_pastciclos==0|is.na(cumsum_pastciclos),
+#                                    1,
+#                                    0))
+# 
+# modelo_final_control_diconuncadebates <- glm(str_replace(formula_modelo_sficativas_variantes,
+#                                                          "cumsum_pastciclos", "diconuncadebates"),
+#                                              family = binomial(link = "logit"), 
+#                                              data = democracias)
+# 
+# #summary(modelo_final_control_diconuncadebates) # 
+# 
+# robust_se_cluster_modelo_final_control_diconuncadebates <- coeftest(modelo_final_control_diconuncadebates, 
+#                                                                     vcov = vcovCL(modelo_final_control_diconuncadebates,
+#                                                                                   cluster = democracias$cat_pais))
+# print(robust_se_cluster_modelo_final_control_diconuncadebates)
+# 
+# control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+# 
+# final_random_intercepts_control_diconuncadebates <- lme4::glmer(
+#   paste(str_replace(formula_modelo_sficativas_variantes,
+#                     "cumsum_pastciclos", "diconuncadebates"),
+#         "(1 | cat_pais)", sep = "+"),
+#   family=binomial("logit"), 
+#   data = democracias,
+#   control = control)
+# 
+# summary(final_random_intercepts_control_diconuncadebates)
 
 
 #### Regulación (tres variantes) #####
@@ -2456,43 +2456,43 @@ summary(final_random_intercepts_interactivo)
 
 #### prop internet version VIEJA #####
 # YA QUEDO TODO ACTUALIZADO CON LA VERSION INTERPOLADA
-
-formula_propinternet2 <- "dico_hubo_debates ~ 
-                        #dico_debates_primerosdos ~ 
-                        #dico_hubo_debate_mediatico ~ 
-                           lnmarginvic + # CAMBIE
-                           lnnec +
-                           #exapprovalnotsmoothed + 
-                           lnvoteshareincumbent +
-                           dico_reeleccion + 
-                           #proptv +
-                           propindivinternet2 + #ACA!
-                           accesogratuito +
-                           avgpropdebatesregionxciclo + 
-                           #prop_elec_usa_ciclo +
-                           regulaciondico +
-                           cumsum_pastciclos +
-                           #dico_debates_pastelection +
-                           lngdp + # CAMBIE
-                           democraciavdemelectoralcomp +
-                           mediaqualitycorruptvdem#, #+
-                          # ncat_eleccion,
-                          #edadregimenbmr#, "
-
-
-modelo_propinternet2 <- glm(formula_propinternet2,
-                            family = binomial(link = "logit"), 
-                            #data = data 
-                            data = democracias)
-options(scipen=999)
-summary(modelo_propinternet2)
-
-robust_se_cluster_modelo_propinternet2 <- coeftest(modelo_propinternet2, 
-                                                   vcov = vcovCL(modelo_propinternet2, 
-                                                                 #cluster = democracias$elecid))
-                                                                 #cluster = data$elecid))
-                                                                 cluster = democracias$cat_pais))
-print(robust_se_cluster_modelo_propinternet2)
+# 
+# formula_propinternet2 <- "dico_hubo_debates ~ 
+#                         #dico_debates_primerosdos ~ 
+#                         #dico_hubo_debate_mediatico ~ 
+#                            lnmarginvic + # CAMBIE
+#                            lnnec +
+#                            #exapprovalnotsmoothed + 
+#                            lnvoteshareincumbent +
+#                            dico_reeleccion + 
+#                            #proptv +
+#                            propindivinternet2 + #ACA!
+#                            accesogratuito +
+#                            avgpropdebatesregionxciclo + 
+#                            #prop_elec_usa_ciclo +
+#                            regulaciondico +
+#                            cumsum_pastciclos +
+#                            #dico_debates_pastelection +
+#                            lngdp + # CAMBIE
+#                            democraciavdemelectoralcomp +
+#                            mediaqualitycorruptvdem#, #+
+#                           # ncat_eleccion,
+#                           #edadregimenbmr#, "
+# 
+# 
+# modelo_propinternet2 <- glm(formula_propinternet2,
+#                             family = binomial(link = "logit"), 
+#                             #data = data 
+#                             data = democracias)
+# options(scipen=999)
+# summary(modelo_propinternet2)
+# 
+# robust_se_cluster_modelo_propinternet2 <- coeftest(modelo_propinternet2, 
+#                                                    vcov = vcovCL(modelo_propinternet2, 
+#                                                                  #cluster = democracias$elecid))
+#                                                                  #cluster = data$elecid))
+#                                                                  cluster = democracias$cat_pais))
+# print(robust_se_cluster_modelo_propinternet2)
 
 
 #### Loop / prueba #### 
@@ -2632,6 +2632,35 @@ lista1 <-  list(
 ) 
 
 
+# Número de observaciones
+n_obs <- c(nobs(modelo_contingencia),
+           nobs(modelo_sistemico),
+           nobs(modelo_regulatorio),
+           nobs(modelo_difusion),
+           nobs(modelo_sficativas_variantes))
+
+# Log likelihood
+log_lik <- c(logLik(modelo_contingencia),
+             logLik(modelo_sistemico),
+             logLik(modelo_regulatorio),
+             logLik(modelo_difusion),
+             logLik(modelo_sficativas_variantes))
+
+# AIC
+aic = c(AIC(modelo_contingencia_bis),
+          AIC(modelo_sistemico_bis),
+          AIC(modelo_regulatorio_bis),
+          AIC(modelo_difusion_bis),
+          AIC(modelo_sficativas_variantes))
+
+# BIC
+bic = c(BIC(modelo_contingencia_bis),
+          BIC(modelo_sistemico_bis),
+          BIC(modelo_regulatorio_bis),
+          BIC(modelo_difusion_bis),
+          BIC(modelo_sficativas_variantes)) 
+
+# TABLA 
 texreg::htmlreg(lista1,
                 custom.model.names = c("Contingencia",
                                        "Sistémico",
@@ -2680,31 +2709,21 @@ texreg::htmlreg(lista1,
                                   10,
                                   8
                 ),
+                custom.gof.rows = list("AIC" = aic,
+                                       "BIC" = bic,
+                                       "Log-verosimilitud" = log_lik,
+                                       "n observaciones" = n_obs),
                 file="anexos/tabla_modelos_logit_robustos.html",
-                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Tabla XXXX Modelos parciales y final logit robustos
+               </div>
+               Se presentan los resultados de la serie de modelos estimados con regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas. 
+             </div>",
                 center = T,
                 bold = 0.1,
                 #. For example, list("Random effects" = c("YES", "YES", "NO"), Observations = c(25, 25, 26))
-                custom.gof.rows = list("AIC" = c(AIC(modelo_contingencia_bis),
-                                                 AIC(modelo_sistemico_bis),
-                                                 AIC(modelo_regulatorio_bis),
-                                                 AIC(modelo_difusion_bis),
-                                                 AIC(modelo_sficativas_variantes)),
-                                       "BIC" = c(BIC(modelo_contingencia_bis),
-                                                 BIC(modelo_sistemico_bis),
-                                                 BIC(modelo_regulatorio_bis),
-                                                 BIC(modelo_difusion_bis),
-                                                 BIC(modelo_sficativas_variantes)),
-                                       "Log Likelihood" = c(as.numeric(logLik(modelo_contingencia_bis)),
-                                                            as.numeric(logLik(modelo_sistemico_bis)),
-                                                            as.numeric(logLik(modelo_regulatorio_bis)),
-                                                            as.numeric(logLik(modelo_difusion_bis)),
-                                                            as.numeric(logLik(modelo_sficativas_variantes))),
-                                       "Num. obs" = c(nobs(modelo_contingencia_bis),
-                                                      nobs(modelo_sistemico_bis),
-                                                      nobs(modelo_regulatorio_bis),
-                                                      nobs(modelo_difusion_bis),
-                                                      nobs(modelo_sficativas_variantes)) ) )   
+                custom.gof.rows = list() )   
  
  
 
@@ -2766,14 +2785,19 @@ texreg::htmlreg(lista1bis,
                                   8
                 ),
                 file="anexos/tabla_random_intercepts.html",
-                caption = "Modelos estimados con efectos aleatorios por país",
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Tabla XXXX Modelos parciales y final multinivel
+               </div>
+               Se presentan los resultados de la serie de modelos estimados con regresión logística con efectos aleatorios por país. Los coeficientes corresponden a variables estandarizadas.  
+             </div>",
                 center = T,
                 bold = 0.1)
 
 
 ## EXPORTO MODELOS CONTROL #####
 ##### S/outliers  ####
-lista2 <-  list(
+lista_s_outliers <-  list(
   robust_se_cluster_modelo_sficativas_variantes,
   robust_se_cluster_modelo_sficativas_variantes_s_outliers
 ) 
@@ -2786,8 +2810,15 @@ n_obs <- c(nobs(modelo_sficativas_variantes),
 log_lik <- c(logLik(modelo_sficativas_variantes),
              logLik(modelo_sficativas_variantes_s_outliers))
 
+# AIC
+aic <- c(AIC(modelo_sficativas_variantes),
+           AIC(modelo_sficativas_variantes_s_outliers))
 
-texreg::htmlreg(lista2,
+# BIC
+bic <- c(BIC(modelo_sficativas_variantes),
+             BIC(modelo_sficativas_variantes_s_outliers))
+
+texreg::htmlreg(lista_s_outliers,
                 custom.model.names = c("Final muestra completa",
                                        "Final s/ obs. influyentes")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
@@ -2804,8 +2835,10 @@ texreg::htmlreg(lista2,
                                       "log PBI per Cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios") ,
-                custom.gof.rows = list("Log-verosimilitud" = log_lik,
-                                       "n" = n_obs),
+                custom.gof.rows = list("AIC" = aic,
+                                       "BIC" = bic,
+                                       "Log-verosimilitud" = log_lik,
+                                       "n observaciones" = n_obs),
                 file="anexos/tabla_anexa_outliers.html",
                 # caption = "Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país",
                 # center = T,
@@ -2822,20 +2855,50 @@ texreg::htmlreg(lista2,
 # kable(tabla, format = "latex", align = "c") %>%
 #   kable_styling(latex_options = "HOLD_position")
 
-##### Comparaciones varios modelos finales  #####
-lista3 <-  list(
+##### Comparaciones varios modelos finales REVISAR NOMBRES COEFFFFF  #####
+lista_variaciones_final <-  list(
   robust_se_cluster_modelo_sficativas_variantes,
   robust_se_cluster_modelo_all,
   robust_se_cluster_modelo_final_control_conalienamiento,
   robust_se_cluster_modelo_final_control_sinaccesogratuito,
-  robust_se_cluster_modelo_final_control_convolatilidad ) 
+  robust_se_cluster_modelo_sficativas)
 
-texreg::htmlreg(lista3,
+# Número de observaciones
+n_obs <- c(nobs(modelo_sficativas_variantes),
+           nobs(modelo_all),
+           nobs(modelo_final_control_conalienamiento),
+           nobs(modelo_final_control_sinaccesogratuito),
+           nobs(modelo_sficativas))
+
+
+
+# Log likelihood
+log_lik <- c(logLik(modelo_sficativas_variantes),
+             logLik(modelo_all),
+             logLik(modelo_final_control_conalienamiento),
+             logLik(modelo_final_control_sinaccesogratuito),
+             logLik(modelo_sficativas))
+
+# AIC
+aic <- c(AIC(modelo_sficativas_variantes),
+         AIC(modelo_all),
+         AIC(modelo_final_control_conalienamiento),
+         AIC(modelo_final_control_sinaccesogratuito),
+         AIC(modelo_sficativas))
+
+# BIC
+bic <- c(BIC(modelo_sficativas_variantes),
+         BIC(modelo_all),
+         BIC(modelo_final_control_conalienamiento),
+         BIC(modelo_final_control_sinaccesogratuito),
+         BIC(modelo_sficativas))
+
+texreg::htmlreg(lista_variaciones_final,
                 custom.model.names = c("Final",
                                        "Completo",
                                        "Final c/ alineamiento",
                                        "Final s/ acceso gratuito",
-                                       "Final c/ volatilidad"
+                                       "Final s/ logaritmos"
                 )  ,
                 
                 stars = c(0.001, 0.01, 0.05, 0.1),
@@ -2872,19 +2935,63 @@ texreg::htmlreg(lista3,
                                   11,
                                   12,
                                   13),
-                file="anexos/tabla_anexa_otrosmodelos.html",
-                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                custom.gof.rows = list("AIC" = aic,
+                                       "BIC" = bic,
+                                       "Log-verosimilitud" = log_lik,
+                                       "n observaciones" = n_obs),
+                file="anexos/tabla_anexa_variantesfinal.html",
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Tabla Anexa 6.XXXX VARIANTES FINAL
+               </div>
+              XXXX Se presentan los resultados del modelo final estimado sobre la muestra completa (columna izquierda) y sobre una muestra excluyendo las observaciones potencialmente influyentes (columna derecha). Ambos emplean regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas. 
+             </div>",
                 center = T,
                 bold = 0.1)
 
-##### S/ logaritmo comparaciones #######
-lista4 <-  list(
-  robust_se_cluster_modelo_sficativas_variantes,
-  robust_se_cluster_modelo_sficativas) 
 
-texreg::htmlreg(lista4,
+##### Variaciones modernizacion: volatilidad y descontento #####
+lista_variaciones_modernizacion <-  list(
+  robust_se_cluster_modelo_sficativas_variantes,
+  robust_se_cluster_modelo_all,
+  robust_se_cluster_modelo_final_control_conalienamiento,
+  robust_se_cluster_modelo_final_control_sinaccesogratuito,
+  robust_se_cluster_modelo_sficativas)
+
+# Número de observaciones
+n_obs <- c(nobs(modelo_sficativas_variantes),
+           nobs(modelo_all),
+           nobs(modelo_final_control_conalienamiento),
+           nobs(modelo_final_control_sinaccesogratuito),
+           nobs(modelo_sficativas))
+
+# Log likelihood
+log_lik <- c(logLik(modelo_sficativas_variantes),
+             logLik(modelo_all),
+             logLik(modelo_final_control_conalienamiento),
+             logLik(modelo_final_control_sinaccesogratuito),
+             logLik(modelo_sficativas))
+
+# AIC
+aic <- c(AIC(modelo_sficativas_variantes),
+         AIC(modelo_all),
+         AIC(modelo_final_control_conalienamiento),
+         AIC(modelo_final_control_sinaccesogratuito),
+         AIC(modelo_sficativas))
+
+# BIC
+bic <- c(BIC(modelo_sficativas_variantes),
+         BIC(modelo_all),
+         BIC(modelo_final_control_conalienamiento),
+         BIC(modelo_final_control_sinaccesogratuito),
+         BIC(modelo_sficativas))
+
+texreg::htmlreg(lista_variaciones_modernizacion,
                 custom.model.names = c("Final",
-                                       "Variante s/ variables log")  ,
+                                       "  ccc
+                                        "
+                )  ,
+                
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
                                       "log Margen de victoria",
@@ -2899,42 +3006,119 @@ texreg::htmlreg(lista4,
                                       "log PBI per Cápita",
                                       "Democracia electoral (VDEM)",
                                       "Corrupción de medios (VDEM)",
-                                      "Margen de victoria",
-                                      "NEC" ,
-                                      "Prop. debates en USA" ,
-                                      "PBI per Cápita"
+                                      "Alineamiento partidario",
+                                      "Prop. TV por hogar",		
+                                      "Volatilidad"
                 ),
                 reorder.coef =  c(1,
-                                  1+1,
-                                  13+1,
-                                  2+1,
-                                  14+1,
-                                  3+1,
-                                  4+1,
-                                  
-                                  5+1,
-                                  6+1,
-                                  7+1,
-                                  15+1,
-                                  8+1,
-                                  9+1,
-                                  10+1,
-                                  16+1,
-                                  11+1,
-                                  12+1
-                ),
-                file="anexos/tabla_anexa_s_logit.html",
-                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                                  2,
+                                  3,
+                                  4,
+                                  5,
+                                  16,
+                                  14,
+                                  15,
+                                  6,
+                                  7,
+                                  8,
+                                  9,
+                                  10,
+                                  11,
+                                  12,
+                                  13),
+                custom.gof.rows = list("AIC" = aic,
+                                       "BIC" = bic,
+                                       "Log-verosimilitud" = log_lik,
+                                       "n observaciones" = n_obs),
+                file="anexos/tabla_anexa_variantesmodernizacion.html",
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Tabla Anexa 6.XXXX VARIANTES MODERNIZACION
+               </div>
+              XXXX Se presentan los resultados del modelo final estimado sobre la muestra completa (columna izquierda) y sobre una muestra excluyendo las observaciones potencialmente influyentes (columna derecha). Ambos emplean regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas. 
+             </div>",
                 center = T,
                 bold = 0.1)
 
-##### Cumsum comparaciones  #####
-lista5 <-  list(
+ 
+##### QUITADO VER NOMBRES COEF ARRIBA S/ logaritmo comparaciones #######
+# lista4 <-  list(
+#   robust_se_cluster_modelo_sficativas_variantes,
+#   ) 
+# 
+# texreg::htmlreg(lista4,
+#                 custom.model.names = c("Final",
+#                                        "Variante s/ variables log")  ,
+#                 stars = c(0.001, 0.01, 0.05, 0.1),
+#                 custom.coef.names = c("(Intercepto)",
+#                                       "log Margen de victoria",
+#                                       "log NEC",
+#                                       "Votos oficialista",
+#                                       "Incumbente reelije",
+#                                       "Prop. individuos c internet",
+#                                       "Acceso gratuito",
+#                                       "Prop. debates en región",
+#                                       "Regulación sobre debates",
+#                                       "Cant. elecciones pasadas con debates",
+#                                       "log PBI per Cápita",
+#                                       "Democracia electoral (VDEM)",
+#                                       "Corrupción de medios (VDEM)",
+#                                       "Margen de victoria",
+#                                       "NEC" ,
+#                                       "Prop. debates en USA" ,
+#                                       "PBI per Cápita"
+#                 ),
+#                 reorder.coef =  c(1,
+#                                   1+1,
+#                                   13+1,
+#                                   2+1,
+#                                   14+1,
+#                                   3+1,
+#                                   4+1,
+#                                   
+#                                   5+1,
+#                                   6+1,
+#                                   7+1,
+#                                   15+1,
+#                                   8+1,
+#                                   9+1,
+#                                   10+1,
+#                                   16+1,
+#                                   11+1,
+#                                   12+1
+#                 ),
+#                 file="anexos/tabla_anexa_s_logit.html",
+#                 caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+#                 center = T,
+#                 bold = 0.1)
+
+##### Cumsum comparaciones. AGREGAR EFECTOS ALEATORIOS??  #####
+lista_variaciones_tradicion <-  list(
   robust_se_cluster_modelo_sficativas_variantes,
   robust_se_cluster_modelo_final_control_dicodebatespasteleeccion,
   robust_se_cluster_modelo_final_control_lncumsum) 
 
-texreg::htmlreg(lista5,
+# Número de observaciones
+n_obs <- c(nobs(modelo_sficativas_variantes),
+           nobs(modelo_final_control_dicodebatespasteleeccion),
+           nobs(modelo_final_control_lncumsum))
+
+# Log likelihood
+log_lik <- c(logLik(modelo_sficativas_variantes),
+             logLik(modelo_final_control_dicodebatespasteleeccion),
+             logLik(modelo_final_control_lncumsum))
+
+# AIC
+aic <- c(AIC(modelo_sficativas_variantes),
+         AIC(modelo_final_control_dicodebatespasteleeccion),
+         AIC(modelo_final_control_lncumsum))
+
+# BIC
+bic <- c(BIC(modelo_sficativas_variantes),
+         BIC(modelo_final_control_dicodebatespasteleeccion),
+         BIC(modelo_final_control_lncumsum))
+
+texreg::htmlreg(lista_variaciones_tradicion,
                 custom.model.names = c("Final",
                                        "Variante: versión dummy de debates antecedentes",
                                        "Variante: versión log de debates antecedentes")  ,
@@ -2971,59 +3155,68 @@ texreg::htmlreg(lista5,
                                   12,
                                   13
                 ),
+                custom.gof.rows = list("AIC" = aic,
+                                       "BIC" = bic,
+                                       "Log-verosimilitud" = log_lik,
+                                       "n observaciones" = n_obs),
                 file="anexos/tabla_anexa_cumsum.html",
-                caption = "Todos los modelos están calculados con errores estándar agrupados por país",
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Tabla Anexa 6.XXXX VARIANTES TRADICION
+               </div>
+              XXXX Se presentan los resultados del modelo final estimado sobre la muestra completa (columna izquierda) y sobre una muestra excluyendo las observaciones potencialmente influyentes (columna derecha). Ambos emplean regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas. 
+             </div>",
                 center = T,
                 bold = 0.1)
 
 
 ##### Cumsum = 0 PENDIENTE:  #####
-lista5bis <-  list(
-  robust_se_cluster_modelo_sficativas_variantes,
-  robust_se_cluster_modelo_sficativas_variantes2.2,
-  modelo_sficativas_variantes2.2_multinivel) 
+# lista5bis <-  list(
+#   robust_se_cluster_modelo_sficativas_variantes,
+#   robust_se_cluster_modelo_sficativas_variantes2.2,
+#   modelo_sficativas_variantes2.2_multinivel) 
+# 
+# texreg::htmlreg(lista5bis,
+#                 custom.model.names = c("Final muestra completa",
+#                                        "Muestra reducida: s/ debates antecedentes (logit robsuto)",
+#                                        "Muestra reducida: s/ debates antecedentes (multinivel)")  ,
+#                 stars = c(0.001, 0.01, 0.05, 0.1),
+#                 custom.coef.names = c("(Intercepto)",
+#                                       "log Margen de victoria",
+#                                       "log NEC",
+#                                       "Votos oficialista",
+#                                       "Incumbente reelije",
+#                                       "Prop. individuos c internet",
+#                                       "Acceso gratuito",
+#                                       "Prop. debates en región",
+#                                       "Regulación sobre debates",
+#                                       "Elección pasada c/ debates",
+#                                       "log PBI per Cápita",
+#                                       "Democracia electoral (VDEM)",
+#                                       "Corrupción de medios (VDEM)"
+#                 ),
+#                 reorder.coef =  c(1,
+#                                     2,
+#                                     3,
+#                                     4,
+#                                     5,
+#                                     6,
+#                                     7,
+#                                     8,
+#                                     9,
+#                                     11,
+#                                     12,
+#                                     13,
+#                                     10
+#                 ),
+#                 file="anexos/tabla_anexa_cumsum0.html",
+#                 caption = "La muestra reducida es una con casos sin debates antecedentes",
+#                 center = T,
+#                 bold = 0.1)
 
-texreg::htmlreg(lista5bis,
-                custom.model.names = c("Final muestra completa",
-                                       "Muestra reducida: s/ debates antecedentes (logit robsuto)",
-                                       "Muestra reducida: s/ debates antecedentes (multinivel)")  ,
-                stars = c(0.001, 0.01, 0.05, 0.1),
-                custom.coef.names = c("(Intercepto)",
-                                      "log Margen de victoria",
-                                      "log NEC",
-                                      "Votos oficialista",
-                                      "Incumbente reelije",
-                                      "Prop. individuos c internet",
-                                      "Acceso gratuito",
-                                      "Prop. debates en región",
-                                      "Regulación sobre debates",
-                                      "Elección pasada c/ debates",
-                                      "log PBI per Cápita",
-                                      "Democracia electoral (VDEM)",
-                                      "Corrupción de medios (VDEM)"
-                ),
-                reorder.coef =  c(1,
-                                    2,
-                                    3,
-                                    4,
-                                    5,
-                                    6,
-                                    7,
-                                    8,
-                                    9,
-                                    11,
-                                    12,
-                                    13,
-                                    10
-                ),
-                file="anexos/tabla_anexa_cumsum0.html",
-                caption = "La muestra reducida es una con casos sin debates antecedentes",
-                center = T,
-                bold = 0.1)
 
 
-
-##### Comparaciones regulacion  #########
+##### Comparaciones regulacion HASTA ACA LLEGUE PENDIENTE:   #########
 lista6 <-  list(
   robust_se_cluster_modelo_sficativas_variantes,
   robust_se_cluster_modelo_final_control_regulacionalternativa2,
