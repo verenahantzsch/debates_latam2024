@@ -1582,7 +1582,7 @@ for (i in colnames(data_to_plot_countrynames)) {
     subset(breaks==i) %>% 
     select(nr)
   
-  if (i != "ncat_eleccion" & i != "cat_pais") {
+  if (i != "ncat_eleccion" & i != "cat_pais" & i != "dico_hubo_debates") {
     if (str_detect(i, "dico|accesogratuito|prohibicionpropaganda|prop_elec_usa_ciclo")){
     # Generate the plot # DICOS
       plot <- ggplot(data_to_plot_countrynames) +
@@ -2484,7 +2484,9 @@ data_excluida_bivariada %>% write.csv("anexos/data_excluida_bivariada_elecciones
 # CANDIDATOS ##############################
 ##  acomodo data preparacion #######
 
-
+# orgosc + 
+#   orgmmcyp + 
+#   orgestadosp
 base <- base_candidatos %>% 
   select(-starts_with("source_")) %>% 
   select(-X) %>% 
@@ -2496,8 +2498,9 @@ variable_dependiente <- base$dico_candidato_presente
 
 options(scipen=999)
 
-## voteshare #######
-nombre_variable <- "% votos obtenidos"
+## recorro por variable independiente
+### voteshare #######
+nombre_variable <- "% votos candidato"
 variable_candidatos <-  base$voteshare
 
 standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
@@ -2572,9 +2575,9 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- summary_tbl # primero es diferente
 
-## v2parglief #######
+### v2parglief #######
 
-nombre_variable <- "Ideología izq-der"
+nombre_variable <- "Ideología izq.-der. candidato"
 
 variable_candidatos <-  base$v2pariglef_vdem
 standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
@@ -2649,8 +2652,8 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
-## v2paactcom_vdem  #######
-nombre_variable <- "Fuerza organizacional"
+### v2paactcom_vdem  #######
+nombre_variable <- "Fuerza organizacional candidato"
 
 variable_candidatos <-  base$v2paactcom_vdem
 standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
@@ -2725,8 +2728,8 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
-## ninvitaciones  #######
-nombre_variable <- "Cant. invitaciones en elección"
+### ninvitaciones  #######
+nombre_variable <- "Cant. invitaciones a candidato en elección"
 
 # preferido: vdem
 variable_candidatos <-  base$ninvitaciones
@@ -2802,8 +2805,8 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
-## dico_oficialista  #######
-nombre_variable <- "Es oficialista (dummy)"
+### dico_oficialista  #######
+nombre_variable <- "Candidato es oficialista (dummy)"
 
 # preferido: vdem
 #variable_candidatos <-  base$dico_oficialista 
@@ -2880,8 +2883,8 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
-## dico_reeleccion  #######
-nombre_variable <- "Reelige (dummy)"
+### dico_reeleccion  #######
+nombre_variable <- "Candidato es presidente (dummy)"
 
 # preferido: vdem
 variable_candidatos <-  base$dico_reeleccion
@@ -2957,8 +2960,8 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
-## propausenciaspasadasfilled  #######
-nombre_variable <- "Prop. ausencias pasadas (incl. 0)"
+### propausenciaspasadasfilled  #######
+nombre_variable <- "Prop. ausencias pasadas candidato (incl. 0)"
 
 # preferido: vdem
 variable_candidatos <-  base$propausenciaspasadasfilled
@@ -3034,8 +3037,8 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
-## Org es OSC  #######
-nombre_variable <- "OSC organizadora"
+### Org es OSC  #######
+nombre_variable <- "OSC organiza"
 
 # preferido: vdem
 variable_candidatos <-  base$orgosc
@@ -3112,11 +3115,11 @@ summary_tbl <- rbind(summary_tbl,
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
 
-## Org es MMC  #######
-nombre_variable <- "MMC organizadora"
+### Org es MMC  #######
+nombre_variable <- "Medio (público o privado) organiza"
 
 # preferido: vdem
-variable_candidatos <-  base$orgmmc
+variable_candidatos <-  base$orgmmcyp
 standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
 
 summary_obj <- summary(variable_candidatos) 
@@ -3191,11 +3194,11 @@ data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
 
 
-## Org es E  #######
-nombre_variable <- "Estado organizador"
+### Org es E  #######
+nombre_variable <- "Estado organiza"
 
 # preferido: vdem
-variable_candidatos <-  base$orgestado
+variable_candidatos <-  base$orgestadosp
 standardized_variable_candidatos <- (variable_candidatos - mean(variable_candidatos, na.rm = TRUE)) / sd(variable_candidatos, na.rm = TRUE)
 
 summary_obj <- summary(variable_candidatos) 
@@ -3268,10 +3271,10 @@ summary_tbl <- rbind(summary_tbl,
 
 data_descriptiva <- data_descriptiva %>% rbind(summary_tbl)
 
-# Resultados globales para pasar a word ######
+## Resultados globales para pasar a word ######
 # en cuenta: variable dependiente debería haber sido descrita antes!
 
-## creo data para plotear #####
+### creo data para plotear #####
 data_to_plot <- base %>% 
   select(voteshare,
          v2pariglef_vdem,
@@ -3282,8 +3285,8 @@ data_to_plot <- base %>%
          dico_reeleccion,
          propausenciaspasadasfilled,
          orgosc,
-         orgmmc,
-         orgestado)
+         orgmmcyp,
+         orgestadosp)
 
 data_to_plot_long <- data_to_plot %>% 
   pivot_longer(cols= everything())
@@ -3298,8 +3301,8 @@ data_to_plot2 <- base %>%
          dico_reeleccion,
          propausenciaspasadasfilled,
          orgosc,
-         orgmmc,
-         orgestado,
+        orgmmcyp,
+        orgestadosp,
          dico_candidato_presente)
 
 data_to_plot_long2 <- data_to_plot2 %>% 
@@ -3311,7 +3314,31 @@ data_to_plot_long3 <- data_to_plot2 %>%
 # referencia
 skimr::skim(data_to_plot)
 
-## TABLA con data descriptiva ####
+# etiquetas
+# custom_labels <- as_labeller(c(dico_oficialistanoreeleccion = "Es oficialista",
+#                                dico_reeleccion = "Reelige",
+#                                ninvitaciones = "Cant. invitaciones",
+#                                propausenciaspasadasfilled  = "Prop. ausencias pasadas",
+#                                v2paactcom_vdem = "Fuerza organizacional",
+#                                v2pariglef_vdem = "Ideología izq.-der.",
+#                                voteshare = "% votos",
+#                                dico_candidato_presente = "Presente en debate",
+#                                orgosc = "OSC organizadora",
+#                                orgmmc = "MMC organizador",
+#                                orgestado = "Estado organizador"))
+
+custom_labels <- as_labeller(c(dico_oficialistanoreeleccion = "Candidato es oficialista",
+                               dico_reeleccion = "Candidato es presidente",
+                               ninvitaciones = "Cant. invitaciones a candidato",
+                               propausenciaspasadasfilled = "Prop. ausencias pasadas candidato",
+                               v2paactcom_vdem = "Fuerza organizacional candidato",
+                               v2pariglef_vdem = "Ideología izq.-der. candidato",
+                               voteshare = "% votos candidato",
+                               dico_candidato_presente = "Candidato presente en debate (V.D.)",
+                               orgosc = "OSC organiza",
+                               orgmmcyp = "Medio (público o privado) organiza",
+                               orgestadosp = "Estado organiza"))
+### TABLA con data descriptiva ####
 
 data_descriptiva_wide <- data_descriptiva %>% 
   mutate(Value = Value %>%  round(2)) %>% 
@@ -3349,33 +3376,22 @@ data_descriptiva_bivariada_candidatos <- data_descriptiva_wide %>%
 data_descriptiva_univariada_candidatos %>% write.csv("anexos/data_descriptiva_univariada_candidatos.csv")
 data_descriptiva_bivariada_candidatos %>% write.csv("anexos/data_descriptiva_bivariada_candidatos.csv")
 
-## HISTOGRAMAS  #####
-
-custom_labels <- as_labeller(c(dico_oficialistanoreeleccion = "Es oficialista",
-                               dico_reeleccion = "Reelige",
-                               ninvitaciones = "Cant. invitaciones",
-                               propausenciaspasadasfilled  = "Prop. ausencias pasadas",
-                               v2paactcom_vdem = "Fuerza organizacional",
-                               v2pariglef_vdem = "Ideología izq.-der.",
-                               voteshare = "% votos",
-                               dico_candidato_presente = "Presente en debate",
-                               orgosc = "OSC organizadora",
-                               orgmmc = "MMC organizador",
-                               orgestado = "Estado organizador"))
-
+### HISTOGRAMAS  #####
 
 histograms_candidatos <- data_to_plot_long %>% 
   ggplot() +
-  geom_histogram(aes(value)) +
+  geom_histogram(aes(value), bins = 10) +
   facet_wrap(~ name, 
              scales = "free",
              labeller = custom_labels,
              nrow = 2) +
-  scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 5)) +
   theme_classic()  +
-  labs(title = "Distribución univariada de variables independientes",
-       caption = "Elaboración propia") +
-  theme(strip.text = element_text(size = 14))
+  labs(title = "Gráfico Anexo 6.V.B.2.1 Histogramas de distribución de las variables independientes",
+       caption = "Elaboración propia",
+       y = "n",
+       x = "valor") +
+  theme(strip.text = element_text(size = 12))
 
 histograms_candidatos %>% ggsave(filename = "images/histogramas_vis_candidatos_univariados.jpg", 
                       width = 18, height = 10)
@@ -3383,33 +3399,49 @@ histograms_candidatos %>% ggsave(filename = "images/histogramas_vis_candidatos_u
 
 histograms_candidatos2 <- data_to_plot_long3 %>% 
   ggplot() +
-  geom_histogram(aes(value, fill = as.factor(dico_candidato_presente)), position = "dodge") +
-  facet_wrap(~ name, 
+  geom_histogram(aes(value, fill = as.factor(dico_candidato_presente)), position = "dodge", bins = 10) +
+  scale_x_continuous(breaks = scales::breaks_pretty(n = 5)) +
+   facet_wrap(~ name, 
              scales = "free",
              labeller = custom_labels,
              nrow = 2) +
-  scale_x_continuous(breaks = scales::breaks_pretty(n = 10)) +
   theme_classic() +
-  labs(title = "Distribución univariada de variables independientes",
-       caption = "Elaboración propia")  +
+  labs(title = "Gráfico Anexo 6.V.B.2.2 Distribución de las variables independientes",
+       subtitle = "condicional a la presencia o ausencia del candidato al debate. ",
+       caption = "Elaboración propia",
+       y = "n",
+       x = "valor")  +
   scale_fill_manual(values = c("grey10", "green"),
                     name= "",
                     breaks = c(0,1),
                     labels = c("Ausente", "Presente")  ) +
-  theme(strip.text = element_text(size = 14),
+  theme(strip.text = element_text(size = 12),
         legend.position = "bottom")
 
 histograms_candidatos2 %>% ggsave(filename = "images/histogramas_vis_candidatos_condicional.jpg", 
                                  width = 18, height = 10)
 
 ## correlaciones entre variables independientes ####
+data_to_corr <- data_to_plot %>% 
+  dplyr::rename("Candidato es oficialista" = dico_oficialistanoreeleccion,
+                "Candidato es presidente" = dico_reeleccion,
+                "Cant. invitaciones a candidato" = ninvitaciones,
+                "Prop. ausencias pasadas candidato" = propausenciaspasadasfilled,
+                "Fuerza organizacional candidato" = v2paactcom_vdem,
+                "Ideología izq.-der. candidato" = v2pariglef_vdem,
+                "% votos candidato" = voteshare,
+                #"Candidato presente en debate (V.D.)" = dico_candidato_presente,
+                "OSC organiza" = orgosc,
+                "Medio (público o privado) organiza" = orgmmcyp,
+                "Estado organiza" = orgestadosp)
 
-correlation_matrix <- cor(data_to_plot , use = "pairwise.complete.obs" )
+correlation_matrix <- cor(data_to_corr , use = "pairwise.complete.obs" )
 
 # Generar el gráfico con resaltado
 
 # otra funcion de grafico
 ggcorrplot::ggcorrplot(correlation_matrix, type = "lower", lab = T, show.legend = F)
+
 
 # Generar el gráfico con coordenadas capturadas
 corr_plot <- corrplot::corrplot(
@@ -3421,37 +3453,51 @@ corr_plot <- corrplot::corrplot(
 )
 # Crear el gráfico de correlación (parte inferior)
 n <- ncol(correlation_matrix) # Número de columnas/filas
-
+par(mfrow = c(1, 1), mar = c(1, 1, 1, 1))
 # Graficar la matriz de correlación
 corrplot::corrplot(
   correlation_matrix, 
   method = "circle",
   col = colorRampPalette(c("red", "white", "green"))(8), 
   type = "lower",   # Muestra solo la parte inferior
-  addgrid.col = "gray",
-  diag = FALSE      # Ocultar diagonal
+  addgrid.col = "gray90",
+  diag = FALSE  ,    # Ocultar diagonal  ,
+  tl.col = "gray10",
+  tl.cex = 0.8
+  # na.label.col = "gray80"
 )
+
 
 # Resaltar valores absolutos mayores a 0.25 con * y mayores a 0.5 con **
 for (j in 1:n) {
   for (i in 1:n) {
+    print(paste(i,j))
     if (i > j) { # Solo trabaja en el triángulo inferior (evita asteriscos en la parte oculta)
-      # Resaltar valores entre 0.25 y 0.5
-      if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
-        text(j, n - i + 1, "*", col = "black", cex = 1.5)
+      if(is.na(correlation_matrix[i, j])){
+        text(j, n - i + 1, "", col = "black", cex = 1.5)
       }
-      # Resaltar valores mayores a 0.5
-      if (abs(correlation_matrix[i, j]) > 0.5) {
-        text(j, n - i + 1, "**", col = "black", cex = 1.5)
+      else{
+        # Resaltar valores entre 0.25 y 0.5
+        if (abs(correlation_matrix[i, j]) > 0.25 && abs(correlation_matrix[i, j]) <= 0.5) {
+          text(j, n - i + 1, round(correlation_matrix[i, j],1), col = "black", cex = 0.5)
+        }
+        #Resaltar valores mayores a 0.5
+        if (abs(correlation_matrix[i, j]) > 0.5) {
+          text(j, n - i + 1, round(correlation_matrix[i, j],1), col = "black", cex = 0.7)
+        }
       }
     }
   }
 }
 
+#side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
+mtext("Gráfico Anexo 6.V.C.1 Correlación entre variables independientes
+      (análisis complementario)", font = 2, side = 3, cex = 1.2, line = -2, outer = F )
 
 
 
-## estadistica descriptiva variable dependiente ######
+## VARIABLE DEPENDIENTE (en caso de elecciones, se encuentra en descripcion_vd_ene2025.R) ######
+### estadistica descriptiva  ##########
 length(unique(base$id_debate))
 
 
@@ -3484,7 +3530,7 @@ descriptiva_VD_candidatos <- descriptiva_VD_candidatos %>%
 
 descriptiva_VD_candidatos %>% write_csv("anexos/descriptiva_VD_candidatos.csv")
 
-## test de diferencia de proporciones ############
+### test de diferencia de proporciones ############
 prop1 <- descriptiva_VD_candidatos$numeric.mean[1]
 prop2 <- descriptiva_VD_candidatos$numeric.mean[2]
 n1 <- length(variable_dependiente)
@@ -3495,14 +3541,106 @@ prop.test(x = c(success1, success2),
           n = c(n1, n2),
           alternative = "two.sided", correct = TRUE)
 
-
-histograma_VD_candidatos <- data_to_plot2 %>% 
+### Gráfico VD Candidatos ############
+histograma_VD_candidatos <- base %>% 
   ggplot() +
-  geom_histogram(aes(dico_candidato_presente)) +
-  theme_classic()  +
-  labs(title = "Distribución univariada de variable dependiente",
-       caption = "Elaboración propia",
-       x = "Presencia de candidato en debate") +
+  geom_histogram(aes(dico_candidato_presente, fill= as.factor(dico_candidato_presente)), bins = 3) +
   scale_x_continuous(breaks = c(0,1),
-                   labels = c("Ausente", "Presente"))
-  
+                     labels = c("Ausente", "Presente")) +  
+  scale_fill_manual(breaks = c(1, 0),
+                    labels = c("", ""),
+                    values = c("green", "grey10"),
+                    name = "") +
+  labs(title = "Gráfico Anexo 6.V.A.1 Distribución de la asistencia de los candidatos ",
+       subtitle = "a los debates celebrados en las democracias de América Latina, para toda la muestra",
+       x = "Presencia de candidato en debate",
+       y = "n observaciones",
+       caption = "Elaboración propia. 
+       Se consideran únicamente los debates ocurridos durante elecciones mínimamente democráticas 
+       (>0.45 en el índice de poliarquía de V-Dem). 
+       Dada la definición de la variable dependiente, no se incluyen 
+       elecciones sin debates ni candidatos que no fueron invitados a debatir. ")  +
+  theme_classic()  +
+  theme(legend.position = "none")
+
+plotname <- "vd_candidatos"
+filename <- paste("images/plot_", plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+# tiempo
+
+base_t <- base %>% 
+  group_by(ncat_eleccion) %>% 
+  summarise(n_candidaturas_anio = n(),
+            n_presencias_eleccion = sum(dico_candidato_presente),
+            n_ausencias_eleccion = n_candidaturas_anio - n_presencias_eleccion,
+            prop_ausencias_anio = n_ausencias_eleccion/n_candidaturas_anio) #%>% 
+ #mutate(dico_candidato_presente = as.factor(dico_candidato_presente))
+
+base_plot_t <- base_t %>% 
+  pivot_longer(cols= c(n_presencias_eleccion, n_ausencias_eleccion), 
+               names_to = "dico_presencias", values_to = "n_dico_presencias") %>% 
+  mutate(porcentaje_ausencias = paste(round(prop_ausencias_anio*100), "%"))
+
+plot_vd_t <- base_plot_t %>% 
+  ggplot() + 
+  geom_col(aes(ncat_eleccion, n_dico_presencias, fill = dico_presencias), colour = "grey80", position = "dodge") +
+  #geom_text(aes(x = ncat_eleccion, y = n_dico_debates, label = porcentaje_elecciones_con_debates)) +
+  theme_classic() +
+  scale_fill_manual(breaks = c("n_presencias_eleccion", "n_ausencias_eleccion"),
+                    labels =c("Candidatos presentes", "Candidatos ausentes"),
+                    values = c("green", "grey10"),
+                    name = "") +
+  scale_x_continuous(breaks = seq(1960,2025,5)) +
+  labs(title = "Gráfico Anexo 6.V.A.2 Candidatos presentes y ausentes ",
+       subtitle = "a los debates celebrados en las democracias de América Latina, 1960-2023",
+       y = "n candidatos",
+       x = "Año",
+       caption = "Elaboración propia. 
+       Se consideran únicamente los debates ocurridos durante elecciones mínimamente democráticas (>0.45 en el índice de poliarquía de V-Dem). 
+       Dada la definición de la variable dependiente, no se incluyen elecciones sin debates ni candidatos que no fueron invitados a debatir. ") +
+  theme(legend.position = "bottom")
+
+ 
+plotname <- "vd_candidatos_ev_t"
+filename <- paste("images/plot_", plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
+
+# paises 
+
+base_e <- base %>% 
+  group_by(cat_pais) %>% 
+  summarise(n_candidaturas_pais = n(),
+            n_presencias_eleccion = sum(dico_candidato_presente),
+            n_ausencias_eleccion = n_candidaturas_pais - n_presencias_eleccion,
+            prop_ausencias_pais = n_ausencias_eleccion/n_candidaturas_pais) #%>% 
+#mutate(dico_candidato_presente = as.factor(dico_candidato_presente))
+
+base_plot_e <- base_e %>% 
+  pivot_longer(cols= c(n_presencias_eleccion, n_ausencias_eleccion), 
+               names_to = "dico_presencias", values_to = "n_dico_presencias") %>% 
+  mutate(porcentaje_ausencias = paste(round(n_candidaturas_pais*100), "%"))
+
+plot_vd_e <- base_plot_e %>% # reordenarn en f de elec sin debates
+  ggplot() + 
+  geom_col(aes(cat_pais, n_dico_presencias, fill = dico_presencias), colour = "grey80", position = "stack") +
+ # geom_text(aes(x = cat_pais, y = y_porcentaje, label = porcentaje_elecciones_con_debates)) +
+  theme_classic() +
+  scale_fill_manual(breaks = c("n_presencias_eleccion", "n_ausencias_eleccion"),
+                    labels =c("Candidatos presentes", "Candidatos ausentes"),
+                    values = c("green", "grey10"),
+                    name = "") +
+  labs(title = "Gráfico Anexo 6.V.A.3 Candidatos presentes y ausentes ",
+       subtitle = "a los debates celebrados en las democracias de América Latina, por páis (1960-2023)",
+       y = "n candidatos",
+       x = "País",
+       caption = "Elaboración propia. 
+       Se consideran únicamente los debates ocurridos durante elecciones mínimamente democráticas (>0.45 en el índice de poliarquía de V-Dem). 
+       Dada la definición de la variable dependiente, no se incluyen elecciones sin debates ni candidatos que no fueron invitados a debatir. ") +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle=90, size = 12))
+
+
+plotname <- "vd_candidatos_ev_e"
+filename <- paste("images/plot_", plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 7)
