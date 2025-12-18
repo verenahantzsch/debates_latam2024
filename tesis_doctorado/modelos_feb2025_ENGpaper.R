@@ -20,7 +20,8 @@ base_indicadores <- read.csv("indicadores_elecciones.csv")
 base_controles <- read.csv("controles_elecciones.csv")
 base_candidatos <-  read.csv("indicadores_candidatos.csv")
 diccionario_indicadores <- read.csv("diccionario_indicadores_etiquetas.csv")
-
+base_debates <- read_csv("base_final3v2023.csv") %>% select(-"...1", -"...2") %>% 
+  subset(dico_certidumbre==1)
 
 countrynames <- read.csv("countrynames.csv") %>% 
   mutate(cat_pais =  iconv(cat_pais, to = "ASCII//TRANSLIT") %>%  str_trim()) %>% 
@@ -109,7 +110,15 @@ democracias <- democracias %>%
                    ncat_ronda, #excluyo algunas variables de id
                    ncat_eleccion,
                    obsid), scale))
-  
+
+
+### data debates  ####
+democracias_basedebates <-  base_debates %>%
+  left_join(base_controles %>% 
+              select(cat_pais, ncat_eleccion, ncat_ronda, democraciavdempolyarchy)) %>% 
+  subset(democraciavdempolyarchy>0.45) %>% 
+  subset(ncat_eleccion!=2024) 
+
 ### mini exploracion ####
 
 skimr::skim(democracias)
@@ -117,12 +126,31 @@ skimr::skim(democracias)
 # problemas de missing en acceso gratuito (tratar de completar)
 # problemas de missing en gdp (una picardia total)
 
+### defino funcion para exportar ###
+
+exportedstats <- function(lista_modelos){
+  zeros <- rep(0, length(lista_modelos))
+  exportedstats <- tibble("aic" = zeros,
+                          "bic"  = zeros,
+                          "loglik"  = zeros,
+                          "n_obs"  = zeros)
+  for (j in seq_along(lista_modelos)) {
+    exportedstats$aic[j] <- AIC(lista_modelos[[j]])
+    exportedstats$bic[j] <- BIC(lista_modelos[[j]])
+    exportedstats$loglik[j] <- logLik(lista_modelos[[j]])
+    exportedstats$n_obs[j] <- nobs(lista_modelos[[j]])
+  }
+  exportedstats
+}
+
 # PPAL MEDIDA DICO: EXISTENCIA DE DEBATES ############
 
 ## evolucion temporal de medida dico: elecciones con y sin debates #####
-
+  
 base_elecciones_conysindebates_t <- democracias %>% 
-  group_by(ncat_eleccion) %>% 
+  mutate( decada = (ncat_eleccion %/% 10) * 10 ) %>% 
+  group_by(decada) %>%  
+ # group_by(ncat_eleccion) %>% 
   summarise(n_elecciones = n(),
             n_elecciones_con_debates = sum(dico_hubo_debates),
             n_elecciones_sin_debates = n_elecciones - n_elecciones_con_debates,
@@ -131,22 +159,28 @@ base_elecciones_conysindebates_t <- democracias %>%
 base_plot_elecciones_conysindebates_t <- base_elecciones_conysindebates_t %>% 
   pivot_longer(cols= c(n_elecciones_con_debates, n_elecciones_sin_debates), 
                names_to = "dico_debates", values_to = "n_dico_debates") %>% 
-  mutate(porcentaje_elecciones_con_debates = paste(round(prop_elecciones_con_debates*100), "%"))
+  mutate(porcentaje_elecciones_con_debates = paste(round(prop_elecciones_con_debates*100), "%")) %>% 
+   group_by(decada) %>% 
+   mutate(y_porcentaje = sum(n_dico_debates)) %>% 
+   ungroup() 
+
+############### PENDIENTE ajustar CAPTION y test significance (caption p test)  ##########
 
 plot_elecciones_conysindebates_t <- base_plot_elecciones_conysindebates_t %>% 
   ggplot() + 
-  geom_col(aes(ncat_eleccion, n_dico_debates, fill = dico_debates), colour = "grey80", position = "dodge") +
-  #geom_text(aes(x = ncat_eleccion, y = n_dico_debates, label = porcentaje_elecciones_con_debates)) +
+  geom_col(aes(decada, n_dico_debates, fill = dico_debates), colour = "grey80", position = "stack") +
+  geom_text(aes(x = decada, y = y_porcentaje, label = porcentaje_elecciones_con_debates)) +
   theme_classic() +
   scale_fill_manual(breaks = c("n_elecciones_con_debates", "n_elecciones_sin_debates"),
                     labels =c("Elections with debates", "Elections without debates"),
                     values = c("green", "grey10"),
                     name = "") +
-  scale_x_continuous(breaks = seq(1960,2025,5)) +
+  scale_x_continuous(breaks = seq(1960,2025,10)) +
+  scale_y_continuous(breaks = seq(0,70,10)) +
   labs(title = "Graph 1: Temporal Evolution of Debates",
        subtitle = "Number of Presidential Elections with and without Debates in Latin American Democracies, 1960–2023",
-       y = "Number of Elections",
-       x = "Year",
+       y = "Count of Elections",
+       x = "Decade",
        caption = "Source: Author. 
      The first and second rounds of presidential elections are counted separately when applicable. 
      Only elections under democratic regimes (V-Dem polyarchy index > 0.45) are considered.") +
@@ -183,6 +217,13 @@ base_plot_elecciones_conysindebates_e <- base_elecciones_conysindebates_e %>%
   mutate(y_porcentaje = sum(n_dico_debates)) %>% 
   ungroup() 
 
+x_labels <- base_plot_elecciones_conysindebates_e %>% 
+  subset(dico_debates == "n_elecciones_con_debates") %>% 
+  mutate(label = paste(eng_cat_pais, ": ", n_elecciones, " elections, ", n_dico_debates, " with debates", sep = "")) %>% 
+  select(eng_cat_pais, label) %>% 
+  arrange(eng_cat_pais)
+
+############### PENDIENTE ajustar CAPTION y test significance (caption p test y para appendix)  ##########
 plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # reordenarn en f de elec sin debates
   ggplot() + 
   geom_col(aes(eng_cat_pais, n_dico_debates, fill = dico_debates), colour = "grey80", position = "stack") +
@@ -192,6 +233,7 @@ plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # 
                     labels =c("Elections with debates", "Elections without debates"),
                     values = c("green", "grey10"),
                     name = "") +
+  scale_x_discrete(breaks = x_labels$eng_cat_pais, label = x_labels$label) +
   labs(title = "Graph 2: Geographical Distribution of Debates",
        subtitle = "Number of Presidential Elections with and without Debates in Latin American Democracies, by Country (1960–2023)",
        y = "Number of Elections",
@@ -201,7 +243,7 @@ plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # 
      Only elections under democratic regimes (V-Dem polyarchy index > 0.45) are considered. 
      Percentages represent the number of elections with debates out of the total.") +
   theme(legend.position = "bottom",
-        axis.text.x = element_text(angle=90, size = 12))
+        axis.text.x = element_text(angle=90, size = 9))
 
  
 plotname <- "ev_e"
@@ -213,7 +255,47 @@ ggsave(filename, width = 10, height = 7)
 summary(base_elecciones_conysindebates_e$prop_elecciones_con_debates)
 sd(base_elecciones_conysindebates_e$prop_elecciones_con_debates)
 
-## MODELOS 1: toda la muestra de democracias - V.D = dico_hubo_debates #####
+## Tabla anexa para Appendix #####
+# The authors should provide a table in the Appendix in which it becomes transparent
+# for each country 
+# when there where elections and 
+# how many debates have been broadcasted. “
+
+# elections with debates
+data_pais_debates_appendix1 <- democracias_basedebates %>% 
+  mutate(ronda_year = paste(ncat_ronda, "° round ", ncat_eleccion, sep = "")) %>% 
+  group_by(cat_pais, ronda_year) %>% 
+  summarise(n_debates = n()) %>% 
+  mutate(txt = paste(ronda_year, " (", n_debates, " debates)", sep = ""))
+
+data_pais_debates_appendix1 <- data_pais_debates_appendix1 %>%
+  group_by(cat_pais) %>%
+  summarise(
+    elections_with_debates = paste(txt, collapse = ", "),
+    .groups = "drop"
+  )
+
+# elections without debates
+
+data_pais_debates_appendix2 <- democracias %>% 
+  mutate(ronda_year = paste(ncat_ronda, "° round ", ncat_eleccion, sep = "")) %>% 
+  group_by(cat_pais) %>%
+  summarise(
+    elections_without_debates = paste(ronda_year, collapse = ", "),
+    .groups = "drop"
+  )
+
+# join
+############### PENDIENTE GUARDAR  ##########
+data_pais_debates_appendix <- data_pais_debates_appendix1 %>% 
+  left_join(data_pais_debates_appendix2) %>% 
+  left_join(countrynames %>% 
+              mutate(cat_pais = ifelse(cat_pais == "Rep. Dominicana",
+                                       "Republica Dominicana",
+                                       cat_pais))) %>% 
+  select(eng_cat_pais, elections_without_debates, elections_with_debates)
+
+## Formulas y estimaciones de base (toda la muestra de democracias - V.D = dico_hubo_debates) #####
 ### Modelo contingencia  ####
 
 formula_modelo_contingencia <- "dico_hubo_debates ~ 
@@ -481,11 +563,11 @@ modelo_all <- glm(formula_modelo_all,
                                    data = democracias)
 options(scipen=999)
 summary(modelo_all)
-## MULTINIVEL MODELOS 1 ####
+## Modelos multinivel ####
 #https://m-clark.github.io/mixed-models-with-R/random_intercepts.html
 
 
-####  PASO 1 MODELO MULTILEVEL: EMPTY #### 
+#### Modelo empty #### 
 
 # Varying-intercept model with no predictors. 
 #   M0 <- lmer (y ~ 1 + (1 | county))
@@ -519,7 +601,7 @@ summary(empty_model_paisyears)
 
 mlmhelpr::icc(empty_model_paisyears)
 
-####  PASO 2 REPORTADO PASO 2 MODELO MULTILEVEL: RANDOM INTERCEPTS BY COUNTRY #### 
+####  Modelos multinivel #### 
 # varying-intercept model
 # Varying-intercept model with an individual-level predictor. 
 # M1 <- lmer (y ~ x + (1 | county))
@@ -528,6 +610,8 @@ mlmhelpr::icc(empty_model_paisyears)
 
 #cluster <- democracias$cat_pais %>% as.factor()
 control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+
+### Modelo contingencia  ####
 
 contingencia_random_intercepts <- lme4::glmer(paste(formula_modelo_contingencia_bis, 
                                                     "(1 | cat_pais)", sep = "+"), 
@@ -538,6 +622,7 @@ contingencia_random_intercepts <- lme4::glmer(paste(formula_modelo_contingencia_
 summary(contingencia_random_intercepts)
 
 
+### Modelo sistemico  ####
 
 sistemico_random_intercepts <- lme4::glmer(paste(formula_modelo_sistemico_bis, 
                                                  "(1 | cat_pais)", sep = "+"), 
@@ -548,6 +633,8 @@ summary(sistemico_random_intercepts)
 # vcov_cluster <- clubSandwich::vcovCR(sistemico_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
 # sistemico_random_intercepts_robust <- coef_test(sistemico_random_intercepts, vcov = vcov_cluster)
 
+### Modelo regulatorio  ####
+
 regulatorio_random_intercepts <- lme4::glmer(paste(formula_modelo_regulatorio_bis, 
                                                    "(1 | cat_pais)", sep = "+"), 
                                              family=binomial("logit"), 
@@ -557,6 +644,8 @@ summary(regulatorio_random_intercepts)
 # vcov_cluster <-  clubSandwich::vcovCR(regulatorio_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
 # regulatorio_random_intercepts_robust <- coef_test(regulatorio_random_intercepts, vcov = vcov_cluster)
 
+### Modelo difusion  ####
+
 difusion_random_intercepts <- lme4::glmer(paste(formula_modelo_difusion_bis, 
                                                 "(1 | cat_pais)", sep = "+"), 
                                           family=binomial("logit"), 
@@ -565,6 +654,8 @@ difusion_random_intercepts <- lme4::glmer(paste(formula_modelo_difusion_bis,
 summary(difusion_random_intercepts)
 # vcov_cluster <- clubSandwich::vcovCR(difusion_random_intercepts, cluster = democracias$cat_pais, type = "CR2")
 # difusion_random_intercepts_robust <- coef_test(difusion_random_intercepts, vcov = vcov_cluster)
+
+### Modelo final  ####
 
 final_random_intercepts <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
                                              "(1 | cat_pais)", sep = "+"), 
@@ -586,18 +677,177 @@ lme4::fixef(modelo_random_intercepts)  # The estimated regression line in an ave
 lme4::ranef(modelo_random_intercepts)  #  how much the intercept is shifted up or down in particular counties or county level errors
 #lme4::confint(gpa_mixed)
 
+## Modelos de control para Reviewer #######
+#### Sin medios corruptos #######
+control_sin_medios_corruptos <- lme4::glmer(paste(str_remove(formula_modelo_sficativas_variantes,
+                                                        " mediaqualitycorruptvdem"), 
+                                             "(1 | cat_pais)", sep = ""), 
+                                       family=binomial("logit"), 
+                                       data = democracias,
+                                       control = control)
+summary(final_random_intercepts)
+summary(control_sin_medios_corruptos)
+
+#### Operacionalizaciones alternativas de "institucionalizacion" ######
+
+control_pasadolncumsum <-  lme4::glmer(paste(
+                    str_replace(formula_modelo_sficativas_variantes,
+                    "cumsum_pastciclos", "lncumsumpastciclos"),
+                    " (1 | cat_pais)", sep = "+"), 
+                                            family=binomial("logit"), 
+                                            data = democracias,
+                                            control = control)
+
+control_pasadodico <-  lme4::glmer(paste(
+  str_replace(formula_modelo_sficativas_variantes,
+              "cumsum_pastciclos", "dico_debates_pastelection"),
+  " (1 | cat_pais)", sep = "+"), 
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts)
+summary(control_pasadolncumsum)
+summary(control_pasadodico)
+
+#### Con "Ronda" #####
 
 
-## EXPORTO MODELOS RANDOM INTERCEPT #####
-lista1bis <-  list(contingencia_random_intercepts,
+control_ncatronda <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
+                                          " ncat_ronda ", " (1 | cat_pais)", sep = "+"), 
+  family=binomial("logit"), 
+  data = democracias,
+  control = control)
+
+summary(final_random_intercepts)
+summary(control_ncatronda)
+
+#### Con "year" ########
+control_year <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
+                                        " ncat_eleccion ", " (1 | cat_pais)", sep = "+"), 
+                                  family=binomial("logit"), 
+                                  data = democracias,
+                                  control = control)
+
+summary(final_random_intercepts)
+summary(control_year)
+
+# MODEL FAILED TO CONVERGE 
+
+#### Completo (todas las variables) ##########
+
+control_all <- lme4::glmer(paste(formula_modelo_all, " (1 | cat_pais)", sep = "+"), 
+                          family=binomial("logit"), 
+                          data = democracias,
+                          control = control)
+options(scipen=999)
+summary(control_all)
+# 129 obs. nec persiste, regulacion desaparece
+
+#### Modelo Interactivo ###############
+control_interactivo <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
+                                   "  regulaciondico*lnnec ", " (1 | cat_pais)", sep = "+"), 
+                             family=binomial("logit"), 
+                             data = democracias_reservanoescalada,
+                             control = control)
+
+summary(final_random_intercepts)
+summary(control_interactivo)
+
+## Exporto Modelos CONTROL ##### 
+lista_controles <-  list(control_all,
+                      control_interactivo,
+                      control_year,
+                      control_ncatronda,
+                      control_pasadolncumsum,
+                      control_pasadodico,
+                      control_sin_medios_corruptos,
+                      final_random_intercepts)
+
+stats_to_export = exportedstats(lista_controles)
+
+texreg::htmlreg(lista_controles,
+                custom.model.names = c("control_all",
+                      "control_interactivo",
+                      "control_year",
+                      "control_ncatronda",
+                      "control_pasadolncumsum",
+                      "control_pasadodico",
+                      "control_sin_medios_corruptos",
+                      "final_random_intercepts")  ,
+                stars = c(0.001, 0.01, 0.05, 0.1),
+                # custom.coef.names = c("(Intercepto)",
+                #                       "log Margen de victoria",
+                #                       "log NEC",
+                #                       "Votos oficialista",
+                #                       "Presidente a reelección",
+                #                       
+                #                       "Debates regulados",
+                #                       "Cant. elecc. pasadas c debates",
+                #                       "log PBI per cápita",
+                #                       "N° Democracia electoral",
+                #                       "N° Corrupción de medios",
+                #                       
+                #                       "Alineamiento partidario",
+                #                       "Prop. TV por hogar"		,
+                #                       "Prop. individuos c internet",
+                #                       "Prohibición propaganda"	 ,
+                #                       "Acceso gratuito",
+                #                       "Prop. debates en región",
+                #                       "Prop. debates en USA"
+                #                       
+                # ),
+                # reorder.coef =  c(1,
+                #                   2,
+                #                   3,
+                #                   4,
+                #                   5,
+                #                   
+                #                   11,
+                #                   12,
+                #                   13,
+                #                   14,
+                #                   15,
+                #                   16,
+                #                   17,
+                #                   
+                #                   6,
+                #                   7,
+                #                   9,
+                #                   10,
+                #                   8
+                # ),
+                include.aic = FALSE,
+                include.bic = FALSE,
+                include.loglik = FALSE,
+                include.nobs = FALSE,
+                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                                       "BIC" = stats_to_export$bic,
+                                       "Log-verosimilitud" = stats_to_export$loglik,
+                                       "n observations" = stats_to_export$n_obs),
+                file="anexos/ENG_tabla_modelos_controles.html",
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Tabla XXXX Modelos de control multinivel
+               </div>
+               Se presentan los resultados de la serie de modelos estimados con regresión logística con efectos aleatorios por país. Los coeficientes corresponden a variables estandarizadas.  
+             </div>",
+                caption.above = T,
+                center = T,
+                bold = 0.1)
+
+## Exporto resultados regresion multinivel #####
+lista_random <-  list(contingencia_random_intercepts,
                    sistemico_random_intercepts,
                    regulatorio_random_intercepts,
                    difusion_random_intercepts,
                    final_random_intercepts)
 
+stats_to_export = exportedstats(lista_random)
+
 # https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
 
-texreg::htmlreg(lista1bis,
+texreg::htmlreg(lista_random,
                 custom.model.names = c("Model #1",
                                        "Model #2",
                                        "Model #3",
@@ -645,12 +895,27 @@ texreg::htmlreg(lista1bis,
                                   10,
                                   8
                 ),
-                file="anexos/ENG_tabla_random_intercepts.html",
-                caption = "Models were estimated using logistic regression with random intercepts for each country. The dependent variable is a binary outcome indicating whether a debate occurred (1) or not (0) in the election.",
-               # title = "Table 3. Regression results",
+                include.aic = FALSE,
+                include.bic = FALSE,
+                include.loglik = FALSE,
+                include.nobs = FALSE,
+                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                                       "BIC" = stats_to_export$bic,
+                                       "Log-Likelihood" = stats_to_export$loglik,
+                                       "n observations" = stats_to_export$n_obs),
+                caption = "<div style='text-align:left;'>
+               <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
+                 Table 3. Regression results
+               </div>
+               Models were estimated using logistic regression with random intercepts for each country. The dependent variable is a binary outcome indicating whether a debate occurred (1) or not (0) in the election.  
+             </div>",
+                caption.above = T,
                 center = T,
-                bold = 0.1)
+                bold = 0.1,
+                file="anexos/ENG_tabla_random_intercepts.html")
 
+## INTERPRETACION #####
+#### PENDIENTE ### marginal effects graph #######
 
 #### INTERPRETACION - importante elegir ####
 
@@ -877,4 +1142,5 @@ plot_interpretacion %>% ggsave(filename = "images/ENG_plot_interpretacion_nec_re
                                width = 12,
                                height = 9)
 
-
+## PENDIENTE DIAGNOSTICOS #######
+###  The authors should show all diagnostic, multicollinearity and robustness test in the Appendix
