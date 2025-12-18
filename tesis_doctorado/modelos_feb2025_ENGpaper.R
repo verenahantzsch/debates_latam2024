@@ -915,9 +915,7 @@ texreg::htmlreg(lista_random,
                 file="anexos/ENG_tabla_random_intercepts.html")
 
 ## INTERPRETACION #####
-#### PENDIENTE ### marginal effects graph #######
-
-#### INTERPRETACION - importante elegir ####
+#### importante elegir ####
 
 # modelo_a_interpretar <- modelo_sficativas_variantes_s_outliers
 # data_modelo_a_interpretar <- data_s_outliers 
@@ -927,7 +925,7 @@ control <- lme4::glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 1000
 
 modelo_a_interpretar <- lme4::glmer(paste(formula_modelo_sficativas_variantes, 
                                           "(1 | cat_pais)", sep = "+"), 
-                                    family=binomial("logit"), 
+                                    family = binomial("logit"), 
                                     data = democracias_reservanoescalada,
                                     control = control)
 
@@ -953,21 +951,74 @@ data_modelo_a_interpretar <- democracias_reservanoescalada %>%
 #                #cluster = democracias$elecid))
 #                #cluster = data$elecid))
 #                cluster = democracias$cat_pais)
-  
-  
+
+levels <- data_modelo_a_interpretar$cat_pais %>% unique()
+nlevels <- length(levels)
 # t the coefficient for X is the difference in the log odds.  https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faq-how-do-i-interpret-odds-ratios-in-logistic-regression/
 # In other words, for a one-unit increase in the math score, the expected change in log odds is .1563404.
 
+#### Grafico de marginal effects PENDIENTE NUMERAR ########
 
-#### INTERPRETACION - ESCENARIOS CON VALORES PREDICHOS #####
+predicted_probs <- marginaleffects::plot_predictions(
+  modelo_a_interpretar,
+  condition = c("lnnec", "regulaciondico"),
+  draw = FALSE
+)   
+
+
+plot_interpretation <- ggplot(predicted_probs) +
+  geom_line(aes(
+    x = exp(lnnec),
+    y = estimate,
+    colour = as.factor(regulaciondico)
+  )) +
+  geom_ribbon(aes(
+    x = exp(lnnec),
+    ymin = conf.low,
+    ymax = conf.high,
+    fill = as.factor(regulaciondico)
+  ), alpha = 0.3) +
+  theme_classic() +
+  labs(
+    title = "Predicted probability of a televised presidential debate",
+    subtitle = "Across the observed range of the effective number of candidates (ENC), with and without debate regulation",
+    caption = paste(
+      "Predicted probabilities are computed from the multilevel logistic regression model.",
+      "Shaded areas represent 95% confidence intervals.",
+      "All other variables are held constant at their mean (continuous variables) or mode (binary variables).",
+      sep = "\n"
+    ),
+    fill = "Debate regulation",
+    colour = "Debate regulation"
+  ) +
+  xlab("Effective Number of Candidates") +
+  ylab("Predicted probability of a televised debate") +
+  scale_x_continuous(breaks = seq(1, 10, 0.5)) +
+  scale_fill_manual(
+    labels = c("No regulation", "Regulation"),
+    breaks = c(0, 1),
+    values = c("grey40", "lawngreen")
+  ) +
+  scale_colour_manual(
+    labels = c("No regulation", "Regulation"),
+    breaks = c(0, 1),
+    values = c("grey30", "limegreen")
+  ) +
+  geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2) +
+  geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2) +
+  theme(legend.position = "bottom")
+
+
+plot_interpretacion %>% ggsave(filename = "images/ENG_plot_interpretacion_nec_regulacion.jpg",
+                               width = 12,
+                               height = 9)
+
+#### Escenarios (tabla) #####
 ### calculo de probas predichas # tengo que reducir la data para poder calcular asi nomas
 #data_modelo_a_interpretar$probabilidades_predichas <- predict(modelo_a_interpretar, type = "response")
 #data_modelo_a_interpretar$predicciones_binarias <- ifelse(data_modelo_a_interpretar$probabilidades_predichas>0.5,1,0)
 
 # Crear un dataset base sobre el cual predecir 
-
-levels <- data_modelo_a_interpretar$cat_pais %>% unique()
-nlevels <- length(levels)
 # version valores relevantes
 valores_relevantes <- c(log(min(data_modelo_a_interpretar$nec)),
                         log(max(data_modelo_a_interpretar$nec)),
@@ -995,18 +1046,11 @@ data_to_predict1 <- data.frame(
 )
 
 # Predecir probabilidades # ALTERNATIVAS PARA IGNORAR RANDOM EFFECTS
-data_to_predict1$predicted_probs <- predict(modelo_a_interpretar, 
-                                           newdata = data_to_predict1, 
-                                           type = "response")
-
-data_to_predict1 <- data_to_predict1 %>% 
-  group_by(lnnec, regulaciondico) %>% 
-  mutate(avg_predicted_probs = mean(predicted_probs)) %>% 
-  ungroup()
 
 preds <- marginaleffects::predictions(
   modelo_a_interpretar,
   newdata = data_to_predict1,
+  conf_level = 0.95,
  re.form = NA  # Esto ignora los efectos aleatorios
 )
 
@@ -1061,86 +1105,139 @@ tabla_data_to_predict <- data_to_predict1 %>%
 
 tabla_data_to_predict %>% write.csv("anexos/ENG_tabla_data_to_predict.csv")
 
-# yay! son casi identicas a lo estimado con modelo logit convencional !
+ 
+## CONTROLES Y DIAGNOSTICOS COPIADO DE GPT VER; VER LO ANTERIOR #######
+###  The authors should show all diagnostic, multicollinearity and robustness test in the Appendix
+#### Extraer residuos ##########
+res_dev  <- residuals(modelo_a_interpretar, type = "deviance")
+res_pear <- residuals(modelo_a_interpretar, type = "pearson")
+fitted   <- fitted(modelo_a_interpretar)
 
-# grafico
-# comento porque preferimos el próximo gráfico
-# ggplot(data_to_predict) +
-#   geom_line(aes(x = exp(lnnec), y = predicted_probs, colour = as.factor(regulaciondico)))
-
-# version con mas valores para graficar 
-data_to_predict2 <- data.frame(
-  lnnec = rep(seq(min(data_modelo_a_interpretar$lnnec, na.rm = TRUE), 
-                    max(data_modelo_a_interpretar$lnnec, na.rm = TRUE),
-                    #mean(data_modelo_sficativas$lnnec, na.rm = TRUE),
-                    length.out = 20), 2*nlevels), # Cambiar por los valores que quieras probar
-  lnmarginvic = mean(data_modelo_a_interpretar$lnmarginvic, na.rm = TRUE),
-  voteshareincumbent = mean(data_modelo_a_interpretar$voteshareincumbent, na.rm = TRUE),
-  dico_reeleccion = median(data_modelo_a_interpretar$dico_reeleccion, na.rm = TRUE), # Si es una variable dicotómica, fija en 0 o 1
-  propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
-  accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
-  avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
-  regulaciondico = rep(c(0,1),each=20*nlevels) ,
-  cumsum_pastciclos = mean(data_modelo_a_interpretar$cumsum_pastciclos, na.rm = TRUE),
-  lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
-  democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
-  mediaqualitycorruptvdem = mean(data_modelo_a_interpretar$mediaqualitycorruptvdem, na.rm = TRUE),
-  cat_pais = levels
-  )
-
-                
-# Predecir probabilidades
-# versiones viejas de calculo en test_modelos_dic2024.R 
-
-# predicted_probs <- margins::prediction(model = modelo_a_interpretar,
-#                               data = data_to_predict2,
-#                               type = "response",
-#                               vcov = vcov_modelo_a_interpretar,
-#                               calculate_se = TRUE)
-
-predicted_probs <- marginaleffects::predictions(
-  modelo_a_interpretar,
-  newdata = data_to_predict2,
-  conf_level = 0.9,
-  re.form = NA  # Esto ignora los efectos aleatorios
-)
-
-data_to_predict2$predicted_probs <- predicted_probs$estimate
-
-# grafico
-
-plot_interpretacion <- ggplot(predicted_probs) +
-  geom_line(aes(x = exp(lnnec), 
-                y = estimate, 
-                colour = as.factor(regulaciondico))) +
-  geom_ribbon(aes(x = exp(lnnec), 
-                  ymin =  conf.low, 
-                  ymax =  conf.high, 
-                  fill = as.factor(regulaciondico)), alpha = 0.3) +
+# Deviance residuals vs fitted
+ggplot(data.frame(fitted, res_dev),
+       aes(x = fitted, y = res_dev)) +
+  geom_point(alpha = 0.4) +
+  geom_hline(yintercept = 0, linetype = 2) +
   theme_classic() +
   labs(
-    title = "Probabilidad predicha de ocurrencia de un debate presidencial",
-    subtitle = "Para distintos valores dentro del rango observado de NEC, con y sin regulación",
-    caption = "Elaboración propia. 
-    Intervalos de confianza ploteados al 90%.
-    Escenarios predichos cuando el resto de las variables se encuentra:
-    -en su media (para el caso de los indicadores continuos),
-    -en su moda (para el caso de los indicadores dicotómicos).",
-    fill = "Regulación sobre debates",
-    colour = "Regulación sobre debates"
-  ) +
-  xlab("Número Efectivo de Candidatos") +
-  ylab("Probabilidad predicha de que ocurra un debate") +
-  scale_x_continuous(breaks= seq(1, 10, 0.5)) +
-  scale_fill_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey40", "lawngreen")) +
-  scale_colour_manual(labels = c("No hay", "Hay"), breaks = c(0,1), values = c("grey30", "limegreen")) +
-  geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2) +
-  theme(legend.position = "bottom")
- 
-plot_interpretacion %>% ggsave(filename = "images/ENG_plot_interpretacion_nec_regulacion.jpg",
-                               width = 12,
-                               height = 9)
+    x = "Fitted values",
+    y = "Deviance residuals",
+    title = "Deviance residuals vs fitted values"
+  )
 
-## PENDIENTE DIAGNOSTICOS #######
-###  The authors should show all diagnostic, multicollinearity and robustness test in the Appendix
+# Pearson residuals vs fitted
+ggplot(data.frame(fitted, res_pear),
+       aes(x = fitted, y = res_pear)) +
+  geom_point(alpha = 0.4) +
+  geom_hline(yintercept = 0, linetype = 2) +
+  theme_classic() +
+  labs(
+    x = "Fitted values",
+    y = "Pearson residuals",
+    title = "Pearson residuals vs fitted values"
+  )
+
+qqnorm(res_dev)
+qqline(res_dev)
+
+#### A2. Influential observations ######
+
+library(influence.ME)
+
+infl <- influence(modelo_a_interpretar, group = "cat_pais")
+
+# Cook's distance
+cd <- cooks.distance(infl)
+
+# Plot Cook's distance
+plot(cd, type = "h",
+     ylab = "Cook's distance",
+     main = "Cook's distance by country")
+
+abline(h = 4/length(cd), lty = 2)
+
+# DFBETAs
+dfb <- dfbetas(infl)
+
+summary(dfb)
+
+
+data.frame(
+  max_cook = max(cd, na.rm = TRUE),
+  n_above_threshold = sum(cd > 4/length(cd), na.rm = TRUE)
+)
+
+
+##### B1. Correlation matrix ########## 
+library(dplyr)
+library(corrplot)
+
+vars_modelo <- data_modelo_a_interpretar %>%
+  select(
+    lnnec,
+    lnmarginvic,
+    voteshareincumbent,
+    propindivinternet,
+    avgpropdebatesregionxciclo,
+    cumsum_pastciclos,
+    lngdp,
+    democraciavdemelectoralcomp,
+    mediaqualitycorruptvdem
+  )
+
+cor_mat <- cor(vars_modelo, use = "pairwise.complete.obs")
+
+corrplot(cor_mat, method = "color", tl.cex = 0.8)
+##### B2. Variance Inflation Factors (VIF) ######
+library(performance)
+
+check_collinearity(modelo_a_interpretar)
+
+# alternativa
+library(car)
+
+modelo_fixed <- glm(
+  outcome ~ lnnec + lnmarginvic + voteshareincumbent +
+    propindivinternet + avgpropdebatesregionxciclo +
+    cumsum_pastciclos + lngdp +
+    democraciavdemelectoralcomp + mediaqualitycorruptvdem,
+  data = data_modelo_a_interpretar,
+  family = binomial
+)
+
+vif(modelo_fixed)
+
+#### C2. Excluding influential observations ######
+
+ids_influyentes <- which(cd > 4/length(cd))
+
+data_sin_infl <- data_modelo_a_interpretar[-ids_influyentes, ]
+
+modelo_sin_infl <- glmer(
+  formula(modelo_a_interpretar),
+  data = data_sin_infl,
+  family = binomial,
+  control = glmerControl(optimizer = "bobyqa")
+)
+
+summary(modelo_sin_infl)
+
+##### C3. Fit statistics ######
+data.frame(
+  Model = c("Baseline", "No media corruption", "Past debate dummy"),
+  AIC = c(
+    AIC(modelo_a_interpretar),
+    AIC(modelo_sin_media),
+    AIC(modelo_past_dummy)
+  ),
+  BIC = c(
+    BIC(modelo_a_interpretar),
+    BIC(modelo_sin_media),
+    BIC(modelo_past_dummy)
+  ),
+  LogLik = c(
+    logLik(modelo_a_interpretar),
+    logLik(modelo_sin_media),
+    logLik(modelo_past_dummy)
+  )
+)
