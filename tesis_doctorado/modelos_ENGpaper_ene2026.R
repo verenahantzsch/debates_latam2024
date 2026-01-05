@@ -7,6 +7,7 @@ library(tidyverse)
 library(sandwich) # para clusterizar errores estandares
 library(lmtest) # para clusterizar errores estandares
 library(lme4)
+library(patchwork)
 
 # seed #################
 set.seed(111)
@@ -30,6 +31,30 @@ countrynames <- read.csv("countrynames.csv") %>%
   mutate(mayus_eng_cat_pais = str_replace(mayus_eng_cat_pais, 
                                           "DOMINICAN REPUB", 
                                           "DOMINICAN REPUBLIC"))
+
+variable_names <- tribble(
+  ~name,                                          ~variable,
+  "ENC",                                          "nec",
+  "Free Airtime Granted",                         "accesogratuito",
+  "Party Alignment",                              "alineamiento",
+  "Proportion of Regional Elections w/Debates",   "avgpropdebatesregionxciclo",
+  "Debates in Past Elections",                    "cumsum_pastciclos",
+  "Electoral Democracy Index (VDEM)",             "democraciavdemelectoralcomp",
+  "log GDP per Capita",                           "lngdp",
+  "Competitiveness",                              "marginvic",
+  "log Competitiveness",                          "lnmarginvic",
+  "Media Corrupt (VDEM)",                         "mediaqualitycorruptvdem",
+  "Election Year",                                "ncat_eleccion",
+  "Political Advertising Prohibited",             "prohibicionpropaganda",
+  "Proportion of U.S. Elections w/ Debates",      "prop_elec_usa_ciclo",
+  "Internet Access",                              "propindivinternet",
+  "TV Sets per Household",                        "proptv",
+  "Regulation on Debates",                        "regulaciondico",
+  "Incumbent Vote Share",                         "voteshareincumbent",
+  "Competing President",                          "dico_reeleccion",
+  "log ENC",                                      "lnnec",
+  "GDP per Capita",                               "gdpxcapita"
+)
 
 setwd("/home/carolina/Documents/Proyectos R/debates_latam2024/tesis_doctorado")
 # ELECCIONES ##############################
@@ -272,16 +297,17 @@ plot_elecciones_conysindebates_t <- base_plot_elecciones_conysindebates_t %>%
                     name = "") +
   scale_x_continuous(breaks = seq(1960,2025,10)) +
   scale_y_continuous(breaks = seq(0,70,10)) +
-  labs(title = "Figure 1: Temporal Evolution of Debates",
+  labs(title = "Figure 1.A: Temporal Evolution of Debates",
        subtitle = "Number of Presidential Elections with and without Debates in Latin American Democracies, 1960–2023",
        y = "Count of Elections",
-       x = "Decade",
-       caption = "Source: Author. 
-     The first and second rounds of presidential elections are counted separately when applicable. 
-     Only elections under democratic regimes (V-Dem polyarchy index > 0.45) are 
-     Percentages represent the number of elections with debates out of the total.
-    A logistic regression confirms a statistically significant positive time trend (b = 0.06, p < 0.0001)") +
-  theme(legend.position = "bottom")
+       x = "Decade")+#,
+    #   caption = "Source: Author. 
+    # The first and second rounds of presidential elections are counted separately when applicable. 
+    # Only elections under democratic regimes (V-Dem polyarchy index > 0.45) are 
+    # Percentages represent the number of elections with debates out of the total.
+    #A logistic regression confirms a statistically significant positive time trend (b = 0.06, p < 0.0001)") +
+  theme(legend.position = "none",
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 0.2))
 
 
 plotname <- "ev_t"
@@ -346,17 +372,21 @@ plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # 
                     values = c("green", "grey10"),
                     name = "") +
   scale_x_discrete(breaks = x_labels$eng_cat_pais, label = x_labels$label) +
-  labs(title = "Figure 2: Geographical Distribution of Debates",
+  labs(title = "Figure 1.B: Geographical Distribution of Debates",
        subtitle = "Number of Presidential Elections with and without Debates in Latin American Democracies, by Country (1960–2023)",
-       y = "Number of Elections",
+       y = "Count of Elections",
        x = "Country",
-       caption = "Source: Author. 
-     The first and second rounds of presidential elections are counted separately when applicable. 
-     Only elections under democratic regimes (V-Dem polyarchy index > 0.45) are considered. 
-     Percentages represent the number of elections with debates out of the total.
-     Differences across countries are statistically significant at the 0.1% level (Pearson’s Chi^2 = 42.28; p < 0.001).") +
+       caption = "Source: Author’s elaboration.
+       
+       Percentages represent the proportion of elections in which at least one debate was held. 
+       The sample is restricted to democratic regimes (V-Dem Polyarchy Index > 0.45). 
+       First and second electoral rounds are treated as independent observations.
+       
+       A logistic regression confirms a significant positive longitudinal trend (beta = 0.06, p < 0.001). 
+       Cross-country variations are statistically significant at the 0.1% level (Pearson’s chi^2 = 42.28; p < 0.001).") +
   theme(legend.position = "bottom",
-        axis.text.x = element_text(angle=90, size = 9))
+        axis.text.x = element_text(angle=90, size = 10),
+        panel.border = element_rect(color = "black", fill = NA, linewidth = 0.2))
 
 
 plotname <- "ev_e"
@@ -364,17 +394,28 @@ filename <- paste("images/ENG2_plot_",  plotname, ".jpg", sep = "")
 ggsave(filename, width = 10, height = 7)
 
 
+
 # cuentas
 summary(base_elecciones_conysindebates_e$prop_elecciones_con_debates)
 sd(base_elecciones_conysindebates_e$prop_elecciones_con_debates)
+
+## panel vertical ####
+
+panel_vertical <- plot_elecciones_conysindebates_t / plot_elecciones_conysindebates_e  +
+  plot_annotation(
+    title = "Figure 1. Spatial and Temporal Distribution of Presidential Debates in Latin America (1960–2023)"#,
+   # tag_levels = "A"
+  )
+plotname <- "panelverticalte"
+filename <- paste("images/ENG2_plot_",  plotname, ".jpg", sep = "")
+ggsave(filename, width = 10, height = 14)
 
 ## Tabla anexa para Appendix #####
 # The authors should provide a table in the Appendix in which it becomes transparent
 # for each country 
 # when there where elections and 
 # how many debates have been broadcasted. “
-#### PENDIENTE AGREGAR ELECCIONES SIN DEBATES #########
-
+ 
 # elections with debates
 data_pais_debates_appendix1 <- democracias_basedebates %>% 
   mutate(ronda_year = paste(ncat_ronda, "° round ", ncat_eleccion, sep = "")) %>% 
@@ -389,7 +430,6 @@ data_pais_debates_appendix1 <- data_pais_debates_appendix1 %>%
     .groups = "drop"
   )
 
-data_pais_debates_appendix1 %>% write_csv("anexos/ENG2_datapaisdebates.csv")
 
 # elections without debates
 
@@ -402,7 +442,7 @@ data_pais_debates_appendix2 <- democracias %>%
   )
 
 # join
-############### PENDIENTE GUARDAR  ##########
+ #
 data_pais_debates_appendix <- data_pais_debates_appendix1 %>% 
   left_join(data_pais_debates_appendix2) %>% 
   left_join(countrynames %>% 
@@ -410,6 +450,8 @@ data_pais_debates_appendix <- data_pais_debates_appendix1 %>%
                                        "Republica Dominicana",
                                        cat_pais))) %>% 
   select(eng_cat_pais, elections_without_debates, elections_with_debates)
+
+data_pais_debates_appendix %>% write_csv("anexos/ENG2_datapaisdebates.csv")
 
 ## Formulas y estimaciones de base (toda la muestra de democracias - V.D = dico_hubo_debates) #####
 ### Modelo contingencia  ####
@@ -666,9 +708,10 @@ formula_modelo_all <- "dico_hubo_debates ~
                            alineamiento +
                            proptv +
                            propindivinternet +
+                           prohibicionpropaganda +
                            accesogratuito +
                            avgpropdebatesregionxciclo + 
-                           #prop_elec_usa_ciclo +
+                           #prop_elec_usa_ciclo + # ES UNA CONSTANTE DADO BAJO N
                            regulaciondico +
                            cumsum_pastciclos +
                            lngdp + 
@@ -893,7 +936,7 @@ summary(control_all)
 control_interactivo <-  lme4::glmer(paste(formula_modelo_sficativas_variantes,
                                           "  regulaciondico*lnnec ", " (1 | cat_pais)", sep = "+"), 
                                     family=binomial("logit"), 
-                                    data = democracias_reservanoescalada,
+                                    data = democracias,
                                     control = control)
 
 summary(final_random_intercepts)
@@ -928,7 +971,7 @@ texreg::htmlreg(lista_random,
                                      # "Media Corrupt (VDEM)",
                                       
                                       "H5 Party Alignment",
-                                      "H3 Sets per Household"		,
+                                      "H3 TV Sets per Household"		,
                                       "H4 Internet Access",
                                       "H6 Political Advertising Prohibited",
                                       "H7 Free Airtime Granted",
@@ -939,47 +982,53 @@ texreg::htmlreg(lista_random,
                                       
                                       
                 ),
-                # reorder.coef =  c(1,
-                #                   3,
-                #                   2,
-                #                   
-                #                   10,
-                #                   11,
-                #                   9,
-                #                   
-                #                   12,
-                #                   13,
-                #                   
-                #                   14,
-                #                   16,
-                #                   17,
-                #                   15,
-                #                   
-                #                   4,
-                #                   5,
-                #                   6,
-                #                   7,
-                #                   8
-                # ),
+                reorder.coef =  c(1,
+                                  3,
+                                  2,
+
+                                  9,
+                                  10,
+                                  8,
+
+                                  11,
+                                  12,
+
+                                  13,
+                                  15,
+                                  16,
+                                  14,
+
+                                  4,
+                                  5,
+                                  6,
+                                  7#,
+                                  #8
+                ),
                 include.aic = FALSE,
                 include.bic = FALSE,
                 include.loglik = FALSE,
                 include.nobs = FALSE,
-                custom.gof.rows = list("n obs (elections)" = stats_to_export$n_obs,
+                custom.gof.rows = list("N obs (elections)" = stats_to_export$n_obs,
                                        "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
                                        "Log-Likelihood" = stats_to_export$loglik),
+                include.groups = TRUE, # Deja este en TRUE si quieres ver el conteo de países
+                custom.gof.names = c("Number of Countries", "Variance: Country (Intercept)"),
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Table 3XXX. Regression results
+                 Table 1. Multilevel Logistic Regression Results for Presidential Debate Occurrence.
                </div>
-               Models were estimated using logistic regression with random intercepts for each country. 
-               The dependent variable is a binary outcome indicating whether a debate occurred (1) or not (0) in the election.  
-               Variables were transformed to z-scores for ease of interpretation.
+               Models were estimated using mixed-effects logistic regression with random intercepts at the country level. <br>
+               The dependent variable is a binary indicator of whether at least one presidential debate occurred during the election (1 = Yes, 0 = No). <br>
+               Independent variables are standardized (z-scores) to facilitate comparison.<br>
+               Observations (N) refer to individual elections.<br>
              </div>",
                 caption.above = T,
                 center = T,
                 bold = 0.1,
+                custom.note = "Standard errors are reported in parentheses. <br>
+               Asterisks indicate statistical significance levels: %stars",
+                
                 file="anexos/ENG2_tabla_random_intercepts.html")
 
 ## INTERPRETACION #####
@@ -1048,19 +1097,22 @@ plot_interpretation <- ggplot(predicted_probs) +
   ), alpha = 0.3) +
   theme_classic() +
   labs(
-    title = "Predicted probability of a televised presidential debate",
-    subtitle = "Across the observed range of the effective number of candidates (ENC), with and without debate regulation",
+    title = "Figure 2. Predicted Probability of a Presidential Debate Occurrence",
+    subtitle = "Effects of Electoral Fragmentation (ENC) and the Presence of Debate Regulations",
     caption = paste(
-      "Predicted probabilities are computed from the multilevel logistic regression model.",
-      "Shaded areas represent 95% confidence intervals.",
-      "All other variables are held constant at their mean (continuous variables) or mode (binary variables).",
+      "Predicted probabilities are derived from the final multilevel logistic regression model. ",
+      "Shaded areas represent 95% confidence intervals. ",
+      "While the model estimates the effect of the log-transformed ENC, ", 
+      "the x-axis has been back-transformed to its natural scale (units of candidates) to facilitate substantive interpretation across its observed range. ",
+      "Horizontal and vertical dashed lines indicate substantive thresholds (50% probability and key ENC values) discussed in the text.",
+      "All other covariates are held constant at their sample means (continuous variables) or modal values (categorical variables). ",
       sep = "\n"
     ),
     fill = "Debate regulation",
     colour = "Debate regulation"
   ) +
-  xlab("Effective Number of Candidates") +
-  ylab("Predicted probability of a televised debate") +
+  xlab("Effective Number of Candidates (ENC)") +
+  ylab("Predicted Probability of a Presidential Debate") +
   scale_x_continuous(breaks = seq(1, 10, 0.5)) +
   scale_fill_manual(
     labels = c("No regulation", "Regulation"),
@@ -1073,7 +1125,7 @@ plot_interpretation <- ggplot(predicted_probs) +
     values = c("grey30", "limegreen")
   ) +
   geom_hline(yintercept = 0.5, alpha = 0.5, linetype = 2) +
-  geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2) +
+ geom_vline(xintercept = c(2, 3), alpha = 0.5, linetype = 2) +
   theme(legend.position = "bottom")
 
 
@@ -1310,10 +1362,10 @@ all_reducido <- lme4::glmer(paste(formula_modelo_all, " (1 | cat_pais)", sep = "
 #Distintos psuedoR2: mas grandes mejor, pero tampoco esperar muy grande (0.2 a 0.4 ya estaria bien)
 
 #stats0 <- stats( modelo_0_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
-stats1 <- stats_ml(contingencia_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
+stats4 <- stats_ml(contingencia_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
 stats2 <- stats_ml(sistemico_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
 stats3 <- stats_ml(regulatorio_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
-stats4 <- stats_ml(difusion_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
+stats1 <- stats_ml(difusion_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
 #stats5 <- stats_ml(sficativas_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
 stats6 <- stats_ml(final_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
 stats7 <- stats_ml(all_reducido, modelo_0_reducido, data_reducida$dico_hubo_debates)
@@ -1471,14 +1523,15 @@ text(fitted_vals[outliers_pearson],
 
 #side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
 #TITULO
-mtext("Figure X.X Residual diagnostics for the final multilevel logistic regression model", 
+mtext("Figure A1. Residual diagnostics for the final multilevel logistic regression model", 
       font = 2, side = 3, cex = 1.2, line = -1.2, outer = TRUE )
 #CAPTION
 mtext("
-(a) Deviance residuals plotted against fitted values. 
-(b) Standardized Pearson residuals plotted against fitted values. 
- Dashed lines indicate conventional thresholds for large residuals. 
- A small number of isolated observations exhibit large residuals, but no systematic patterns indicative of model misspecification are observed. ", 
+(a) Deviance residuals plotted against fitted values.
+(b) Standardized Pearson residuals plotted against fitted values.
+Dashed horizontal lines indicate ±2 standardized residuals (the conventional threshold for large residuals).
+Individual observations exceeding this threshold are labeled for transparency.
+A small number of isolated observations exhibit large residuals; however, no systematic patterns indicative of model misspecification are observed.", 
       side = 1, line = 4, cex = 0.75, outer = TRUE, adj = 1, font = 3 )
 
 dev.off()
@@ -1591,6 +1644,93 @@ The direction and significance of the primary substantive predictors remain stab
 #Figure X. Cluster-level DFBETAs for the final multilevel logistic regression model.
 dev.off()
 
+######  Panel Vertical Cook/DFBETAS #####
+jpeg("images/ENG2_influence_panel.jpg", width = 900, height = 1200, quality = 95)
+
+par(
+  mfrow = c(2, 1),        # PANEL VERTICAL
+  mar = c(5, 4, 3, 3),   # márgenes internos de cada plot
+  oma = c(12, 0, 4, 0)   # márgenes externos (caption + título general)
+)
+
+###### (a) Cook's distance 
+
+cd <- cooks.distance(infl)
+J <- nrow(cd)
+umbralcd <- 4 / J
+
+plot(
+  cd,
+  ylab = "Cook's distance",
+  xlab = "Country (cluster)",
+  main = "(a) Cluster-level Cook's distance"
+)
+abline(h = umbralcd, lty = 2, col = "red4")
+
+idx_cd <- which(cd > umbralcd)
+text(
+  idx_cd,
+  cd[idx_cd],
+  labels = rownames(cd)[idx_cd],
+  pos = 2,
+  cex = 0.8,
+  col = "blue4"
+)
+
+###### (b) DFBETAs by cluster 
+
+dfb <- dfbetas(infl)
+umbral <- 1
+
+colnames(dfb) <- c(
+  "(Intercept)",
+  "log Competitiveness",
+  "log ENC",
+  "Incumbent Vote Share",
+  "Competing President",
+  "Internet Access",
+  "Free Airtime Granted",
+  "Regional Elections w/Debates",
+  "Regulation on Debates",
+  "Debates in Past Elections",
+  "log GDP per Capita",
+  "Electoral Democracy Index"
+)
+
+boxplot(
+  dfb,
+  las = 2,
+  main = "(b) Cluster-level DFBETAs",
+  ylab = "DFBETA",
+  cex.axis = 0.7
+)
+abline(h = c(-1, 1), lty = 2, col = "red3")
+
+idx_dfb <- which(abs(dfb) > umbral, arr.ind = TRUE)
+
+text(
+  x = idx_dfb[, "col"],
+  y = dfb[idx_dfb] + rnorm(nrow(idx_dfb), 0, 0.05),
+  labels = rownames(dfb)[idx_dfb[, "row"]],
+  pos = 3,
+  cex = 0.75,
+  col = "blue4"
+)
+
+###### CAPTION GENERAL (para toda la figura)
+mtext(
+  "  Figure A2. Cluster-level influence diagnostics for the final multilevel logistic regression model.", 
+  side = 3, line = 1, cex = 1.6, outer = TRUE, adj = 0, font = 2 )
+mtext(
+  "Panel (a) reports Cook’s distance by country cluster (J = 17). 
+  While Chile slightly exceeds the heuristic threshold (4/J), its absolute influence remains moderate (D < 0.5). 
+  Panel (b) displays the distribution of DFBETAs across clusters for each fixed-effect coefficient; dashed horizontal lines indicate the conventional |1| threshold. 
+  Only a small fraction of country–parameter pairs exceed this limit. 
+  A sensitivity analysis excluding Chile confirms that the main findings remain robust, with no changes in the direction or statistical significance of the primary predictors.", 
+  side = 1, line = 8.5, cex = 1, outer = TRUE, adj = 1, font = 3 )
+ 
+
+dev.off()
 #### Multicolinealidad ######### 
 ##### Correlation matrix ########## 
 
@@ -1702,7 +1842,7 @@ for (j in 1:n) {
 #side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
 mtext("Figure X. Correlation matrix among predictors", font = 2, side = 3, cex = 1.2, line = -2, outer = F )
 dev.off()
-##### Variance Inflation Factors (VIF) ######
+##### VIFs Variance Inflation Factors ######
 
 # vif de modelo principal
 vifs <- performance::check_collinearity(final_random_intercepts) %>% 
@@ -1735,13 +1875,19 @@ vis_sinlog <- performance::check_collinearity(control_slogs) %>%
   select(Term, VIF)  %>% 
   mutate(Modelo = "Non-log")
 
+vis_sincontroles <- performance::check_collinearity(control_sin_controles) %>% 
+  tibble() %>% 
+  select(Term, VIF)  %>% 
+  mutate(Modelo = "Sin controles")
+
 all_vifs <- rbind(
   vis_sinlog,
   #vifs_conronda,
-  vifs_completo,
-  vifs_conyear,
+  #vifs_completo,
+  #vifs_conyear,
   vifs) %>% 
-  pivot_wider(names_from = Modelo, values_from = VIF)
+  pivot_wider(names_from = Modelo, values_from = VIF) %>% 
+  left_join(variable_names, by = c("Term" = "variable"))
 
 all_vifs %>% write_csv("./anexos/ENG2_vifs.csv")
 
@@ -1855,7 +2001,8 @@ lista_controles <-  list(control_all,
                          control_year,
                          control_ncatronda,
                          control_interactivo,
-                         control_sin_infl )
+                         control_sin_infl,
+                         control_sin_controles)
 
 stats_to_export = exportedstats(lista_controles)
 
@@ -1867,73 +2014,101 @@ texreg::htmlreg(lista_controles,
                                        "W/round",
 
                                       "W/interaction",
-                                       "Sensitivity analysis" )  ,
+                                       "Sensitivity analysis",
+                                      
+                                      "Without controls")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
-                # custom.coef.names = c("(Intercepto)",
-                #                       "log Margen de victoria",
-                #                       "log NEC",
-                #                       "Votos oficialista",
-                #                       "Presidente a reelección",
-                #                       
-                #                       "Debates regulados",
-                #                       "Cant. elecc. pasadas c debates",
-                #                       "log PBI per cápita",
-                #                       "N° Democracia electoral",
-                #                       "N° Corrupción de medios",
-                #                       
-                #                       "Alineamiento partidario",
-                #                       "Prop. TV por hogar"		,
-                #                       "Prop. individuos c internet",
-                #                       "Prohibición propaganda"	 ,
-                #                       "Acceso gratuito",
-                #                       "Prop. debates en región",
-                #                       "Prop. debates en USA"
-                #                       
-                # ),
-                # reorder.coef =  c(1,
-                #                   2,
-                #                   3,
-                #                   4,
-                #                   5,
-                #                   
-                #                   11,
-                #                   12,
-                #                   13,
-                #                   14,
-                #                   15,
-                #                   16,
-                #                   17,
-                #                   
-                #                   6,
-                #                   7,
-                #                   9,
-                #                   10,
-                #                   8
-                # ),
+                custom.coef.names = c("(Intercept)",
+                                      "H8 log Competitiveness",
+                                      "H11 log ENC",
+                                      "H9 Incumbent Vote Share",
+                                      "H10 Competing President",
+
+                                      "H5 Party Alignment",
+                                      "H3 TV Sets per Household"		,
+                                      "H4 Internet Access",
+
+                                      "H6 Political Advertising Prohibited",
+                                      "H7 Free Airtime Granted",
+
+                                      "H2 Proportion of Regional Elections with Debates",
+                                      #"H1 Proportion of U.S. Elections with Debates", # CONSTANTE EN EL FULL QUE ES EL UNICO QUE LO INCLUYE
+
+                                      "H12 Regulation on Debates",
+                                      "H13 Debates in Past Elections",
+                                      "log GDP per Capita",
+                                      "Electoral Democracy Index (VDEM)",
+                                      # "Media Corrupt (VDEM)",
+                                      
+                                      "Election Round",
+                                      "Year",
+                                      "log ENC x Regulation on Debates"
+
+                ),
+                reorder.coef =  c(1,
+                                  
+                                  16,
+                                  17,
+                                  
+                                  11,
+                                  
+                                  
+                                  7,
+                                  8,
+                                  6,
+                                  
+                                  9,
+                                  10,
+                                  
+                                  2,
+                                  4,
+                                  5,
+                                  3,
+                                  
+                                  12,
+                                  
+                                  18,
+                                  
+                                  13,
+                                  14,
+                                  15
+                ),
                 include.aic = FALSE,
                 include.bic = FALSE,
                 include.loglik = FALSE,
                 include.nobs = FALSE,
-                custom.gof.rows = list("n obs (elections)" = stats_to_export$n_obs,
+                custom.gof.rows = list("N obs (elections)" = stats_to_export$n_obs,
                                        "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
                                        "Log-Likelihood" = stats_to_export$loglik),
+                include.groups = TRUE, # Deja este en TRUE si quieres ver el conteo de países
+                custom.gof.names = c("Number of Countries", "Variance: Country (Intercept)"),
                 file="anexos/ENG2_tabla_modelos_controles2.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-            Appendix Table XXXX Sensitivity analyisis and alternative specifications
-               </div>
-            Se presentan los resultados de la serie de modelos estimados con regresión logística con efectos aleatorios por país. Los coeficientes corresponden a variables estandarizadas.  
-            Full Model: 
-            Fixed Effects:
-            W/time trends:
-            W/round:
-            W/interaction:
-            Sensitivity analysis:  
-                 </div>",
+                Table A.6. Alternative Model Specifications and Sensitivity Analyses.
+  </div>
+  The table presents results for alternative model specifications to assess the robustness of the main findings: <br>
+  <br>
+  <b>Full Model:</b> Includes all considered predictors, with the exception of the <i>Proportion of U.S. Elections with Debates</i>, which was dropped due to lack of variation following listwise deletion. This model exhibited multicollinearity issues and failed to converge; results are provided for transparency.<br>
+  <b>Fixed Effects:</b> The final specification estimated via logistic regression with clustered standard errors at the country level.<br>
+  <b>W/Time Trends:</b> Includes a control for linear time trends. This model faced multicollinearity issues as several predictors share similar positive temporal trends, complicating the isolation of individual effects.<br>
+  <b>W/Round:</b> Includes a control for the election round. The main specification without this control is theoretically preferred, as the effect of the round is expected to be mediated by competitiveness and ENC.<br>
+  <b>W/Interaction:</b> Includes an interaction term between <i>log ENC</i> and <i>Regulation on Debates</i>.<br>
+  <b>Sensitivity Analysis:</b> Excludes Chile, identified as a moderately influential case in diagnostic plots.<br>
+  <b>Without Controls:</b> Excludes development (GDP) and democracy (V-Dem) indicators to retain Venezuela in the sample (J = 18).<br>
+  <br>
+  With the exception of the Fixed Effects specification, all models were estimated using multilevel logistic regression. The dependent variable is a binary indicator of whether at least one televised presidential debate occurred (1 = Yes, 0 = No).
+</div>
+
+             </div>",
                 caption.above = T,
                 center = T,
-                bold = 0.1)
+                bold = 0.1,
+                custom.note = " Independent variables are standardized (z-scores) to facilitate comparison.<br>
+               Observations (N) refer to individual elections.<br>
+               Standard errors are reported in parentheses. <br>
+               Asterisks indicate statistical significance levels: %stars")
 
 ##### otros #########
 cor(democracias$ncat_ronda, democracias$nec)

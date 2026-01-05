@@ -123,6 +123,26 @@ cor(democracias$democraciavdemelectoralcomp, democracias$democraciavdempolyarchy
 
 # DEFINO FUNCIONES #############
 
+funcion_count_R2 <- function(modelo, variable_dependiente){
+  
+  probabilidades_predichas <- predict(modelo, type = "response")
+  predicciones_binarias <- ifelse(probabilidades_predichas>0.5,1,0)
+  
+  # Count R²: proporción de predicciones correctas
+  count_r2 <- mean(predicciones_binarias == variable_dependiente)
+  # Precisión base: proporción de la clase mayoritaria
+  baseline_accuracy <- max(table(variable_dependiente)) / length(variable_dependiente)
+  # Adjusted Count R²
+  adjusted_count_r2 <- (count_r2 - baseline_accuracy) / (1 - baseline_accuracy)
+  #  The adjusted count R2 is the proportion of correct guesses beyond the number that would be correctly guessed by choosing the largest marginal
+  
+  name <- deparse(substitute(modelo))
+  
+  dataframe <- tibble(countr2 = count_r2,
+                      adjcountr2 = adjusted_count_r2,
+                      modelo =   name )
+}
+
 stats <- function(modelo){
   pseudoR2 <- rcompanion::nagelkerke(modelo, restrictNobs = T)$Pseudo.R.squared.for.model.vs.null %>% 
     as.data.frame() %>% 
@@ -1279,7 +1299,7 @@ mtext("Elaboración propia.
 par(mfrow = c(1,2))
 plot(modelo_a_probar, 
      which = 1, caption = "", main = "", sub.caption = "",
-     labels.id = data_modelo_a_probar$obsid,)
+     labels.id = data_modelo_a_probar$obsid)
 title(main = "", xlab= "", ylab = "" ) # borra título
 mtext("6.III.C.2.1 Residuos vs. valores predichos",
       side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
@@ -1291,7 +1311,7 @@ mtext("6.III.C.2.1 Residuos vs. valores predichos",
 #Me aplica: It appears at the lower predicted values, we’re under-fitting The observed proportions are larger than the predicted proportions. 
 # At the medium predicted values, we're over-fitting for a couple of observations. The observed proportions are much smaller than the predicted proportions.
 plot(modelo_a_probar, which = 2, caption = "", main = "", sub.caption = "",
-     labels.id = data_modelo_a_probar$obsid,)
+     labels.id = data_modelo_a_probar$obsid)
 mtext("6.III.C.2.2 Residuos vs. valores predichos",
       side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 
@@ -1942,29 +1962,7 @@ adjusted_count_r2 <- (count_r2 - baseline_accuracy) / (1 - baseline_accuracy)
 cat("Count R²:", count_r2, "\n")
 cat("Adjusted Count R²:", adjusted_count_r2, "\n")
 
-# PARA COMPARAR, DEFINO FUNCION
-#modelo <- modelo_0
-# para comparar
-funcion_count_R2 <- function(modelo, variable_dependiente){
-  
-  probabilidades_predichas <- predict(modelo, type = "response")
-  predicciones_binarias <- ifelse(probabilidades_predichas>0.5,1,0)
- 
-   # Count R²: proporción de predicciones correctas
-  count_r2 <- mean(predicciones_binarias == variable_dependiente)
-  # Precisión base: proporción de la clase mayoritaria
-  baseline_accuracy <- max(table(variable_dependiente)) / length(variable_dependiente)
-  # Adjusted Count R²
-  adjusted_count_r2 <- (count_r2 - baseline_accuracy) / (1 - baseline_accuracy)
-  #  The adjusted count R2 is the proportion of correct guesses beyond the number that would be correctly guessed by choosing the largest marginal
-  
-  name <- deparse(substitute(modelo))
-  
-  dataframe <- tibble(countr2 = count_r2,
-                          adjcountr2 = adjusted_count_r2,
-                          modelo =   name )
-}
-
+# con funcion definida arriba 
 countr20 <- funcion_count_R2(modelo_0_reducido, data_reducida$dico_hubo_debates)
 countr21 <- funcion_count_R2(modelo_contingencia_reducido, data_reducida$dico_hubo_debates)
 countr22 <- funcion_count_R2(modelo_sistemico_reducido, data_reducida$dico_hubo_debates)
@@ -2660,10 +2658,6 @@ summary(modelo_sficativas_variantes2.2_multinivel)
 
 
 ## EXPORTO MODELOS ######
-### defino función #######
-#lista_modelos <- lista1
-
-
 
 # https://www.rdocumentation.org/packages/texreg/versions/1.39.4/topics/htmlreg
 
