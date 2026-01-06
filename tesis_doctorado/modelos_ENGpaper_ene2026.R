@@ -381,6 +381,7 @@ plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # 
        Percentages represent the proportion of elections in which at least one debate was held. 
        The sample is restricted to democratic regimes (V-Dem Polyarchy Index > 0.45). 
        First and second electoral rounds are treated as independent observations.
+       See Appendix Table A1 for a full inventory of elections and debates per country.
        
        A logistic regression confirms a significant positive longitudinal trend (beta = 0.06, p < 0.001). 
        Cross-country variations are statistically significant at the 0.1% level (Pearson’s chi^2 = 42.28; p < 0.001).") +
@@ -410,7 +411,7 @@ plotname <- "panelverticalte"
 filename <- paste("images/ENG2_plot_",  plotname, ".jpg", sep = "")
 ggsave(filename, width = 10, height = 14)
 
-## Tabla anexa para Appendix #####
+## Sample Tabla anexa para Appendix #####
 # The authors should provide a table in the Appendix in which it becomes transparent
 # for each country 
 # when there where elections and 
@@ -434,6 +435,7 @@ data_pais_debates_appendix1 <- data_pais_debates_appendix1 %>%
 # elections without debates
 
 data_pais_debates_appendix2 <- democracias %>% 
+  subset(dico_hubo_debates==0) %>% 
   mutate(ronda_year = paste(ncat_ronda, "° round ", ncat_eleccion, sep = "")) %>% 
   group_by(cat_pais) %>%
   summarise(
