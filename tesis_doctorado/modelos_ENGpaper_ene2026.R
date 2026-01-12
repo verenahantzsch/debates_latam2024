@@ -41,8 +41,8 @@ variable_names <- tribble(
   "Debates in Past Elections",                    "cumsum_pastciclos",
   "Electoral Democracy Index (VDEM)",             "democraciavdemelectoralcomp",
   "log GDP per Capita",                           "lngdp",
-  "Competitiveness",                              "marginvic",
-  "log Competitiveness",                          "lnmarginvic",
+  "Closeness",                                    "marginvic",
+  "log Closeness",                                "lnmarginvic",
   "Media Corrupt (VDEM)",                         "mediaqualitycorruptvdem",
   "Election Year",                                "ncat_eleccion",
   "Political Advertising Prohibited",             "prohibicionpropaganda",
@@ -977,7 +977,7 @@ texreg::htmlreg(lista_random,
                                       "H4 Internet Access",
                                       "H6 Political Advertising Prohibited",
                                       "H7 Free Airtime Granted",
-                                      "H8 log Competitiveness",
+                                      "H8 log Closeness",
                                       "H11 log ENC",
                                       "H9 Incumbent Vote Share",
                                       "H10 Competing President"
@@ -1499,7 +1499,7 @@ plot(fitted_vals, res_dev,
      xlab = "Fitted values (log-odds)",
      #main = "Deviance residuals vs. fitted values",
      pch = 19, cex = 0.6)
-mtext("(a) Deviance residuals vs. fitted values", 
+mtext("Figure A1.A Deviance residuals vs. fitted values", 
       side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 abline(h = c(-2, 0, 2), col = c("red3", "gray40", "red3"), lty = c(2, 1, 2))
 
@@ -1514,7 +1514,7 @@ plot(fitted_vals, res_pearson_std,
      xlab = "Fitted values (log-odds)",
      #main = "Standardized Pearson residuals vs. fitted values",
      pch = 19, cex = 0.6)
-mtext("(b) Standardized Pearson residuals vs. fitted values", 
+mtext("Figure A1.B Standardized Pearson residuals vs. fitted values", 
       side = 3, line = 0.5, adj = 0, cex = 0.9, font = 1)
 abline(h = c(-2, 0, 2), col = c("red3", "gray40", "red3"), lty = c(2, 1, 2))
 
@@ -1529,8 +1529,8 @@ mtext("Figure A1. Residual diagnostics for the final multilevel logistic regress
       font = 2, side = 3, cex = 1.2, line = -1.2, outer = TRUE )
 #CAPTION
 mtext("
-(a) Deviance residuals plotted against fitted values.
-(b) Standardized Pearson residuals plotted against fitted values.
+Figure A1.A Deviance residuals plotted against fitted values.
+Figure A1.B Standardized Pearson residuals plotted against fitted values.
 Dashed horizontal lines indicate ±2 standardized residuals (the conventional threshold for large residuals).
 Individual observations exceeding this threshold are labeled for transparency.
 A small number of isolated observations exhibit large residuals; however, no systematic patterns indicative of model misspecification are observed.", 
@@ -1599,7 +1599,7 @@ par(mfrow = c(1, 1),
     oma = c(9, 0, 0, 0) ) # (bottom, left, top, right))
 
 colnames(dfb) <- c("(Intercept)"  ,
-                   "log Competitiveness",     
+                   "log Closeness",     
                    "log ENC",     
                    "Incumbent Vote Share",
                    "Competing President",
@@ -1665,7 +1665,7 @@ plot(
   cd,
   ylab = "Cook's distance",
   xlab = "Country (cluster)",
-  main = "(a) Cluster-level Cook's distance"
+  main = "Figure A2.A Cluster-level Cook's distance"
 )
 abline(h = umbralcd, lty = 2, col = "red4")
 
@@ -1686,7 +1686,7 @@ umbral <- 1
 
 colnames(dfb) <- c(
   "(Intercept)",
-  "log Competitiveness",
+  "log Closeness",
   "log ENC",
   "Incumbent Vote Share",
   "Competing President",
@@ -1702,7 +1702,7 @@ colnames(dfb) <- c(
 boxplot(
   dfb,
   las = 2,
-  main = "(b) Cluster-level DFBETAs",
+  main = "Figure A2.B Cluster-level DFBETAs",
   ylab = "DFBETA",
   cex.axis = 0.7
 )
@@ -1724,9 +1724,9 @@ mtext(
   "  Figure A2. Cluster-level influence diagnostics for the final multilevel logistic regression model.", 
   side = 3, line = 1, cex = 1.6, outer = TRUE, adj = 0, font = 2 )
 mtext(
-  "Panel (a) reports Cook’s distance by country cluster (J = 17). 
+  "Figure A2.A reports Cook’s distance by country cluster (J = 17). 
   While Chile slightly exceeds the heuristic threshold (4/J), its absolute influence remains moderate (D < 0.5). 
-  Panel (b) displays the distribution of DFBETAs across clusters for each fixed-effect coefficient; dashed horizontal lines indicate the conventional |1| threshold. 
+  Figure A2.B displays the distribution of DFBETAs across clusters for each fixed-effect coefficient; dashed horizontal lines indicate the conventional |1| threshold. 
   Only a small fraction of country–parameter pairs exceed this limit. 
   A sensitivity analysis excluding Chile confirms that the main findings remain robust, with no changes in the direction or statistical significance of the primary predictors.", 
   side = 1, line = 8.5, cex = 1, outer = TRUE, adj = 1, font = 3 )
@@ -1770,7 +1770,7 @@ corr_modelo_a_probar <- data_modelo_sficativas %>%
                  "Electoral Democracy Index (VDEM)" = democraciavdemelectoralcomp ,
                  "log GDP per Capita" = lngdp ,
                  #"Competitiveness" = marginvic, 
-                 "log Competitiveness" = lnmarginvic, 
+                 "log Closeness" = lnmarginvic, 
                 # "Media Corrupt (VDEM)" = mediaqualitycorruptvdem ,
                  "Election Year" = ncat_eleccion,
                  "Political Advertising Prohibited" = prohibicionpropaganda ,
@@ -2021,7 +2021,7 @@ texreg::htmlreg(lista_controles,
                                       "Without controls")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercept)",
-                                      "H8 log Competitiveness",
+                                      "H8 log Closeness",
                                       "H11 log ENC",
                                       "H9 Incumbent Vote Share",
                                       "H10 Competing President",
@@ -2088,14 +2088,14 @@ texreg::htmlreg(lista_controles,
                 file="anexos/ENG2_tabla_modelos_controles2.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                Table A.6. Alternative Model Specifications and Sensitivity Analyses.
+                Table A6. Alternative Model Specifications and Sensitivity Analyses.
   </div>
   The table presents results for alternative model specifications to assess the robustness of the main findings: <br>
   <br>
   <b>Full Model:</b> Includes all considered predictors, with the exception of the <i>Proportion of U.S. Elections with Debates</i>, which was dropped due to lack of variation following listwise deletion. This model exhibited multicollinearity issues and failed to converge; results are provided for transparency.<br>
   <b>Fixed Effects:</b> The final specification estimated via logistic regression with clustered standard errors at the country level.<br>
   <b>W/Time Trends:</b> Includes a control for linear time trends. This model faced multicollinearity issues as several predictors share similar positive temporal trends, complicating the isolation of individual effects.<br>
-  <b>W/Round:</b> Includes a control for the election round. The main specification without this control is theoretically preferred, as the effect of the round is expected to be mediated by competitiveness and ENC.<br>
+  <b>W/Round:</b> Includes a control for the election round. The main specification without this control is theoretically preferred, as the effect of the round is expected to be mediated by Electoral Closeness and ENC.<br>
   <b>W/Interaction:</b> Includes an interaction term between <i>log ENC</i> and <i>Regulation on Debates</i>.<br>
   <b>Sensitivity Analysis:</b> Excludes Chile, identified as a moderately influential case in diagnostic plots.<br>
   <b>Without Controls:</b> Excludes development (GDP) and democracy (V-Dem) indicators to retain Venezuela in the sample (J = 18).<br>

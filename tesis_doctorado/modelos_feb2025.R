@@ -178,17 +178,25 @@ vifs <- function(modelo){
   vif_tibble
 }
 
+m<- contingencia_random_intercepts
 exportedstats <- function(lista_modelos){
   zeros <- rep(0, length(lista_modelos))
   exportedstats <- tibble("aic" = zeros,
                           "bic"  = zeros,
                           "loglik"  = zeros,
-                          "n_obs"  = zeros)
+                          "n_obs"  = zeros #,
+                         # "R2"  = zeros 
+                          )
   for (j in seq_along(lista_modelos)) {
-    exportedstats$aic[j] <- AIC(lista_modelos[[j]])
-    exportedstats$bic[j] <- BIC(lista_modelos[[j]])
-    exportedstats$loglik[j] <- logLik(lista_modelos[[j]])
-    exportedstats$n_obs[j] <- nobs(lista_modelos[[j]])
+    m <- lista_modelos[[j]]
+    exportedstats$aic[j] <- AIC(m)
+    exportedstats$bic[j] <- BIC(m)
+    exportedstats$loglik[j] <- logLik(m)
+    exportedstats$n_obs[j] <- nobs(m)
+    # ll_null  <- logLik(update(m, . ~1 + (1 | cat_pais))) # SOLO APLICABLE A MULTINIVEL Y NI SE SI BIEN
+    # R2_CS <- 1 - exp((2 / exportedstats$n_obs[j]) * (ll_null - exportedstats$loglik[j]))
+    # R2_N  <- R2_CS / (1 - exp((2 / exportedstats$n_obs[j]) * ll_null))
+    # exportedstats$R2[j] <- R2_N
   }
   exportedstats
 }
@@ -1525,7 +1533,7 @@ corr_modelo_a_probar <- data_modelo_a_probar %>%
          democraciavdemelectoralcomp,
          mediaqualitycorruptvdem) %>% 
   dplyr::rename( "Acceso gratuito a TV" = accesogratuito,
-                 "Alineamiento partidario" = alineamiento,
+                 "Prop. identificados c partido" = alineamiento,
                  "Prop. elecciones c/debates región" = avgpropdebatesregionxciclo ,
                  "Cant. elecciones pasadas c/debates" = cumsum_pastciclos ,
                  "N° democracia electoral" = democraciavdemelectoralcomp ,
@@ -1591,7 +1599,7 @@ new_order <- c("Año electoral",
                "log % individuos c/Internet",
                "PBI x capita" ,
                "log PBI x capita",
-               "Alineamiento partidario" ,
+               "Prop. identificados c partido" ,
                "N° democracia electoral",
                "N° corrupción en medios",
                "Margen de victoria",
@@ -2690,17 +2698,24 @@ lista_logit <-  list(
   robust_se_cluster_modelo_difusion,
   robust_se_cluster_modelo_sficativas_variantes
 ) 
-
-
 stats_to_export = exportedstats(lista_logit)
+# lista_stats_to_export <- list(
+#   modelo_contingencia,
+#   modelo_sistemico,
+#   modelo_regulatorio,
+#   modelo_difusion,
+#   modelo_sficativas_variantes
+# )
+# 
+# stats_to_export = exportedstats(lista_stats_to_export)
 
 # TABLA 
 texreg::htmlreg(lista_logit,
-                custom.model.names = c("Contingencia",
-                                       "Sistémico",
-                                       "Regulatorio",
-                                       "Difusión",
-                                       "Final")  ,
+                custom.model.names = c("Contingencia |",
+                                       "Sistémico |",
+                                       "Regulatorio |",
+                                       "Difusión |",
+                                       "Final |")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
                                       "log Margen de victoria",
@@ -2714,7 +2729,7 @@ texreg::htmlreg(lista_logit,
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
                                       
-                                      "Alineamiento partidario",
+                                      "Prop. identificados c partido",
                                       "Prop. TV por hogar"		,
                                       "Prop. individuos c internet",
                                       "Prohibición propaganda"	 ,
@@ -2743,19 +2758,23 @@ texreg::htmlreg(lista_logit,
                                   10,
                                   8
                 ),
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                      "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                                      # "R2 Nagelkerke" = stats_to_export$R2),
                 file="anexos/tabla_modelos_logit_robustos.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla XXXX Modelos parciales y final logit robustos
+                 Tabla 17. Modelos parciales y final logit de un nivel, con errores robustos. 
                </div>
-               Se presentan los resultados de la serie de modelos estimados con regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas. 
+               Se presentan los resultados de la serie de modelos estimados con regresión logística con errores estándar robustos agrupados por país. Se trata de especificaciones de un nivel (sin efectos aleatorios). <br>
+               Los coeficientes corresponden a variables estandarizadas. 
              </div>",
                 center = T,
                 bold = 0.1,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 caption.above = T
 )   
  
@@ -2771,11 +2790,11 @@ lista_random <-  list(contingencia_random_intercepts,
 stats_to_export = exportedstats(lista_random)
 
 texreg::htmlreg(lista_random,
-                custom.model.names = c("Contingencia",
-                                       "Sistémico",
-                                       "Regulatorio",
-                                       "Difusión",
-                                       "Final")  ,
+                custom.model.names = c("Contingencia |",
+                                       "Sistémico |",
+                                       "Regulatorio |",
+                                       "Difusión |",
+                                       "Final |")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
                                       "log Margen de victoria",
@@ -2789,7 +2808,7 @@ texreg::htmlreg(lista_random,
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
                                       
-                                      "Alineamiento partidario",
+                                      "Prop. identificados c partido",
                                       "Prop. TV por hogar"		,
                                       "Prop. individuos c internet",
                                       "Prohibición propaganda"	 ,
@@ -2822,19 +2841,23 @@ texreg::htmlreg(lista_random,
                 include.bic = FALSE,
                 include.loglik = FALSE,
                 include.nobs = FALSE,
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                # "R2 Nagelkerke" = stats_to_export$R2),
                 file="anexos/tabla_random_intercepts.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla XXXX Modelos parciales y final multinivel
+                 Tabla 18. Modelos parciales y final logit multinivel. 
                </div>
-               Se presentan los resultados de la serie de modelos estimados con regresión logística con efectos aleatorios por país. Los coeficientes corresponden a variables estandarizadas.  
+               Se presentan los resultados de la serie de modelos estimados con regresión logística con efectos aleatorios por país. La técnica permite diferenciar el efecto de 'pertenencia' a los diferentes países de la muestra. <br>
+               Los coeficientes corresponden a variables estandarizadas.  
              </div>",
                 caption.above = T,
                 center = T,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 bold = 0.1)
 
 
@@ -2845,8 +2868,13 @@ lista_s_outliers <-  list(
   robust_se_cluster_modelo_sficativas_variantes_s_outliers
 ) 
 
+# lista_stats_to_export <- list(
+#   modelo_sficativas_variantes,
+#   modelo_sficativas_variantes_s_outliers
+# ) 
+# 
+# stats_to_export = exportedstats(lista_stats_to_export)
 stats_to_export = exportedstats(lista_s_outliers)
-
 
 texreg::htmlreg(lista_s_outliers,
                 custom.model.names = c("Final muestra completa",
@@ -2865,21 +2893,26 @@ texreg::htmlreg(lista_s_outliers,
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios") ,
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                # "R2 Nagelkerke" = stats_to_export$R2),
                 file="anexos/tabla_anexa_outliers.html",
                 # caption = "Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país",
                 # center = T,
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.III.D.2. Modelo final sobre muestra reducida
+                 Tabla Anexa 6.III.D.2. Modelo final sobre muestra reducida. 
                </div>
-               Se presentan los resultados del modelo final estimado sobre la muestra completa (columna izquierda) y sobre una muestra que excluye las observaciones potencialmente influyentes (columna derecha). Ambos modelos emplean regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas.
+               Se presentan los resultados del modelo final estimado sobre la muestra completa (columna izquierda) y sobre una muestra que excluye las observaciones potencialmente influyentes (columna derecha).  <br>
+               Ambos modelos emplean regresión logística con errores estándar robustos agrupados por país.  <br>
+               Los coeficientes corresponden a variables estandarizadas.
              </div>",
                 caption.above = TRUE,
                 center = T,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 bold = 0.1)
 
 # kable(tabla, format = "latex", align = "c") %>%
@@ -2893,6 +2926,15 @@ lista_variaciones_final <-  list(
   robust_se_cluster_modelo_final_control_sinaccesogratuito,
   robust_se_cluster_modelo_sficativas)
 
+# lista_stats_to_export <- list(
+#   modelo_sficativas_variantes,
+#   modelo_all,
+#   modelo_final_control_conalienamiento,
+#   modelo_final_control_sinaccesogratuito,
+#   modelo_sficativas
+# ) 
+# 
+# stats_to_export = exportedstats(lista_stats_to_export)
 stats_to_export = exportedstats(lista_variaciones_final)
 
 
@@ -2918,7 +2960,7 @@ texreg::htmlreg(lista_variaciones_final,
                                       "log PBI per cápita",
                                       "N° democracia electoral",
                                       "N° corrupción de medios",
-                                      "Alineamiento partidario",
+                                      "Prop. identificados c partido",
                                       "Prop. TV por hogar",
                                        "Margen de victoria",
                                        "NEC",
@@ -2949,25 +2991,28 @@ texreg::htmlreg(lista_variaciones_final,
                                   
                                   11,
                                   19),
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                # "R2 Nagelkerke" = stats_to_export$R2),
                 file="anexos/tabla_anexa_variantesfinal.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.IV.1 Variaciones del modelo final
+                 Tabla Anexa 6.IV.1 Variaciones del modelo final. 
                </div>
-                Se presentan los resultados de distintas variaciones de la especificación final preferida (primera columna). 
-                En orden: 
-                un modelo completo, que incluye todos los predictores; 
-                uno que incorpora la medida de alineamiento; 
-                otro que excluye la variable de acceso gratuito a los medios en campaña; 
-                y un modelo en el que todas las variables ingresan en su escala original. 
-                Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país. 
-                Los coeficientes corresponden a variables estandarizadas.          
+                Se presentan los resultados de distintas variaciones de la especificación final preferida (primera columna). <br>
+                En orden:  <br>
+                un modelo completo, que incluye todos los predictores; <br>
+                uno que incorpora la medida de alineamiento; <br> 
+                otro que excluye la variable de acceso gratuito a los medios en campaña; <br>
+                y un modelo en el que todas las variables ingresan en su escala original. <br> 
+                Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país. <br>
+                Los coeficientes corresponden a variables estandarizadas.  <br>          
                 </div>",
                 caption.above = TRUE,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 center = T,
                 bold = 0.1)
 
@@ -2979,6 +3024,14 @@ lista_variaciones_modernizacion <-  list(
   robust_se_cluster_modelo_final_control_convolatilidad,
   robust_se_cluster_modelo_final_control_consatisfaccion)
 
+# lista_stats_to_export <- list(
+#   modelo_sficativas_variantes,
+#   modelo_sistemico_control_convolatilidad,
+#   modelo_final_control_convolatilidad,
+#   modelo_final_control_consatisfaccion
+# ) 
+# 
+# stats_to_export = exportedstats(lista_stats_to_export)
 stats_to_export = exportedstats( lista_variaciones_modernizacion )
 
 texreg::htmlreg(lista_variaciones_modernizacion,
@@ -3002,7 +3055,7 @@ texreg::htmlreg(lista_variaciones_modernizacion,
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
-                                      "Alineamiento partidario",
+                                      "Prop. identificados c partido",
                                       "Prop. TV por hogar",
                                       "Volatilidad",
                                       "Satisfaccion"
@@ -3024,24 +3077,27 @@ texreg::htmlreg(lista_variaciones_modernizacion,
                                   11,
                                   12,
                                   13),
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                # "R2 Nagelkerke" = stats_to_export$R2),
                 file="anexos/tabla_anexa_variantesmodernizacion.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
                  Tabla Anexa 6.IV.2. Variaciones del modelo final – operacionalización de modernización
                </div>
-              La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. 
-              Las restantes presentan, en orden: 
-              una variación del modelo sistémico que incorpora un indicador de volatilidad; 
-              una variación del modelo final con la misma medida; 
-              y una variación del modelo final que incluye un indicador de satisfacción con la democracia. 
-              Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país. 
-              Los coeficientes corresponden a variables estandarizadas. 
+              La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. <br>
+              Las restantes presentan, en orden: <br>
+              una variación del modelo sistémico que incorpora un indicador de volatilidad; <br>
+              una variación del modelo final con la misma medida; <br>
+              y una variación del modelo final que incluye un indicador de satisfacción con la democracia. <br>
+              Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país. <br>
+              Los coeficientes corresponden a variables estandarizadas. <br>
              </div>",
                 caption.above = TRUE,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 center = T,
                 bold = 0.1)
 
@@ -3105,6 +3161,15 @@ lista_variaciones_tradicion <-  list(
   robust_se_cluster_modelo_final_control_lncumsum,
   final_random_intercepts_control_lncumsum) 
 
+# lista_stats_to_export <- list(
+#   modelo_sficativas_variantes,
+#   modelo_final_control_dicodebatespasteleeccion,
+#   final_random_intercepts_control_dicodebatespasteleeccion,
+#   modelo_final_control_lncumsum,
+#   modelo_final_random_intercepts_control_lncumsum
+# ) 
+# 
+# stats_to_export = exportedstats(lista_stats_to_export)
 stats_to_export = exportedstats(lista_variaciones_tradicion )
 
 texreg::htmlreg(lista_variaciones_tradicion,
@@ -3150,24 +3215,27 @@ texreg::htmlreg(lista_variaciones_tradicion,
                 include.bic = FALSE,
                 include.loglik = FALSE,
                 include.nobs = FALSE,
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                # "R2 Nagelkerke" = stats_to_export$R2),
                 file="anexos/tabla_anexa_cumsum.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.IV.3. Variaciones del modelo final – operacionalización de los debates antecedentes
+                 Tabla Anexa 6.IV.3. Variaciones del modelo final – operacionalización de los debates antecedentes. 
                </div>
-              La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. 
-              En este modelo, la tradición se mide mediante la suma acumulada de elecciones con debates antecedentes. 
-              Las columnas restantes presentan, en orden: 
-              una variante que sustituye dicha medida por un indicador dicotómico de si hubo debates en la elección inmediata anterior (estimado con dos técnicas alternativas), 
-              y una variante que transforma la suma acumulada en logaritmo (también estimada con dos técnicas alternativas). 
-              La referencia 'logit' alude a la regresión logística con errores estándar robustos agrupados por país, mientras que 'multinivel' refiere a una regresión logística con efectos aleatorios por país. 
-              Los coeficientes corresponden a variables estandarizadas.  
+              La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. <br>
+              En este modelo, la tradición se mide mediante la suma acumulada de elecciones con debates antecedentes. <br>
+              Las columnas restantes presentan, en orden: <br>
+              una variante que sustituye dicha medida por un indicador dicotómico de si hubo debates en la elección inmediata anterior (estimado con dos técnicas alternativas), <br>
+              y una variante que transforma la suma acumulada en logaritmo (también estimada con dos técnicas alternativas). <br>
+              La referencia 'logit' alude a la regresión logística con errores estándar robustos agrupados por país, mientras que 'multinivel' refiere a una regresión logística con efectos aleatorios por país. <br>
+              Los coeficientes corresponden a variables estandarizadas. <br> 
              </div>",,
                 caption.above = TRUE,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 center = T,
                 bold = 0.1)
 
@@ -3223,8 +3291,14 @@ lista_regulacion <-  list(
   robust_se_cluster_modelo_sficativas_variantes,
   robust_se_cluster_modelo_final_control_regulacionalternativa2,
   robust_se_cluster_modelo_final_control_regulacionalternativa3) 
-
 stats_to_export = exportedstats( lista_regulacion )
+
+# lista_stats_to_export <- list(
+#   modelo_sficativas_variantes,
+#   modelo_final_control_regulacionalternativa2,
+#   modelo_final_control_regulacionalternativa3
+# ) 
+# stats_to_export = exportedstats( lista_stats_to_export )
 
 texreg::htmlreg(lista_regulacion,
                 custom.model.names = c("Final logit",
@@ -3266,22 +3340,25 @@ texreg::htmlreg(lista_regulacion,
                                   13
                 ),
                 file="anexos/tabla_anexa_regulacion.html",
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                # "R2 Nagelkerke" = stats_to_export$R2),
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.IV.4. Variaciones del modelo final – operacionalización de regulación
+                 Tabla Anexa 6.IV.4. Variaciones del modelo final – operacionalización de regulación. 
                </div>
-             La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. 
-             En este modelo, la existencia de regulaciones específicamente referidas a los debates se mide de manera dicotómica. 
-             Las columnas restantes presentan, en orden: 
-             una variante que sustituye dicha medida por dos categorías de regulación —'obligaciones' versus otras formas regulatorias (normalmente, el reconocimiento de garantías)—, con la ausencia de regulaciones como categoría de base; 
-             y una variante en la que el indicador dicotómico se reemplaza por uno ordinal que aprecia el grado de exigencia de la legislación vigente. 
-             Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país. 
-             Los coeficientes corresponden a variables estandarizadas.
+             La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. <br>
+             En este modelo, la existencia de regulaciones específicamente referidas a los debates se mide de manera dicotómica. <br>
+             Las columnas restantes presentan, en orden: <br>
+             una variante que sustituye dicha medida por dos categorías de regulación —'obligaciones' versus otras formas regulatorias (normalmente, el reconocimiento de garantías)—, con la ausencia de regulaciones como categoría de base; <br>
+             y una variante en la que el indicador dicotómico se reemplaza por uno ordinal que aprecia el grado de exigencia de la legislación vigente. <br>
+             Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país. <br>
+             Los coeficientes corresponden a variables estandarizadas.  <br>
              </div>",
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 caption.above = TRUE,                
                 center = T,
                 bold = 0.1)
@@ -3290,8 +3367,12 @@ texreg::htmlreg(lista_regulacion,
 lista_interactivo <-  list(
   robust_se_cluster_modelo_sficativas_variantes,
   robust_se_cluster_modelo_sficativas_variantes_interactivo) 
-
 stats_to_export = exportedstats( lista_interactivo )
+
+# lista_stats_to_export <- list(
+#   modelo_sficativas_variantes,
+#   modelo_sficativas_variantes_interactivo)
+#stats_to_export = exportedstats( lista_stats_to_export )
 
 texreg::htmlreg(lista_interactivo,
                 custom.model.names = c("Final",
@@ -3312,22 +3393,25 @@ texreg::htmlreg(lista_interactivo,
                                       "N° Corrupción de medios",
                                       "Regulación * log NEC"
                 ),
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones (elecciones)" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik ), #,
+                # "R2 Nagelkerke" = stats_to_export$R2),
                 file="anexos/tabla_anexa_interactivo.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.IV.5. Modelo final con término interactivo
+                 Tabla Anexa 6.IV.5. Modelo final con término interactivo. 
                </div>
-              La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. 
-              La columna derecha presenta los resultados de un modelo que incorpora un término interactivo entre el NEC y la existencia de regulaciones. 
-              Ambos modelos emplean regresión logística con errores estándar robustos agrupados por país. 
-              Los coeficientes corresponden a variables estandarizadas.
+              La primera columna reporta la especificación final preferida, a fin de facilitar la comparación. <br> 
+              La columna derecha presenta los resultados de un modelo que incorpora un término interactivo entre el NEC y la existencia de regulaciones. <br> 
+              Ambos modelos emplean regresión logística con errores estándar robustos agrupados por país. <br> 
+              Los coeficientes corresponden a variables estandarizadas. <br>
              </div>",
                 caption.above = TRUE,               
                 center = T,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 bold = 0.1)
 
 
@@ -3545,7 +3629,7 @@ plot_interpretacion <- ggplot(predicted_probs) +
                   fill = as.factor(regulaciondico)), alpha = 0.3) +
   theme_classic() +
   labs(
-    title = "Probabilidad predicha de ocurrencia de un debate presidencial",
+    title = "Figura 5. Probabilidad predicha de ocurrencia de un debate presidencial",
     subtitle = "Para distintos valores dentro del rango observado de NEC, con y sin regulación",
     caption = "Elaboración propia. 
     Intervalos de confianza ploteados al 90%.
@@ -3656,8 +3740,9 @@ plot_interpretacion4 <- ggplot(data_to_predict4) +
   facet_wrap(~as.factor(escenario)) +
   theme_classic() +
   labs(
-    title = "Probabilidad predicha de ocurrencia de un debate presidencial",
-    subtitle = "Para distintos valores dentro del rango observado de NEC, y distintos escenarios",
+    title = "Figura 6. Probabilidad predicha de ocurrencia de un debate presidencial",
+    subtitle = "Para distintos valores dentro del rango observado de NEC, 
+    bajo distintos escenarios en términos de existencia de regulaciones sobre debates y postulación del Presidente a la reelección",
     caption = "Elaboración propia. 
     Intervalos de confianza ploteados al 90%.
     Escenarios predichos cuando el resto de las variables se encuentra:
@@ -3773,7 +3858,7 @@ plot_margins <- ggplot(marginals_df) +
   # geom_hline(aes(yintercept = 0.25), colour = "red2", linetype = 2, alpha = 0.1) +
   coord_flip() +
   scale_y_continuous(breaks = seq(-1,1,0.25)) +
-  labs(title = "Efectos marginales promedio",
+  labs(title = "Figura 4. Efectos marginales promedio",
        subtitle = "Modelo final",
        x = "Predictores", 
        y = "Efectos marginales promedio",
@@ -4796,9 +4881,9 @@ stats_to_export = exportedstats(modelos_capitulo)
 texreg::htmlreg(modelos_capitulo,
                 custom.model.names = c(#"Niv. individual",
                                        #"Niv. debate",
-                                       "Todas las variables",
-                                       "Todas las variables multinivel",
-                                       "Excluyendo variables",
+                                       "Todas las variables |",
+                                       "Todas las variables multinivel |",
+                                       "Excluyendo variables |",
                                        "Excluyendo variables multinivel")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
@@ -4825,19 +4910,29 @@ texreg::htmlreg(modelos_capitulo,
                 include.bic = FALSE,
                 include.loglik = FALSE,
                 include.nobs = FALSE,
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik#,
+                                       #"R2 Nagelkerke" = stats_to_export$R2
+                                       ),
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla XXXX Estimación de la probabilidad de que un candidato concurra a un debate
+                 Tabla 22. Estimación de la probabilidad de que un candidato concurra a un debate. 
                </div>
-               Se reportan los resultados de cuatro modelos que estiman la probabilidad de que un candidato concurra a debatir. Los dos primeros incluyen todos los predictores; los dos siguientes excluyen los indicadores provenientes de la base de datos V-Dem, que presentan numerosos faltantes. Para cada especificación se emplean dos técnicas de estimación alternativas: regresión logística con errores estándar robustos agrupados por país (columnas 1 y 3) y regresión logística multinivel con efectos aleatorios por país (columnas 2 y 4). Los coeficientes corresponden a variables estandarizadas.
+               Se reportan los resultados de cuatro modelos que estiman la probabilidad de que un candidato concurra a debatir. <br>
+               Los dos primeros incluyen todos los predictores; los dos siguientes excluyen los indicadores provenientes de la base de datos V-Dem, que presentan numerosos faltantes. <br>
+               Para cada especificación se emplean dos técnicas de estimación alternativas: regresión logística con errores estándar robustos agrupados por país (columnas 1 y 3) y regresión logística multinivel con efectos aleatorios por país (columnas 2 y 4).  <br>
+               Los coeficientes corresponden a variables estandarizadas.
              </div>",
+
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 center = T,
+                dcolumn = TRUE,
                 bold = 0.1,
-                caption.above = T
+                caption.above = T#,
+                #column.sep = "|"
 )   
 
 modelos_anexo <-  list(
@@ -4887,19 +4982,27 @@ custom.coef.names = c("(Intercepto)",
                 include.bic = FALSE,
                 include.loglik = FALSE,
                 include.nobs = FALSE,
-custom.gof.rows = list("AIC" = stats_to_export$aic,
+custom.gof.rows = list("N observaciones" = stats_to_export$n_obs,
+                       "AIC" = stats_to_export$aic,
                        "BIC" = stats_to_export$bic,
-                       "Log-verosimilitud" = stats_to_export$loglik,
-                       "n observaciones" = stats_to_export$n_obs),
+                       "Log-verosimilitud" = stats_to_export$loglik#,
+                      # "R2 Nagelkerke" = stats_to_export$R2
+                       ),
 caption = "<div style='text-align:left;'>
                 <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.V.C.2.1 Estimación de la probabilidad de asistencia de los candidatos a los debates, con variaciones en la operacionalización del tipo de organizador
+                 Tabla Anexa 6.V.C.2.1 Estimación de la probabilidad de asistencia de los candidatos a los debates, con variaciones en la operacionalización del tipo de organizador. 
                </div>
-               Se reportan los resultados de cuatro modelos que estiman la probabilidad de que un candidato concurra a debatir. Los dos primeros incluyen todos los predictores; los dos siguientes excluyen los indicadores provenientes de la base de datos V-Dem, que presentan numerosos faltantes. Para cada especificación se emplean dos técnicas de estimación alternativas: regresión logística con errores estándar robustos agrupados por país (columnas 1 y 3) y regresión logística multinivel con efectos aleatorios por país (columnas 2 y 4). A diferencia de los modelos presentados en el Capítulo 6, los de esta tabla reorganizan las categorías del organizador del debate: se agrupan el Estado y los medios públicos en una única categoría, mientras que los medios privados se consideran por separado. Los coeficientes corresponden a variables estandarizadas.
+               Se reportan los resultados de cuatro modelos que estiman la probabilidad de que un candidato concurra a debatir. <br>
+               Los dos primeros incluyen todos los predictores; los dos siguientes excluyen los indicadores provenientes de la base de datos V-Dem, que presentan numerosos faltantes. <br>
+               Para cada especificación se emplean dos técnicas de estimación alternativas: regresión logística con errores estándar robustos agrupados por país (columnas 1 y 3) y regresión logística multinivel con efectos aleatorios por país (columnas 2 y 4). <br>
+               A diferencia de los modelos presentados en el Capítulo 6, los de esta tabla reorganizan las categorías del organizador del debate: se agrupan el Estado y los medios públicos en una única categoría, mientras que los medios privados se consideran por separado. <br>
+               Los coeficientes corresponden a variables estandarizadas.
              </div>",
 center = T,
 bold = 0.1,
-caption.above = T
+caption.above = T,
+custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
 )   
 
 
@@ -4936,17 +5039,23 @@ texreg::htmlreg(modelo_control,
                 include.bic = FALSE,
                 include.loglik = FALSE,
                 include.nobs = FALSE,
-                custom.gof.rows = list("AIC" = stats_to_export$aic,
+                custom.gof.rows = list("N observaciones" = stats_to_export$n_obs,
+                                       "AIC" = stats_to_export$aic,
                                        "BIC" = stats_to_export$bic,
-                                       "Log-verosimilitud" = stats_to_export$loglik,
-                                       "n observaciones" = stats_to_export$n_obs),
+                                       "Log-verosimilitud" = stats_to_export$loglik#,
+                                       # "R2 Nagelkerke" = stats_to_export$R2
+                ),
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.V.C.1.2 Estimación de la probabilidad de asistencia de los candidatos a los debates, sin debates antecedentes
+                 Tabla Anexa 6.V.C.1.2 Estimación de la probabilidad de asistencia de los candidatos a los debates, sin debates antecedentes. 
                </div>
-                Se reportan los resultados de un modelo que estima la probabilidad de que un candidato concurra a debatir, en el cual se excluye la suma acumulada de elecciones con debates antecedentes, debido a que presenta valores de VIF problemáticos. Se emplea una regresión logística con errores estándar robustos agrupados por país. Los coeficientes corresponden a variables estandarizadas.      
+                Se reportan los resultados de un modelo que estima la probabilidad de que un candidato concurra a debatir, en el cual se excluye la suma acumulada de elecciones con debates antecedentes, debido a que presenta valores de VIF problemáticos. <br>
+                Se emplea regresión logística con errores estándar robustos agrupados por país. <br>
+                Los coeficientes corresponden a variables estandarizadas.      
                 </div>",
                 center = T,
                 bold = 0.1,
+                custom.note = "Errores estándar entre paréntesis. <br>
+                Los asteriscos indican distintos niveles de significancia: %stars",
                 caption.above = T
 )   

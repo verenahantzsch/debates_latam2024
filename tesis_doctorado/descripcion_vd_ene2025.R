@@ -210,7 +210,8 @@ plot_elecciones_conysindebates_t <- base_plot_elecciones_conysindebates_t %>%
                     values = c("green", "grey10"),
                     name = "") +
   scale_x_continuous(breaks = seq(1960,2025,5)) +
-  labs(title = "Cantidad de elecciones presidenciales con y sin debates",
+  scale_y_continuous(breaks = seq(0,10,2)) +
+  labs(title = "Figura 1. Cantidad de elecciones presidenciales con y sin debates",
          subtitle = "En las democracias de América Latina, 1960-2023",
        y = "Cantidad de elecciones",
        x = "Año",
@@ -255,7 +256,8 @@ plot_elecciones_conysindebates_e <- base_plot_elecciones_conysindebates_e %>% # 
                     labels =c("Elecciones con debates", "Elecciones sin debates"),
                     values = c("green", "grey10"),
                     name = "") +
-  labs(title = "Cantidad de elecciones presidenciales con y sin debates",
+  scale_y_continuous(breaks = seq(0,24,2)) +
+  labs(title = "Figura 2. Cantidad de elecciones presidenciales con y sin debates",
        subtitle = "En las democracias de América Latina, por páis (1960-2023)",
        y = "Cantidad de elecciones",
        x = "País",

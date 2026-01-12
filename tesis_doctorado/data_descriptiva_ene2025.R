@@ -177,7 +177,7 @@ nec_crica <- democracias %>%
   ungroup()
 
 ## desalineamiento (% personas que YES se identifican con partido). MODERATE NEGATIVE COR + SFICATIVA  #######
-nombre_variable <- "Alineamiento partidario"
+nombre_variable <- "Prop. identificados c partido"
 
 variable_independiente <- democracias$alineamiento
 standardized_variable_independiente <- (variable_independiente - mean(variable_independiente, na.rm = TRUE)) / sd(variable_independiente, na.rm = TRUE)
@@ -1468,7 +1468,7 @@ data_descriptiva_bivariada %>% write.csv("anexos/data_descriptiva_bivariada_elec
 ## histogramas x variable #####
 
 custom_labels <- as_labeller(c(accesogratuito = "Acceso gratuito a TV",
-                  alineamiento = "Alineamiento partidario",
+                  alineamiento = "Prop. identificados c partido",
                   avgpropdebatesregionxciclo = "Prop. elecciones c/debates región",
                   cumsum_pastciclos = "Cant. elecciones pasadas c/debates",
                   democraciavdemelectoralcomp = "N. democracia electoral (VDEM)",
@@ -1548,7 +1548,7 @@ labels <- tibble(breaks = c("accesogratuito",
               "dico_hubo_debates"),
               label = c( 
               "Acceso gratuito a TV",
-                         "Alineamiento partidario",
+                         "Prop. identificados c partido",
                          "Prop. elecciones c/debates región",
                          "Cant. elecciones pasadas c/debates",
                          "N. democracia electoral (V-DEM)",
@@ -1648,7 +1648,7 @@ for (i in colnames(data_to_plot_countrynames)) {
 # 
 # data_to_plot <- data_to_plot %>% 
 #   dplyr::rename( "Acceso gratuito a TV" = accesogratuito,
-#                  "Alineamiento partidario" = alineamiento,
+#                  "Prop. identificados c partido" = alineamiento,
 #                 "Prop. elecciones c/debates región" = avgpropdebatesregionxciclo ,
 #                 "Cant. elecciones pasadas c/debates" = cumsum_pastciclos ,
 #                 "N° democracia electoral" = democraciavdemelectoralcomp ,
