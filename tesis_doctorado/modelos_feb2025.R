@@ -6,6 +6,8 @@
 library(tidyverse)
 library(sandwich) # para clusterizar errores estandares
 library(lmtest) # para clusterizar errores estandares
+library(lme4)
+library(patchwork)
 
 # seed #################
 set.seed(111)
@@ -1417,7 +1419,7 @@ data_modelo_a_probar[c(20,61,77,127, 162),]
 # observaciones nr 90, 116 para cook , 77 y 78 para hat en modelo sficativas 
 # observaciones nr 90, 116 para cook , 7 y 177 para hat en modelo sficativas, aunque tambien vale mencionar que se reducen las escalas del problema 
 
-##### dfbetas ####
+##### dfbetas nivel indiv ####
 
 #Para cada observación, podemos ver la diferencia en la estimación del coeficiente para la intersección, la variable  disp y la variable  hp que ocurre cuando eliminamos esa observación en particular.
 #Normalmente consideramos que una observación es muy influyente en la estimación de un coeficiente dado si tiene un valor DBETAS mayor que un umbral de 2/√ n, donde  n es el número de observaciones.
@@ -1427,6 +1429,7 @@ umbral <- 2 / sqrt(nrow(data_modelo_a_probar))
 #par(mfrow=c(2,1))
 
 dfbetas <- as.data.frame(dfbetas(modelo_a_probar))
+dfbetas$obsid <- data_modelo_a_probar$obsid
 #colnames(dfbetas)
 labels <- tibble( indicador = colnames(dfbetas),
                   label = c("Intercepto",
@@ -1441,19 +1444,26 @@ labels <- tibble( indicador = colnames(dfbetas),
                             "Cant. elecc. pasadas c debates" ,
                             "log PBI per cápita" ,
                             "N° Democracia electoral",
-                            "N° Corrupción en medios" )  )
+                            "N° Corrupción en medios",
+                            "Obsid")  )
 
 
-par(mfrow = c(3, 4), mar = c(2, 4, 2, 1))
+jpeg("images/plot_indivdfbetas_panels.jpg", width = 1200, height = 900, quality = 90)
+
+par(
+  mfrow = c(3, 4),
+  mar = c(2, 4, 2, 1),
+  oma = c(9, 2, 3, 1)  # espacio para caption, y título general
+)
 # x defecto par(mar = c(1, 0.8, 0.8, 0.4) + 0.02)
 #c(abajo, izquierda, arriba, derecha)
 #i <- 1
-for (i in seq(2, ncol(dfbetas))) { # Iterar sobre columnas de dfbetas
+for (i in seq(2, ncol(dfbetas)-1)) { # Iterar sobre columnas de dfbetas
   
   plot(dfbetas[[i]],   
        main = "", 
        xlab = "", ylab = "")
-  mtext(paste("6.III.D." , i-1," ", labels$label[i], sep = ""), # Agregar el nombre de la variable como título
+  mtext(paste("6.III.D.1." , i-1," ", labels$label[i], sep = ""), # Agregar el nombre de la variable como título
         side = 3, line = 0.5, adj = 0, cex = 0.7, font = 1)
   abline(h = umbral, lty = 2, col = "gray30")
   abline(h = -umbral, lty = 2, col = "gray30")
@@ -1464,13 +1474,95 @@ for (i in seq(2, ncol(dfbetas))) { # Iterar sobre columnas de dfbetas
 }
 
 #side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
-#mtext("Gráfico Anexo 6.III.D", font = 2, side = 3, cex = 1.2, line = -1, outer = TRUE )
-mtext("DFBETAs", side = 2, line = -2, cex = 0.8, outer = TRUE )
-# mtext("Elaboración propia. 
-#       El eje horizontal representa el índice de cada observación. 
-#       Cada panel (6.III.D.1 a 6.III.C.12) grafica los DFBETAs para cada uno de los coeficientes del modelo. ", 
-#       side = 1, line = -1, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
-#  
+# TÍTULO GENERAL
+mtext("Gráfico Anexo 6.III.D.1 Panel de DFBETAs – Nivel de observación", 
+      side = 3, outer = TRUE, cex = 1.85, font = 2)
+
+# ETIQUETA EJE Y
+mtext("DFBETA", side = 2, line = 0.5, outer = TRUE, cex = 0.8)
+
+# CAPTION
+mtext(
+  "Cada panel (6.III.D.1.1 a 6.III.D.1.12) presenta los DFBETAs a nivel de observación para cada uno de los coeficientes del modelo.
+Las líneas punteadas representan el umbral máximo y mínimo de 2/√n utilizado para la detección de observaciones influyentes.
+Si bien algunas observaciones superan este umbral, no se identifican patrones sistemáticos, y ninguna excede el umbral más laxo de ∣1∣, 
+lo que sugiere una influencia limitada de observaciones individuales sobre las estimaciones.",
+  side = 1, line = 7.5, outer = TRUE, adj = 1, cex = 0.85, font = 3
+)
+
+dev.off()  
+
+
+# Grafico boxplot
+jpeg("images/plot_indivdfbetas.jpg", width = 800, height = 600, quality = 90)
+
+par(
+  mfrow = c(1, 1),
+  mar = c(5, 4, 3, 3),
+  oma = c(9, 0, 0, 0)
+)
+
+# Renombrar coeficientes
+colnames(dfbetas)[1:13] <- c(
+  "(Intercepto)",
+  "log Margen de victoria",
+  "log NEC",
+  "Votos oficialista",
+  "Presidente a reelección",
+  "Prop. individuos c internet",
+  "Acceso gratuito",
+  "Prop. debates en región",
+  "Debates regulados",
+  "Cant. elecc. pasadas c debates",
+  "log PBI per cápita",
+  "N° Democracia electoral",
+  "N° Corrupción de medios"
+)
+
+umbral <- 2 / sqrt(nrow(dfbetas))
+
+# Boxplot SOLO de coeficientes
+boxplot(
+  dfbetas[ , -ncol(dfbetas)],
+  las = 2,
+  main = "Gráfico Anexo 6.III.D.2 Distribución de DFBETAs – Nivel de observación",
+  ylab = "DFBETA",
+  cex.axis = 0.7,
+  cex.main = 1.5
+)
+
+abline(h = c(-umbral, umbral), lty = 2, col = "red3")
+
+# Detectar mas influyentes
+mat <- dfbetas[ , -ncol(dfbetas)]
+
+idx <- do.call(rbind, lapply(seq_len(ncol(mat)), function(j) {
+  i <- which.max(abs(mat[, j]))
+  cbind(row = i, col = j)} )) 
+
+
+# Etiquetas CORRECTAS
+text(
+  x = idx[, "col"],
+  y = dfbetas[ , -ncol(dfbetas)][idx] ,
+  labels = dfbetas$obsid[idx[, "row"]],
+  pos = 3,
+  cex = 0.8,
+  col = "blue4"
+)
+
+# Caption
+mtext(
+  "Elaboración propia.
+Distribución de los DFBETAs por observación (elección) para cada uno de los coeficientes fijos. 
+Las líneas punteadas indican el umbral de 2/√n utilizado para la detección de casos influyentes. 
+Ninguna supera el umbral alternativo de |1|. 
+Se etiquetan las observaciones con valores máximos para cada coeficiente. ",
+  side = 1, line = 7.5, cex = 0.85, outer = TRUE, adj = 1, font = 3
+)
+
+dev.off()
+
 #### comentario ####
 
 # de cook:
@@ -1485,6 +1577,126 @@ mtext("DFBETAs", side = 2, line = -2, cex = 0.8, outer = TRUE )
 
 # algunos cambios despues de cambio en imputacion de propindivinternet
 # colombia 1998, el salvador 2014, argentina 2003, repdom 2020 repdom 2016, nicaragua 1990, peru 1990 2
+
+### Controles - Clusters influyentes / solo para multinivel ######
+
+infl <- influence.ME::influence(final_random_intercepts, group = "cat_pais")
+
+##### Cook's distance #########
+cd <- cooks.distance(infl)
+J <- nrow(cd) 
+umbralcd <- 4 / J
+
+jpeg("images/plot_clustercook.jpg", width = 800, height = 600, quality = 90)
+
+par(mfrow = c(1, 1),
+    mar = c(4, 4, 3, 3),   # márgenes internos
+    oma = c(7, 0, 0, 0) ) # (bottom, left, top, right))
+
+plot(cd,
+     ylab = "Distancia de Cook",
+     xlab = "País (clúster)",
+     main = "Distancias de Cook - Nivel de clústeres")
+abline(h = umbralcd, lty = 2, col = "red4")
+
+# Etiquetar SOLO los influyentes
+idx <- which(cd > umbralcd)
+
+text(idx,
+     cd[idx],
+     labels = rownames(cd)[idx],
+     pos = 2,
+     cex = 0.8,
+     col = "blue4")
+
+#CAPTION
+mtext("
+El gráfico muestra la influencia global de cada clúster (país) sobre los parámetros del modelo.
+Si bien Chile y Uruguay superan levemente el umbral de consenso (4/J), su influencia es moderada (D < 0.5). 
+Un análisis de sensibilidad indica que la exclusión de estos clústeres no altera la dirección ni la significancia de los efectos principales, 
+      lo que sugiere la robustez de los hallazgos.", 
+      side = 1, line = 5, cex = 0.75, outer = TRUE, adj = 1, font = 3 )
+#Figure X. Cluster-level DFBETAs for the final multilevel logistic regression model.
+
+dev.off()
+
+clusters_influyentes <- rownames(cd)[cd > umbralcd]
+
+data_sin_infl <-  data_modelo_sficativas %>% 
+  subset(!cat_pais %in% clusters_influyentes)
+
+
+control_sin_infl <- lme4::glmer(
+  formula(final_random_intercepts),
+  data = data_sin_infl,
+  family = binomial,
+  control = glmerControl(optimizer = "bobyqa")
+)
+
+summary(control_sin_infl)
+
+##### DFBETAs por cluster #####
+dfb <- dfbetas(infl)
+umbral <- 1
+# Resumen rápido
+summary(dfb)
+
+# Grafico
+jpeg("images/plot_clusterdfbetas.jpg", width = 800, height = 600, quality = 90)
+
+par(mfrow = c(1, 1),
+    mar = c(5, 4, 3, 3),   # márgenes internos
+    oma = c(9, 0, 0, 0) ) # (bottom, left, top, right))
+
+colnames(dfb) <- c(
+  "(Intercepto)",
+  "log Margen de victoria",
+  "log NEC",
+  "Votos oficialista",
+  "Presidente a reelección",
+  "Prop. individuos c internet",
+  "Acceso gratuito",
+  "Prop. debates en región",
+  "Debates regulados",
+  "Cant. elecc. pasadas c debates",
+  "log PBI per cápita",
+  "N° Democracia electoral",
+  "N° Corrupción de medios"
+)
+
+
+boxplot(dfb,
+        las = 2,
+        main = "Gráfico Anexo 6.III.D.3 DFBETAs - Nivel de clúster",
+        ylab = "DFBETA",
+        cex.main = 1.5,
+        cex.axis = 0.7  ) # ↓ achica labels eje x)
+abline(h = c(-1, 1), lty = 2, col = "red3")
+
+
+# Etiquetar SOLO por debajo/arribaumbral
+idx <- which(abs(dfb) > umbral, arr.ind = TRUE)
+
+text(
+  x = idx[, "col"],           # coeficiente
+  y = dfb[idx] + rnorm(nrow(idx), 0, 0.05),                 # valor DFBETA
+  labels = rownames(dfb)[idx[, "row"]],  # país
+  pos = 3,
+  cex = 0.8,
+  col = "blue4"
+)
+
+#CAPTION
+mtext("
+Distribución de los DFBETAs por clúster (país) para cada uno de los coeficientes fijos.
+Las líneas punteadas indican el umbral de∣1∣ utilizado para la detección de casos influyentes.
+La alta concentración de valores cercanos a cero respalda la robustez de la estimación, 
+junto con el hecho de que solo el 1,5 % de los pares país–parámetro supera este límite (Argentina, Chile, Ecuador, Perú y Uruguay en algunos predictores).
+La dirección y la significancia de los efectos principales se mantienen estables entre clústeres.
+ ", 
+      side = 1, line = 8.5, cex = 0.75, outer = TRUE, adj = 1, font = 3 )
+#Figure X. Cluster-level DFBETAs for the final multilevel logistic regression model.
+dev.off()
 
 ### Control de multicolinealidad ####
 ##### correlaciones (al menos <.5, conservador <2.5) ####
@@ -1809,13 +2021,7 @@ all_vifs2 <- all_vifs %>%
 
 all_vifs2 %>% write_csv("anexos/vifs_values.csv")
 
-### Controles - Missing data PENDIENTE ####
-# jack knife
-# imputacion: 
-# reemp x valor promedio, 
-# reemp x mediana, 
-# mcmc multiple imputation approach -> simulacion + iteraciones
-# comparar modelos 
+
 ### Controles - Fit, Overall significance y comparaciones ####
 #### test de Wald ####
 
@@ -2036,7 +2242,7 @@ stats_modelo %>% write_csv("anexos/stats_modelo.csv")
 
 # idem: el desempeño de la variante es ligeramente peor
 
-### Controles COMPARACION SIMPLE MULTI ######
+### Controles - Comparacion simple / multi ######
 
 ## MODELO NULO ##
  
@@ -2170,7 +2376,15 @@ all_stats_multisimple <- all_stats_multisimple %>%
 
 all_stats_multisimple %>% write_csv("anexos/all_stats_multisimple.csv")
 
-## OTROS MODELOS control ####
+### Controles - Missing data PENDIENTE ####
+# jack knife
+# imputacion: 
+# reemp x valor promedio, 
+# reemp x mediana, 
+# mcmc multiple imputation approach -> simulacion + iteraciones
+# comparar modelos 
+
+### Controles- Especificaciones alternativas ####
 
 #### vuelvo a la data escalada estandarizada #####
 democracias <- democracias_reservaescalada 
@@ -2976,9 +3190,9 @@ texreg::htmlreg(lista_s_outliers,
                 # center = T,
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla Anexa 6.III.D.2. Modelo final sobre muestra reducida. 
+                 Tabla Anexa 6.III.D.2. Modelo Final sobre muestra reducida. 
                </div>
-               Se presentan los resultados del modelo final estimado sobre la muestra completa (columna izquierda) y sobre una muestra que excluye las observaciones potencialmente influyentes (columna derecha).  <br>
+               Se presentan los resultados del modelo Final estimado sobre la muestra completa (columna izquierda) y sobre una muestra que excluye las observaciones potencialmente influyentes (columna derecha).  <br>
                Ambos modelos emplean regresión logística con errores estándar robustos agrupados por país.  <br>
                Los coeficientes corresponden a variables estandarizadas.
              </div>",
@@ -3085,7 +3299,7 @@ texreg::htmlreg(lista_variaciones_final,
                 file="anexos/tabla_anexa_variantesfinal.html",
                 caption = "<div style='text-align:left;'>
   <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-    Tabla Anexa 6.IV.A. Pruebas de robustez y especificaciones alternativas del modelo final.
+    Tabla Anexa 6.IV.A. Pruebas de robustez y especificaciones alternativas del modelo Final.
   </div>
   La tabla presenta resultados de distintas variaciones de la especificación preferida para evaluar la consistencia de los hallazgos. En orden de columna: <br>
   <br>
@@ -3184,7 +3398,7 @@ texreg::htmlreg(lista_variaciones_modernizacion,
   <br>
   <b>Sistémico c/ volatilidad:</b> Una variación del modelo sistémico que incorpora un indicador de volatilidad electoral. <br>
   <b>Final c/ volatilidad:</b> Una variación de la especificación final que incluye la misma medida de volatilidad. <br>
-  <b>Final c/ satisfacción:</b> Una variación del modelo final que incorpora un indicador de satisfacción con la democracia. <br>
+  <b>Final c/ satisfacción:</b> Una variación del modelo Final que incorpora un indicador de satisfacción con la democracia. <br>
   <br>
   Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país (<i>clusters</i>). Los coeficientes corresponden a variables estandarizadas (<i>z-scores</i>) para permitir la comparación de magnitudes.
 </div>",
@@ -3411,9 +3625,9 @@ texreg::htmlreg(lista_interactivo,
                 file="anexos/tabla_anexa_interactivo.html",
                 caption = "<div style='text-align:left;'>
   <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-    Tabla Anexa 6.IV.E. Modelo final con término interactivo.
+    Tabla Anexa 6.IV.E. Modelo Final con término interactivo.
   </div>
-  La primera columna reporta la especificación final preferida para facilitar la comparación. La columna derecha (<b>Final c/ interacción</b>) presenta los resultados de un modelo que incorpora un término de interacción entre el Número Efectivo de Candidatos (NEC) y la existencia de regulaciones sobre debates. <br>
+  La primera columna reporta la especificación Final preferida para facilitar la comparación. La columna derecha (<b>Final c/ interacción</b>) presenta los resultados de un modelo que incorpora un término de interacción entre el Número Efectivo de Candidatos (NEC) y la existencia de regulaciones sobre debates. <br>
   <br>
   Ambos modelos emplean regresión logística con errores estándar robustos agrupados por país (<i>clusters</i>). A diferencia de las tablas anteriores, y con el fin de facilitar la interpretación sustantiva de los efectos marginales y del término interactivo, los coeficientes corresponden a las variables en su escala original (sin estandarizar).
 </div>",
@@ -3737,13 +3951,16 @@ plot_interpretacion <- ggplot(predicted_probs) +
                   fill = as.factor(regulaciondico)), alpha = 0.3) +
   theme_classic() +
   labs(
-    title = "Figura 5. Probabilidad predicha de ocurrencia de un debate presidencial",
-    subtitle = "Para distintos valores dentro del rango observado de NEC, con y sin regulación",
+    title = "Figura 5. Probabilidad predicha de ocurrencia de un debate presidencial.",
+    subtitle = "Para distintos valores del rango observado de NEC, con y sin regulación",
     caption = "Elaboración propia. 
-    Intervalos de confianza ploteados al 90%.
-    Escenarios predichos cuando el resto de las variables se encuentra:
-    -en su media (para el caso de los indicadores continuos),
-    -en su moda (para el caso de los indicadores dicotómicos).",
+    Probabilidad predicha de que se celebre un debate con base en los resultados del modelo Final (Tabla 17).
+    Los intervalos de confianza están calculados al 90%. 
+    Los escenarios predichos mantienen el resto de las variables de control en sus valores promedio 
+    (media para indicadores continuos y moda para dicotómicos). 
+    Se reexponenció el indicador del NEC (se muestran los valores de la escala original), a los fines de la claridad expositiva.
+    Las líneas punteadas indican umbrales teóricamente relevantes: 
+    probabilidad del 50% y valores de NEC equivalentes a 2 y 3 candidatos competitivos.",
     fill = "Debates regulados",
     colour = "Debates regulados"
   ) +
@@ -3849,13 +4066,16 @@ plot_interpretacion4 <- ggplot(data_to_predict4) +
   theme_classic() +
   labs(
     title = "Figura 6. Probabilidad predicha de ocurrencia de un debate presidencial",
-    subtitle = "Para distintos valores dentro del rango observado de NEC, 
+    subtitle = "Según niveles de NEC (rango observado), 
     bajo distintos escenarios en términos de existencia de regulaciones sobre debates y postulación del Presidente a la reelección",
     caption = "Elaboración propia. 
-    Intervalos de confianza ploteados al 90%.
-    Escenarios predichos cuando el resto de las variables se encuentra:
-    -en su media (para el caso de los indicadores continuos),
-    -en su moda (para el caso de los indicadores dicotómicos).",
+    Probabilidad predicha de que se celebre un debate con base en los resultados del modelo Final (Tabla 17).
+    Los intervalos de confianza están calculados al 90%. 
+    Los escenarios predichos mantienen el resto de las variables de control en sus valores promedio 
+    (media para indicadores continuos y moda para dicotómicos). 
+    Se reexponenció el indicador del NEC (se muestran los valores de la escala original), a los fines de la claridad expositiva.
+    Las líneas punteadas indican umbrales teóricamente relevantes: 
+    probabilidad del 50% y valores de NEC equivalentes a 2 y 3 candidatos competitivos.",
     fill = "Debates regulados",
     colour = "Debates regulados"
   ) +
@@ -3967,11 +4187,12 @@ plot_margins <- ggplot(marginals_df) +
   coord_flip() +
   scale_y_continuous(breaks = seq(-1,1,0.25)) +
   labs(title = "Figura 4. Efectos marginales promedio",
-       subtitle = "Modelo final",
+       subtitle = "Modelo Final",
        x = "Predictores", 
        y = "Efectos marginales promedio",
-       caption = "Elaboración propia sobre la base de modelo final, estimado con regresión logística con errores estándar agrupados por país.
-       Intervalos de confianza estimados al 90%") +
+       caption = "Elaboración propia sobre la base de modelo Final, 
+       estimado con regresión logística con errores estándar agrupados por país (Tabla 17).
+       Intervalos de confianza estimados al 90%. ") +
   theme_classic() +
   theme(axis.text.y = element_text(size = 12))
 
@@ -4157,7 +4378,7 @@ plot_data_to_predict_cumsum0_regulacion <- ggplot(data_to_predict_cumsum0_regula
        subtitle = "dada la existncia o no de regulaciones sobre la práctica",
        x = "Regulación",
        y = "Probabilidad predicha",
-       caption = "Elaboración propia con base en los resultados del modelo final preferido. 
+       caption = "Elaboración propia con base en los resultados del modelo Final preferido (Tabla 17). 
          La cantidad de debates antecedentes está fijada a cero.
          Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
          cuando nunca ocurrieron debates en el país.
@@ -4205,7 +4426,7 @@ plot_data_to_predict_cumsum0_nec <- ggplot(data_to_predict_cumsum0_nec) +
        subtitle = "Cuando nunca hubo debates, para distintos valores de NEC",
        x = "NEC",
        y = "Probabilidad predicha",
-       caption = "Elaboración propia con base en los resultados del modelo final preferido.
+       caption = "Elaboración propia con base en los resultados del modelo Final preferido (Tabla 17).
          La cantidad de debates antecedentes está fijada a cero.
          Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
          cuando nunca ocurrieron debates en el país.
@@ -4254,7 +4475,7 @@ plot_data_to_predict_cumsum0_internet <- ggplot(data_to_predict_cumsum0_internet
        subtitle = "Cuando nunca hubo debates, según la cantidad de individuos c/ acceso a internet",
        x =  "% de individuos con acceso a internet",
        y = "Probabilidad predicha",
-       caption = "Elaboración propia con base en los resultados del modelo final preferido.
+       caption = "Elaboración propia con base en los resultados del modelo Final preferido (Tabla 17).
          La cantidad de debates antecedentes está fijada a cero.
          Es decir, el gráfico representa la probabilidad de ocurrencia de un debate para distintos valores del predictor,
          cuando nunca ocurrieron debates en el país.
@@ -4329,7 +4550,7 @@ plot_ranint <- ggplot(ranint, aes(x = condval, y = reorder(grp, condval))) +
   geom_vline(aes(xintercept = 0), linetype = 3, colour = "blue4") +
   labs(title = "Gráfico Anexo 6.III.A Interceptos aleatorios estimados",
        subtitle = "por país, junto a su desvío estándar condicional",
-       caption = "Elaboración propia, con base en los resultados del modelo final multinivel")
+       caption = "Elaboración propia, con base en los resultados del modelo Final multinivel (Tabla 18).")
 
 plot_ranint %>% ggsave(filename = "images/random_intercepts.jpg", 
                        width = 10, height = 6)
@@ -4388,7 +4609,7 @@ data_to_predict_testdrive_interactivo <- data.frame(
   propindivinternet = mean(data_modelo_a_interpretar$propindivinternet, na.rm = TRUE),
   accesogratuito = median(data_modelo_a_interpretar$accesogratuito, na.rm = TRUE),
   avgpropdebatesregionxciclo = mean(data_modelo_a_interpretar$avgpropdebatesregionxciclo, na.rm = TRUE),
-  regulaciondico = rep(c(0,1),each=20) ,
+  regulaciondico = rep(c(0,1), each=20) ,
   cumsum_pastciclos = mean(data_modelo_a_interpretar$cumsum_pastciclos, na.rm = TRUE),
   lngdp = mean(data_modelo_a_interpretar$lngdp, na.rm = TRUE),
   democraciavdemelectoralcomp = mean(data_modelo_a_interpretar$democraciavdemelectoralcomp, na.rm = TRUE),
@@ -4421,13 +4642,16 @@ plot_interpretacion <- ggplot(predicted_probs) +
   theme_classic() +
   labs(
     title = "Gráfico Anexo 6.IV.E. Probabilidad predicha de ocurrencia de un debate presidencial",
-    subtitle = "Para distintos valores dentro del rango observado de NEC, con y sin regulación",
+    subtitle = "Para distintos valores dentro del rango observado de NEC, con y sin regulación,
+    según los resultados de un modelo interactivo. ",
     caption = "Elaboración propia. 
-    Intervalos de confianza ploteados al 90%.
-    Escenarios predichos cuando el resto de las variables se encuentra:
-    -en su media (para el caso de los indicadores continuos),
-    -en su moda (para el caso de los indicadores dicotómicos),
-    Según los resultados de la especificación final con la adición de un término interactivo.",
+    Probabilidad predicha de que se celebre un debate con base en los resultados del modelo interactivo (Tabla Anexa 6.IV.E).
+    Los intervalos de confianza están calculados al 90%. 
+    Los escenarios predichos mantienen el resto de las variables de control en sus valores promedio 
+    (media para indicadores continuos y moda para dicotómicos). 
+     Se reexponenció el indicador del NEC (se muestran los valores de la escala original), a los fines de la claridad expositiva.
+    Las líneas punteadas indican umbrales teóricamente relevantes: 
+    probabilidad del 50% y valores de NEC equivalentes a 2 y 3 candidatos competitivos.",
     fill = "Debates regulados",
     colour = "Debates regulados"
   ) +
@@ -5028,10 +5252,10 @@ stats_to_export <- rbind(
 texreg::htmlreg(modelos_capitulo,
                 custom.model.names = c(#"Niv. individual",
                                        #"Niv. debate",
-                                       "Todas las variables |",
-                                       "Todas las variables multinivel |",
-                                       "Excluyendo variables |",
-                                       "Excluyendo variables multinivel")  ,
+                                       "Todas las <br> variables ",
+                                       "Todas las <br> variables <br> multinivel ",
+                                       "Excluyendo <br> variables ",
+                                       "Excluyendo <br> variables <br> multinivel")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
                 custom.coef.names = c("(Intercepto)",
                                       "% de votos obtenidos",
@@ -5068,9 +5292,9 @@ texreg::htmlreg(modelos_capitulo,
                  Tabla 22. Estimación de la probabilidad de que un candidato concurra a un debate. 
                </div>
                Se reportan los resultados de cuatro modelos que estiman la probabilidad de que un candidato concurra a debatir. <br>
-               Los dos primeros incluyen todos los predictores; los dos siguientes excluyen los indicadores provenientes de la base de datos V-Dem, que presentan numerosos faltantes. <br>
+               Los dos primeros (<i>Todas las variables</i>) incluyen todos los predictores; los dos siguientes (<i>Excluyendo variables</i>) excluyen los indicadores provenientes de la base de datos V-Dem, que presentan numerosos faltantes. <br>
                Para cada especificación se emplean dos técnicas de estimación alternativas: regresión logística con errores estándar robustos agrupados por país (columnas 1 y 3) y regresión logística multinivel con efectos aleatorios por país (columnas 2 y 4).  <br>
-               Los coeficientes corresponden a variables estandarizadas.
+               Los coeficientes corresponden a variables estandarizadas (<i>z-scores</i>).
              </div>",
 
                 custom.note = "Errores estándar entre paréntesis. <br>
@@ -5113,10 +5337,10 @@ stats_to_export <- rbind(
 
 texreg::htmlreg(modelos_anexo,
                 custom.model.names = c(
-                  "Todas las variables",
-                  "Todas las variables multinivel",
-                  "Excluyendo variables",
-                  "Excluyendo variables multinivel")  ,
+                  "Todas las <br> variables",
+                  "Todas las <br> variables <br> multinivel",
+                  "Excluyendo <br> variables",
+                  "Excluyendo <br> variables <br> multinivel")  ,
                 stars = c(0.001, 0.01, 0.05, 0.1),
 custom.coef.names = c("(Intercepto)",
                       "% de votos obtenidos",
@@ -5156,7 +5380,7 @@ caption = "<div style='text-align:left;'>
                Los dos primeros incluyen todos los predictores; los dos siguientes excluyen los indicadores provenientes de la base de datos V-Dem, que presentan numerosos faltantes. <br>
                Para cada especificación se emplean dos técnicas de estimación alternativas: regresión logística con errores estándar robustos agrupados por país (columnas 1 y 3) y regresión logística multinivel con efectos aleatorios por país (columnas 2 y 4). <br>
                A diferencia de los modelos presentados en el Capítulo 6, los de esta tabla reorganizan las categorías del organizador del debate: se agrupan el Estado y los medios públicos en una única categoría, mientras que los medios privados se consideran por separado. <br>
-               Los coeficientes corresponden a variables estandarizadas.
+               Los coeficientes corresponden a variables estandarizadas (<i>z-scores</i>).
              </div>",
 center = T,
 bold = 0.1,
@@ -5212,13 +5436,13 @@ texreg::htmlreg(modelo_control,
                </div>
                 Se reportan los resultados de un modelo que estima la probabilidad de que un candidato concurra a debatir, en el cual se excluye la suma acumulada de elecciones con debates antecedentes, debido a que presenta valores de VIF problemáticos. <br>
                 Se emplea regresión logística con errores estándar robustos agrupados por país. <br>
-                Los coeficientes corresponden a variables estandarizadas.      
+                Los coeficientes corresponden a variables estandarizadas (<i>z-scores</i>).      
                 </div>",
                 center = T,
                 bold = 0.1,
                 custom.note = "Errores estándar entre paréntesis. <br>
-                Se los estima de manera robusta, agrupados a nivel país, con el objetivo de corregir la correlación entre observaciones dentro de cada clúster. <br>
-                Las métricas de ajuste (AIC, BIC, Log-verosimilitud y R² de Nagelkerke) se derivan de la estimación por máxima verosimilitud de los modelos originales. <br>
+                Se los estima de manera robusta, agrupados a nivel país, <br> con el objetivo de corregir la correlación entre observaciones dentro de cada clúster. <br>
+                Las métricas de ajuste (AIC, BIC, Log-verosimilitud y R² de Nagelkerke) <br> se derivan de la estimación por máxima verosimilitud de los modelos originales. <br>
                 Los asteriscos indican distintos niveles de significancia: %stars 
                 ",
                 caption.above = T
