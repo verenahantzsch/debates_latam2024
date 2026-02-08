@@ -99,7 +99,7 @@ data_base_limpia <- data_base_limpia %>%
   # creo dicotómicas para temas
   # antes corrijo cuestion de codebook: debates monotematicos son exclusivos
   mutate(cat_temas = saltear_NAs(cat_temas,ifelse(str_detect(cat_temas, "monotema"), "monotema", cat_temas))) %>% 
-  mutate( dico_temas_puntuales = saltear_NAs(cat_temas,str_detect(cat_temas,"puntuales")) ,
+  mutate( dico_temas_puntuales = saltear_NAs(cat_temas,str_detect(cat_temas,"puntuales")|str_detect(cat_temas,"preguntas")) ,
           dico_temas_libre = saltear_NAs(cat_temas,str_detect(cat_temas,"libre")) ,
           dico_temas_monotema = saltear_NAs(cat_temas,str_detect(cat_temas,"monotema")) ,
           dico_temas_bloques = saltear_NAs(cat_temas,str_detect(cat_temas,"bloques")) )

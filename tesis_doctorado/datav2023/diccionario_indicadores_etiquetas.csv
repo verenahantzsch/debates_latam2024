@@ -1,0 +1,21 @@
+Indicador,Nombre
+ncat_eleccion,Año Elección
+nec,N.E.C.
+alineamiento,Alineamiento partidario
+marginvic,Margen de victoria
+voteshareincumbent,% voto oficialista
+dico_reeleccion,Presidente compite p/ reelección (dummy)
+proptv,% hogares con TV
+propindivinternet,% individuos con Internet
+prohibicionpropaganda,Prohibición propaganda en TV (dummy)
+accesogratuito,Acceso gratuito a TV (dummy)
+regulaciondico,Debates televisados regulados (dummy)
+cumsum_pastciclos,Cantidad de elecciones pasadas con debates
+avgpropdebatesregionxciclo,Prop. promedio de elecciones con debates en región
+prop_elec_usa_ciclo,Prop. de elecciones con debates en USA
+gdpxcapita,PBI per cápita
+democraciavdemelectoralcomp,Nivel de democracia (componente electoral VDEM)
+mediaqualitycorruptvdem,Nivel de corrupción en medios (VDEM)
+lnmarginvic,log Margen de Victoria
+lnnec,log NEC
+lngdp,log PBI per Cápita

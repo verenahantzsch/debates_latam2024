@@ -1241,7 +1241,7 @@ base_unificada_controles %>% write.csv("controles_elecciones.csv")
 
 ########################################################################
 ##########################################################################
-############# auxiliares para llenar incumbencia ##############
+# auxiliares para llenar incumbencia ##############
 
 WINNERS <- data_fried_seaw_caro_candidatos %>%
   mutate(vote_share= as.numeric(vote_share)) %>% 
@@ -1254,7 +1254,34 @@ INCUMBENTS <- data_fried_seaw_caro_candidatos %>%
   filter(status == "Incumbent") %>% 
   select(cat_pais,ncat_eleccion,ncat_ronda,candidate_name,party_name)
 
+# auxiliares para llenar FUENTES ##############
+fuentes1 <- read.csv("indicadores_elecciones.csv") %>% select(starts_with("source")) # controles
+fuentes2 <- read.csv("controles_elecciones.csv") %>% select(starts_with("source")) # indicadores
+fuentes3 <- read.csv("indicadores_candidatos.csv") %>% select(starts_with("source")) # candidatos (armada en otro script)
 
+# unique values por variable
+
+# NEC
+
+fuentes_nec <- fuentes1 %>% select("source_nec") %>% unique()
+fuentes_nec_detalle <- fuentes3 %>% select("source_voteshare") %>% unique()
+
+# desalineam
+
+fuentes_desalineam <- fuentes1 %>% select("source_alineamiento") %>% unique()
+
+
+# reeleccion
+
+fuentes_reeleccion <- fuentes3 %>% select("source_incumbencystatus") %>% unique()
+
+# proptv
+
+fuentes_proptv <- fuentes1 %>% select("source_proptv") %>% unique()
+
+# prohibicion/regulacion
+
+fuentes_regulacion <- fuentes1 %>% select("source_accesomedios") %>% unique()
 #############################################################################
 ##### VIEJO ################################################ 
 ##### chequeo de missings ########################################
