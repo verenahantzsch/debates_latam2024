@@ -1,713 +1,717 @@
-cat_pais,ncat_eleccion,ncat_ronda,nombres_candidatos,dico_reeleccion,dico_oficialista,source_incumbencystatus
-Brasil,1989,1,Leonel Brizola,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Mario Covas,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Paulo Maluf,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Aureliano Chaves,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Guilherme Afif Domingos,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Roberto Freire,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Ronaldo Caiado,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Affonso Camargo,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Ulysses Guimaraes,0,1,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Fernando Henrique Cardoso,0,1,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Leonel Brizola,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Eneas Ferreira Carneiro,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Esperidiao Amin,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Flavio Gurgel Rocha,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Hernani Goulart Fortuna,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Orestes Quercia,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2002,1,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2002,1,Jose Serra,0,1,Elaboración propia con base en fuentes secundarias
-Brasil,2002,1,Ciro Gomes,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2002,1,Anthony Garotinho,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2006,1,Geraldo Alckmin,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2006,1,Jose Maria Eymael,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2006,1,Luciano Bivar,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2006,1,Cristovam Buarque,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2006,1,Heloisa Helena,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2010,1,Marina Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2010,1,Jose Serra,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2010,1,Dilma Rousseff,0,1,Elaboración propia con base en fuentes secundarias
-Brasil,2010,1,Plinio Sampaio,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Dilma Rousseff,1,1,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Aecio Neves,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Marina Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Luciana Genro,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Pastor Everaldo,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Levy Fidelix,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Eduardo Jorge,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2014,1,Jose Maria Eymael,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Alvaro Dias,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Geraldo Alckmin,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Marina Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Henrique Meirelles,0,1,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Guilherme Boulos,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Ciro Gomes,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Cabo Daciolo,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Jair Bolsonaro,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Fernando Haddad,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2022,1,Jair Bolsonaro,1,1,Elaboración propia con base en fuentes secundarias
-Brasil,2022,1,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2022,1,Luiz Felipe d'Avila,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2022,1,Ciro Gomes,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2022,1,Simone Tebet,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2022,1,Soraya Thronicke,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2022,1,Kelmon Souza,0,0,Elaboración propia con base en fuentes secundarias
-Chile,1989,1,Hernan Buchi,0,1,Elaboración propia con base en fuentes secundarias
-Chile,1989,1,Patricio Aylwin Azocar,0,0,Elaboración propia con base en fuentes secundarias
-Chile,1993,1,Eduardo Frei Ruiz-Tagle,0,1,Elaboración propia con base en fuentes secundarias
-Chile,1993,1,Arturo Alessandri Besa,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2000,1,Joaquin Lavin Infante,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2000,1,Ricardo Lagos Escobar,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2006,1,Michelle Bachelet,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2006,1,Tomas Hirsch Goldschmidt,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2006,1,Joaquin Lavin Infante,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2006,1,Sebastian Pinera,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2010,1,Jorge Arrate Mac Niven,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2010,1,Marco Enriquez-Ominami,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2010,1,Sebastian Pinera,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2010,1,Eduardo Frei Ruiz-Tagle,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Franco Parisi,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Marcel Claude,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Ricardo Israel,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Marco Enriquez-Ominami,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Roxana Miranda,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Evelyn Matthei,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Alfredo Sfeir,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Tomas Jocelyn-Holt,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,1,Michelle Bachelet,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Sebastian Pinera,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Beatriz Sanchez,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Jose Antonio Kast,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Alejandro Guillier,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Carolina Goic,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Marco Enriquez-Ominami,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Eduardo Artes,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,1,Alejandro Navarro,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2021,1,Gabriel Boric,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2021,1,Sebastian Sichel,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2021,1,Jose Antonio Kast,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2021,1,Yasna Provoste,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2021,1,Eduardo Artes,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2021,1,Marco Enriquez-Ominami,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2021,1,Franco Parisi,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2015,1,Nicolas del Cano,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2015,1,Adolfo Rodriguez Saa,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2015,1,Sergio Massa,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2015,1,Margarita Stolbizer,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2015,1,Mauricio Macri,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2019,1,Juan Jose Gomez Centurion,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2019,1,Mauricio Macri,1,1,Elaboración propia con base en fuentes secundarias
-Argentina,2019,1,Alberto Fernandez,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2019,1,Jose Luis Espert,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2019,1,Roberto Lavagna,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2019,1,Nicolas del Cano,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2023,1,Sergio Massa,0,1,Elaboración propia con base en fuentes secundarias
-Argentina,2023,1,Javier Milei,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2023,1,Myriam Bregman,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2023,1,Juan Schiaretti,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2023,1,Patricia Bullrich,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Keiko Fujimori Higuchi,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Oscar Luis Castaneda Lossio,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Pedro Pablo Kuczynski,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Ollanta Moises Humala Tasso,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Alejandro Toledo Manrique,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Juliana Reymer Rodriguez,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Humberto Pinazo Bella,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Rafael Belaunde Aubry,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Jose Manuel Rodriguez Cuadros,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Ricardo Noriega Salaverry,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,1,Jose Nique de la Puente,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Antero Flores Araoz,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Hernando Guerra Garcia,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Francisco Diez Canseco,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Yehude Simon,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Fernando Olivera,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Julio Guzman,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Veronika Mendoza,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Vladimir Cerron,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Gregorio Santos Guerrero,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Alan Garcia Perez,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Alejandro Toledo Manrique,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Alfredo Barnechea,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Keiko Fujimori Higuchi,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Miguel Hilario,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Pedro Pablo Kuczynski,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Yonhy Lescano,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,George Forsyth,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Veronika Mendoza,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Keiko Fujimori Higuchi,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Daniel Urresti,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Cesar Acuna,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Marco Arana,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Alberto Beingolea,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Hernando de Soto,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Andres Alcantara,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Ollanta Moises Humala Tasso,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Pedro Castillo,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Jose Vega,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Julio Guzman,0,1,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Rafael Santos,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Ciro Galvez,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Rafael Lopez Aliaga,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,1,Daniel Salaverry,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2003,1,Nicanor Duarte Frutos,0,1,Elaboración propia con base en fuentes secundarias
-Paraguay,2003,1,Julio Cesar Franco,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2003,1,Pedro Fadul,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2003,1,Guillermo Sanchez Guffanti,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2003,1,Diego Abente,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2008,1,Lino Oviedo,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2008,1,Blanca Ovelar,0,1,Elaboración propia con base en fuentes secundarias
-Paraguay,2008,1,Pedro Fadul,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2008,1,Fernando Lugo,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2013,1,Horacio Cartes,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2013,1,Efrain Alegre,0,1,Elaboración propia con base en fuentes secundarias
-Paraguay,2013,1,Miguel Carrizosa,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2013,1,Mario Ferreiro,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2013,1,Lino Oviedo,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2013,1,Anibal Carrillo,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2018,1,Efrain Alegre,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2018,1,Mario Abdo Benitez,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2023,1,Paraguayo Cubas,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2023,1,Euclides Acevedo,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2023,1,Jorge Gomez Otano,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2023,1,Luis Talavera,0,0,Elaboración propia con base en fuentes secundarias
-Paraguay,2023,1,Alfredo Luis Machuca Doldan,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,1,Jaime Roldos,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,1,Sixto Duran Ballen,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,1,Raul Clemente Huerta,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,1,Rodrigo Borja,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,1,Abdon Calderon,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,1,Rene Mauge,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2006,1,Rafael Correa,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2006,1,Cynthia Viteri,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2006,1,Leon Roldos,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2006,1,Fernando Rosero,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2006,1,Alvaro Noboa,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Lucio Gutierrez,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Alvaro Noboa,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Nelson Zavala,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Guillermo Lasso,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Mauricio Rodas,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Norman Wray,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Abdala Bucaram,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Guillermo Lasso,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Washington Pesantes,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Patricio Zuquilanda,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Ivan Espinel,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Paco Moncayo,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Cynthia Viteri,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2017,1,Lenin Moreno,0,1,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Andres Arauz,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Yaku Perez,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Isidro Romero,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Gustavo Larrea,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Carlos Sagnay,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Giovanny Andrade,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Paul Carrasco,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Ximena Pena,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Guillermo Lasso,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Guillermo Celi,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Lucio Gutierrez,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Xavier Hervas,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Cesar Montufar,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Gerson Almeida,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Juan Fernando Velasco,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,1,Pedro Freile,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,1,Yaku Perez,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,1,Bolivar Armijos,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,1,Luisa Gonzalez,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,1,Xavier Hervas,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,1,Daniel Noboa Azin,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,1,Otto Sonnenholzner,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,1,Jan Topic,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1984,1,Julio Maria Sanguinetti,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1984,1,Alberto Zumaran,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1989,1,Jorge Batlle,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1989,1,Luis Alberto Lacalle Herrera,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1989,1,Carlos Julio Pereyra,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1989,1,Alberto Zumaran,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1989,1,Liber Seregni,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1989,1,Hugo Batalla,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1994,1,Julio Maria Sanguinetti,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1994,1,Tabare Vazquez,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,1994,1,Juan Andres Ramirez,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2009,1,Pedro Bordaberry,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2009,1,Pablo Mieres,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2009,1,Raul Rodriguez,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2014,1,Luis Alberto Lacalle Pou,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2014,1,Pedro Bordaberry,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2014,1,Pablo Mieres,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2014,1,Cesar Vega,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2014,1,Gonzalo Abella,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2014,1,Rafael Fernandez,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2019,1,Luis Alberto Lacalle Pou,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2019,1,Daniel Martinez,0,1,Elaboración propia con base en fuentes secundarias
-Nicaragua,2006,1,Eduardo Montealegre,0,0,Elaboración propia con base en fuentes secundarias
-Nicaragua,2006,1,Edmundo Jarquin,0,0,Elaboración propia con base en fuentes secundarias
-Nicaragua,2006,1,Jose Rizo,0,1,Elaboración propia con base en fuentes secundarias
-Nicaragua,2006,1,Eden Pastora,0,0,Elaboración propia con base en fuentes secundarias
-Panama,1994,1,Jose Salvador Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Panama,1994,1,Samuel Lewis Galindo,0,0,Elaboración propia con base en fuentes secundarias
-Panama,1994,1,Ernesto Perez Balladares,0,0,Elaboración propia con base en fuentes secundarias
-Panama,1994,1,Ruben Blades,0,0,Elaboración propia con base en fuentes secundarias
-Panama,1994,1,Eduardo Vallarino Arjona,0,0,Elaboración propia con base en fuentes secundarias
-Panama,1994,1,Ruben Dario Carles,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2004,1,Guillermo Endara,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2004,1,Jose Miguel Aleman,0,1,Elaboración propia con base en fuentes secundarias
-Panama,2004,1,Ricardo Martinelli,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2004,1,Martin Torrijos,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2009,1,Ricardo Martinelli,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2009,1,Balbina Herrera,0,1,Elaboración propia con base en fuentes secundarias
-Panama,2014,1,Juan Carlos Navarro,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2014,1,Juan Carlos Varela,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2014,1,Genaro Lopez,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2014,1,Jose Domingo Arias,0,1,Elaboración propia con base en fuentes secundarias
-Panama,2014,1,Juan Jovane,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2014,1,Gerardo Barroso,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2014,1,Esteban Rodriguez,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2019,1,Ana Matilde Gomez,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2019,1,Ricardo Lombana,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2019,1,Marco Ameglio,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2019,1,Jose Isabel Blandon,0,1,Elaboración propia con base en fuentes secundarias
-Panama,2019,1,Saul Mendez,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2019,1,Romulo Roux,0,0,Elaboración propia con base en fuentes secundarias
-Panama,2019,1,Laurentino Cortizo,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1963,1,Rafael Caldera,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1963,1,Arturo Uslar Pietri,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1968,1,Gonzalo Barrios,0,1,Elaboración propia con base en fuentes secundarias
-Venezuela,1968,1,German Borregales,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1968,1,Luis Beltran Prieto,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1968,1,Rafael Caldera,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1968,1,Alejandro Hernandez,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1983,1,Jaime Lusinchi,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1983,1,Rafael Caldera,0,1,Elaboración propia con base en fuentes secundarias
-Venezuela,1998,1,Claudio Fermin,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1998,1,Hugo Chavez,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Carlos Palenque,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Genaro Flores,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Luis Sandoval Moron,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Antonio Aranibar,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Roger Cortez,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Victor Hugo Cardena,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Gonzalo Sanchez de Lozada,0,1,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Jaime Paz Zamora,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1989,1,Hugo Banzer,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Felix Cardenas,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Jerjes Justiniano,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Mario Serrate,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Fernando Untoja,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Antonio Aranibar,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Ramiro Velasco,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Gonzalo Sanchez de Lozada,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Hugo Banzer,0,1,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Max Fernandez,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1997,1,Juan Carlos Duran,0,1,Elaboración propia con base en fuentes secundarias
-Bolivia,1997,1,Miguel Urioste,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1997,1,Remedios Loza,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1997,1,Jaime Paz Zamora,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1997,1,Ivo Kuljis,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Gonzalo Sanchez de Lozada,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Manfred Reyes Villa,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Evo Morales,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Felipe Quispe,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Jaime Paz Zamora,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Jorge Quiroga,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Samuel Doria Medina,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Michiaki Nagatani,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2014,1,Samuel Doria Medina,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2014,1,Juan del Granado,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2014,1,Jorge Quiroga,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2014,1,Fernando Vargas,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2020,1,Luis Arce,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2020,1,Carlos Mesa,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2020,1,Luis Fernando Camacho,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2020,1,Chi Hyun Chung,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2020,1,Jorge Quiroga,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2020,1,Maria de la Cruz Baya,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2020,1,Feliciano Mamani,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,1994,1,Cuauhtemoc Cardenas,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,1994,1,Diego Fernandez de Cevallos,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,1994,1,Ernesto Zedillo,0,1,Elaboración propia con base en fuentes secundarias
-Mexico,2000,1,Francisco Labastida,0,1,Elaboración propia con base en fuentes secundarias
-Mexico,2000,1,Cuauhtemoc Cardenas,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2000,1,Vicente Fox,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2000,1,Gilberto Rincon,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2000,1,Porfirio Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2000,1,Manuel Camacho,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2006,1,Roberto Campa,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2006,1,Patricia Mercado,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2006,1,Roberto Madrazo,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2006,1,Felipe Calderon,0,1,Elaboración propia con base en fuentes secundarias
-Mexico,2006,1,Andres Manuel Lopez Obrador,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2012,1,Enrique Pena Nieto,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2012,1,Andres Manuel Lopez Obrador,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2012,1,Josefina Vazquez Mota,0,1,Elaboración propia con base en fuentes secundarias
-Mexico,2012,1,Gabriel Quadri,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2018,1,Andres Manuel Lopez Obrador,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2018,1,Ricardo Anaya Cortes,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2018,1,Margarita Zavala,0,0,Elaboración propia con base en fuentes secundarias
-Mexico,2018,1,Jose Antonio Meade Kuribrena,0,1,Elaboración propia con base en fuentes secundarias
-Mexico,2018,1,Jaime Rodriguez Calderon,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,1,Eduardo Suger,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,1,Fritz Garcia-Gallont,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,1,Alvaro Colom,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,1,Manuel Conde Orellana,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,1,Leonel Lopez Rodas,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2007,1,Alvaro Colom,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2007,1,Rigoberta Menchu,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2007,1,Eduardo Suger,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2007,1,Otto Perez Molina,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2007,1,Alejandro Giammattei,0,1,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Manuel Baldizon,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Harold Caballeros,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Otto Perez Molina,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Eduardo Suger,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Sandra Torres,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Juan Gutierrez,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Adela de Torre,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Alejandro Giammattei,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Patricia de Arzu,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Rigoberta Menchu,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Zury Rios,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Alejandro Giammattei,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Jose Angel Lopez,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Miguel Angel Sandoval,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Lizardo Sosa,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Juan Gutierrez,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Luis Fernando Perez,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Mario David Garcia,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Sandra Torres,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Roberto Gonzalez,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Jimmy Morales,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Manuel Baldizon,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Anibal Garcia,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,1,Mario Estrada,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Roberto Arzu,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Edwin Escobar,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Hector Estrada,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Alejandro Giammattei,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Edmond Mulet,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Sandra Torres,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Estuardo Galdamez,0,1,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Amilcar Rivera,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Isaac Farchi,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Manfredo Marroquin,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Benito Morales,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Manuel Villacorta,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Pablo Ignacio Ceto,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Pablo Duarte,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Fredy Cabrera,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Anibal Garcia,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Danilo Roca,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Jose Luis Chea Urruela,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Luis Velasquez,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Ricardo Sagastume,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Armando Castillo,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Giulio Talamonti,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Francisco Arredondo,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Sandra Torres,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Zury Rios,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Edmond Mulet,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Manuel Conde Orellana,0,1,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Amilcar Pop,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Alvaro Trujillo,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Giovanni Reyes,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Rudio Lecsan Merida,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Luis Lam,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Julio Rivera Claveria,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Amilcar Rivera,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Manuel Villacorta,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Rudy Guzman,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Bernardo Arevalo,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Hugo Pena,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Samuel Morales,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Carlos Pineda,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Rafael Espada,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,1993,1,Jose Oswaldo Ramos Soto,0,1,Elaboración propia con base en fuentes secundarias
-Honduras,1993,1,Marco Orlando Iriarte,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,1993,1,Olban Valladares,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,1993,1,Carlos Roberto Reina,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Orle Anibal Solis,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Romeo Vasquez Velasquez,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Mauricio Villeda Bermudez,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Salvador Nasralla,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Iris Xiomara Castro de Zelaya,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Jorge Rafael Aguilar,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Andres Pavon Murillo,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2013,1,Juan Orlando Hernandez,0,1,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Jose Alfonso Diaz Narvaez,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Salvador Nasralla,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Eliseo Vallecillo Reyes,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Lucas Evangelisto Aguilera,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Luis Orlando Zelaya,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Romeo Vasquez Velasquez,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Isaias Fonseca Aguilar,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,1986,1,Alvaro Gomez Hurtado,0,1,Elaboración propia con base en fuentes secundarias
-Colombia,1986,1,Luis Carlos Galan,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,1994,1,Andres Pastrana,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,1994,1,Ernesto Samper,0,1,Elaboración propia con base en fuentes secundarias
-Colombia,2002,1,Alvaro Uribe Velez,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2002,1,Noemi Sanin,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2002,1,Luis Eduardo Garzon,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2002,1,Horacio Serpa,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2002,1,Harold Bedoy,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2006,1,Antanas Mockus,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2006,1,Horacio Serpa,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2006,1,Enrique Parejo,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2006,1,Carlos Gaviria,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2006,1,Alvaro Leyva,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2010,1,Antanas Mockus,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2010,1,Noemi Sanin,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2010,1,Gustavo Petro,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2010,1,German Vargas Lleras,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2010,1,Rafael Pardo,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2010,1,Juan Manuel Santos,0,1,Elaboración propia con base en fuentes secundarias
-Colombia,2010,1,Sergio Fajardo,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2014,1,Clara Lopez,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2014,1,Marta Lucia Ramirez,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2014,1,Oscar Ivan Zuluaga,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2014,1,Enrique Penalosa,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2014,1,Juan Manuel Santos,1,1,Elaboración propia con base en fuentes secundarias
-Colombia,2018,1,Sergio Fajardo,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2018,1,Humberto de la Calle,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2018,1,Ivan Duque,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2018,1,Gustavo Petro,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2018,1,German Vargas Lleras,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2018,1,Viviane Morales,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,Gustavo Petro,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,Ingrid Betancourt,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,Federico Gutierrez,0,1,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,Sergio Fajardo,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,Enrique Gomez,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,John Milton Rodriguez,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,Luis Perez,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2022,1,Rodolfo Hernandez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,1986,1,Oscar Arias Sanchez,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,1986,1,Rafael Calderon Fournier,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,1998,1,Jose Miguel Corrales Bolanos,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,1998,1,Miguel Angel Rodriguez Echeverria,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Otto Guevara,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Abel Pacheco de la Espriella,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Otton Solis,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Rolando Araya,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Pablo Galo Angulo Casasola,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Jose Hine Garcia,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Justo Orozco Alvarez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Jorge Walter Coto Molina,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Marvin Calvo Montoya,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Walter Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Daniel Reynolds Vargas,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Vladimir de la Cruz de Lemos,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,1,Rolando Angulo Zeledon,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Humberto Arce,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Otton Solis,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Otto Guevara,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Abel Pacheco de la Espriella,1,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Alvaro Montero,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Ricardo Toledo,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Vladimir de la Cruz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Bolivar Serrano Hidalgo,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Jose Manuel Echandi,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Antonio Alvarez Desanti,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Walter Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Juan Jose Vargas Fallas,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Jose Miguel Villalobos,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Humberto Vargas,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2006,1,Oscar Arias,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Carlos Alvarado Quesada,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Otto Guevara,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Edgardo Araya,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Mario Redondo Poveda,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Rodolfo Hernandez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Antonio Alvarez Desanti,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Fabricio Alvarado Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Oscar Lopez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Sergio Mena,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Jhon Vega,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Laura Chinchilla,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Otton Solis,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Otto Guevara,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Luis Fishman,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Walter Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Mayra Gonzalez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Eugenio Trejos,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Oscar Lopez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2010,1,Rolando Araya,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Johnny Araya Monge,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Jose Miguel Corrales Bolanos,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Otto Guevara,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Rodolfo Piza,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Luis Guillermo Solis,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Jose Maria Villalta,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Jose Manuel Echandi,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Hector Monestel Herrera,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Sergio Mena,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Oscar Lopez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Carlos Avendano,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Walter Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2014,1,Justo Orozco,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Stephanie Campos,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Juan Diego Castro,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,1,Rodolfo Piza,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Rodrigo Chaves,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Fabricio Alvarado Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Rolando Araya,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Welmer Ramos,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Jose Maria Villalta,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Eliecer Feinzaig,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Jose Maria Figueres,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Lineth Saborio,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Rodolfo Hernandez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Rodolfo Piza,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Federico Malavassi,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Carmen Quesada,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Greivin Moya,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Martin Chinchilla,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Luis Alberto Cordero,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Eduardo Cruickshank,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Christian Rivera,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Maricela Morales,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Roulan Jimenez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Sergio Mena,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Oscar Lopez,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Natalia Diaz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Oscar Campos,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Walter Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,1,Jhon Vega,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Luis Rodolfo Abinader,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Guillermo Moreno,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Minerva Tavarez Mirabal,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Soraya Aquino,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Pelegrin Castillo,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Elias Wessin Chavez,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Hatuey De Camps,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,1999,1,Rodolfo Parker,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,1999,1,Facundo Guardado,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,1999,1,Ruben Zamora,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,1999,1,Salvador Nestor Garcia,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,2014,1,Salvador Sanchez Ceren,0,1,Elaboración propia con base en fuentes secundarias
-El Salvador,2014,1,Norman Quijano,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,2014,1,Elias Antonio Saca,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,2014,1,Rene Rodriguez Hurtado,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,2014,1,Oscar Lemu,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,2019,1,Carlos Calleja,0,0,Elaboración propia con base en fuentes secundarias
-El Salvador,2019,1,Hugo Martinez,0,1,Elaboración propia con base en fuentes secundarias
-El Salvador,2019,1,Josue Alvarado,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Fernando Collor de Mello,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,1,Silvio Santos,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1994,1,Walter Queiroz,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2006,1,Luiz Inacio Lula da Silva,1,1,Elaboración propia con base en fuentes secundarias
-Brasil,2018,1,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2015,1,Daniel Scioli,0,1,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Cesar Acuna,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Daniel Urresti,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,1,Renzo Reggiardo,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2006,1,Luis Macas Ambuludi,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Rafael Correa,1,1,Elaboración propia con base en fuentes secundarias
-Ecuador,2013,1,Alberto Acosta,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2009,1,Luis Alberto Lacalle Herrera,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2009,1,Jose Mujica,0,1,Elaboración propia con base en fuentes secundarias
-Uruguay,2014,1,Tabare Vazquez,0,1,Elaboración propia con base en fuentes secundarias
-Nicaragua,2006,1,Daniel Ortega,0,0,Elaboración propia con base en fuentes secundarias
-Panama,1994,1,Mireya Moscoso,0,1,Elaboración propia con base en fuentes secundarias
-Panama,2009,1,Guillermo Endara,0,0,Elaboración propia con base en fuentes secundarias
-Venezuela,1963,1,Raul Leoni,0,1,Elaboración propia con base en fuentes secundarias
-Venezuela,1998,1,Irene Saez,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1993,1,Carlos Palenque,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,1997,1,Hugo Banzer,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Rene Blattmann,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Nicolas Valdivia,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Costa Obregon,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Rolando Morales,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2002,1,Johnny Fernandez,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Evo Morales,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Felipe Quispe,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Gildo Angulo,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Nestor Garcia,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2005,1,Eliseo Rodriguez,0,0,Elaboración propia con base en fuentes secundarias
-Bolivia,2014,1,Evo Morales,1,1,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,1,Oscar Berger,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,1,Mario Estrada,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2019,1,Zury Rios,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,1,Isaac Farchi,0,0,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Juan Orlando Hernandez,1,1,Elaboración propia con base en fuentes secundarias
-Honduras,2017,1,Marlene Alvarenga,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,1986,1,Virgilio Barco,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2002,1,Ingrid Betancourt,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2006,1,Alvaro Uribe Velez,1,1,Elaboración propia con base en fuentes secundarias
-Colombia,2018,1,Jorge Antonio Trujillo,0,0,Elaboración propia con base en fuentes secundarias
-Republica Dominicana,2016,1,Danilo Medina,1,1,Elaboración propia con base en fuentes secundarias
-El Salvador,1999,1,Francisco Flores,0,1,Elaboración propia con base en fuentes secundarias
-El Salvador,2019,1,Nayib Bukele,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,2,Fernando Collor de Mello,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,1989,2,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2002,2,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2002,2,Jose Serra,0,1,Elaboración propia con base en fuentes secundarias
-Brasil,2006,2,Geraldo Alckmin,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2006,2,Luiz Inacio Lula da Silva,1,1,Elaboración propia con base en fuentes secundarias
-Brasil,2010,2,Jose Serra,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2010,2,Dilma Rousseff,0,1,Elaboración propia con base en fuentes secundarias
-Brasil,2014,2,Dilma Rousseff,1,1,Elaboración propia con base en fuentes secundarias
-Brasil,2014,2,Aecio Neves,0,0,Elaboración propia con base en fuentes secundarias
-Brasil,2022,2,Jair Bolsonaro,1,1,Elaboración propia con base en fuentes secundarias
-Brasil,2022,2,Luiz Inacio Lula da Silva,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2006,2,Sebastian Pinera,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2006,2,Michelle Bachelet,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2010,2,Sebastian Pinera,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2010,2,Eduardo Frei Ruiz-Tagle,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2013,2,Michelle Bachelet,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2013,2,Evelyn Matthei,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2017,2,Sebastian Pinera,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2017,2,Alejandro Guillier,0,1,Elaboración propia con base en fuentes secundarias
-Chile,2021,2,Gabriel Boric,0,0,Elaboración propia con base en fuentes secundarias
-Chile,2021,2,Jose Antonio Kast,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2015,2,Daniel Scioli,0,1,Elaboración propia con base en fuentes secundarias
-Argentina,2015,2,Mauricio Macri,0,0,Elaboración propia con base en fuentes secundarias
-Argentina,2023,2,Sergio Massa,0,1,Elaboración propia con base en fuentes secundarias
-Argentina,2023,2,Javier Milei,0,0,Elaboración propia con base en fuentes secundarias
-Peru,1990,2,Alberto Fujimori,0,0,Elaboración propia con base en fuentes secundarias
-Peru,1990,2,Mario Vargas Llosa,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2001,2,Alejandro Toledo Manrique,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2001,2,Alan Garcia Perez,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2006,2,Alan Garcia Perez,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2006,2,Ollanta Moises Humala Tasso,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,2,Ollanta Moises Humala Tasso,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2011,2,Keiko Fujimori Higuchi,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,2,Keiko Fujimori Higuchi,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2016,2,Pedro Pablo Kuczynski,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,2,Keiko Fujimori Higuchi,0,0,Elaboración propia con base en fuentes secundarias
-Peru,2021,2,Pedro Castillo,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,2,Sixto Duran Ballen,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1979,2,Jaime Roldos,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1984,2,Rodrigo Borja,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,1984,2,Leon Febres Cordero,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,2,Andres Arauz,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2021,2,Guillermo Lasso,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,2,Luisa Gonzalez,0,0,Elaboración propia con base en fuentes secundarias
-Ecuador,2023,2,Daniel Noboa Azin,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2019,2,Luis Alberto Lacalle Pou,0,0,Elaboración propia con base en fuentes secundarias
-Uruguay,2019,2,Daniel Martinez,0,1,Elaboración propia con base en fuentes secundarias
-Guatemala,1995,2,Alvaro Arzu,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,1995,2,Alfonso Portillo,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,2,Oscar Berger,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2003,2,Alvaro Colom,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,2,Otto Perez Molina,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2011,2,Manuel Baldizon,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,2,Sandra Torres,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2015,2,Jimmy Morales,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,2,Bernardo Arevalo,0,0,Elaboración propia con base en fuentes secundarias
-Guatemala,2023,2,Sandra Torres,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,1998,2,Andres Pastrana,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,1998,2,Horacio Serpa,0,1,Elaboración propia con base en fuentes secundarias
-Colombia,2010,2,Antanas Mockus,0,0,Elaboración propia con base en fuentes secundarias
-Colombia,2010,2,Juan Manuel Santos,0,1,Elaboración propia con base en fuentes secundarias
-Colombia,2014,2,Juan Manuel Santos,1,1,Elaboración propia con base en fuentes secundarias
-Colombia,2014,2,Oscar Ivan Zuluaga,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,2,Abel Pacheco de la Espriella,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2002,2,Rolando Araya,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,2,Fabricio Alvarado Munoz,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2018,2,Carlos Alvarado Quesada,0,1,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,2,Rodrigo Chaves,0,0,Elaboración propia con base en fuentes secundarias
-Costa Rica,2022,2,Jose Maria Figueres,0,0,Elaboración propia con base en fuentes secundarias
+cat_pais,ncat_eleccion,ncat_ronda,nombres_candidatos,dico_reeleccion,dico_oficialista,dico_oficialistanoreeleccion,source_incumbencystatus
+Brasil,1989,1,Leonel Brizola,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Mario Covas,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Paulo Maluf,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Aureliano Chaves,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Guilherme Afif Domingos,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Roberto Freire,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Ronaldo Caiado,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Affonso Camargo,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Ulysses Guimaraes,0,1,1,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Fernando Henrique Cardoso,0,1,1,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Leonel Brizola,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Eneas Ferreira Carneiro,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Esperidiao Amin,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Flavio Gurgel Rocha,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Hernani Goulart Fortuna,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Orestes Quercia,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2002,1,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2002,1,Jose Serra,0,1,1,Elaboración propia con base en fuentes secundarias
+Brasil,2002,1,Ciro Gomes,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2002,1,Anthony Garotinho,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2006,1,Geraldo Alckmin,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2006,1,Jose Maria Eymael,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2006,1,Luciano Bivar,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2006,1,Cristovam Buarque,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2006,1,Heloisa Helena,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2010,1,Marina Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2010,1,Jose Serra,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2010,1,Dilma Rousseff,0,1,1,Elaboración propia con base en fuentes secundarias
+Brasil,2010,1,Plinio Sampaio,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Dilma Rousseff,1,1,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Aecio Neves,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Marina Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Luciana Genro,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Pastor Everaldo,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Levy Fidelix,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Eduardo Jorge,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,1,Jose Maria Eymael,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Alvaro Dias,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Geraldo Alckmin,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Marina Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Henrique Meirelles,0,1,1,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Guilherme Boulos,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Ciro Gomes,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Cabo Daciolo,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Jair Bolsonaro,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Fernando Haddad,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,1,Jair Bolsonaro,1,1,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,1,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,1,Luiz Felipe d'Avila,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,1,Ciro Gomes,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,1,Simone Tebet,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,1,Soraya Thronicke,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,1,Kelmon Souza,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,1989,1,Hernan Buchi,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,1989,1,Patricio Aylwin Azocar,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,1993,1,Manfred Max-Neef,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,1993,1,Jose Pinera,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,1993,1,Eugenio Pizzarro,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,1993,1,Christian Reitze,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,1993,1,Eduardo Frei Ruiz-Tagle,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,1993,1,Arturo Alessandri Besa,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2000,1,Joaquin Lavin Infante,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2000,1,Ricardo Lagos Escobar,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2006,1,Michelle Bachelet,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2006,1,Tomas Hirsch Goldschmidt,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2006,1,Joaquin Lavin Infante,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2006,1,Sebastian Pinera,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2010,1,Jorge Arrate Mac Niven,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2010,1,Marco Enriquez-Ominami,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2010,1,Sebastian Pinera,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2010,1,Eduardo Frei Ruiz-Tagle,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Franco Parisi,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Marcel Claude,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Ricardo Israel,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Marco Enriquez-Ominami,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Roxana Miranda,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Evelyn Matthei,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Alfredo Sfeir,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Tomas Jocelyn-Holt,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,1,Michelle Bachelet,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Sebastian Pinera,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Beatriz Sanchez,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Jose Antonio Kast,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Alejandro Guillier,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Carolina Goic,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Marco Enriquez-Ominami,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Eduardo Artes,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,1,Alejandro Navarro,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2021,1,Gabriel Boric,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2021,1,Sebastian Sichel,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2021,1,Jose Antonio Kast,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2021,1,Yasna Provoste,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2021,1,Eduardo Artes,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2021,1,Marco Enriquez-Ominami,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2021,1,Franco Parisi,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2015,1,Nicolas del Cano,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2015,1,Adolfo Rodriguez Saa,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2015,1,Sergio Massa,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2015,1,Margarita Stolbizer,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2015,1,Mauricio Macri,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2019,1,Juan Jose Gomez Centurion,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2019,1,Mauricio Macri,1,1,0,Elaboración propia con base en fuentes secundarias
+Argentina,2019,1,Alberto Fernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2019,1,Jose Luis Espert,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2019,1,Roberto Lavagna,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2019,1,Nicolas del Cano,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2023,1,Sergio Massa,0,1,1,Elaboración propia con base en fuentes secundarias
+Argentina,2023,1,Javier Milei,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2023,1,Myriam Bregman,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2023,1,Juan Schiaretti,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2023,1,Patricia Bullrich,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Keiko Fujimori Higuchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Oscar Luis Castaneda Lossio,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Pedro Pablo Kuczynski,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Ollanta Moises Humala Tasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Alejandro Toledo Manrique,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Juliana Reymer Rodriguez,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Humberto Pinazo Bella,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Rafael Belaunde Aubry,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Jose Manuel Rodriguez Cuadros,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Ricardo Noriega Salaverry,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,1,Jose Nique de la Puente,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Antero Flores Araoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Hernando Guerra Garcia,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Francisco Diez Canseco,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Yehude Simon,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Fernando Olivera,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Julio Guzman,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Veronika Mendoza,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Vladimir Cerron,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Gregorio Santos Guerrero,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Alan Garcia Perez,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Alejandro Toledo Manrique,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Alfredo Barnechea,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Keiko Fujimori Higuchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Miguel Hilario,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Pedro Pablo Kuczynski,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Yonhy Lescano,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,George Forsyth,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Veronika Mendoza,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Keiko Fujimori Higuchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Daniel Urresti,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Cesar Acuna,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Marco Arana,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Alberto Beingolea,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Hernando de Soto,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Andres Alcantara,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Ollanta Moises Humala Tasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Pedro Castillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Jose Vega,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Julio Guzman,0,1,1,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Rafael Santos,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Ciro Galvez,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Rafael Lopez Aliaga,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,1,Daniel Salaverry,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2003,1,Nicanor Duarte Frutos,0,1,1,Elaboración propia con base en fuentes secundarias
+Paraguay,2003,1,Julio Cesar Franco,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2003,1,Pedro Fadul,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2003,1,Guillermo Sanchez Guffanti,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2003,1,Diego Abente,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2008,1,Lino Oviedo,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2008,1,Blanca Ovelar,0,1,1,Elaboración propia con base en fuentes secundarias
+Paraguay,2008,1,Pedro Fadul,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2008,1,Fernando Lugo,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2013,1,Horacio Cartes,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2013,1,Efrain Alegre,0,1,1,Elaboración propia con base en fuentes secundarias
+Paraguay,2013,1,Miguel Carrizosa,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2013,1,Mario Ferreiro,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2013,1,Lino Oviedo,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2013,1,Anibal Carrillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2018,1,Efrain Alegre,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2018,1,Mario Abdo Benitez,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2023,1,Paraguayo Cubas,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2023,1,Euclides Acevedo,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2023,1,Jorge Gomez Otano,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2023,1,Luis Talavera,0,0,0,Elaboración propia con base en fuentes secundarias
+Paraguay,2023,1,Alfredo Luis Machuca Doldan,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,1,Jaime Roldos,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,1,Sixto Duran Ballen,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,1,Raul Clemente Huerta,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,1,Rodrigo Borja,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,1,Abdon Calderon,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,1,Rene Mauge,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2006,1,Rafael Correa,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2006,1,Cynthia Viteri,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2006,1,Leon Roldos,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2006,1,Fernando Rosero,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2006,1,Alvaro Noboa,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Lucio Gutierrez,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Alvaro Noboa,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Nelson Zavala,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Guillermo Lasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Mauricio Rodas,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Norman Wray,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Abdala Bucaram,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Guillermo Lasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Washington Pesantes,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Patricio Zuquilanda,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Ivan Espinel,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Paco Moncayo,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Cynthia Viteri,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2017,1,Lenin Moreno,0,1,1,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Andres Arauz,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Yaku Perez,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Isidro Romero,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Gustavo Larrea,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Carlos Sagnay,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Giovanny Andrade,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Paul Carrasco,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Ximena Pena,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Guillermo Lasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Guillermo Celi,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Lucio Gutierrez,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Xavier Hervas,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Cesar Montufar,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Gerson Almeida,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Juan Fernando Velasco,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,1,Pedro Freile,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,1,Yaku Perez,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,1,Bolivar Armijos,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,1,Luisa Gonzalez,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,1,Xavier Hervas,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,1,Daniel Noboa Azin,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,1,Otto Sonnenholzner,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,1,Jan Topic,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1984,1,Julio Maria Sanguinetti,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1984,1,Alberto Zumaran,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1989,1,Jorge Batlle,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1989,1,Luis Alberto Lacalle Herrera,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1989,1,Carlos Julio Pereyra,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1989,1,Alberto Zumaran,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1989,1,Liber Seregni,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1989,1,Hugo Batalla,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1994,1,Julio Maria Sanguinetti,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1994,1,Tabare Vazquez,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,1994,1,Juan Andres Ramirez,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2009,1,Pedro Bordaberry,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2009,1,Pablo Mieres,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2009,1,Raul Rodriguez,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2014,1,Luis Alberto Lacalle Pou,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2014,1,Pedro Bordaberry,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2014,1,Pablo Mieres,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2014,1,Cesar Vega,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2014,1,Gonzalo Abella,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2014,1,Rafael Fernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2019,1,Luis Alberto Lacalle Pou,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2019,1,Daniel Martinez,0,1,1,Elaboración propia con base en fuentes secundarias
+Nicaragua,2006,1,Eduardo Montealegre,0,0,0,Elaboración propia con base en fuentes secundarias
+Nicaragua,2006,1,Edmundo Jarquin,0,0,0,Elaboración propia con base en fuentes secundarias
+Nicaragua,2006,1,Jose Rizo,0,1,1,Elaboración propia con base en fuentes secundarias
+Nicaragua,2006,1,Eden Pastora,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,1994,1,Jose Salvador Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,1994,1,Samuel Lewis Galindo,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,1994,1,Ernesto Perez Balladares,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,1994,1,Ruben Blades,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,1994,1,Eduardo Vallarino Arjona,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,1994,1,Ruben Dario Carles,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2004,1,Guillermo Endara,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2004,1,Jose Miguel Aleman,0,1,1,Elaboración propia con base en fuentes secundarias
+Panama,2004,1,Ricardo Martinelli,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2004,1,Martin Torrijos,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2009,1,Ricardo Martinelli,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2009,1,Balbina Herrera,0,1,1,Elaboración propia con base en fuentes secundarias
+Panama,2014,1,Juan Carlos Navarro,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2014,1,Juan Carlos Varela,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2014,1,Genaro Lopez,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2014,1,Jose Domingo Arias,0,1,1,Elaboración propia con base en fuentes secundarias
+Panama,2014,1,Juan Jovane,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2014,1,Gerardo Barroso,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2014,1,Esteban Rodriguez,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2019,1,Ana Matilde Gomez,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2019,1,Ricardo Lombana,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2019,1,Marco Ameglio,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2019,1,Jose Isabel Blandon,0,1,1,Elaboración propia con base en fuentes secundarias
+Panama,2019,1,Saul Mendez,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2019,1,Romulo Roux,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,2019,1,Laurentino Cortizo,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1963,1,Rafael Caldera,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1963,1,Arturo Uslar Pietri,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1968,1,Gonzalo Barrios,0,1,1,Elaboración propia con base en fuentes secundarias
+Venezuela,1968,1,German Borregales,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1968,1,Luis Beltran Prieto,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1968,1,Rafael Caldera,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1968,1,Alejandro Hernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1983,1,Jaime Lusinchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1983,1,Rafael Caldera,0,1,1,Elaboración propia con base en fuentes secundarias
+Venezuela,1998,1,Claudio Fermin,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1998,1,Hugo Chavez,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Carlos Palenque,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Genaro Flores,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Luis Sandoval Moron,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Antonio Aranibar,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Roger Cortez,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Victor Hugo Cardena,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Gonzalo Sanchez de Lozada,0,1,1,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Jaime Paz Zamora,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1989,1,Hugo Banzer,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Felix Cardenas,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Jerjes Justiniano,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Mario Serrate,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Fernando Untoja,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Antonio Aranibar,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Ramiro Velasco,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Gonzalo Sanchez de Lozada,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Hugo Banzer,0,1,1,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Max Fernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1997,1,Juan Carlos Duran,0,1,1,Elaboración propia con base en fuentes secundarias
+Bolivia,1997,1,Miguel Urioste,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1997,1,Remedios Loza,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1997,1,Jaime Paz Zamora,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1997,1,Ivo Kuljis,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Gonzalo Sanchez de Lozada,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Manfred Reyes Villa,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Evo Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Felipe Quispe,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Jaime Paz Zamora,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Jorge Quiroga,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Samuel Doria Medina,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Michiaki Nagatani,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2014,1,Samuel Doria Medina,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2014,1,Juan del Granado,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2014,1,Jorge Quiroga,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2014,1,Fernando Vargas,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2020,1,Luis Arce,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2020,1,Carlos Mesa,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2020,1,Luis Fernando Camacho,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2020,1,Chi Hyun Chung,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2020,1,Jorge Quiroga,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2020,1,Maria de la Cruz Baya,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2020,1,Feliciano Mamani,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,1994,1,Cuauhtemoc Cardenas,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,1994,1,Diego Fernandez de Cevallos,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,1994,1,Ernesto Zedillo,0,1,1,Elaboración propia con base en fuentes secundarias
+Mexico,2000,1,Francisco Labastida,0,1,1,Elaboración propia con base en fuentes secundarias
+Mexico,2000,1,Cuauhtemoc Cardenas,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2000,1,Vicente Fox,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2000,1,Gilberto Rincon,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2000,1,Porfirio Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2000,1,Manuel Camacho,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2006,1,Roberto Campa,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2006,1,Patricia Mercado,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2006,1,Roberto Madrazo,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2006,1,Felipe Calderon,0,1,1,Elaboración propia con base en fuentes secundarias
+Mexico,2006,1,Andres Manuel Lopez Obrador,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2012,1,Enrique Pena Nieto,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2012,1,Andres Manuel Lopez Obrador,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2012,1,Josefina Vazquez Mota,0,1,1,Elaboración propia con base en fuentes secundarias
+Mexico,2012,1,Gabriel Quadri,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2018,1,Andres Manuel Lopez Obrador,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2018,1,Ricardo Anaya Cortes,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2018,1,Margarita Zavala,0,0,0,Elaboración propia con base en fuentes secundarias
+Mexico,2018,1,Jose Antonio Meade Kuribrena,0,1,1,Elaboración propia con base en fuentes secundarias
+Mexico,2018,1,Jaime Rodriguez Calderon,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,1,Eduardo Suger,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,1,Fritz Garcia-Gallont,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,1,Alvaro Colom,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,1,Manuel Conde Orellana,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,1,Leonel Lopez Rodas,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2007,1,Alvaro Colom,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2007,1,Rigoberta Menchu,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2007,1,Eduardo Suger,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2007,1,Otto Perez Molina,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2007,1,Alejandro Giammattei,0,1,1,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Manuel Baldizon,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Harold Caballeros,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Otto Perez Molina,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Eduardo Suger,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Sandra Torres,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Juan Gutierrez,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Adela de Torre,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Alejandro Giammattei,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Patricia de Arzu,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Rigoberta Menchu,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Zury Rios,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Alejandro Giammattei,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Jose Angel Lopez,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Miguel Angel Sandoval,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Lizardo Sosa,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Juan Gutierrez,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Luis Fernando Perez,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Mario David Garcia,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Sandra Torres,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Roberto Gonzalez,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Jimmy Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Manuel Baldizon,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Anibal Garcia,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,1,Mario Estrada,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Roberto Arzu,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Edwin Escobar,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Hector Estrada,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Alejandro Giammattei,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Edmond Mulet,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Sandra Torres,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Estuardo Galdamez,0,1,1,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Amilcar Rivera,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Isaac Farchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Manfredo Marroquin,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Benito Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Manuel Villacorta,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Pablo Ignacio Ceto,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Pablo Duarte,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Fredy Cabrera,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Anibal Garcia,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Danilo Roca,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Jose Luis Chea Urruela,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Luis Velasquez,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Ricardo Sagastume,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Armando Castillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Giulio Talamonti,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Francisco Arredondo,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Sandra Torres,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Zury Rios,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Edmond Mulet,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Manuel Conde Orellana,0,1,1,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Amilcar Pop,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Alvaro Trujillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Giovanni Reyes,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Rudio Lecsan Merida,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Luis Lam,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Julio Rivera Claveria,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Amilcar Rivera,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Manuel Villacorta,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Rudy Guzman,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Bernardo Arevalo,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Hugo Pena,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Samuel Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Carlos Pineda,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Rafael Espada,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,1993,1,Jose Oswaldo Ramos Soto,0,1,1,Elaboración propia con base en fuentes secundarias
+Honduras,1993,1,Marco Orlando Iriarte,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,1993,1,Olban Valladares,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,1993,1,Carlos Roberto Reina,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Orle Anibal Solis,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Romeo Vasquez Velasquez,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Mauricio Villeda Bermudez,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Salvador Nasralla,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Iris Xiomara Castro de Zelaya,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Jorge Rafael Aguilar,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Andres Pavon Murillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2013,1,Juan Orlando Hernandez,0,1,1,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Jose Alfonso Diaz Narvaez,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Salvador Nasralla,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Eliseo Vallecillo Reyes,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Lucas Evangelisto Aguilera,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Luis Orlando Zelaya,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Romeo Vasquez Velasquez,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Isaias Fonseca Aguilar,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,1986,1,Alvaro Gomez Hurtado,0,1,1,Elaboración propia con base en fuentes secundarias
+Colombia,1986,1,Luis Carlos Galan,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,1994,1,Andres Pastrana,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,1994,1,Ernesto Samper,0,1,1,Elaboración propia con base en fuentes secundarias
+Colombia,2002,1,Alvaro Uribe Velez,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2002,1,Noemi Sanin,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2002,1,Luis Eduardo Garzon,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2002,1,Horacio Serpa,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2002,1,Harold Bedoy,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2006,1,Antanas Mockus,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2006,1,Horacio Serpa,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2006,1,Enrique Parejo,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2006,1,Carlos Gaviria,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2006,1,Alvaro Leyva,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2010,1,Antanas Mockus,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2010,1,Noemi Sanin,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2010,1,Gustavo Petro,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2010,1,German Vargas Lleras,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2010,1,Rafael Pardo,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2010,1,Juan Manuel Santos,0,1,1,Elaboración propia con base en fuentes secundarias
+Colombia,2010,1,Sergio Fajardo,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2014,1,Clara Lopez,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2014,1,Marta Lucia Ramirez,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2014,1,Oscar Ivan Zuluaga,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2014,1,Enrique Penalosa,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2014,1,Juan Manuel Santos,1,1,0,Elaboración propia con base en fuentes secundarias
+Colombia,2018,1,Sergio Fajardo,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2018,1,Humberto de la Calle,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2018,1,Ivan Duque,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2018,1,Gustavo Petro,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2018,1,German Vargas Lleras,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2018,1,Viviane Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,Gustavo Petro,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,Ingrid Betancourt,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,Federico Gutierrez,0,1,1,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,Sergio Fajardo,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,Enrique Gomez,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,John Milton Rodriguez,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,Luis Perez,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2022,1,Rodolfo Hernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,1986,1,Oscar Arias Sanchez,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,1986,1,Rafael Calderon Fournier,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,1998,1,Jose Miguel Corrales Bolanos,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,1998,1,Miguel Angel Rodriguez Echeverria,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Otto Guevara,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Abel Pacheco de la Espriella,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Otton Solis,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Rolando Araya,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Pablo Galo Angulo Casasola,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Jose Hine Garcia,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Justo Orozco Alvarez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Jorge Walter Coto Molina,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Marvin Calvo Montoya,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Walter Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Daniel Reynolds Vargas,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Vladimir de la Cruz de Lemos,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,1,Rolando Angulo Zeledon,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Humberto Arce,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Otton Solis,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Otto Guevara,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Abel Pacheco de la Espriella,1,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Alvaro Montero,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Ricardo Toledo,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Vladimir de la Cruz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Bolivar Serrano Hidalgo,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Jose Manuel Echandi,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Antonio Alvarez Desanti,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Walter Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Juan Jose Vargas Fallas,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Jose Miguel Villalobos,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Humberto Vargas,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2006,1,Oscar Arias,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Carlos Alvarado Quesada,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Otto Guevara,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Edgardo Araya,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Mario Redondo Poveda,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Rodolfo Hernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Antonio Alvarez Desanti,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Fabricio Alvarado Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Oscar Lopez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Sergio Mena,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Jhon Vega,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Laura Chinchilla,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Otton Solis,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Otto Guevara,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Luis Fishman,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Walter Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Mayra Gonzalez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Eugenio Trejos,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Oscar Lopez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2010,1,Rolando Araya,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Johnny Araya Monge,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Jose Miguel Corrales Bolanos,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Otto Guevara,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Rodolfo Piza,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Luis Guillermo Solis,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Jose Maria Villalta,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Jose Manuel Echandi,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Hector Monestel Herrera,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Sergio Mena,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Oscar Lopez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Carlos Avendano,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Walter Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2014,1,Justo Orozco,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Stephanie Campos,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Juan Diego Castro,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,1,Rodolfo Piza,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Rodrigo Chaves,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Fabricio Alvarado Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Rolando Araya,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Welmer Ramos,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Jose Maria Villalta,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Eliecer Feinzaig,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Jose Maria Figueres,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Lineth Saborio,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Rodolfo Hernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Rodolfo Piza,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Federico Malavassi,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Carmen Quesada,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Greivin Moya,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Martin Chinchilla,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Luis Alberto Cordero,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Eduardo Cruickshank,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Christian Rivera,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Maricela Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Roulan Jimenez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Sergio Mena,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Oscar Lopez,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Natalia Diaz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Oscar Campos,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Walter Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,1,Jhon Vega,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Luis Rodolfo Abinader,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Guillermo Moreno,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Minerva Tavarez Mirabal,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Soraya Aquino,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Pelegrin Castillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Elias Wessin Chavez,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Hatuey De Camps,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,1999,1,Rodolfo Parker,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,1999,1,Facundo Guardado,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,1999,1,Ruben Zamora,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,1999,1,Salvador Nestor Garcia,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,2014,1,Salvador Sanchez Ceren,0,1,1,Elaboración propia con base en fuentes secundarias
+El Salvador,2014,1,Norman Quijano,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,2014,1,Elias Antonio Saca,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,2014,1,Rene Rodriguez Hurtado,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,2014,1,Oscar Lemu,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,2019,1,Carlos Calleja,0,0,0,Elaboración propia con base en fuentes secundarias
+El Salvador,2019,1,Hugo Martinez,0,1,1,Elaboración propia con base en fuentes secundarias
+El Salvador,2019,1,Josue Alvarado,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Fernando Collor de Mello,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,1,Silvio Santos,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1994,1,Walter Queiroz,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2006,1,Luiz Inacio Lula da Silva,1,1,0,Elaboración propia con base en fuentes secundarias
+Brasil,2018,1,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2015,1,Daniel Scioli,0,1,1,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Cesar Acuna,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Daniel Urresti,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,1,Renzo Reggiardo,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2006,1,Luis Macas Ambuludi,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Rafael Correa,1,1,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2013,1,Alberto Acosta,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2009,1,Luis Alberto Lacalle Herrera,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2009,1,Jose Mujica,0,1,1,Elaboración propia con base en fuentes secundarias
+Uruguay,2014,1,Tabare Vazquez,0,1,1,Elaboración propia con base en fuentes secundarias
+Nicaragua,2006,1,Daniel Ortega,0,0,0,Elaboración propia con base en fuentes secundarias
+Panama,1994,1,Mireya Moscoso,0,1,1,Elaboración propia con base en fuentes secundarias
+Panama,2009,1,Guillermo Endara,0,0,0,Elaboración propia con base en fuentes secundarias
+Venezuela,1963,1,Raul Leoni,0,1,1,Elaboración propia con base en fuentes secundarias
+Venezuela,1998,1,Irene Saez,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1993,1,Carlos Palenque,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,1997,1,Hugo Banzer,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Rene Blattmann,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Nicolas Valdivia,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Costa Obregon,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Rolando Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2002,1,Johnny Fernandez,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Evo Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Felipe Quispe,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Gildo Angulo,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Nestor Garcia,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2005,1,Eliseo Rodriguez,0,0,0,Elaboración propia con base en fuentes secundarias
+Bolivia,2014,1,Evo Morales,1,1,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,1,Oscar Berger,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,1,Mario Estrada,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2019,1,Zury Rios,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,1,Isaac Farchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Juan Orlando Hernandez,1,1,0,Elaboración propia con base en fuentes secundarias
+Honduras,2017,1,Marlene Alvarenga,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,1986,1,Virgilio Barco,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2002,1,Ingrid Betancourt,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2006,1,Alvaro Uribe Velez,1,1,0,Elaboración propia con base en fuentes secundarias
+Colombia,2018,1,Jorge Antonio Trujillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Republica Dominicana,2016,1,Danilo Medina,1,1,0,Elaboración propia con base en fuentes secundarias
+El Salvador,1999,1,Francisco Flores,0,1,1,Elaboración propia con base en fuentes secundarias
+El Salvador,2019,1,Nayib Bukele,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,2,Fernando Collor de Mello,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,1989,2,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2002,2,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2002,2,Jose Serra,0,1,1,Elaboración propia con base en fuentes secundarias
+Brasil,2006,2,Geraldo Alckmin,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2006,2,Luiz Inacio Lula da Silva,1,1,0,Elaboración propia con base en fuentes secundarias
+Brasil,2010,2,Jose Serra,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2010,2,Dilma Rousseff,0,1,1,Elaboración propia con base en fuentes secundarias
+Brasil,2014,2,Dilma Rousseff,1,1,0,Elaboración propia con base en fuentes secundarias
+Brasil,2014,2,Aecio Neves,0,0,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,2,Jair Bolsonaro,1,1,0,Elaboración propia con base en fuentes secundarias
+Brasil,2022,2,Luiz Inacio Lula da Silva,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2006,2,Sebastian Pinera,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2006,2,Michelle Bachelet,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2010,2,Sebastian Pinera,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2010,2,Eduardo Frei Ruiz-Tagle,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2013,2,Michelle Bachelet,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2013,2,Evelyn Matthei,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2017,2,Sebastian Pinera,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2017,2,Alejandro Guillier,0,1,1,Elaboración propia con base en fuentes secundarias
+Chile,2021,2,Gabriel Boric,0,0,0,Elaboración propia con base en fuentes secundarias
+Chile,2021,2,Jose Antonio Kast,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2015,2,Daniel Scioli,0,1,1,Elaboración propia con base en fuentes secundarias
+Argentina,2015,2,Mauricio Macri,0,0,0,Elaboración propia con base en fuentes secundarias
+Argentina,2023,2,Sergio Massa,0,1,1,Elaboración propia con base en fuentes secundarias
+Argentina,2023,2,Javier Milei,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,1990,2,Alberto Fujimori,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,1990,2,Mario Vargas Llosa,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2001,2,Alejandro Toledo Manrique,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2001,2,Alan Garcia Perez,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2006,2,Alan Garcia Perez,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2006,2,Ollanta Moises Humala Tasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,2,Ollanta Moises Humala Tasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2011,2,Keiko Fujimori Higuchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,2,Keiko Fujimori Higuchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2016,2,Pedro Pablo Kuczynski,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,2,Keiko Fujimori Higuchi,0,0,0,Elaboración propia con base en fuentes secundarias
+Peru,2021,2,Pedro Castillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,2,Sixto Duran Ballen,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1979,2,Jaime Roldos,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1984,2,Rodrigo Borja,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,1984,2,Leon Febres Cordero,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,2,Andres Arauz,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2021,2,Guillermo Lasso,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,2,Luisa Gonzalez,0,0,0,Elaboración propia con base en fuentes secundarias
+Ecuador,2023,2,Daniel Noboa Azin,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2019,2,Luis Alberto Lacalle Pou,0,0,0,Elaboración propia con base en fuentes secundarias
+Uruguay,2019,2,Daniel Martinez,0,1,1,Elaboración propia con base en fuentes secundarias
+Guatemala,1995,2,Alvaro Arzu,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,1995,2,Alfonso Portillo,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,2,Oscar Berger,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2003,2,Alvaro Colom,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,2,Otto Perez Molina,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2011,2,Manuel Baldizon,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,2,Sandra Torres,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2015,2,Jimmy Morales,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,2,Bernardo Arevalo,0,0,0,Elaboración propia con base en fuentes secundarias
+Guatemala,2023,2,Sandra Torres,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,1998,2,Andres Pastrana,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,1998,2,Horacio Serpa,0,1,1,Elaboración propia con base en fuentes secundarias
+Colombia,2010,2,Antanas Mockus,0,0,0,Elaboración propia con base en fuentes secundarias
+Colombia,2010,2,Juan Manuel Santos,0,1,1,Elaboración propia con base en fuentes secundarias
+Colombia,2014,2,Juan Manuel Santos,1,1,0,Elaboración propia con base en fuentes secundarias
+Colombia,2014,2,Oscar Ivan Zuluaga,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,2,Abel Pacheco de la Espriella,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2002,2,Rolando Araya,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,2,Fabricio Alvarado Munoz,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2018,2,Carlos Alvarado Quesada,0,1,1,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,2,Rodrigo Chaves,0,0,0,Elaboración propia con base en fuentes secundarias
+Costa Rica,2022,2,Jose Maria Figueres,0,0,0,Elaboración propia con base en fuentes secundarias

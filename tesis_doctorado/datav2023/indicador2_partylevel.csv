@@ -68,646 +68,650 @@
 "67","Brasil",2022,2,"Luiz Inacio Lula da Silva","PT",-1.896,"Proyectado. Ultimo valor disponible V-DEM",0.567,"Proyectado. Ultimo valor disponible V-DEM"
 "68","Chile",1989,1,"Hernan Buchi","Alliance",NA,"VDEM",NA,"VDEM"
 "69","Chile",1989,1,"Patricio Aylwin Azocar","C",NA,"VDEM",NA,"VDEM"
-"70","Chile",1993,1,"Eduardo Frei Ruiz-Tagle","C",NA,"VDEM",NA,"VDEM"
-"71","Chile",1993,1,"Arturo Alessandri Besa","Alliance",NA,"VDEM",NA,"VDEM"
-"72","Chile",2000,1,"Joaquin Lavin Infante","Alliance",NA,NA,NA,NA
-"73","Chile",2000,1,"Ricardo Lagos Escobar","C",NA,NA,NA,NA
-"74","Chile",2006,1,"Michelle Bachelet","C",NA,"VDEM",NA,"VDEM"
-"75","Chile",2006,1,"Tomas Hirsch Goldschmidt","PODEMOS",NA,"VDEM",NA,"VDEM"
-"76","Chile",2006,1,"Joaquin Lavin Infante","UDI",2.619,"VDEM",0.473,"VDEM"
-"77","Chile",2006,1,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
-"78","Chile",2006,2,"Sebastian Pinera","RN",1.669,"Proyectado. Ultimo valor disponible V-DEM",-0.977,"Proyectado. Ultimo valor disponible V-DEM"
-"79","Chile",2006,2,"Michelle Bachelet","C",NA,NA,NA,NA
-"80","Chile",2010,1,"Jorge Arrate Mac Niven","PODEMOS",NA,NA,NA,NA
-"81","Chile",2010,1,"Marco Enriquez-Ominami","C",NA,"VDEM",NA,"VDEM"
-"82","Chile",2010,1,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
-"83","Chile",2010,1,"Eduardo Frei Ruiz-Tagle","C",NA,"VDEM",NA,"VDEM"
-"84","Chile",2010,2,"Sebastian Pinera","RN",1.669,"Proyectado. Ultimo valor disponible V-DEM",-0.977,"Proyectado. Ultimo valor disponible V-DEM"
-"85","Chile",2010,2,"Eduardo Frei Ruiz-Tagle","C",NA,NA,NA,NA
-"86","Chile",2013,1,"Franco Parisi",NA,NA,NA,NA,NA
-"87","Chile",2013,1,"Marcel Claude","PH",NA,NA,NA,NA
-"88","Chile",2013,1,"Ricardo Israel",NA,NA,NA,NA,NA
-"89","Chile",2013,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA
-"90","Chile",2013,1,"Roxana Miranda",NA,NA,NA,NA,NA
-"91","Chile",2013,1,"Evelyn Matthei","Alliance",NA,"VDEM",NA,"VDEM"
-"92","Chile",2013,1,"Alfredo Sfeir",NA,NA,NA,NA,NA
-"93","Chile",2013,1,"Tomas Jocelyn-Holt",NA,NA,NA,NA,NA
-"94","Chile",2013,1,"Michelle Bachelet","C",NA,"VDEM",NA,"VDEM"
-"95","Chile",2013,2,"Michelle Bachelet","C",NA,"VDEM",NA,"VDEM"
-"96","Chile",2013,2,"Evelyn Matthei","Alliance",NA,"VDEM",NA,"VDEM"
-"97","Chile",2017,1,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
-"98","Chile",2017,1,"Beatriz Sanchez","Broad Front",NA,"VDEM",NA,"VDEM"
-"99","Chile",2017,1,"Jose Antonio Kast",NA,NA,NA,NA,NA
-"100","Chile",2017,1,"Alejandro Guillier",NA,NA,NA,NA,NA
-"101","Chile",2017,1,"Carolina Goic","PDC",0.312,"VDEM",-0.901,"VDEM"
-"102","Chile",2017,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA
-"103","Chile",2017,1,"Eduardo Artes",NA,NA,NA,NA,NA
-"104","Chile",2017,1,"Alejandro Navarro",NA,NA,NA,NA,NA
-"105","Chile",2017,2,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
-"106","Chile",2017,2,"Alejandro Guillier",NA,NA,NA,NA,NA
-"107","Chile",2021,1,"Gabriel Boric",NA,NA,NA,NA,NA
-"108","Chile",2021,1,"Sebastian Sichel","PODEMOS",NA,NA,NA,NA
-"109","Chile",2021,1,"Jose Antonio Kast",NA,NA,NA,NA,NA
-"110","Chile",2021,1,"Yasna Provoste","PDC",0.312,"Proyectado. Ultimo valor disponible V-DEM",-0.901,"Proyectado. Ultimo valor disponible V-DEM"
-"111","Chile",2021,1,"Eduardo Artes",NA,NA,NA,NA,NA
-"112","Chile",2021,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA
-"113","Chile",2021,1,"Franco Parisi",NA,NA,NA,NA,NA
-"114","Chile",2021,2,"Gabriel Boric",NA,NA,NA,NA,NA
-"115","Chile",2021,2,"Jose Antonio Kast",NA,NA,NA,NA,NA
-"116","Argentina",2015,1,"Nicolas del Cano",NA,NA,NA,NA,NA
-"117","Argentina",2015,1,"Adolfo Rodriguez Saa",NA,NA,NA,NA,NA
-"118","Argentina",2015,1,"Sergio Massa","United for a...",NA,"VDEM",NA,"VDEM"
-"119","Argentina",2015,1,"Margarita Stolbizer",NA,NA,NA,NA,NA
-"120","Argentina",2015,1,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
-"121","Argentina",2015,2,"Daniel Scioli","FPV-PJ",-1.659,"VDEM",2.17,"VDEM"
-"122","Argentina",2015,2,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
-"123","Argentina",2019,1,"Juan Jose Gomez Centurion",NA,NA,NA,NA,NA
-"124","Argentina",2019,1,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
-"125","Argentina",2019,1,"Alberto Fernandez","Frente de Todos",NA,"VDEM",NA,"VDEM"
-"126","Argentina",2019,1,"Jose Luis Espert",NA,NA,NA,NA,NA
-"127","Argentina",2019,1,"Roberto Lavagna","CF",0.073,"VDEM",-1.35,"VDEM"
-"128","Argentina",2019,1,"Nicolas del Cano",NA,NA,NA,NA,NA
-"129","Argentina",2023,1,"Sergio Massa",NA,NA,NA,NA,NA
-"130","Argentina",2023,1,"Javier Milei",NA,NA,NA,NA,NA
-"131","Argentina",2023,1,"Myriam Bregman",NA,NA,NA,NA,NA
-"132","Argentina",2023,1,"Juan Schiaretti",NA,NA,NA,NA,NA
-"133","Argentina",2023,1,"Patricia Bullrich","C",NA,NA,NA,NA
-"134","Argentina",2023,2,"Sergio Massa",NA,NA,NA,NA,NA
-"135","Argentina",2023,2,"Javier Milei",NA,NA,NA,NA,NA
-"136","Peru",1990,2,"Alberto Fujimori","NM",0.691,"VDEM",-0.795,"VDEM"
-"137","Peru",1990,2,"Mario Vargas Llosa","Democratic F...",2.063,"VDEM",-1.277,"VDEM"
-"138","Peru",2001,2,"Alejandro Toledo Manrique","PP",1.139,"VDEM",-1.104,"VDEM"
-"139","Peru",2001,2,"Alan Garcia Perez","APRA/PAP",0.609,"VDEM",0.118,"VDEM"
-"140","Peru",2006,2,"Alan Garcia Perez","APRA/PAP",1.818,"VDEM",0.447,"VDEM"
-"141","Peru",2006,2,"Ollanta Moises Humala Tasso","UPP",-1.197,"VDEM",-1.39,"VDEM"
-"142","Peru",2011,1,"Keiko Fujimori Higuchi","FP",2.03,"VDEM",-0.073,"VDEM"
-"143","Peru",2011,1,"Oscar Luis Castaneda Lossio","Alianza Soli...",NA,"VDEM",NA,"VDEM"
-"144","Peru",2011,1,"Pedro Pablo Kuczynski","Alianza Por ...",0.731,"VDEM",-1.769,"VDEM"
-"145","Peru",2011,1,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA
-"146","Peru",2011,1,"Alejandro Toledo Manrique","PP",1.139,"VDEM",-1.104,"VDEM"
-"147","Peru",2011,1,"Juliana Reymer Rodriguez",NA,NA,NA,NA,NA
-"148","Peru",2011,1,"Humberto Pinazo Bella",NA,NA,NA,NA,NA
-"149","Peru",2011,1,"Rafael Belaunde Aubry",NA,NA,NA,NA,NA
-"150","Peru",2011,1,"Jose Manuel Rodriguez Cuadros",NA,NA,NA,NA,NA
-"151","Peru",2011,1,"Ricardo Noriega Salaverry",NA,NA,NA,NA,NA
-"152","Peru",2011,1,"Jose Nique de la Puente",NA,NA,NA,NA,NA
-"153","Peru",2011,2,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA
-"154","Peru",2011,2,"Keiko Fujimori Higuchi","FP",2.03,"VDEM",-0.073,"VDEM"
-"155","Peru",2016,1,"Antero Flores Araoz",NA,NA,NA,NA,NA
-"156","Peru",2016,1,"Hernando Guerra Garcia",NA,NA,NA,NA,NA
-"157","Peru",2016,1,"Francisco Diez Canseco",NA,NA,NA,NA,NA
-"158","Peru",2016,1,"Yehude Simon",NA,NA,NA,NA,NA
-"159","Peru",2016,1,"Fernando Olivera",NA,NA,NA,NA,NA
-"160","Peru",2016,1,"Julio Guzman",NA,NA,NA,NA,NA
-"161","Peru",2016,1,"Veronika Mendoza","Frente Amplio",-1.945,"VDEM",-0.335,"VDEM"
-"162","Peru",2016,1,"Vladimir Cerron",NA,NA,NA,NA,NA
-"163","Peru",2016,1,"Gregorio Santos Guerrero",NA,NA,NA,NA,NA
-"164","Peru",2016,1,"Alan Garcia Perez","Popular Alli...",0.929,"VDEM",-1.076,"VDEM"
-"165","Peru",2016,1,"Alejandro Toledo Manrique",NA,NA,NA,NA,NA
-"166","Peru",2016,1,"Alfredo Barnechea","AP",0.48,"VDEM",-0.586,"VDEM"
-"167","Peru",2016,1,"Keiko Fujimori Higuchi","FP",2.022,"VDEM",0.045,"VDEM"
-"168","Peru",2016,1,"Miguel Hilario",NA,NA,NA,NA,NA
-"169","Peru",2016,1,"Pedro Pablo Kuczynski","PPK",1.424,"VDEM",-1.461,"VDEM"
-"170","Peru",2016,2,"Keiko Fujimori Higuchi","FP",2.022,"VDEM",0.045,"VDEM"
-"171","Peru",2016,2,"Pedro Pablo Kuczynski",NA,NA,NA,NA,NA
-"172","Peru",2021,1,"Yonhy Lescano","AP",0.48,"Proyectado. Ultimo valor disponible V-DEM",-0.586,"Proyectado. Ultimo valor disponible V-DEM"
-"173","Peru",2021,1,"George Forsyth",NA,NA,NA,NA,NA
-"174","Peru",2021,1,"Veronika Mendoza",NA,NA,NA,NA,NA
-"175","Peru",2021,1,"Keiko Fujimori Higuchi","FP",2.022,"Proyectado. Ultimo valor disponible V-DEM",0.045,"Proyectado. Ultimo valor disponible V-DEM"
-"176","Peru",2021,1,"Daniel Urresti",NA,NA,NA,NA,NA
-"177","Peru",2021,1,"Cesar Acuna","APEP",NA,NA,NA,NA
-"178","Peru",2021,1,"Marco Arana","Frente Amplio",-1.945,"Proyectado. Ultimo valor disponible V-DEM",-0.335,"Proyectado. Ultimo valor disponible V-DEM"
-"179","Peru",2021,1,"Alberto Beingolea",NA,NA,NA,NA,NA
-"180","Peru",2021,1,"Hernando de Soto",NA,NA,NA,NA,NA
-"181","Peru",2021,1,"Andres Alcantara",NA,NA,NA,NA,NA
-"182","Peru",2021,1,"Ollanta Moises Humala Tasso","PNP",NA,NA,NA,NA
-"183","Peru",2021,1,"Pedro Castillo",NA,NA,NA,NA,NA
-"184","Peru",2021,1,"Jose Vega",NA,NA,NA,NA,NA
-"185","Peru",2021,1,"Julio Guzman",NA,NA,NA,NA,NA
-"186","Peru",2021,1,"Rafael Santos",NA,NA,NA,NA,NA
-"187","Peru",2021,1,"Ciro Galvez",NA,NA,NA,NA,NA
-"188","Peru",2021,1,"Rafael Lopez Aliaga",NA,NA,NA,NA,NA
-"189","Peru",2021,1,"Daniel Salaverry","SP",NA,NA,NA,NA
-"190","Peru",2021,2,"Keiko Fujimori Higuchi","FP",2.022,"Proyectado. Ultimo valor disponible V-DEM",0.045,"Proyectado. Ultimo valor disponible V-DEM"
-"191","Peru",2021,2,"Pedro Castillo",NA,NA,NA,NA,NA
-"192","Paraguay",2003,1,"Nicanor Duarte Frutos","ANR-PC",0.551,"VDEM",1.392,"VDEM"
-"193","Paraguay",2003,1,"Julio Cesar Franco","PLRA",1.944,"VDEM",0.602,"VDEM"
-"194","Paraguay",2003,1,"Pedro Fadul","PPQ",2.324,"VDEM",-0.9,"VDEM"
-"195","Paraguay",2003,1,"Guillermo Sanchez Guffanti","UNACE",3.686,"VDEM",-0.434,"VDEM"
-"196","Paraguay",2003,1,"Diego Abente","PEN",NA,NA,NA,NA
-"197","Paraguay",2008,1,"Lino Oviedo","UNACE",3.686,"VDEM",-0.434,"VDEM"
-"198","Paraguay",2008,1,"Blanca Ovelar","ANR-PC",1.244,"VDEM",1.392,"VDEM"
-"199","Paraguay",2008,1,"Pedro Fadul","PPQ",2.324,"VDEM",-0.9,"VDEM"
-"200","Paraguay",2008,1,"Fernando Lugo",NA,NA,NA,NA,NA
-"201","Paraguay",2013,1,"Horacio Cartes","ANR-PC",1.655,"VDEM",1.392,"VDEM"
-"202","Paraguay",2013,1,"Efrain Alegre","PLRA",1.988,"VDEM",0.602,"VDEM"
-"203","Paraguay",2013,1,"Miguel Carrizosa","PPQ",2.324,"Proyectado. Ultimo valor disponible V-DEM",-0.9,"Proyectado. Ultimo valor disponible V-DEM"
-"204","Paraguay",2013,1,"Mario Ferreiro",NA,NA,NA,NA,NA
-"205","Paraguay",2013,1,"Lino Oviedo","UNACE",3.695,"VDEM",-0.434,"VDEM"
-"206","Paraguay",2013,1,"Anibal Carrillo","GF",-0.175,"VDEM",-0.221,"VDEM"
-"207","Paraguay",2018,1,"Efrain Alegre","GANAR",1.128,"VDEM",-0.012,"VDEM"
-"208","Paraguay",2018,1,"Mario Abdo Benitez","ANR-PC",1.655,"VDEM",1.392,"VDEM"
-"209","Paraguay",2023,1,"Paraguayo Cubas",NA,NA,NA,NA,NA
-"210","Paraguay",2023,1,"Euclides Acevedo",NA,NA,NA,NA,NA
-"211","Paraguay",2023,1,"Jorge Gomez Otano","UNACE",3.695,"Proyectado. Ultimo valor disponible V-DEM",-0.434,"Proyectado. Ultimo valor disponible V-DEM"
-"212","Paraguay",2023,1,"Luis Talavera",NA,NA,NA,NA,NA
-"213","Paraguay",2023,1,"Alfredo Luis Machuca Doldan",NA,NA,NA,NA,NA
-"214","Ecuador",1979,1,"Jaime Roldos","CFP",-0.915,"VDEM",0.023,"VDEM"
-"215","Ecuador",1979,1,"Sixto Duran Ballen","PSC",2.255,"VDEM",0.172,"VDEM"
-"216","Ecuador",1979,1,"Raul Clemente Huerta",NA,NA,NA,NA,NA
-"217","Ecuador",1979,1,"Rodrigo Borja","ID",-0.883,"VDEM",0.493,"VDEM"
-"218","Ecuador",1979,1,"Abdon Calderon","FRA",NA,NA,NA,NA
-"219","Ecuador",1979,1,"Rene Mauge",NA,NA,NA,NA,NA
-"220","Ecuador",1979,2,"Sixto Duran Ballen","PSC",2.255,"VDEM",0.172,"VDEM"
-"221","Ecuador",1979,2,"Jaime Roldos","CFP",-0.915,"VDEM",0.023,"VDEM"
-"222","Ecuador",1984,2,"Rodrigo Borja","ID",-0.883,"VDEM",0.556,"VDEM"
-"223","Ecuador",1984,2,"Leon Febres Cordero","PSC",2.255,"VDEM",0.636,"VDEM"
-"224","Ecuador",2006,1,"Rafael Correa","PAIS",NA,NA,NA,NA
-"225","Ecuador",2006,1,"Cynthia Viteri","PSC",2.253,"VDEM",0.397,"VDEM"
-"226","Ecuador",2006,1,"Leon Roldos","ID",-0.532,"VDEM",-0.904,"VDEM"
-"227","Ecuador",2006,1,"Fernando Rosero","PRE",-0.148,"VDEM",-0.808,"VDEM"
-"228","Ecuador",2006,1,"Alvaro Noboa","PRIAN",1.591,"VDEM",-0.734,"VDEM"
-"229","Ecuador",2013,1,"Lucio Gutierrez","PSP",-0.017,"VDEM",-1.098,"VDEM"
-"230","Ecuador",2013,1,"Alvaro Noboa","PRIAN",1.591,"Proyectado. Ultimo valor disponible V-DEM",-1.706,"Proyectado. Ultimo valor disponible V-DEM"
-"231","Ecuador",2013,1,"Nelson Zavala","PRE",-0.13,"Proyectado. Ultimo valor disponible V-DEM",-0.801,"Proyectado. Ultimo valor disponible V-DEM"
-"232","Ecuador",2013,1,"Guillermo Lasso","CREO",1.501,"VDEM",-0.467,"VDEM"
-"233","Ecuador",2013,1,"Mauricio Rodas",NA,NA,NA,NA,NA
-"234","Ecuador",2013,1,"Norman Wray",NA,NA,NA,NA,NA
-"235","Ecuador",2017,1,"Abdala Bucaram",NA,NA,NA,NA,NA
-"236","Ecuador",2017,1,"Guillermo Lasso","CREO",1.501,"VDEM",-0.467,"VDEM"
-"237","Ecuador",2017,1,"Washington Pesantes","UE",NA,NA,NA,NA
-"238","Ecuador",2017,1,"Patricio Zuquilanda","PSP",-0.017,"Proyectado. Ultimo valor disponible V-DEM",-1.098,"Proyectado. Ultimo valor disponible V-DEM"
-"239","Ecuador",2017,1,"Ivan Espinel",NA,NA,NA,NA,NA
-"240","Ecuador",2017,1,"Paco Moncayo","ID",-0.532,"Proyectado. Ultimo valor disponible V-DEM",-0.904,"Proyectado. Ultimo valor disponible V-DEM"
-"241","Ecuador",2017,1,"Cynthia Viteri","PSC",2.158,"VDEM",0.268,"VDEM"
-"242","Ecuador",2017,1,"Lenin Moreno","PAIS",-1.539,"VDEM",0.865,"VDEM"
-"243","Ecuador",2021,1,"Andres Arauz",NA,NA,NA,NA,NA
-"244","Ecuador",2021,1,"Yaku Perez","MUPP-NP",-2.175,"Proyectado. Ultimo valor disponible V-DEM",0.493,"Proyectado. Ultimo valor disponible V-DEM"
-"245","Ecuador",2021,1,"Isidro Romero","PA",NA,NA,NA,NA
-"246","Ecuador",2021,1,"Gustavo Larrea",NA,NA,NA,NA,NA
-"247","Ecuador",2021,1,"Carlos Sagnay",NA,NA,NA,NA,NA
-"248","Ecuador",2021,1,"Giovanny Andrade","UE",NA,NA,NA,NA
-"249","Ecuador",2021,1,"Paul Carrasco",NA,NA,NA,NA,NA
-"250","Ecuador",2021,1,"Ximena Pena","PAIS",-1.539,"Proyectado. Ultimo valor disponible V-DEM",0.865,"Proyectado. Ultimo valor disponible V-DEM"
-"251","Ecuador",2021,1,"Guillermo Lasso","CREO",1.501,"Proyectado. Ultimo valor disponible V-DEM",-0.467,"Proyectado. Ultimo valor disponible V-DEM"
-"252","Ecuador",2021,1,"Guillermo Celi",NA,NA,NA,NA,NA
-"253","Ecuador",2021,1,"Lucio Gutierrez",NA,NA,NA,NA,NA
-"254","Ecuador",2021,1,"Xavier Hervas","ID",-0.532,"Proyectado. Ultimo valor disponible V-DEM",-0.904,"Proyectado. Ultimo valor disponible V-DEM"
-"255","Ecuador",2021,1,"Cesar Montufar",NA,NA,NA,NA,NA
-"256","Ecuador",2021,1,"Gerson Almeida",NA,NA,NA,NA,NA
-"257","Ecuador",2021,1,"Juan Fernando Velasco",NA,NA,NA,NA,NA
-"258","Ecuador",2021,1,"Pedro Freile",NA,NA,NA,NA,NA
-"259","Ecuador",2021,2,"Andres Arauz",NA,NA,NA,NA,NA
-"260","Ecuador",2021,2,"Guillermo Lasso","CREO",1.501,"Proyectado. Ultimo valor disponible V-DEM",-0.467,"Proyectado. Ultimo valor disponible V-DEM"
-"261","Ecuador",2023,1,"Yaku Perez",NA,NA,NA,NA,NA
-"262","Ecuador",2023,1,"Bolivar Armijos",NA,NA,NA,NA,NA
-"263","Ecuador",2023,1,"Luisa Gonzalez",NA,NA,NA,NA,NA
-"264","Ecuador",2023,1,"Xavier Hervas",NA,NA,NA,NA,NA
-"265","Ecuador",2023,1,"Daniel Noboa Azin",NA,NA,NA,NA,NA
-"266","Ecuador",2023,1,"Otto Sonnenholzner","PA",NA,NA,NA,NA
-"267","Ecuador",2023,1,"Jan Topic","PSC",2.158,"Proyectado. Ultimo valor disponible V-DEM",0.268,"Proyectado. Ultimo valor disponible V-DEM"
-"268","Ecuador",2023,2,"Luisa Gonzalez",NA,NA,NA,NA,NA
-"269","Ecuador",2023,2,"Daniel Noboa Azin",NA,NA,NA,NA,NA
-"270","Uruguay",1984,1,"Julio Maria Sanguinetti","PC",1.012,"VDEM",1.562,"VDEM"
-"271","Uruguay",1984,1,"Alberto Zumaran","PN",0.66,"VDEM",1.843,"VDEM"
-"272","Uruguay",1989,1,"Jorge Batlle","PC",1.307,"VDEM",1.499,"VDEM"
-"273","Uruguay",1989,1,"Luis Alberto Lacalle Herrera","PN",1.594,"VDEM",1.78,"VDEM"
-"274","Uruguay",1989,1,"Carlos Julio Pereyra","PN",1.594,"VDEM",1.78,"VDEM"
-"275","Uruguay",1989,1,"Alberto Zumaran","PN",1.594,"VDEM",1.78,"VDEM"
-"276","Uruguay",1989,1,"Liber Seregni","FA/EP",-1.546,"VDEM",0.734,"VDEM"
-"277","Uruguay",1989,1,"Hugo Batalla","NE",-0.487,"VDEM",-0.062,"VDEM"
-"278","Uruguay",1994,1,"Julio Maria Sanguinetti","PC",1.006,"VDEM",1.499,"VDEM"
-"279","Uruguay",1994,1,"Tabare Vazquez","FA/EP",-1.538,"VDEM",0.734,"VDEM"
-"280","Uruguay",1994,1,"Juan Andres Ramirez","PN",1.395,"VDEM",1.78,"VDEM"
-"281","Uruguay",2009,1,"Pedro Bordaberry","PC",1.269,"VDEM",0.805,"VDEM"
-"282","Uruguay",2009,1,"Pablo Mieres",NA,NA,NA,NA,NA
-"283","Uruguay",2009,1,"Raul Rodriguez",NA,NA,NA,NA,NA
-"284","Uruguay",2014,1,"Luis Alberto Lacalle Pou","PN",1.269,"VDEM",1.78,"VDEM"
-"285","Uruguay",2014,1,"Pedro Bordaberry","PC",1.269,"VDEM",0.805,"VDEM"
-"286","Uruguay",2014,1,"Pablo Mieres",NA,NA,NA,NA,NA
-"287","Uruguay",2014,1,"Cesar Vega",NA,NA,NA,NA,NA
-"288","Uruguay",2014,1,"Gonzalo Abella",NA,NA,NA,NA,NA
-"289","Uruguay",2014,1,"Rafael Fernandez",NA,NA,NA,NA,NA
-"290","Uruguay",2019,1,"Luis Alberto Lacalle Pou","PN",1.269,"VDEM",1.8,"VDEM"
-"291","Uruguay",2019,1,"Daniel Martinez","FA/EP",-1.077,"VDEM",1.152,"VDEM"
-"292","Uruguay",2019,2,"Luis Alberto Lacalle Pou","PN",1.269,"VDEM",1.8,"VDEM"
-"293","Uruguay",2019,2,"Daniel Martinez","FA/EP",-1.077,"VDEM",1.152,"VDEM"
-"294","Nicaragua",2006,1,"Eduardo Montealegre","ALN",2.025,"VDEM",-0.685,"VDEM"
-"295","Nicaragua",2006,1,"Edmundo Jarquin","MRS",-0.863,"VDEM",-2.365,"VDEM"
-"296","Nicaragua",2006,1,"Jose Rizo","PLC",2.008,"VDEM",0.141,"VDEM"
-"297","Nicaragua",2006,1,"Eden Pastora",NA,NA,NA,NA,NA
-"298","Panama",1994,1,"Jose Salvador Munoz","PPA",2.164,"VDEM",2.352,"VDEM"
-"299","Panama",1994,1,"Samuel Lewis Galindo","PS",0.766,"VDEM",-0.028,"VDEM"
-"300","Panama",1994,1,"Ernesto Perez Balladares","PRD",-0.871,"VDEM",2.36,"VDEM"
-"301","Panama",1994,1,"Ruben Blades","MPE",-0.457,"VDEM",-0.171,"VDEM"
-"302","Panama",1994,1,"Eduardo Vallarino Arjona","PP-PDC",0.565,"VDEM",1.037,"VDEM"
-"303","Panama",1994,1,"Ruben Dario Carles","MOLIRENA",1.414,"VDEM",2.002,"VDEM"
-"304","Panama",2004,1,"Guillermo Endara","PS",0.775,"VDEM",0.234,"VDEM"
-"305","Panama",2004,1,"Jose Miguel Aleman",NA,NA,NA,NA,NA
-"306","Panama",2004,1,"Ricardo Martinelli","CD",1.157,"VDEM",1.135,"VDEM"
-"307","Panama",2004,1,"Martin Torrijos","PRD",-0.871,"VDEM",2.864,"VDEM"
-"308","Panama",2009,1,"Ricardo Martinelli",NA,NA,NA,NA,NA
-"309","Panama",2009,1,"Balbina Herrera","PRD",-0.871,"VDEM",2.372,"VDEM"
-"310","Panama",2014,1,"Juan Carlos Navarro","PRD",-0.871,"VDEM",1.976,"VDEM"
-"311","Panama",2014,1,"Juan Carlos Varela","PPA",2.164,"VDEM",2.821,"VDEM"
-"312","Panama",2014,1,"Genaro Lopez",NA,NA,NA,NA,NA
-"313","Panama",2014,1,"Jose Domingo Arias","MOLIRENA",1.408,"VDEM",1.666,"VDEM"
-"314","Panama",2014,1,"Juan Jovane",NA,NA,NA,NA,NA
-"315","Panama",2014,1,"Gerardo Barroso",NA,NA,NA,NA,NA
-"316","Panama",2014,1,"Esteban Rodriguez",NA,NA,NA,NA,NA
-"317","Panama",2019,1,"Ana Matilde Gomez",NA,NA,NA,NA,NA
-"318","Panama",2019,1,"Ricardo Lombana",NA,NA,NA,NA,NA
-"319","Panama",2019,1,"Marco Ameglio",NA,NA,NA,NA,NA
-"320","Panama",2019,1,"Jose Isabel Blandon","PPA",2.165,"VDEM",1.992,"VDEM"
-"321","Panama",2019,1,"Saul Mendez",NA,NA,NA,NA,NA
-"322","Panama",2019,1,"Romulo Roux",NA,NA,NA,NA,NA
-"323","Panama",2019,1,"Laurentino Cortizo","PRD",-0.491,"VDEM",2.341,"VDEM"
-"324","Venezuela",1963,1,"Rafael Caldera","COPEI",NA,"VDEM",NA,"VDEM"
-"325","Venezuela",1963,1,"Arturo Uslar Pietri","IPFN",NA,"VDEM",NA,"VDEM"
-"326","Venezuela",1968,1,"Gonzalo Barrios","AD",NA,"VDEM",NA,"VDEM"
-"327","Venezuela",1968,1,"German Borregales",NA,NA,NA,NA,NA
-"328","Venezuela",1968,1,"Luis Beltran Prieto","MEP",NA,"VDEM",NA,"VDEM"
-"329","Venezuela",1968,1,"Rafael Caldera","COPEI",NA,"VDEM",NA,"VDEM"
-"330","Venezuela",1968,1,"Alejandro Hernandez",NA,NA,NA,NA,NA
-"331","Venezuela",1983,1,"Jaime Lusinchi","AD",-0.62,"VDEM",2.346,"VDEM"
-"332","Venezuela",1983,1,"Rafael Caldera","COPEI",0.5,"VDEM",2.172,"VDEM"
-"333","Venezuela",1998,1,"Claudio Fermin",NA,NA,NA,NA,NA
-"334","Venezuela",1998,1,"Hugo Chavez","MVR",-2.395,"VDEM",1.487,"VDEM"
-"335","Bolivia",1989,1,"Carlos Palenque","CONDEPA",-1.013,"VDEM",-0.982,"VDEM"
-"336","Bolivia",1989,1,"Genaro Flores",NA,NA,NA,NA,NA
-"337","Bolivia",1989,1,"Luis Sandoval Moron",NA,NA,NA,NA,NA
-"338","Bolivia",1989,1,"Antonio Aranibar","IU",-2.426,"VDEM",-1.784,"VDEM"
-"339","Bolivia",1989,1,"Roger Cortez",NA,NA,NA,NA,NA
-"340","Bolivia",1989,1,"Victor Hugo Cardena",NA,NA,NA,NA,NA
-"341","Bolivia",1989,1,"Gonzalo Sanchez de Lozada","MNR",1.825,"VDEM",1.246,"VDEM"
-"342","Bolivia",1989,1,"Jaime Paz Zamora","MIR",-0.94,"VDEM",-0.017,"VDEM"
-"343","Bolivia",1989,1,"Hugo Banzer","ADN",1.977,"VDEM",0.379,"VDEM"
-"344","Bolivia",1993,1,"Felix Cardenas",NA,NA,NA,NA,NA
-"345","Bolivia",1993,1,"Jerjes Justiniano",NA,NA,NA,NA,NA
-"346","Bolivia",1993,1,"Mario Serrate",NA,NA,NA,NA,NA
-"347","Bolivia",1993,1,"Fernando Untoja",NA,NA,NA,NA,NA
-"348","Bolivia",1993,1,"Antonio Aranibar","MBL",-1.585,"VDEM",-2.493,"VDEM"
-"349","Bolivia",1993,1,"Ramiro Velasco","IU",-2.426,"Proyectado. Ultimo valor disponible V-DEM",-1.784,"Proyectado. Ultimo valor disponible V-DEM"
-"350","Bolivia",1993,1,"Gonzalo Sanchez de Lozada","MNR",1.056,"VDEM",1.246,"VDEM"
-"351","Bolivia",1993,1,"Hugo Banzer","AP",0.776,"VDEM",0.214,"VDEM"
-"352","Bolivia",1993,1,"Max Fernandez","UCS",0.047,"VDEM",-0.794,"VDEM"
-"353","Bolivia",1997,1,"Juan Carlos Duran","MNR",1.406,"VDEM",0.936,"VDEM"
-"354","Bolivia",1997,1,"Miguel Urioste",NA,NA,NA,NA,NA
-"355","Bolivia",1997,1,"Remedios Loza","CONDEPA",-0.644,"VDEM",-1.011,"VDEM"
-"356","Bolivia",1997,1,"Jaime Paz Zamora","MIR",-0.544,"VDEM",-0.017,"VDEM"
-"357","Bolivia",1997,1,"Ivo Kuljis","UCS",0.047,"VDEM",-0.794,"VDEM"
-"358","Bolivia",2002,1,"Gonzalo Sanchez de Lozada","MNR",1.406,"VDEM",0.936,"VDEM"
-"359","Bolivia",2002,1,"Manfred Reyes Villa","NFR",1.749,"VDEM",-0.753,"VDEM"
-"360","Bolivia",2002,1,"Evo Morales","MAS",-2.343,"VDEM",1.06,"VDEM"
-"361","Bolivia",2002,1,"Felipe Quispe",NA,NA,NA,NA,NA
-"362","Bolivia",2002,1,"Jaime Paz Zamora","MIR",-0.313,"VDEM",-0.402,"VDEM"
-"363","Bolivia",2005,1,"Jorge Quiroga","Podemos",1.405,"VDEM",-1.113,"VDEM"
-"364","Bolivia",2005,1,"Samuel Doria Medina","UN",0.279,"VDEM",-1.623,"VDEM"
-"365","Bolivia",2005,1,"Michiaki Nagatani","MNR",1.406,"VDEM",-0.361,"VDEM"
-"366","Bolivia",2014,1,"Samuel Doria Medina","UN",0.882,"VDEM",-1.325,"VDEM"
-"367","Bolivia",2014,1,"Juan del Granado",NA,NA,NA,NA,NA
-"368","Bolivia",2014,1,"Jorge Quiroga","PDC",1.287,"VDEM",-1.448,"VDEM"
-"369","Bolivia",2014,1,"Fernando Vargas",NA,NA,NA,NA,NA
-"370","Bolivia",2020,1,"Luis Arce","MAS",-1.92,"Proyectado. Ultimo valor disponible V-DEM",1.311,"Proyectado. Ultimo valor disponible V-DEM"
-"371","Bolivia",2020,1,"Carlos Mesa",NA,NA,NA,NA,NA
-"372","Bolivia",2020,1,"Luis Fernando Camacho",NA,NA,NA,NA,NA
-"373","Bolivia",2020,1,"Chi Hyun Chung",NA,NA,NA,NA,NA
-"374","Bolivia",2020,1,"Jorge Quiroga",NA,NA,NA,NA,NA
-"375","Bolivia",2020,1,"Maria de la Cruz Baya","ADN",1.018,"Proyectado. Ultimo valor disponible V-DEM",0.211,"Proyectado. Ultimo valor disponible V-DEM"
-"376","Bolivia",2020,1,"Feliciano Mamani",NA,NA,NA,NA,NA
-"377","Mexico",1994,1,"Cuauhtemoc Cardenas","PRD",-1.531,"VDEM",0.649,"VDEM"
-"378","Mexico",1994,1,"Diego Fernandez de Cevallos","PAN",1.997,"VDEM",0.97,"VDEM"
-"379","Mexico",1994,1,"Ernesto Zedillo","PRI",0.825,"VDEM",2.663,"VDEM"
-"380","Mexico",2000,1,"Francisco Labastida","PRI",0.753,"VDEM",2.781,"VDEM"
-"381","Mexico",2000,1,"Cuauhtemoc Cardenas","Alliance for...",NA,NA,NA,NA
-"382","Mexico",2000,1,"Vicente Fox","PAN",2.254,"VDEM",1.65,"VDEM"
-"383","Mexico",2000,1,"Gilberto Rincon",NA,NA,NA,NA,NA
-"384","Mexico",2000,1,"Porfirio Munoz",NA,NA,NA,NA,NA
-"385","Mexico",2000,1,"Manuel Camacho",NA,NA,NA,NA,NA
-"386","Mexico",2006,1,"Roberto Campa",NA,NA,NA,NA,NA
-"387","Mexico",2006,1,"Patricia Mercado",NA,NA,NA,NA,NA
-"388","Mexico",2006,1,"Roberto Madrazo","Alliance for...",NA,"VDEM",NA,"VDEM"
-"389","Mexico",2006,1,"Felipe Calderon","PAN",2.012,"VDEM",1.425,"VDEM"
-"390","Mexico",2006,1,"Andres Manuel Lopez Obrador","Coalition fo...",NA,"VDEM",NA,"VDEM"
-"391","Mexico",2012,1,"Enrique Pena Nieto","PRI",1.016,"VDEM",2.767,"VDEM"
-"392","Mexico",2012,1,"Andres Manuel Lopez Obrador","PRD",-1.456,"VDEM",1.261,"VDEM"
-"393","Mexico",2012,1,"Josefina Vazquez Mota","PAN",2.013,"VDEM",1.817,"VDEM"
-"394","Mexico",2012,1,"Gabriel Quadri",NA,NA,NA,NA,NA
-"395","Mexico",2018,1,"Andres Manuel Lopez Obrador","MORENA",-1.698,"VDEM",0.97,"VDEM"
-"396","Mexico",2018,1,"Ricardo Anaya Cortes","PAN",1.97,"VDEM",1.72,"VDEM"
-"397","Mexico",2018,1,"Margarita Zavala",NA,NA,NA,NA,NA
-"398","Mexico",2018,1,"Jose Antonio Meade Kuribrena","PRI",0.949,"VDEM",2.667,"VDEM"
-"399","Mexico",2018,1,"Jaime Rodriguez Calderon",NA,NA,NA,NA,NA
-"400","Guatemala",1995,2,"Alvaro Arzu","PAN",1.64,"VDEM",-0.892,"VDEM"
-"401","Guatemala",1995,2,"Alfonso Portillo","FRG",2.146,"VDEM",-0.191,"VDEM"
-"402","Guatemala",2003,1,"Eduardo Suger",NA,NA,NA,NA,NA
-"403","Guatemala",2003,1,"Fritz Garcia-Gallont","PU",2.984,"VDEM",-2.646,"VDEM"
-"404","Guatemala",2003,1,"Alvaro Colom","UNE",-0.932,"VDEM",-0.264,"VDEM"
-"405","Guatemala",2003,1,"Manuel Conde Orellana",NA,NA,NA,NA,NA
-"406","Guatemala",2003,1,"Leonel Lopez Rodas","PAN",1.64,"VDEM",-1.982,"VDEM"
-"407","Guatemala",2003,2,"Oscar Berger","GANA",1.041,"VDEM",-0.949,"VDEM"
-"408","Guatemala",2003,2,"Alvaro Colom","UNE",-0.932,"VDEM",-0.264,"VDEM"
-"409","Guatemala",2007,1,"Alvaro Colom","UNE",-0.932,"VDEM",-0.264,"VDEM"
-"410","Guatemala",2007,1,"Rigoberta Menchu","EG",-0.92,"VDEM",-1.951,"VDEM"
-"411","Guatemala",2007,1,"Eduardo Suger","CASA",1.078,"VDEM",-2.62,"VDEM"
-"412","Guatemala",2007,1,"Otto Perez Molina","PP",2.479,"VDEM",-1.596,"VDEM"
-"413","Guatemala",2007,1,"Alejandro Giammattei","GANA",1.041,"VDEM",-1.609,"VDEM"
-"414","Guatemala",2011,1,"Manuel Baldizon","LIDER",0.868,"VDEM",-1.203,"VDEM"
-"415","Guatemala",2011,1,"Harold Caballeros","VIVA-EG",0.612,"VDEM",-2.673,"VDEM"
-"416","Guatemala",2011,1,"Otto Perez Molina","PP",2.479,"VDEM",-0.523,"VDEM"
-"417","Guatemala",2011,1,"Eduardo Suger","CREO",0.858,"VDEM",-1.063,"VDEM"
-"418","Guatemala",2011,1,"Sandra Torres","UNE-GANA",-0.22,"VDEM",-0.511,"VDEM"
-"419","Guatemala",2011,1,"Juan Gutierrez","PAN",1.64,"Proyectado. Ultimo valor disponible V-DEM",-1.982,"Proyectado. Ultimo valor disponible V-DEM"
-"420","Guatemala",2011,1,"Adela de Torre",NA,NA,NA,NA,NA
-"421","Guatemala",2011,1,"Alejandro Giammattei","CASA",1.078,"Proyectado. Ultimo valor disponible V-DEM",-2.62,"Proyectado. Ultimo valor disponible V-DEM"
-"422","Guatemala",2011,1,"Patricia de Arzu","PU",2.984,"Proyectado. Ultimo valor disponible V-DEM",-2.646,"Proyectado. Ultimo valor disponible V-DEM"
-"423","Guatemala",2011,1,"Rigoberta Menchu","WINAQ",NA,NA,NA,NA
-"424","Guatemala",2011,2,"Otto Perez Molina","PP",2.479,"VDEM",-0.523,"VDEM"
-"425","Guatemala",2011,2,"Manuel Baldizon","LIDER",0.868,"VDEM",-1.203,"VDEM"
-"426","Guatemala",2015,1,"Zury Rios","ViVa",2.445,"VDEM",-1.762,"VDEM"
-"427","Guatemala",2015,1,"Alejandro Giammattei",NA,NA,NA,NA,NA
-"428","Guatemala",2015,1,"Jose Angel Lopez","EG",-0.92,"Proyectado. Ultimo valor disponible V-DEM",-1.951,"Proyectado. Ultimo valor disponible V-DEM"
-"429","Guatemala",2015,1,"Miguel Angel Sandoval","WINAQ",NA,NA,NA,NA
-"430","Guatemala",2015,1,"Lizardo Sosa","T",1.09,"VDEM",-1.47,"VDEM"
-"431","Guatemala",2015,1,"Juan Gutierrez","PAN",1.64,"Proyectado. Ultimo valor disponible V-DEM",-1.982,"Proyectado. Ultimo valor disponible V-DEM"
-"432","Guatemala",2015,1,"Luis Fernando Perez",NA,NA,NA,NA,NA
-"433","Guatemala",2015,1,"Mario David Garcia","PP",2.479,"VDEM",-1.202,"VDEM"
-"434","Guatemala",2015,1,"Sandra Torres","UNE",-0.932,"VDEM",-0.264,"VDEM"
-"435","Guatemala",2015,1,"Roberto Gonzalez","CREO",0.858,"VDEM",-1.063,"VDEM"
-"436","Guatemala",2015,1,"Jimmy Morales","FCN",2.459,"VDEM",-1.008,"VDEM"
-"437","Guatemala",2015,1,"Manuel Baldizon","LIDER",0.868,"VDEM",-1.203,"VDEM"
-"438","Guatemala",2015,1,"Anibal Garcia",NA,NA,NA,NA,NA
-"439","Guatemala",2015,1,"Mario Estrada","UCN",0.449,"Proyectado. Ultimo valor disponible V-DEM",-0.52,"Proyectado. Ultimo valor disponible V-DEM"
-"440","Guatemala",2015,2,"Sandra Torres","UNE",-0.932,"VDEM",-0.264,"VDEM"
-"441","Guatemala",2015,2,"Jimmy Morales","FCN",2.459,"VDEM",-1.008,"VDEM"
-"442","Guatemala",2019,1,"Roberto Arzu","PAN",1.64,"Proyectado. Ultimo valor disponible V-DEM",-1.982,"Proyectado. Ultimo valor disponible V-DEM"
-"443","Guatemala",2019,1,"Edwin Escobar",NA,NA,NA,NA,NA
-"444","Guatemala",2019,1,"Hector Estrada","CREO",0.858,"VDEM",-1.063,"VDEM"
-"445","Guatemala",2019,1,"Alejandro Giammattei","Vamos",2.477,"VDEM",-1.982,"VDEM"
-"446","Guatemala",2019,1,"Edmond Mulet","PHG",1.476,"VDEM",-1.77,"VDEM"
-"447","Guatemala",2019,1,"Sandra Torres","UNE",-0.932,"VDEM",-0.264,"VDEM"
-"448","Guatemala",2019,1,"Estuardo Galdamez","FCN",2.459,"VDEM",-1.008,"VDEM"
-"449","Guatemala",2019,1,"Amilcar Rivera",NA,NA,NA,NA,NA
-"450","Guatemala",2019,1,"Isaac Farchi","ViVa",2.445,"Proyectado. Ultimo valor disponible V-DEM",-1.762,"Proyectado. Ultimo valor disponible V-DEM"
-"451","Guatemala",2019,1,"Manfredo Marroquin","EG",-0.92,"Proyectado. Ultimo valor disponible V-DEM",-1.951,"Proyectado. Ultimo valor disponible V-DEM"
-"452","Guatemala",2019,1,"Benito Morales","FCN",2.459,"VDEM",-1.008,"VDEM"
-"453","Guatemala",2019,1,"Manuel Villacorta","WINAQ",NA,NA,NA,NA
-"454","Guatemala",2019,1,"Pablo Ignacio Ceto",NA,NA,NA,NA,NA
-"455","Guatemala",2019,1,"Pablo Duarte","PU",2.984,"Proyectado. Ultimo valor disponible V-DEM",-2.646,"Proyectado. Ultimo valor disponible V-DEM"
-"456","Guatemala",2019,1,"Fredy Cabrera","T",1.09,"VDEM",-1.47,"VDEM"
-"457","Guatemala",2019,1,"Anibal Garcia",NA,NA,NA,NA,NA
-"458","Guatemala",2019,1,"Danilo Roca",NA,NA,NA,NA,NA
-"459","Guatemala",2019,1,"Jose Luis Chea Urruela",NA,NA,NA,NA,NA
-"460","Guatemala",2019,1,"Luis Velasquez",NA,NA,NA,NA,NA
-"461","Guatemala",2023,1,"Ricardo Sagastume","T",1.09,"Proyectado. Ultimo valor disponible V-DEM",-1.47,"Proyectado. Ultimo valor disponible V-DEM"
-"462","Guatemala",2023,1,"Armando Castillo","ViVa",2.445,"Proyectado. Ultimo valor disponible V-DEM",-1.762,"Proyectado. Ultimo valor disponible V-DEM"
-"463","Guatemala",2023,1,"Giulio Talamonti",NA,NA,NA,NA,NA
-"464","Guatemala",2023,1,"Francisco Arredondo","CREO",0.858,"Proyectado. Ultimo valor disponible V-DEM",-1.063,"Proyectado. Ultimo valor disponible V-DEM"
-"465","Guatemala",2023,1,"Sandra Torres","UNE",-0.932,"Proyectado. Ultimo valor disponible V-DEM",-0.264,"Proyectado. Ultimo valor disponible V-DEM"
-"466","Guatemala",2023,1,"Zury Rios",NA,NA,NA,NA,NA
-"467","Guatemala",2023,1,"Edmond Mulet",NA,NA,NA,NA,NA
-"468","Guatemala",2023,1,"Manuel Conde Orellana",NA,NA,NA,NA,NA
-"469","Guatemala",2023,1,"Amilcar Pop","WINAQ",NA,NA,NA,NA
-"470","Guatemala",2023,1,"Alvaro Trujillo",NA,NA,NA,NA,NA
-"471","Guatemala",2023,1,"Giovanni Reyes","BIEN",NA,NA,NA,NA
-"472","Guatemala",2023,1,"Rudio Lecsan Merida","PHG",1.476,"Proyectado. Ultimo valor disponible V-DEM",-1.77,"Proyectado. Ultimo valor disponible V-DEM"
-"473","Guatemala",2023,1,"Luis Lam",NA,NA,NA,NA,NA
-"474","Guatemala",2023,1,"Julio Rivera Claveria",NA,NA,NA,NA,NA
-"475","Guatemala",2023,1,"Amilcar Rivera",NA,NA,NA,NA,NA
-"476","Guatemala",2023,1,"Manuel Villacorta",NA,NA,NA,NA,NA
-"477","Guatemala",2023,1,"Rudy Guzman",NA,NA,NA,NA,NA
-"478","Guatemala",2023,1,"Bernardo Arevalo","Semilla",NA,NA,NA,NA
-"479","Guatemala",2023,1,"Hugo Pena",NA,NA,NA,NA,NA
-"480","Guatemala",2023,2,"Bernardo Arevalo","Semilla",NA,NA,NA,NA
-"481","Guatemala",2023,2,"Sandra Torres","UNE",-0.932,"Proyectado. Ultimo valor disponible V-DEM",-0.264,"Proyectado. Ultimo valor disponible V-DEM"
-"482","Guatemala",2023,1,"Samuel Morales","FCN",2.459,"Proyectado. Ultimo valor disponible V-DEM",-1.008,"Proyectado. Ultimo valor disponible V-DEM"
-"483","Guatemala",2023,1,"Carlos Pineda",NA,NA,NA,NA,NA
-"484","Guatemala",2023,1,"Rafael Espada",NA,NA,NA,NA,NA
-"485","Honduras",1993,1,"Jose Oswaldo Ramos Soto","PNH",1.629,"VDEM",1.236,"VDEM"
-"486","Honduras",1993,1,"Marco Orlando Iriarte",NA,NA,NA,NA,NA
-"487","Honduras",1993,1,"Olban Valladares",NA,NA,NA,NA,NA
-"488","Honduras",1993,1,"Carlos Roberto Reina","PLH",0.826,"VDEM",1.225,"VDEM"
-"489","Honduras",2013,1,"Orle Anibal Solis",NA,NA,NA,NA,NA
-"490","Honduras",2013,1,"Romeo Vasquez Velasquez",NA,NA,NA,NA,NA
-"491","Honduras",2013,1,"Mauricio Villeda Bermudez","PLH",1.637,"VDEM",1.236,"VDEM"
-"492","Honduras",2013,1,"Salvador Nasralla","PAC",-0.064,"VDEM",-0.347,"VDEM"
-"493","Honduras",2013,1,"Iris Xiomara Castro de Zelaya","LIBRE",-1.456,"VDEM",0.801,"VDEM"
-"494","Honduras",2013,1,"Jorge Rafael Aguilar",NA,NA,NA,NA,NA
-"495","Honduras",2013,1,"Andres Pavon Murillo","PUD",-1.12,"Proyectado. Ultimo valor disponible V-DEM",-0.5,"Proyectado. Ultimo valor disponible V-DEM"
-"496","Honduras",2013,1,"Juan Orlando Hernandez","PNH",2.129,"VDEM",1.522,"VDEM"
-"497","Honduras",2017,1,"Jose Alfonso Diaz Narvaez",NA,NA,NA,NA,NA
-"498","Honduras",2017,1,"Salvador Nasralla","LIBRE",-1.461,"VDEM",0.983,"VDEM"
-"499","Honduras",2017,1,"Eliseo Vallecillo Reyes",NA,NA,NA,NA,NA
-"500","Honduras",2017,1,"Lucas Evangelisto Aguilera",NA,NA,NA,NA,NA
-"501","Honduras",2017,1,"Luis Orlando Zelaya","PLH",1.637,"VDEM",1.236,"VDEM"
-"502","Honduras",2017,1,"Romeo Vasquez Velasquez",NA,NA,NA,NA,NA
-"503","Honduras",2017,1,"Isaias Fonseca Aguilar",NA,NA,NA,NA,NA
-"504","Colombia",1986,1,"Alvaro Gomez Hurtado","PCC",2.339,"VDEM",1.151,"VDEM"
-"505","Colombia",1986,1,"Luis Carlos Galan","PLC",-0.611,"VDEM",1.577,"VDEM"
-"506","Colombia",1994,1,"Andres Pastrana","PCC",2.344,"VDEM",0.884,"VDEM"
-"507","Colombia",1994,1,"Ernesto Samper","PLC",-0.752,"VDEM",1.632,"VDEM"
-"508","Colombia",1998,2,"Andres Pastrana","PCC",2.344,"VDEM",0.905,"VDEM"
-"509","Colombia",1998,2,"Horacio Serpa","PLC",-0.342,"VDEM",1.632,"VDEM"
-"510","Colombia",2002,1,"Alvaro Uribe Velez","Primero Colombia",NA,NA,NA,NA
-"511","Colombia",2002,1,"Noemi Sanin",NA,NA,NA,NA,NA
-"512","Colombia",2002,1,"Luis Eduardo Garzon",NA,NA,NA,NA,NA
-"513","Colombia",2002,1,"Horacio Serpa","PLC",-0.387,"VDEM",0.953,"VDEM"
-"514","Colombia",2002,1,"Harold Bedoy",NA,NA,NA,NA,NA
-"515","Colombia",2006,1,"Antanas Mockus",NA,NA,NA,NA,NA
-"516","Colombia",2006,1,"Horacio Serpa","PLC",-0.63,"VDEM",0.814,"VDEM"
-"517","Colombia",2006,1,"Enrique Parejo",NA,NA,NA,NA,NA
-"518","Colombia",2006,1,"Carlos Gaviria","PDA",-2.597,"VDEM",-0.273,"VDEM"
-"519","Colombia",2006,1,"Alvaro Leyva",NA,NA,NA,NA,NA
-"520","Colombia",2010,1,"Antanas Mockus","Verde",NA,NA,NA,NA
-"521","Colombia",2010,1,"Noemi Sanin","PCC",2.358,"VDEM",0.251,"VDEM"
-"522","Colombia",2010,1,"Gustavo Petro","PDA",-2.329,"VDEM",-0.273,"VDEM"
-"523","Colombia",2010,1,"German Vargas Lleras",NA,NA,NA,NA,NA
-"524","Colombia",2010,1,"Rafael Pardo","PLC",-0.455,"VDEM",0.563,"VDEM"
-"525","Colombia",2010,1,"Juan Manuel Santos","Partido-U",0.144,"VDEM",0.632,"VDEM"
-"526","Colombia",2010,1,"Sergio Fajardo",NA,NA,NA,NA,NA
-"527","Colombia",2010,2,"Antanas Mockus","Verde",NA,NA,NA,NA
-"528","Colombia",2010,2,"Juan Manuel Santos","Partido-U",0.144,"VDEM",0.632,"VDEM"
-"529","Colombia",2014,1,"Clara Lopez","PDA",-2.329,"Proyectado. Ultimo valor disponible V-DEM",-0.273,"Proyectado. Ultimo valor disponible V-DEM"
-"530","Colombia",2014,1,"Marta Lucia Ramirez","PCC",2.358,"VDEM",0.251,"VDEM"
-"531","Colombia",2014,1,"Oscar Ivan Zuluaga","CD",2.679,"VDEM",0.373,"VDEM"
-"532","Colombia",2014,1,"Enrique Penalosa","AV",NA,NA,NA,NA
-"533","Colombia",2014,1,"Juan Manuel Santos","Partido-U",0.803,"VDEM",0.552,"VDEM"
-"534","Colombia",2014,2,"Juan Manuel Santos","Partido-U",0.803,"VDEM",0.552,"VDEM"
-"535","Colombia",2014,2,"Oscar Ivan Zuluaga","CD",2.679,"VDEM",0.373,"VDEM"
-"536","Colombia",2018,1,"Sergio Fajardo",NA,NA,NA,NA,NA
-"537","Colombia",2018,1,"Humberto de la Calle","PLC",-0.279,"VDEM",0.563,"VDEM"
-"538","Colombia",2018,1,"Ivan Duque","CD",2.679,"VDEM",0.557,"VDEM"
-"539","Colombia",2018,1,"Gustavo Petro",NA,NA,NA,NA,NA
-"540","Colombia",2018,1,"German Vargas Lleras",NA,NA,NA,NA,NA
-"541","Colombia",2018,1,"Viviane Morales",NA,NA,NA,NA,NA
-"542","Colombia",2022,1,"Gustavo Petro",NA,NA,NA,NA,NA
-"543","Colombia",2022,1,"Ingrid Betancourt",NA,NA,NA,NA,NA
-"544","Colombia",2022,1,"Federico Gutierrez",NA,NA,NA,NA,NA
-"545","Colombia",2022,1,"Sergio Fajardo",NA,NA,NA,NA,NA
-"546","Colombia",2022,1,"Enrique Gomez",NA,NA,NA,NA,NA
-"547","Colombia",2022,1,"John Milton Rodriguez",NA,NA,NA,NA,NA
-"548","Colombia",2022,1,"Luis Perez",NA,NA,NA,NA,NA
-"549","Colombia",2022,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA
-"550","Costa Rica",1986,1,"Oscar Arias Sanchez",NA,NA,NA,NA,NA
-"551","Costa Rica",1986,1,"Rafael Calderon Fournier",NA,NA,NA,NA,NA
-"552","Costa Rica",1998,1,"Jose Miguel Corrales Bolanos",NA,NA,NA,NA,NA
-"553","Costa Rica",1998,1,"Miguel Angel Rodriguez Echeverria","PUSC",1.516,"VDEM",-1.244,"VDEM"
-"554","Costa Rica",2002,1,"Otto Guevara","PML",2.425,"VDEM",-2.503,"VDEM"
-"555","Costa Rica",2002,1,"Abel Pacheco de la Espriella","PUSC",1.516,"VDEM",-1.244,"VDEM"
-"556","Costa Rica",2002,1,"Otton Solis","PAC",-1.125,"VDEM",-2.486,"VDEM"
-"557","Costa Rica",2002,1,"Rolando Araya","PLN",0.603,"VDEM",-0.796,"VDEM"
-"558","Costa Rica",2002,1,"Pablo Galo Angulo Casasola",NA,NA,NA,NA,NA
-"559","Costa Rica",2002,1,"Jose Hine Garcia",NA,NA,NA,NA,NA
-"560","Costa Rica",2002,1,"Justo Orozco Alvarez",NA,NA,NA,NA,NA
-"561","Costa Rica",2002,1,"Jorge Walter Coto Molina",NA,NA,NA,NA,NA
-"562","Costa Rica",2002,1,"Marvin Calvo Montoya",NA,NA,NA,NA,NA
-"563","Costa Rica",2002,1,"Walter Munoz","PIN",NA,NA,NA,NA
-"564","Costa Rica",2002,1,"Daniel Reynolds Vargas",NA,NA,NA,NA,NA
-"565","Costa Rica",2002,1,"Vladimir de la Cruz de Lemos","FD",NA,NA,NA,NA
-"566","Costa Rica",2002,1,"Rolando Angulo Zeledon",NA,NA,NA,NA,NA
-"567","Costa Rica",2002,2,"Abel Pacheco de la Espriella","PUSC",1.516,"VDEM",-1.244,"VDEM"
-"568","Costa Rica",2002,2,"Rolando Araya","PLN",0.603,"VDEM",-0.796,"VDEM"
-"569","Costa Rica",2006,1,"Humberto Arce",NA,NA,NA,NA,NA
-"570","Costa Rica",2006,1,"Otton Solis","PAC",-1.125,"VDEM",-2.486,"VDEM"
-"571","Costa Rica",2006,1,"Otto Guevara","PML",2.097,"VDEM",-2.503,"VDEM"
-"572","Costa Rica",2006,1,"Abel Pacheco de la Espriella",NA,NA,NA,NA,NA
-"573","Costa Rica",2006,1,"Alvaro Montero",NA,NA,NA,NA,NA
-"574","Costa Rica",2006,1,"Ricardo Toledo","PUSC",1.516,"VDEM",-1.653,"VDEM"
-"575","Costa Rica",2006,1,"Vladimir de la Cruz","FD",NA,NA,NA,NA
-"576","Costa Rica",2006,1,"Bolivar Serrano Hidalgo",NA,NA,NA,NA,NA
-"577","Costa Rica",2006,1,"Jose Manuel Echandi",NA,NA,NA,NA,NA
-"578","Costa Rica",2006,1,"Antonio Alvarez Desanti",NA,NA,NA,NA,NA
-"579","Costa Rica",2006,1,"Walter Munoz","PIN",NA,NA,NA,NA
-"580","Costa Rica",2006,1,"Juan Jose Vargas Fallas",NA,NA,NA,NA,NA
-"581","Costa Rica",2006,1,"Jose Miguel Villalobos",NA,NA,NA,NA,NA
-"582","Costa Rica",2006,1,"Humberto Vargas",NA,NA,NA,NA,NA
-"583","Costa Rica",2006,1,"Oscar Arias","PLN",1.393,"VDEM",-0.938,"VDEM"
-"584","Costa Rica",2018,1,"Carlos Alvarado Quesada","PAC",0,"VDEM",-1.319,"VDEM"
-"585","Costa Rica",2018,1,"Otto Guevara","PML",2.097,"Proyectado. Ultimo valor disponible V-DEM",-2.503,"Proyectado. Ultimo valor disponible V-DEM"
-"586","Costa Rica",2018,1,"Edgardo Araya","FA",-2.46,"Proyectado. Ultimo valor disponible V-DEM",-2.532,"Proyectado. Ultimo valor disponible V-DEM"
-"587","Costa Rica",2018,1,"Mario Redondo Poveda",NA,NA,NA,NA,NA
-"588","Costa Rica",2018,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA
-"589","Costa Rica",2018,1,"Antonio Alvarez Desanti","PLN",0.633,"VDEM",-0.938,"VDEM"
-"590","Costa Rica",2018,1,"Fabricio Alvarado Munoz","PRN",2.047,"VDEM",-0.471,"VDEM"
-"591","Costa Rica",2018,1,"Oscar Lopez","PASE",1.57,"Proyectado. Ultimo valor disponible V-DEM",-2.464,"Proyectado. Ultimo valor disponible V-DEM"
-"592","Costa Rica",2018,1,"Sergio Mena",NA,NA,NA,NA,NA
-"593","Costa Rica",2018,1,"Jhon Vega",NA,NA,NA,NA,NA
-"594","Costa Rica",2010,1,"Laura Chinchilla","PLN",0.276,"VDEM",-0.938,"VDEM"
-"595","Costa Rica",2010,1,"Otton Solis","PAC",-1.125,"VDEM",-1.318,"VDEM"
-"596","Costa Rica",2010,1,"Otto Guevara","PML",2.097,"VDEM",-2.503,"VDEM"
-"597","Costa Rica",2010,1,"Luis Fishman","PUSC",1.516,"VDEM",-2.414,"VDEM"
-"598","Costa Rica",2010,1,"Walter Munoz","PIN",NA,NA,NA,NA
-"599","Costa Rica",2010,1,"Mayra Gonzalez",NA,NA,NA,NA,NA
-"600","Costa Rica",2010,1,"Eugenio Trejos","FA",NA,NA,NA,NA
-"601","Costa Rica",2010,1,"Oscar Lopez","PASE",1.57,"VDEM",-2.464,"VDEM"
-"602","Costa Rica",2010,1,"Rolando Araya",NA,NA,NA,NA,NA
-"603","Costa Rica",2014,1,"Johnny Araya Monge","PLN",0.633,"VDEM",-0.938,"VDEM"
-"604","Costa Rica",2014,1,"Jose Miguel Corrales Bolanos",NA,NA,NA,NA,NA
-"605","Costa Rica",2014,1,"Otto Guevara","PML",2.097,"VDEM",-2.503,"VDEM"
-"606","Costa Rica",2014,1,"Rodolfo Piza","PUSC",1.516,"VDEM",-2.414,"VDEM"
-"607","Costa Rica",2014,1,"Luis Guillermo Solis","PAC",0,"VDEM",-1.319,"VDEM"
-"608","Costa Rica",2014,1,"Jose Maria Villalta","FA",-2.46,"VDEM",-2.532,"VDEM"
-"609","Costa Rica",2014,1,"Jose Manuel Echandi",NA,NA,NA,NA,NA
-"610","Costa Rica",2014,1,"Hector Monestel Herrera",NA,NA,NA,NA,NA
-"611","Costa Rica",2014,1,"Sergio Mena",NA,NA,NA,NA,NA
-"612","Costa Rica",2014,1,"Oscar Lopez","PASE",1.57,"Proyectado. Ultimo valor disponible V-DEM",-2.464,"Proyectado. Ultimo valor disponible V-DEM"
-"613","Costa Rica",2014,1,"Carlos Avendano","PRN",NA,NA,NA,NA
-"614","Costa Rica",2014,1,"Walter Munoz","PIN",NA,NA,NA,NA
-"615","Costa Rica",2014,1,"Justo Orozco",NA,NA,NA,NA,NA
-"616","Costa Rica",2018,1,"Stephanie Campos",NA,NA,NA,NA,NA
-"617","Costa Rica",2018,2,"Fabricio Alvarado Munoz",NA,NA,NA,NA,NA
-"618","Costa Rica",2018,2,"Carlos Alvarado Quesada","PAC",0,"VDEM",-1.319,"VDEM"
-"619","Costa Rica",2018,1,"Juan Diego Castro","PIN",1.096,"VDEM",-2.495,"VDEM"
-"620","Costa Rica",2018,1,"Rodolfo Piza","PUSC",1.516,"VDEM",-2.414,"VDEM"
-"621","Costa Rica",2022,1,"Rodrigo Chaves",NA,NA,NA,NA,NA
-"622","Costa Rica",2022,1,"Fabricio Alvarado Munoz",NA,NA,NA,NA,NA
-"623","Costa Rica",2022,1,"Rolando Araya",NA,NA,NA,NA,NA
-"624","Costa Rica",2022,1,"Welmer Ramos","PAC",0,"Proyectado. Ultimo valor disponible V-DEM",-1.319,"Proyectado. Ultimo valor disponible V-DEM"
-"625","Costa Rica",2022,1,"Jose Maria Villalta","FA",-2.46,"Proyectado. Ultimo valor disponible V-DEM",-2.532,"Proyectado. Ultimo valor disponible V-DEM"
-"626","Costa Rica",2022,1,"Eliecer Feinzaig",NA,NA,NA,NA,NA
-"627","Costa Rica",2022,1,"Jose Maria Figueres","PLN",0.633,"Proyectado. Ultimo valor disponible V-DEM",-0.938,"Proyectado. Ultimo valor disponible V-DEM"
-"628","Costa Rica",2022,1,"Lineth Saborio","PUSC",1.516,"Proyectado. Ultimo valor disponible V-DEM",-2.414,"Proyectado. Ultimo valor disponible V-DEM"
-"629","Costa Rica",2022,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA
-"630","Costa Rica",2022,1,"Rodolfo Piza",NA,NA,NA,NA,NA
-"631","Costa Rica",2022,1,"Federico Malavassi",NA,NA,NA,NA,NA
-"632","Costa Rica",2022,1,"Carmen Quesada",NA,NA,NA,NA,NA
-"633","Costa Rica",2022,1,"Greivin Moya",NA,NA,NA,NA,NA
-"634","Costa Rica",2022,1,"Martin Chinchilla","PU",NA,NA,NA,NA
-"635","Costa Rica",2022,1,"Luis Alberto Cordero","PML",2.097,"Proyectado. Ultimo valor disponible V-DEM",-2.503,"Proyectado. Ultimo valor disponible V-DEM"
-"636","Costa Rica",2022,1,"Eduardo Cruickshank","PRN",2.047,"Proyectado. Ultimo valor disponible V-DEM",-0.471,"Proyectado. Ultimo valor disponible V-DEM"
-"637","Costa Rica",2022,1,"Christian Rivera",NA,NA,NA,NA,NA
-"638","Costa Rica",2022,1,"Maricela Morales",NA,NA,NA,NA,NA
-"639","Costa Rica",2022,1,"Roulan Jimenez",NA,NA,NA,NA,NA
-"640","Costa Rica",2022,1,"Sergio Mena",NA,NA,NA,NA,NA
-"641","Costa Rica",2022,1,"Oscar Lopez","PASE",1.57,"Proyectado. Ultimo valor disponible V-DEM",-2.464,"Proyectado. Ultimo valor disponible V-DEM"
-"642","Costa Rica",2022,1,"Natalia Diaz",NA,NA,NA,NA,NA
-"643","Costa Rica",2022,1,"Oscar Campos",NA,NA,NA,NA,NA
-"644","Costa Rica",2022,1,"Walter Munoz","PIN",1.096,"Proyectado. Ultimo valor disponible V-DEM",-2.495,"Proyectado. Ultimo valor disponible V-DEM"
-"645","Costa Rica",2022,1,"Jhon Vega",NA,NA,NA,NA,NA
-"646","Costa Rica",2022,2,"Rodrigo Chaves",NA,NA,NA,NA,NA
-"647","Costa Rica",2022,2,"Jose Maria Figueres","PLN",0.633,"Proyectado. Ultimo valor disponible V-DEM",-0.938,"Proyectado. Ultimo valor disponible V-DEM"
-"648","Republica Dominicana",2016,1,"Luis Rodolfo Abinader","PRM",NA,NA,NA,NA
-"649","Republica Dominicana",2016,1,"Guillermo Moreno",NA,NA,NA,NA,NA
-"650","Republica Dominicana",2016,1,"Minerva Tavarez Mirabal",NA,NA,NA,NA,NA
-"651","Republica Dominicana",2016,1,"Soraya Aquino",NA,NA,NA,NA,NA
-"652","Republica Dominicana",2016,1,"Pelegrin Castillo",NA,NA,NA,NA,NA
-"653","Republica Dominicana",2016,1,"Elias Wessin Chavez","PQD",NA,NA,NA,NA
-"654","Republica Dominicana",2016,1,"Hatuey De Camps",NA,NA,NA,NA,NA
-"655","El Salvador",1999,1,"Rodolfo Parker","PDC",NA,NA,NA,NA
-"656","El Salvador",1999,1,"Facundo Guardado","FMLN",-2.503,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
-"657","El Salvador",1999,1,"Ruben Zamora",NA,NA,NA,NA,NA
-"658","El Salvador",1999,1,"Salvador Nestor Garcia",NA,NA,NA,NA,NA
-"659","El Salvador",2014,1,"Salvador Sanchez Ceren","FMLN",-1.292,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
-"660","El Salvador",2014,1,"Norman Quijano","ARENA",1.946,"Proyectado. Ultimo valor disponible V-DEM",1.936,"Proyectado. Ultimo valor disponible V-DEM"
-"661","El Salvador",2014,1,"Elias Antonio Saca",NA,NA,NA,NA,NA
-"662","El Salvador",2014,1,"Rene Rodriguez Hurtado",NA,NA,NA,NA,NA
-"663","El Salvador",2014,1,"Oscar Lemu",NA,NA,NA,NA,NA
-"664","El Salvador",2019,1,"Carlos Calleja",NA,NA,NA,NA,NA
-"665","El Salvador",2019,1,"Hugo Martinez","FMLN",-1.292,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
-"666","El Salvador",2019,1,"Josue Alvarado",NA,NA,NA,NA,NA
-"667","Brasil",1989,1,"Fernando Collor de Mello","PRN",NA,NA,NA,NA
-"668","Brasil",1989,1,"Silvio Santos",NA,NA,NA,NA,NA
-"669","Brasil",1994,1,"Walter Queiroz","PRN",NA,NA,NA,NA
-"670","Brasil",2006,1,"Luiz Inacio Lula da Silva","PT",-1.455,"VDEM",0.818,"VDEM"
-"671","Brasil",2018,1,"Luiz Inacio Lula da Silva","PT",-1.896,"VDEM",0.567,"VDEM"
-"672","Argentina",2015,1,"Daniel Scioli","FPV-PJ",-1.659,"VDEM",2.17,"VDEM"
-"673","Peru",2016,1,"Cesar Acuna",NA,NA,NA,NA,NA
-"674","Peru",2016,1,"Daniel Urresti",NA,NA,NA,NA,NA
-"675","Peru",2016,1,"Renzo Reggiardo",NA,NA,NA,NA,NA
-"676","Ecuador",2006,1,"Luis Macas Ambuludi","MUPP-NP",-2.175,"VDEM",0.493,"VDEM"
-"677","Ecuador",2013,1,"Rafael Correa","PAIS",-1.61,"VDEM",1.932,"VDEM"
-"678","Ecuador",2013,1,"Alberto Acosta","MUPP-NP",-2.175,"VDEM",0.493,"VDEM"
-"679","Uruguay",2009,1,"Luis Alberto Lacalle Herrera","PN",1.373,"VDEM",1.78,"VDEM"
-"680","Uruguay",2009,1,"Jose Mujica","FA/EP",-1.334,"VDEM",1.152,"VDEM"
-"681","Uruguay",2014,1,"Tabare Vazquez","FA/EP",-1.334,"VDEM",1.152,"VDEM"
-"682","Nicaragua",2006,1,"Daniel Ortega","FSLN",-0.854,"VDEM",0.938,"VDEM"
-"683","Panama",1994,1,"Mireya Moscoso",NA,NA,NA,NA,NA
-"684","Panama",2009,1,"Guillermo Endara",NA,NA,NA,NA,NA
-"685","Venezuela",1963,1,"Raul Leoni","AD",NA,"VDEM",NA,"VDEM"
-"686","Venezuela",1998,1,"Irene Saez",NA,NA,NA,NA,NA
-"687","Bolivia",1993,1,"Carlos Palenque","CONDEPA",-1.013,"VDEM",-0.693,"VDEM"
-"688","Bolivia",1997,1,"Hugo Banzer","ADN",1.018,"VDEM",0.211,"VDEM"
-"689","Bolivia",2002,1,"Rene Blattmann",NA,NA,NA,NA,NA
-"690","Bolivia",2002,1,"Nicolas Valdivia","CONDEPA",-0.644,"Proyectado. Ultimo valor disponible V-DEM",-1.011,"Proyectado. Ultimo valor disponible V-DEM"
-"691","Bolivia",2002,1,"Costa Obregon",NA,NA,NA,NA,NA
-"692","Bolivia",2002,1,"Rolando Morales",NA,NA,NA,NA,NA
-"693","Bolivia",2002,1,"Johnny Fernandez","UCS",0.047,"Proyectado. Ultimo valor disponible V-DEM",-0.794,"Proyectado. Ultimo valor disponible V-DEM"
-"694","Bolivia",2005,1,"Evo Morales","MAS",-2.343,"VDEM",1.294,"VDEM"
-"695","Bolivia",2005,1,"Felipe Quispe",NA,NA,NA,NA,NA
-"696","Bolivia",2005,1,"Gildo Angulo","NFR",1.749,"Proyectado. Ultimo valor disponible V-DEM",-0.753,"Proyectado. Ultimo valor disponible V-DEM"
-"697","Bolivia",2005,1,"Nestor Garcia",NA,NA,NA,NA,NA
-"698","Bolivia",2005,1,"Eliseo Rodriguez",NA,NA,NA,NA,NA
-"699","Bolivia",2014,1,"Evo Morales","MAS",-2.343,"VDEM",1.895,"VDEM"
-"700","Guatemala",2003,1,"Oscar Berger",NA,NA,NA,NA,NA
-"701","Guatemala",2011,1,"Mario Estrada","UCN",0.449,"VDEM",-0.52,"VDEM"
-"702","Guatemala",2019,1,"Zury Rios",NA,NA,NA,NA,NA
-"703","Guatemala",2023,1,"Isaac Farchi",NA,NA,NA,NA,NA
-"704","Honduras",2017,1,"Juan Orlando Hernandez","PNH",2.129,"VDEM",1.522,"VDEM"
-"705","Honduras",2017,1,"Marlene Alvarenga","PAC",-0.064,"Proyectado. Ultimo valor disponible V-DEM",-0.347,"Proyectado. Ultimo valor disponible V-DEM"
-"706","Colombia",1986,1,"Virgilio Barco","PLC",-0.611,"VDEM",1.577,"VDEM"
-"707","Colombia",2002,1,"Ingrid Betancourt",NA,NA,NA,NA,NA
-"708","Colombia",2006,1,"Alvaro Uribe Velez","Primero Colombia",NA,NA,NA,NA
-"709","Colombia",2018,1,"Jorge Antonio Trujillo",NA,NA,NA,NA,NA
-"710","Republica Dominicana",2016,1,"Danilo Medina","PLD",NA,NA,NA,NA
-"711","El Salvador",1999,1,"Francisco Flores","ARENA",2.493,"Proyectado. Ultimo valor disponible V-DEM",1.515,"Proyectado. Ultimo valor disponible V-DEM"
-"712","El Salvador",2019,1,"Nayib Bukele",NA,NA,NA,NA,NA
+"70","Chile",1993,1,"Manfred Max-Neef",NA,NA,NA,NA,NA
+"71","Chile",1993,1,"Jose Pinera",NA,NA,NA,NA,NA
+"72","Chile",1993,1,"Eugenio Pizzarro",NA,NA,NA,NA,NA
+"73","Chile",1993,1,"Christian Reitze",NA,NA,NA,NA,NA
+"74","Chile",1993,1,"Eduardo Frei Ruiz-Tagle","C",NA,"VDEM",NA,"VDEM"
+"75","Chile",1993,1,"Arturo Alessandri Besa","Alliance",NA,"VDEM",NA,"VDEM"
+"76","Chile",2000,1,"Joaquin Lavin Infante","Alliance",NA,NA,NA,NA
+"77","Chile",2000,1,"Ricardo Lagos Escobar","C",NA,NA,NA,NA
+"78","Chile",2006,1,"Michelle Bachelet","C",NA,"VDEM",NA,"VDEM"
+"79","Chile",2006,1,"Tomas Hirsch Goldschmidt","PODEMOS",NA,"VDEM",NA,"VDEM"
+"80","Chile",2006,1,"Joaquin Lavin Infante","UDI",2.619,"VDEM",0.473,"VDEM"
+"81","Chile",2006,1,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
+"82","Chile",2006,2,"Sebastian Pinera","RN",1.669,"Proyectado. Ultimo valor disponible V-DEM",-0.977,"Proyectado. Ultimo valor disponible V-DEM"
+"83","Chile",2006,2,"Michelle Bachelet","C",NA,NA,NA,NA
+"84","Chile",2010,1,"Jorge Arrate Mac Niven","PODEMOS",NA,NA,NA,NA
+"85","Chile",2010,1,"Marco Enriquez-Ominami","C",NA,"VDEM",NA,"VDEM"
+"86","Chile",2010,1,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
+"87","Chile",2010,1,"Eduardo Frei Ruiz-Tagle","C",NA,"VDEM",NA,"VDEM"
+"88","Chile",2010,2,"Sebastian Pinera","RN",1.669,"Proyectado. Ultimo valor disponible V-DEM",-0.977,"Proyectado. Ultimo valor disponible V-DEM"
+"89","Chile",2010,2,"Eduardo Frei Ruiz-Tagle","C",NA,NA,NA,NA
+"90","Chile",2013,1,"Franco Parisi",NA,NA,NA,NA,NA
+"91","Chile",2013,1,"Marcel Claude","PH",NA,NA,NA,NA
+"92","Chile",2013,1,"Ricardo Israel",NA,NA,NA,NA,NA
+"93","Chile",2013,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA
+"94","Chile",2013,1,"Roxana Miranda",NA,NA,NA,NA,NA
+"95","Chile",2013,1,"Evelyn Matthei","Alliance",NA,"VDEM",NA,"VDEM"
+"96","Chile",2013,1,"Alfredo Sfeir",NA,NA,NA,NA,NA
+"97","Chile",2013,1,"Tomas Jocelyn-Holt",NA,NA,NA,NA,NA
+"98","Chile",2013,1,"Michelle Bachelet","C",NA,"VDEM",NA,"VDEM"
+"99","Chile",2013,2,"Michelle Bachelet","C",NA,"VDEM",NA,"VDEM"
+"100","Chile",2013,2,"Evelyn Matthei","Alliance",NA,"VDEM",NA,"VDEM"
+"101","Chile",2017,1,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
+"102","Chile",2017,1,"Beatriz Sanchez","Broad Front",NA,"VDEM",NA,"VDEM"
+"103","Chile",2017,1,"Jose Antonio Kast",NA,NA,NA,NA,NA
+"104","Chile",2017,1,"Alejandro Guillier",NA,NA,NA,NA,NA
+"105","Chile",2017,1,"Carolina Goic","PDC",0.312,"VDEM",-0.901,"VDEM"
+"106","Chile",2017,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA
+"107","Chile",2017,1,"Eduardo Artes",NA,NA,NA,NA,NA
+"108","Chile",2017,1,"Alejandro Navarro",NA,NA,NA,NA,NA
+"109","Chile",2017,2,"Sebastian Pinera","RN",1.669,"VDEM",-0.977,"VDEM"
+"110","Chile",2017,2,"Alejandro Guillier",NA,NA,NA,NA,NA
+"111","Chile",2021,1,"Gabriel Boric",NA,NA,NA,NA,NA
+"112","Chile",2021,1,"Sebastian Sichel","PODEMOS",NA,NA,NA,NA
+"113","Chile",2021,1,"Jose Antonio Kast",NA,NA,NA,NA,NA
+"114","Chile",2021,1,"Yasna Provoste","PDC",0.312,"Proyectado. Ultimo valor disponible V-DEM",-0.901,"Proyectado. Ultimo valor disponible V-DEM"
+"115","Chile",2021,1,"Eduardo Artes",NA,NA,NA,NA,NA
+"116","Chile",2021,1,"Marco Enriquez-Ominami",NA,NA,NA,NA,NA
+"117","Chile",2021,1,"Franco Parisi",NA,NA,NA,NA,NA
+"118","Chile",2021,2,"Gabriel Boric",NA,NA,NA,NA,NA
+"119","Chile",2021,2,"Jose Antonio Kast",NA,NA,NA,NA,NA
+"120","Argentina",2015,1,"Nicolas del Cano",NA,NA,NA,NA,NA
+"121","Argentina",2015,1,"Adolfo Rodriguez Saa",NA,NA,NA,NA,NA
+"122","Argentina",2015,1,"Sergio Massa","United for a...",NA,"VDEM",NA,"VDEM"
+"123","Argentina",2015,1,"Margarita Stolbizer",NA,NA,NA,NA,NA
+"124","Argentina",2015,1,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
+"125","Argentina",2015,2,"Daniel Scioli","FPV-PJ",-1.659,"VDEM",2.17,"VDEM"
+"126","Argentina",2015,2,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
+"127","Argentina",2019,1,"Juan Jose Gomez Centurion",NA,NA,NA,NA,NA
+"128","Argentina",2019,1,"Mauricio Macri","C",NA,"VDEM",NA,"VDEM"
+"129","Argentina",2019,1,"Alberto Fernandez","Frente de Todos",NA,"VDEM",NA,"VDEM"
+"130","Argentina",2019,1,"Jose Luis Espert",NA,NA,NA,NA,NA
+"131","Argentina",2019,1,"Roberto Lavagna","CF",0.073,"VDEM",-1.35,"VDEM"
+"132","Argentina",2019,1,"Nicolas del Cano",NA,NA,NA,NA,NA
+"133","Argentina",2023,1,"Sergio Massa",NA,NA,NA,NA,NA
+"134","Argentina",2023,1,"Javier Milei",NA,NA,NA,NA,NA
+"135","Argentina",2023,1,"Myriam Bregman",NA,NA,NA,NA,NA
+"136","Argentina",2023,1,"Juan Schiaretti",NA,NA,NA,NA,NA
+"137","Argentina",2023,1,"Patricia Bullrich","C",NA,NA,NA,NA
+"138","Argentina",2023,2,"Sergio Massa",NA,NA,NA,NA,NA
+"139","Argentina",2023,2,"Javier Milei",NA,NA,NA,NA,NA
+"140","Peru",1990,2,"Alberto Fujimori","NM",0.691,"VDEM",-0.795,"VDEM"
+"141","Peru",1990,2,"Mario Vargas Llosa","Democratic F...",2.063,"VDEM",-1.277,"VDEM"
+"142","Peru",2001,2,"Alejandro Toledo Manrique","PP",1.139,"VDEM",-1.104,"VDEM"
+"143","Peru",2001,2,"Alan Garcia Perez","APRA/PAP",0.609,"VDEM",0.118,"VDEM"
+"144","Peru",2006,2,"Alan Garcia Perez","APRA/PAP",1.818,"VDEM",0.447,"VDEM"
+"145","Peru",2006,2,"Ollanta Moises Humala Tasso","UPP",-1.197,"VDEM",-1.39,"VDEM"
+"146","Peru",2011,1,"Keiko Fujimori Higuchi","FP",2.03,"VDEM",-0.073,"VDEM"
+"147","Peru",2011,1,"Oscar Luis Castaneda Lossio","Alianza Soli...",NA,"VDEM",NA,"VDEM"
+"148","Peru",2011,1,"Pedro Pablo Kuczynski","Alianza Por ...",0.731,"VDEM",-1.769,"VDEM"
+"149","Peru",2011,1,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA
+"150","Peru",2011,1,"Alejandro Toledo Manrique","PP",1.139,"VDEM",-1.104,"VDEM"
+"151","Peru",2011,1,"Juliana Reymer Rodriguez",NA,NA,NA,NA,NA
+"152","Peru",2011,1,"Humberto Pinazo Bella",NA,NA,NA,NA,NA
+"153","Peru",2011,1,"Rafael Belaunde Aubry",NA,NA,NA,NA,NA
+"154","Peru",2011,1,"Jose Manuel Rodriguez Cuadros",NA,NA,NA,NA,NA
+"155","Peru",2011,1,"Ricardo Noriega Salaverry",NA,NA,NA,NA,NA
+"156","Peru",2011,1,"Jose Nique de la Puente",NA,NA,NA,NA,NA
+"157","Peru",2011,2,"Ollanta Moises Humala Tasso",NA,NA,NA,NA,NA
+"158","Peru",2011,2,"Keiko Fujimori Higuchi","FP",2.03,"VDEM",-0.073,"VDEM"
+"159","Peru",2016,1,"Antero Flores Araoz",NA,NA,NA,NA,NA
+"160","Peru",2016,1,"Hernando Guerra Garcia",NA,NA,NA,NA,NA
+"161","Peru",2016,1,"Francisco Diez Canseco",NA,NA,NA,NA,NA
+"162","Peru",2016,1,"Yehude Simon",NA,NA,NA,NA,NA
+"163","Peru",2016,1,"Fernando Olivera",NA,NA,NA,NA,NA
+"164","Peru",2016,1,"Julio Guzman",NA,NA,NA,NA,NA
+"165","Peru",2016,1,"Veronika Mendoza","Frente Amplio",-1.945,"VDEM",-0.335,"VDEM"
+"166","Peru",2016,1,"Vladimir Cerron",NA,NA,NA,NA,NA
+"167","Peru",2016,1,"Gregorio Santos Guerrero",NA,NA,NA,NA,NA
+"168","Peru",2016,1,"Alan Garcia Perez","Popular Alli...",0.929,"VDEM",-1.076,"VDEM"
+"169","Peru",2016,1,"Alejandro Toledo Manrique",NA,NA,NA,NA,NA
+"170","Peru",2016,1,"Alfredo Barnechea","AP",0.48,"VDEM",-0.586,"VDEM"
+"171","Peru",2016,1,"Keiko Fujimori Higuchi","FP",2.022,"VDEM",0.045,"VDEM"
+"172","Peru",2016,1,"Miguel Hilario",NA,NA,NA,NA,NA
+"173","Peru",2016,1,"Pedro Pablo Kuczynski","PPK",1.424,"VDEM",-1.461,"VDEM"
+"174","Peru",2016,2,"Keiko Fujimori Higuchi","FP",2.022,"VDEM",0.045,"VDEM"
+"175","Peru",2016,2,"Pedro Pablo Kuczynski",NA,NA,NA,NA,NA
+"176","Peru",2021,1,"Yonhy Lescano","AP",0.48,"Proyectado. Ultimo valor disponible V-DEM",-0.586,"Proyectado. Ultimo valor disponible V-DEM"
+"177","Peru",2021,1,"George Forsyth",NA,NA,NA,NA,NA
+"178","Peru",2021,1,"Veronika Mendoza",NA,NA,NA,NA,NA
+"179","Peru",2021,1,"Keiko Fujimori Higuchi","FP",2.022,"Proyectado. Ultimo valor disponible V-DEM",0.045,"Proyectado. Ultimo valor disponible V-DEM"
+"180","Peru",2021,1,"Daniel Urresti",NA,NA,NA,NA,NA
+"181","Peru",2021,1,"Cesar Acuna","APEP",NA,NA,NA,NA
+"182","Peru",2021,1,"Marco Arana","Frente Amplio",-1.945,"Proyectado. Ultimo valor disponible V-DEM",-0.335,"Proyectado. Ultimo valor disponible V-DEM"
+"183","Peru",2021,1,"Alberto Beingolea",NA,NA,NA,NA,NA
+"184","Peru",2021,1,"Hernando de Soto",NA,NA,NA,NA,NA
+"185","Peru",2021,1,"Andres Alcantara",NA,NA,NA,NA,NA
+"186","Peru",2021,1,"Ollanta Moises Humala Tasso","PNP",NA,NA,NA,NA
+"187","Peru",2021,1,"Pedro Castillo",NA,NA,NA,NA,NA
+"188","Peru",2021,1,"Jose Vega",NA,NA,NA,NA,NA
+"189","Peru",2021,1,"Julio Guzman",NA,NA,NA,NA,NA
+"190","Peru",2021,1,"Rafael Santos",NA,NA,NA,NA,NA
+"191","Peru",2021,1,"Ciro Galvez",NA,NA,NA,NA,NA
+"192","Peru",2021,1,"Rafael Lopez Aliaga",NA,NA,NA,NA,NA
+"193","Peru",2021,1,"Daniel Salaverry","SP",NA,NA,NA,NA
+"194","Peru",2021,2,"Keiko Fujimori Higuchi","FP",2.022,"Proyectado. Ultimo valor disponible V-DEM",0.045,"Proyectado. Ultimo valor disponible V-DEM"
+"195","Peru",2021,2,"Pedro Castillo",NA,NA,NA,NA,NA
+"196","Paraguay",2003,1,"Nicanor Duarte Frutos","ANR-PC",0.551,"VDEM",1.392,"VDEM"
+"197","Paraguay",2003,1,"Julio Cesar Franco","PLRA",1.944,"VDEM",0.602,"VDEM"
+"198","Paraguay",2003,1,"Pedro Fadul","PPQ",2.324,"VDEM",-0.9,"VDEM"
+"199","Paraguay",2003,1,"Guillermo Sanchez Guffanti","UNACE",3.686,"VDEM",-0.434,"VDEM"
+"200","Paraguay",2003,1,"Diego Abente","PEN",NA,NA,NA,NA
+"201","Paraguay",2008,1,"Lino Oviedo","UNACE",3.686,"VDEM",-0.434,"VDEM"
+"202","Paraguay",2008,1,"Blanca Ovelar","ANR-PC",1.244,"VDEM",1.392,"VDEM"
+"203","Paraguay",2008,1,"Pedro Fadul","PPQ",2.324,"VDEM",-0.9,"VDEM"
+"204","Paraguay",2008,1,"Fernando Lugo",NA,NA,NA,NA,NA
+"205","Paraguay",2013,1,"Horacio Cartes","ANR-PC",1.655,"VDEM",1.392,"VDEM"
+"206","Paraguay",2013,1,"Efrain Alegre","PLRA",1.988,"VDEM",0.602,"VDEM"
+"207","Paraguay",2013,1,"Miguel Carrizosa","PPQ",2.324,"Proyectado. Ultimo valor disponible V-DEM",-0.9,"Proyectado. Ultimo valor disponible V-DEM"
+"208","Paraguay",2013,1,"Mario Ferreiro",NA,NA,NA,NA,NA
+"209","Paraguay",2013,1,"Lino Oviedo","UNACE",3.695,"VDEM",-0.434,"VDEM"
+"210","Paraguay",2013,1,"Anibal Carrillo","GF",-0.175,"VDEM",-0.221,"VDEM"
+"211","Paraguay",2018,1,"Efrain Alegre","GANAR",1.128,"VDEM",-0.012,"VDEM"
+"212","Paraguay",2018,1,"Mario Abdo Benitez","ANR-PC",1.655,"VDEM",1.392,"VDEM"
+"213","Paraguay",2023,1,"Paraguayo Cubas",NA,NA,NA,NA,NA
+"214","Paraguay",2023,1,"Euclides Acevedo",NA,NA,NA,NA,NA
+"215","Paraguay",2023,1,"Jorge Gomez Otano","UNACE",3.695,"Proyectado. Ultimo valor disponible V-DEM",-0.434,"Proyectado. Ultimo valor disponible V-DEM"
+"216","Paraguay",2023,1,"Luis Talavera",NA,NA,NA,NA,NA
+"217","Paraguay",2023,1,"Alfredo Luis Machuca Doldan",NA,NA,NA,NA,NA
+"218","Ecuador",1979,1,"Jaime Roldos","CFP",-0.915,"VDEM",0.023,"VDEM"
+"219","Ecuador",1979,1,"Sixto Duran Ballen","PSC",2.255,"VDEM",0.172,"VDEM"
+"220","Ecuador",1979,1,"Raul Clemente Huerta",NA,NA,NA,NA,NA
+"221","Ecuador",1979,1,"Rodrigo Borja","ID",-0.883,"VDEM",0.493,"VDEM"
+"222","Ecuador",1979,1,"Abdon Calderon","FRA",NA,NA,NA,NA
+"223","Ecuador",1979,1,"Rene Mauge",NA,NA,NA,NA,NA
+"224","Ecuador",1979,2,"Sixto Duran Ballen","PSC",2.255,"VDEM",0.172,"VDEM"
+"225","Ecuador",1979,2,"Jaime Roldos","CFP",-0.915,"VDEM",0.023,"VDEM"
+"226","Ecuador",1984,2,"Rodrigo Borja","ID",-0.883,"VDEM",0.556,"VDEM"
+"227","Ecuador",1984,2,"Leon Febres Cordero","PSC",2.255,"VDEM",0.636,"VDEM"
+"228","Ecuador",2006,1,"Rafael Correa","PAIS",NA,NA,NA,NA
+"229","Ecuador",2006,1,"Cynthia Viteri","PSC",2.253,"VDEM",0.397,"VDEM"
+"230","Ecuador",2006,1,"Leon Roldos","ID",-0.532,"VDEM",-0.904,"VDEM"
+"231","Ecuador",2006,1,"Fernando Rosero","PRE",-0.148,"VDEM",-0.808,"VDEM"
+"232","Ecuador",2006,1,"Alvaro Noboa","PRIAN",1.591,"VDEM",-0.734,"VDEM"
+"233","Ecuador",2013,1,"Lucio Gutierrez","PSP",-0.017,"VDEM",-1.098,"VDEM"
+"234","Ecuador",2013,1,"Alvaro Noboa","PRIAN",1.591,"Proyectado. Ultimo valor disponible V-DEM",-1.706,"Proyectado. Ultimo valor disponible V-DEM"
+"235","Ecuador",2013,1,"Nelson Zavala","PRE",-0.13,"Proyectado. Ultimo valor disponible V-DEM",-0.801,"Proyectado. Ultimo valor disponible V-DEM"
+"236","Ecuador",2013,1,"Guillermo Lasso","CREO",1.501,"VDEM",-0.467,"VDEM"
+"237","Ecuador",2013,1,"Mauricio Rodas",NA,NA,NA,NA,NA
+"238","Ecuador",2013,1,"Norman Wray",NA,NA,NA,NA,NA
+"239","Ecuador",2017,1,"Abdala Bucaram",NA,NA,NA,NA,NA
+"240","Ecuador",2017,1,"Guillermo Lasso","CREO",1.501,"VDEM",-0.467,"VDEM"
+"241","Ecuador",2017,1,"Washington Pesantes","UE",NA,NA,NA,NA
+"242","Ecuador",2017,1,"Patricio Zuquilanda","PSP",-0.017,"Proyectado. Ultimo valor disponible V-DEM",-1.098,"Proyectado. Ultimo valor disponible V-DEM"
+"243","Ecuador",2017,1,"Ivan Espinel",NA,NA,NA,NA,NA
+"244","Ecuador",2017,1,"Paco Moncayo","ID",-0.532,"Proyectado. Ultimo valor disponible V-DEM",-0.904,"Proyectado. Ultimo valor disponible V-DEM"
+"245","Ecuador",2017,1,"Cynthia Viteri","PSC",2.158,"VDEM",0.268,"VDEM"
+"246","Ecuador",2017,1,"Lenin Moreno","PAIS",-1.539,"VDEM",0.865,"VDEM"
+"247","Ecuador",2021,1,"Andres Arauz",NA,NA,NA,NA,NA
+"248","Ecuador",2021,1,"Yaku Perez","MUPP-NP",-2.175,"Proyectado. Ultimo valor disponible V-DEM",0.493,"Proyectado. Ultimo valor disponible V-DEM"
+"249","Ecuador",2021,1,"Isidro Romero","PA",NA,NA,NA,NA
+"250","Ecuador",2021,1,"Gustavo Larrea",NA,NA,NA,NA,NA
+"251","Ecuador",2021,1,"Carlos Sagnay",NA,NA,NA,NA,NA
+"252","Ecuador",2021,1,"Giovanny Andrade","UE",NA,NA,NA,NA
+"253","Ecuador",2021,1,"Paul Carrasco",NA,NA,NA,NA,NA
+"254","Ecuador",2021,1,"Ximena Pena","PAIS",-1.539,"Proyectado. Ultimo valor disponible V-DEM",0.865,"Proyectado. Ultimo valor disponible V-DEM"
+"255","Ecuador",2021,1,"Guillermo Lasso","CREO",1.501,"Proyectado. Ultimo valor disponible V-DEM",-0.467,"Proyectado. Ultimo valor disponible V-DEM"
+"256","Ecuador",2021,1,"Guillermo Celi",NA,NA,NA,NA,NA
+"257","Ecuador",2021,1,"Lucio Gutierrez",NA,NA,NA,NA,NA
+"258","Ecuador",2021,1,"Xavier Hervas","ID",-0.532,"Proyectado. Ultimo valor disponible V-DEM",-0.904,"Proyectado. Ultimo valor disponible V-DEM"
+"259","Ecuador",2021,1,"Cesar Montufar",NA,NA,NA,NA,NA
+"260","Ecuador",2021,1,"Gerson Almeida",NA,NA,NA,NA,NA
+"261","Ecuador",2021,1,"Juan Fernando Velasco",NA,NA,NA,NA,NA
+"262","Ecuador",2021,1,"Pedro Freile",NA,NA,NA,NA,NA
+"263","Ecuador",2021,2,"Andres Arauz",NA,NA,NA,NA,NA
+"264","Ecuador",2021,2,"Guillermo Lasso","CREO",1.501,"Proyectado. Ultimo valor disponible V-DEM",-0.467,"Proyectado. Ultimo valor disponible V-DEM"
+"265","Ecuador",2023,1,"Yaku Perez",NA,NA,NA,NA,NA
+"266","Ecuador",2023,1,"Bolivar Armijos",NA,NA,NA,NA,NA
+"267","Ecuador",2023,1,"Luisa Gonzalez",NA,NA,NA,NA,NA
+"268","Ecuador",2023,1,"Xavier Hervas",NA,NA,NA,NA,NA
+"269","Ecuador",2023,1,"Daniel Noboa Azin",NA,NA,NA,NA,NA
+"270","Ecuador",2023,1,"Otto Sonnenholzner","PA",NA,NA,NA,NA
+"271","Ecuador",2023,1,"Jan Topic","PSC",2.158,"Proyectado. Ultimo valor disponible V-DEM",0.268,"Proyectado. Ultimo valor disponible V-DEM"
+"272","Ecuador",2023,2,"Luisa Gonzalez",NA,NA,NA,NA,NA
+"273","Ecuador",2023,2,"Daniel Noboa Azin",NA,NA,NA,NA,NA
+"274","Uruguay",1984,1,"Julio Maria Sanguinetti","PC",1.012,"VDEM",1.562,"VDEM"
+"275","Uruguay",1984,1,"Alberto Zumaran","PN",0.66,"VDEM",1.843,"VDEM"
+"276","Uruguay",1989,1,"Jorge Batlle","PC",1.307,"VDEM",1.499,"VDEM"
+"277","Uruguay",1989,1,"Luis Alberto Lacalle Herrera","PN",1.594,"VDEM",1.78,"VDEM"
+"278","Uruguay",1989,1,"Carlos Julio Pereyra","PN",1.594,"VDEM",1.78,"VDEM"
+"279","Uruguay",1989,1,"Alberto Zumaran","PN",1.594,"VDEM",1.78,"VDEM"
+"280","Uruguay",1989,1,"Liber Seregni","FA/EP",-1.546,"VDEM",0.734,"VDEM"
+"281","Uruguay",1989,1,"Hugo Batalla","NE",-0.487,"VDEM",-0.062,"VDEM"
+"282","Uruguay",1994,1,"Julio Maria Sanguinetti","PC",1.006,"VDEM",1.499,"VDEM"
+"283","Uruguay",1994,1,"Tabare Vazquez","FA/EP",-1.538,"VDEM",0.734,"VDEM"
+"284","Uruguay",1994,1,"Juan Andres Ramirez","PN",1.395,"VDEM",1.78,"VDEM"
+"285","Uruguay",2009,1,"Pedro Bordaberry","PC",1.269,"VDEM",0.805,"VDEM"
+"286","Uruguay",2009,1,"Pablo Mieres",NA,NA,NA,NA,NA
+"287","Uruguay",2009,1,"Raul Rodriguez",NA,NA,NA,NA,NA
+"288","Uruguay",2014,1,"Luis Alberto Lacalle Pou","PN",1.269,"VDEM",1.78,"VDEM"
+"289","Uruguay",2014,1,"Pedro Bordaberry","PC",1.269,"VDEM",0.805,"VDEM"
+"290","Uruguay",2014,1,"Pablo Mieres",NA,NA,NA,NA,NA
+"291","Uruguay",2014,1,"Cesar Vega",NA,NA,NA,NA,NA
+"292","Uruguay",2014,1,"Gonzalo Abella",NA,NA,NA,NA,NA
+"293","Uruguay",2014,1,"Rafael Fernandez",NA,NA,NA,NA,NA
+"294","Uruguay",2019,1,"Luis Alberto Lacalle Pou","PN",1.269,"VDEM",1.8,"VDEM"
+"295","Uruguay",2019,1,"Daniel Martinez","FA/EP",-1.077,"VDEM",1.152,"VDEM"
+"296","Uruguay",2019,2,"Luis Alberto Lacalle Pou","PN",1.269,"VDEM",1.8,"VDEM"
+"297","Uruguay",2019,2,"Daniel Martinez","FA/EP",-1.077,"VDEM",1.152,"VDEM"
+"298","Nicaragua",2006,1,"Eduardo Montealegre","ALN",2.025,"VDEM",-0.685,"VDEM"
+"299","Nicaragua",2006,1,"Edmundo Jarquin","MRS",-0.863,"VDEM",-2.365,"VDEM"
+"300","Nicaragua",2006,1,"Jose Rizo","PLC",2.008,"VDEM",0.141,"VDEM"
+"301","Nicaragua",2006,1,"Eden Pastora",NA,NA,NA,NA,NA
+"302","Panama",1994,1,"Jose Salvador Munoz","PPA",2.164,"VDEM",2.352,"VDEM"
+"303","Panama",1994,1,"Samuel Lewis Galindo","PS",0.766,"VDEM",-0.028,"VDEM"
+"304","Panama",1994,1,"Ernesto Perez Balladares","PRD",-0.871,"VDEM",2.36,"VDEM"
+"305","Panama",1994,1,"Ruben Blades","MPE",-0.457,"VDEM",-0.171,"VDEM"
+"306","Panama",1994,1,"Eduardo Vallarino Arjona","PP-PDC",0.565,"VDEM",1.037,"VDEM"
+"307","Panama",1994,1,"Ruben Dario Carles","MOLIRENA",1.414,"VDEM",2.002,"VDEM"
+"308","Panama",2004,1,"Guillermo Endara","PS",0.775,"VDEM",0.234,"VDEM"
+"309","Panama",2004,1,"Jose Miguel Aleman",NA,NA,NA,NA,NA
+"310","Panama",2004,1,"Ricardo Martinelli","CD",1.157,"VDEM",1.135,"VDEM"
+"311","Panama",2004,1,"Martin Torrijos","PRD",-0.871,"VDEM",2.864,"VDEM"
+"312","Panama",2009,1,"Ricardo Martinelli",NA,NA,NA,NA,NA
+"313","Panama",2009,1,"Balbina Herrera","PRD",-0.871,"VDEM",2.372,"VDEM"
+"314","Panama",2014,1,"Juan Carlos Navarro","PRD",-0.871,"VDEM",1.976,"VDEM"
+"315","Panama",2014,1,"Juan Carlos Varela","PPA",2.164,"VDEM",2.821,"VDEM"
+"316","Panama",2014,1,"Genaro Lopez",NA,NA,NA,NA,NA
+"317","Panama",2014,1,"Jose Domingo Arias","MOLIRENA",1.408,"VDEM",1.666,"VDEM"
+"318","Panama",2014,1,"Juan Jovane",NA,NA,NA,NA,NA
+"319","Panama",2014,1,"Gerardo Barroso",NA,NA,NA,NA,NA
+"320","Panama",2014,1,"Esteban Rodriguez",NA,NA,NA,NA,NA
+"321","Panama",2019,1,"Ana Matilde Gomez",NA,NA,NA,NA,NA
+"322","Panama",2019,1,"Ricardo Lombana",NA,NA,NA,NA,NA
+"323","Panama",2019,1,"Marco Ameglio",NA,NA,NA,NA,NA
+"324","Panama",2019,1,"Jose Isabel Blandon","PPA",2.165,"VDEM",1.992,"VDEM"
+"325","Panama",2019,1,"Saul Mendez",NA,NA,NA,NA,NA
+"326","Panama",2019,1,"Romulo Roux",NA,NA,NA,NA,NA
+"327","Panama",2019,1,"Laurentino Cortizo","PRD",-0.491,"VDEM",2.341,"VDEM"
+"328","Venezuela",1963,1,"Rafael Caldera","COPEI",NA,"VDEM",NA,"VDEM"
+"329","Venezuela",1963,1,"Arturo Uslar Pietri","IPFN",NA,"VDEM",NA,"VDEM"
+"330","Venezuela",1968,1,"Gonzalo Barrios","AD",NA,"VDEM",NA,"VDEM"
+"331","Venezuela",1968,1,"German Borregales",NA,NA,NA,NA,NA
+"332","Venezuela",1968,1,"Luis Beltran Prieto","MEP",NA,"VDEM",NA,"VDEM"
+"333","Venezuela",1968,1,"Rafael Caldera","COPEI",NA,"VDEM",NA,"VDEM"
+"334","Venezuela",1968,1,"Alejandro Hernandez",NA,NA,NA,NA,NA
+"335","Venezuela",1983,1,"Jaime Lusinchi","AD",-0.62,"VDEM",2.346,"VDEM"
+"336","Venezuela",1983,1,"Rafael Caldera","COPEI",0.5,"VDEM",2.172,"VDEM"
+"337","Venezuela",1998,1,"Claudio Fermin",NA,NA,NA,NA,NA
+"338","Venezuela",1998,1,"Hugo Chavez","MVR",-2.395,"VDEM",1.487,"VDEM"
+"339","Bolivia",1989,1,"Carlos Palenque","CONDEPA",-1.013,"VDEM",-0.982,"VDEM"
+"340","Bolivia",1989,1,"Genaro Flores",NA,NA,NA,NA,NA
+"341","Bolivia",1989,1,"Luis Sandoval Moron",NA,NA,NA,NA,NA
+"342","Bolivia",1989,1,"Antonio Aranibar","IU",-2.426,"VDEM",-1.784,"VDEM"
+"343","Bolivia",1989,1,"Roger Cortez",NA,NA,NA,NA,NA
+"344","Bolivia",1989,1,"Victor Hugo Cardena",NA,NA,NA,NA,NA
+"345","Bolivia",1989,1,"Gonzalo Sanchez de Lozada","MNR",1.825,"VDEM",1.246,"VDEM"
+"346","Bolivia",1989,1,"Jaime Paz Zamora","MIR",-0.94,"VDEM",-0.017,"VDEM"
+"347","Bolivia",1989,1,"Hugo Banzer","ADN",1.977,"VDEM",0.379,"VDEM"
+"348","Bolivia",1993,1,"Felix Cardenas",NA,NA,NA,NA,NA
+"349","Bolivia",1993,1,"Jerjes Justiniano",NA,NA,NA,NA,NA
+"350","Bolivia",1993,1,"Mario Serrate",NA,NA,NA,NA,NA
+"351","Bolivia",1993,1,"Fernando Untoja",NA,NA,NA,NA,NA
+"352","Bolivia",1993,1,"Antonio Aranibar","MBL",-1.585,"VDEM",-2.493,"VDEM"
+"353","Bolivia",1993,1,"Ramiro Velasco","IU",-2.426,"Proyectado. Ultimo valor disponible V-DEM",-1.784,"Proyectado. Ultimo valor disponible V-DEM"
+"354","Bolivia",1993,1,"Gonzalo Sanchez de Lozada","MNR",1.056,"VDEM",1.246,"VDEM"
+"355","Bolivia",1993,1,"Hugo Banzer","AP",0.776,"VDEM",0.214,"VDEM"
+"356","Bolivia",1993,1,"Max Fernandez","UCS",0.047,"VDEM",-0.794,"VDEM"
+"357","Bolivia",1997,1,"Juan Carlos Duran","MNR",1.406,"VDEM",0.936,"VDEM"
+"358","Bolivia",1997,1,"Miguel Urioste",NA,NA,NA,NA,NA
+"359","Bolivia",1997,1,"Remedios Loza","CONDEPA",-0.644,"VDEM",-1.011,"VDEM"
+"360","Bolivia",1997,1,"Jaime Paz Zamora","MIR",-0.544,"VDEM",-0.017,"VDEM"
+"361","Bolivia",1997,1,"Ivo Kuljis","UCS",0.047,"VDEM",-0.794,"VDEM"
+"362","Bolivia",2002,1,"Gonzalo Sanchez de Lozada","MNR",1.406,"VDEM",0.936,"VDEM"
+"363","Bolivia",2002,1,"Manfred Reyes Villa","NFR",1.749,"VDEM",-0.753,"VDEM"
+"364","Bolivia",2002,1,"Evo Morales","MAS",-2.343,"VDEM",1.06,"VDEM"
+"365","Bolivia",2002,1,"Felipe Quispe",NA,NA,NA,NA,NA
+"366","Bolivia",2002,1,"Jaime Paz Zamora","MIR",-0.313,"VDEM",-0.402,"VDEM"
+"367","Bolivia",2005,1,"Jorge Quiroga","Podemos",1.405,"VDEM",-1.113,"VDEM"
+"368","Bolivia",2005,1,"Samuel Doria Medina","UN",0.279,"VDEM",-1.623,"VDEM"
+"369","Bolivia",2005,1,"Michiaki Nagatani","MNR",1.406,"VDEM",-0.361,"VDEM"
+"370","Bolivia",2014,1,"Samuel Doria Medina","UN",0.882,"VDEM",-1.325,"VDEM"
+"371","Bolivia",2014,1,"Juan del Granado",NA,NA,NA,NA,NA
+"372","Bolivia",2014,1,"Jorge Quiroga","PDC",1.287,"VDEM",-1.448,"VDEM"
+"373","Bolivia",2014,1,"Fernando Vargas",NA,NA,NA,NA,NA
+"374","Bolivia",2020,1,"Luis Arce","MAS",-1.92,"Proyectado. Ultimo valor disponible V-DEM",1.311,"Proyectado. Ultimo valor disponible V-DEM"
+"375","Bolivia",2020,1,"Carlos Mesa",NA,NA,NA,NA,NA
+"376","Bolivia",2020,1,"Luis Fernando Camacho",NA,NA,NA,NA,NA
+"377","Bolivia",2020,1,"Chi Hyun Chung",NA,NA,NA,NA,NA
+"378","Bolivia",2020,1,"Jorge Quiroga",NA,NA,NA,NA,NA
+"379","Bolivia",2020,1,"Maria de la Cruz Baya","ADN",1.018,"Proyectado. Ultimo valor disponible V-DEM",0.211,"Proyectado. Ultimo valor disponible V-DEM"
+"380","Bolivia",2020,1,"Feliciano Mamani",NA,NA,NA,NA,NA
+"381","Mexico",1994,1,"Cuauhtemoc Cardenas","PRD",-1.531,"VDEM",0.649,"VDEM"
+"382","Mexico",1994,1,"Diego Fernandez de Cevallos","PAN",1.997,"VDEM",0.97,"VDEM"
+"383","Mexico",1994,1,"Ernesto Zedillo","PRI",0.825,"VDEM",2.663,"VDEM"
+"384","Mexico",2000,1,"Francisco Labastida","PRI",0.753,"VDEM",2.781,"VDEM"
+"385","Mexico",2000,1,"Cuauhtemoc Cardenas","Alliance for...",NA,NA,NA,NA
+"386","Mexico",2000,1,"Vicente Fox","PAN",2.254,"VDEM",1.65,"VDEM"
+"387","Mexico",2000,1,"Gilberto Rincon",NA,NA,NA,NA,NA
+"388","Mexico",2000,1,"Porfirio Munoz",NA,NA,NA,NA,NA
+"389","Mexico",2000,1,"Manuel Camacho",NA,NA,NA,NA,NA
+"390","Mexico",2006,1,"Roberto Campa",NA,NA,NA,NA,NA
+"391","Mexico",2006,1,"Patricia Mercado",NA,NA,NA,NA,NA
+"392","Mexico",2006,1,"Roberto Madrazo","Alliance for...",NA,"VDEM",NA,"VDEM"
+"393","Mexico",2006,1,"Felipe Calderon","PAN",2.012,"VDEM",1.425,"VDEM"
+"394","Mexico",2006,1,"Andres Manuel Lopez Obrador","Coalition fo...",NA,"VDEM",NA,"VDEM"
+"395","Mexico",2012,1,"Enrique Pena Nieto","PRI",1.016,"VDEM",2.767,"VDEM"
+"396","Mexico",2012,1,"Andres Manuel Lopez Obrador","PRD",-1.456,"VDEM",1.261,"VDEM"
+"397","Mexico",2012,1,"Josefina Vazquez Mota","PAN",2.013,"VDEM",1.817,"VDEM"
+"398","Mexico",2012,1,"Gabriel Quadri",NA,NA,NA,NA,NA
+"399","Mexico",2018,1,"Andres Manuel Lopez Obrador","MORENA",-1.698,"VDEM",0.97,"VDEM"
+"400","Mexico",2018,1,"Ricardo Anaya Cortes","PAN",1.97,"VDEM",1.72,"VDEM"
+"401","Mexico",2018,1,"Margarita Zavala",NA,NA,NA,NA,NA
+"402","Mexico",2018,1,"Jose Antonio Meade Kuribrena","PRI",0.949,"VDEM",2.667,"VDEM"
+"403","Mexico",2018,1,"Jaime Rodriguez Calderon",NA,NA,NA,NA,NA
+"404","Guatemala",1995,2,"Alvaro Arzu","PAN",1.64,"VDEM",-0.892,"VDEM"
+"405","Guatemala",1995,2,"Alfonso Portillo","FRG",2.146,"VDEM",-0.191,"VDEM"
+"406","Guatemala",2003,1,"Eduardo Suger",NA,NA,NA,NA,NA
+"407","Guatemala",2003,1,"Fritz Garcia-Gallont","PU",2.984,"VDEM",-2.646,"VDEM"
+"408","Guatemala",2003,1,"Alvaro Colom","UNE",-0.932,"VDEM",-0.264,"VDEM"
+"409","Guatemala",2003,1,"Manuel Conde Orellana",NA,NA,NA,NA,NA
+"410","Guatemala",2003,1,"Leonel Lopez Rodas","PAN",1.64,"VDEM",-1.982,"VDEM"
+"411","Guatemala",2003,2,"Oscar Berger","GANA",1.041,"VDEM",-0.949,"VDEM"
+"412","Guatemala",2003,2,"Alvaro Colom","UNE",-0.932,"VDEM",-0.264,"VDEM"
+"413","Guatemala",2007,1,"Alvaro Colom","UNE",-0.932,"VDEM",-0.264,"VDEM"
+"414","Guatemala",2007,1,"Rigoberta Menchu","EG",-0.92,"VDEM",-1.951,"VDEM"
+"415","Guatemala",2007,1,"Eduardo Suger","CASA",1.078,"VDEM",-2.62,"VDEM"
+"416","Guatemala",2007,1,"Otto Perez Molina","PP",2.479,"VDEM",-1.596,"VDEM"
+"417","Guatemala",2007,1,"Alejandro Giammattei","GANA",1.041,"VDEM",-1.609,"VDEM"
+"418","Guatemala",2011,1,"Manuel Baldizon","LIDER",0.868,"VDEM",-1.203,"VDEM"
+"419","Guatemala",2011,1,"Harold Caballeros","VIVA-EG",0.612,"VDEM",-2.673,"VDEM"
+"420","Guatemala",2011,1,"Otto Perez Molina","PP",2.479,"VDEM",-0.523,"VDEM"
+"421","Guatemala",2011,1,"Eduardo Suger","CREO",0.858,"VDEM",-1.063,"VDEM"
+"422","Guatemala",2011,1,"Sandra Torres","UNE-GANA",-0.22,"VDEM",-0.511,"VDEM"
+"423","Guatemala",2011,1,"Juan Gutierrez","PAN",1.64,"Proyectado. Ultimo valor disponible V-DEM",-1.982,"Proyectado. Ultimo valor disponible V-DEM"
+"424","Guatemala",2011,1,"Adela de Torre",NA,NA,NA,NA,NA
+"425","Guatemala",2011,1,"Alejandro Giammattei","CASA",1.078,"Proyectado. Ultimo valor disponible V-DEM",-2.62,"Proyectado. Ultimo valor disponible V-DEM"
+"426","Guatemala",2011,1,"Patricia de Arzu","PU",2.984,"Proyectado. Ultimo valor disponible V-DEM",-2.646,"Proyectado. Ultimo valor disponible V-DEM"
+"427","Guatemala",2011,1,"Rigoberta Menchu","WINAQ",NA,NA,NA,NA
+"428","Guatemala",2011,2,"Otto Perez Molina","PP",2.479,"VDEM",-0.523,"VDEM"
+"429","Guatemala",2011,2,"Manuel Baldizon","LIDER",0.868,"VDEM",-1.203,"VDEM"
+"430","Guatemala",2015,1,"Zury Rios","ViVa",2.445,"VDEM",-1.762,"VDEM"
+"431","Guatemala",2015,1,"Alejandro Giammattei",NA,NA,NA,NA,NA
+"432","Guatemala",2015,1,"Jose Angel Lopez","EG",-0.92,"Proyectado. Ultimo valor disponible V-DEM",-1.951,"Proyectado. Ultimo valor disponible V-DEM"
+"433","Guatemala",2015,1,"Miguel Angel Sandoval","WINAQ",NA,NA,NA,NA
+"434","Guatemala",2015,1,"Lizardo Sosa","T",1.09,"VDEM",-1.47,"VDEM"
+"435","Guatemala",2015,1,"Juan Gutierrez","PAN",1.64,"Proyectado. Ultimo valor disponible V-DEM",-1.982,"Proyectado. Ultimo valor disponible V-DEM"
+"436","Guatemala",2015,1,"Luis Fernando Perez",NA,NA,NA,NA,NA
+"437","Guatemala",2015,1,"Mario David Garcia","PP",2.479,"VDEM",-1.202,"VDEM"
+"438","Guatemala",2015,1,"Sandra Torres","UNE",-0.932,"VDEM",-0.264,"VDEM"
+"439","Guatemala",2015,1,"Roberto Gonzalez","CREO",0.858,"VDEM",-1.063,"VDEM"
+"440","Guatemala",2015,1,"Jimmy Morales","FCN",2.459,"VDEM",-1.008,"VDEM"
+"441","Guatemala",2015,1,"Manuel Baldizon","LIDER",0.868,"VDEM",-1.203,"VDEM"
+"442","Guatemala",2015,1,"Anibal Garcia",NA,NA,NA,NA,NA
+"443","Guatemala",2015,1,"Mario Estrada","UCN",0.449,"Proyectado. Ultimo valor disponible V-DEM",-0.52,"Proyectado. Ultimo valor disponible V-DEM"
+"444","Guatemala",2015,2,"Sandra Torres","UNE",-0.932,"VDEM",-0.264,"VDEM"
+"445","Guatemala",2015,2,"Jimmy Morales","FCN",2.459,"VDEM",-1.008,"VDEM"
+"446","Guatemala",2019,1,"Roberto Arzu","PAN",1.64,"Proyectado. Ultimo valor disponible V-DEM",-1.982,"Proyectado. Ultimo valor disponible V-DEM"
+"447","Guatemala",2019,1,"Edwin Escobar",NA,NA,NA,NA,NA
+"448","Guatemala",2019,1,"Hector Estrada","CREO",0.858,"VDEM",-1.063,"VDEM"
+"449","Guatemala",2019,1,"Alejandro Giammattei","Vamos",2.477,"VDEM",-1.982,"VDEM"
+"450","Guatemala",2019,1,"Edmond Mulet","PHG",1.476,"VDEM",-1.77,"VDEM"
+"451","Guatemala",2019,1,"Sandra Torres","UNE",-0.932,"VDEM",-0.264,"VDEM"
+"452","Guatemala",2019,1,"Estuardo Galdamez","FCN",2.459,"VDEM",-1.008,"VDEM"
+"453","Guatemala",2019,1,"Amilcar Rivera",NA,NA,NA,NA,NA
+"454","Guatemala",2019,1,"Isaac Farchi","ViVa",2.445,"Proyectado. Ultimo valor disponible V-DEM",-1.762,"Proyectado. Ultimo valor disponible V-DEM"
+"455","Guatemala",2019,1,"Manfredo Marroquin","EG",-0.92,"Proyectado. Ultimo valor disponible V-DEM",-1.951,"Proyectado. Ultimo valor disponible V-DEM"
+"456","Guatemala",2019,1,"Benito Morales","FCN",2.459,"VDEM",-1.008,"VDEM"
+"457","Guatemala",2019,1,"Manuel Villacorta","WINAQ",NA,NA,NA,NA
+"458","Guatemala",2019,1,"Pablo Ignacio Ceto",NA,NA,NA,NA,NA
+"459","Guatemala",2019,1,"Pablo Duarte","PU",2.984,"Proyectado. Ultimo valor disponible V-DEM",-2.646,"Proyectado. Ultimo valor disponible V-DEM"
+"460","Guatemala",2019,1,"Fredy Cabrera","T",1.09,"VDEM",-1.47,"VDEM"
+"461","Guatemala",2019,1,"Anibal Garcia",NA,NA,NA,NA,NA
+"462","Guatemala",2019,1,"Danilo Roca",NA,NA,NA,NA,NA
+"463","Guatemala",2019,1,"Jose Luis Chea Urruela",NA,NA,NA,NA,NA
+"464","Guatemala",2019,1,"Luis Velasquez",NA,NA,NA,NA,NA
+"465","Guatemala",2023,1,"Ricardo Sagastume","T",1.09,"Proyectado. Ultimo valor disponible V-DEM",-1.47,"Proyectado. Ultimo valor disponible V-DEM"
+"466","Guatemala",2023,1,"Armando Castillo","ViVa",2.445,"Proyectado. Ultimo valor disponible V-DEM",-1.762,"Proyectado. Ultimo valor disponible V-DEM"
+"467","Guatemala",2023,1,"Giulio Talamonti",NA,NA,NA,NA,NA
+"468","Guatemala",2023,1,"Francisco Arredondo","CREO",0.858,"Proyectado. Ultimo valor disponible V-DEM",-1.063,"Proyectado. Ultimo valor disponible V-DEM"
+"469","Guatemala",2023,1,"Sandra Torres","UNE",-0.932,"Proyectado. Ultimo valor disponible V-DEM",-0.264,"Proyectado. Ultimo valor disponible V-DEM"
+"470","Guatemala",2023,1,"Zury Rios",NA,NA,NA,NA,NA
+"471","Guatemala",2023,1,"Edmond Mulet",NA,NA,NA,NA,NA
+"472","Guatemala",2023,1,"Manuel Conde Orellana",NA,NA,NA,NA,NA
+"473","Guatemala",2023,1,"Amilcar Pop","WINAQ",NA,NA,NA,NA
+"474","Guatemala",2023,1,"Alvaro Trujillo",NA,NA,NA,NA,NA
+"475","Guatemala",2023,1,"Giovanni Reyes","BIEN",NA,NA,NA,NA
+"476","Guatemala",2023,1,"Rudio Lecsan Merida","PHG",1.476,"Proyectado. Ultimo valor disponible V-DEM",-1.77,"Proyectado. Ultimo valor disponible V-DEM"
+"477","Guatemala",2023,1,"Luis Lam",NA,NA,NA,NA,NA
+"478","Guatemala",2023,1,"Julio Rivera Claveria",NA,NA,NA,NA,NA
+"479","Guatemala",2023,1,"Amilcar Rivera",NA,NA,NA,NA,NA
+"480","Guatemala",2023,1,"Manuel Villacorta",NA,NA,NA,NA,NA
+"481","Guatemala",2023,1,"Rudy Guzman",NA,NA,NA,NA,NA
+"482","Guatemala",2023,1,"Bernardo Arevalo","Semilla",NA,NA,NA,NA
+"483","Guatemala",2023,1,"Hugo Pena",NA,NA,NA,NA,NA
+"484","Guatemala",2023,2,"Bernardo Arevalo","Semilla",NA,NA,NA,NA
+"485","Guatemala",2023,2,"Sandra Torres","UNE",-0.932,"Proyectado. Ultimo valor disponible V-DEM",-0.264,"Proyectado. Ultimo valor disponible V-DEM"
+"486","Guatemala",2023,1,"Samuel Morales","FCN",2.459,"Proyectado. Ultimo valor disponible V-DEM",-1.008,"Proyectado. Ultimo valor disponible V-DEM"
+"487","Guatemala",2023,1,"Carlos Pineda",NA,NA,NA,NA,NA
+"488","Guatemala",2023,1,"Rafael Espada",NA,NA,NA,NA,NA
+"489","Honduras",1993,1,"Jose Oswaldo Ramos Soto","PNH",1.629,"VDEM",1.236,"VDEM"
+"490","Honduras",1993,1,"Marco Orlando Iriarte",NA,NA,NA,NA,NA
+"491","Honduras",1993,1,"Olban Valladares",NA,NA,NA,NA,NA
+"492","Honduras",1993,1,"Carlos Roberto Reina","PLH",0.826,"VDEM",1.225,"VDEM"
+"493","Honduras",2013,1,"Orle Anibal Solis",NA,NA,NA,NA,NA
+"494","Honduras",2013,1,"Romeo Vasquez Velasquez",NA,NA,NA,NA,NA
+"495","Honduras",2013,1,"Mauricio Villeda Bermudez","PLH",1.637,"VDEM",1.236,"VDEM"
+"496","Honduras",2013,1,"Salvador Nasralla","PAC",-0.064,"VDEM",-0.347,"VDEM"
+"497","Honduras",2013,1,"Iris Xiomara Castro de Zelaya","LIBRE",-1.456,"VDEM",0.801,"VDEM"
+"498","Honduras",2013,1,"Jorge Rafael Aguilar",NA,NA,NA,NA,NA
+"499","Honduras",2013,1,"Andres Pavon Murillo","PUD",-1.12,"Proyectado. Ultimo valor disponible V-DEM",-0.5,"Proyectado. Ultimo valor disponible V-DEM"
+"500","Honduras",2013,1,"Juan Orlando Hernandez","PNH",2.129,"VDEM",1.522,"VDEM"
+"501","Honduras",2017,1,"Jose Alfonso Diaz Narvaez",NA,NA,NA,NA,NA
+"502","Honduras",2017,1,"Salvador Nasralla","LIBRE",-1.461,"VDEM",0.983,"VDEM"
+"503","Honduras",2017,1,"Eliseo Vallecillo Reyes",NA,NA,NA,NA,NA
+"504","Honduras",2017,1,"Lucas Evangelisto Aguilera",NA,NA,NA,NA,NA
+"505","Honduras",2017,1,"Luis Orlando Zelaya","PLH",1.637,"VDEM",1.236,"VDEM"
+"506","Honduras",2017,1,"Romeo Vasquez Velasquez",NA,NA,NA,NA,NA
+"507","Honduras",2017,1,"Isaias Fonseca Aguilar",NA,NA,NA,NA,NA
+"508","Colombia",1986,1,"Alvaro Gomez Hurtado","PCC",2.339,"VDEM",1.151,"VDEM"
+"509","Colombia",1986,1,"Luis Carlos Galan","PLC",-0.611,"VDEM",1.577,"VDEM"
+"510","Colombia",1994,1,"Andres Pastrana","PCC",2.344,"VDEM",0.884,"VDEM"
+"511","Colombia",1994,1,"Ernesto Samper","PLC",-0.752,"VDEM",1.632,"VDEM"
+"512","Colombia",1998,2,"Andres Pastrana","PCC",2.344,"VDEM",0.905,"VDEM"
+"513","Colombia",1998,2,"Horacio Serpa","PLC",-0.342,"VDEM",1.632,"VDEM"
+"514","Colombia",2002,1,"Alvaro Uribe Velez","Primero Colombia",NA,NA,NA,NA
+"515","Colombia",2002,1,"Noemi Sanin",NA,NA,NA,NA,NA
+"516","Colombia",2002,1,"Luis Eduardo Garzon",NA,NA,NA,NA,NA
+"517","Colombia",2002,1,"Horacio Serpa","PLC",-0.387,"VDEM",0.953,"VDEM"
+"518","Colombia",2002,1,"Harold Bedoy",NA,NA,NA,NA,NA
+"519","Colombia",2006,1,"Antanas Mockus",NA,NA,NA,NA,NA
+"520","Colombia",2006,1,"Horacio Serpa","PLC",-0.63,"VDEM",0.814,"VDEM"
+"521","Colombia",2006,1,"Enrique Parejo",NA,NA,NA,NA,NA
+"522","Colombia",2006,1,"Carlos Gaviria","PDA",-2.597,"VDEM",-0.273,"VDEM"
+"523","Colombia",2006,1,"Alvaro Leyva",NA,NA,NA,NA,NA
+"524","Colombia",2010,1,"Antanas Mockus","Verde",NA,NA,NA,NA
+"525","Colombia",2010,1,"Noemi Sanin","PCC",2.358,"VDEM",0.251,"VDEM"
+"526","Colombia",2010,1,"Gustavo Petro","PDA",-2.329,"VDEM",-0.273,"VDEM"
+"527","Colombia",2010,1,"German Vargas Lleras",NA,NA,NA,NA,NA
+"528","Colombia",2010,1,"Rafael Pardo","PLC",-0.455,"VDEM",0.563,"VDEM"
+"529","Colombia",2010,1,"Juan Manuel Santos","Partido-U",0.144,"VDEM",0.632,"VDEM"
+"530","Colombia",2010,1,"Sergio Fajardo",NA,NA,NA,NA,NA
+"531","Colombia",2010,2,"Antanas Mockus","Verde",NA,NA,NA,NA
+"532","Colombia",2010,2,"Juan Manuel Santos","Partido-U",0.144,"VDEM",0.632,"VDEM"
+"533","Colombia",2014,1,"Clara Lopez","PDA",-2.329,"Proyectado. Ultimo valor disponible V-DEM",-0.273,"Proyectado. Ultimo valor disponible V-DEM"
+"534","Colombia",2014,1,"Marta Lucia Ramirez","PCC",2.358,"VDEM",0.251,"VDEM"
+"535","Colombia",2014,1,"Oscar Ivan Zuluaga","CD",2.679,"VDEM",0.373,"VDEM"
+"536","Colombia",2014,1,"Enrique Penalosa","AV",NA,NA,NA,NA
+"537","Colombia",2014,1,"Juan Manuel Santos","Partido-U",0.803,"VDEM",0.552,"VDEM"
+"538","Colombia",2014,2,"Juan Manuel Santos","Partido-U",0.803,"VDEM",0.552,"VDEM"
+"539","Colombia",2014,2,"Oscar Ivan Zuluaga","CD",2.679,"VDEM",0.373,"VDEM"
+"540","Colombia",2018,1,"Sergio Fajardo",NA,NA,NA,NA,NA
+"541","Colombia",2018,1,"Humberto de la Calle","PLC",-0.279,"VDEM",0.563,"VDEM"
+"542","Colombia",2018,1,"Ivan Duque","CD",2.679,"VDEM",0.557,"VDEM"
+"543","Colombia",2018,1,"Gustavo Petro",NA,NA,NA,NA,NA
+"544","Colombia",2018,1,"German Vargas Lleras",NA,NA,NA,NA,NA
+"545","Colombia",2018,1,"Viviane Morales",NA,NA,NA,NA,NA
+"546","Colombia",2022,1,"Gustavo Petro",NA,NA,NA,NA,NA
+"547","Colombia",2022,1,"Ingrid Betancourt",NA,NA,NA,NA,NA
+"548","Colombia",2022,1,"Federico Gutierrez",NA,NA,NA,NA,NA
+"549","Colombia",2022,1,"Sergio Fajardo",NA,NA,NA,NA,NA
+"550","Colombia",2022,1,"Enrique Gomez",NA,NA,NA,NA,NA
+"551","Colombia",2022,1,"John Milton Rodriguez",NA,NA,NA,NA,NA
+"552","Colombia",2022,1,"Luis Perez",NA,NA,NA,NA,NA
+"553","Colombia",2022,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA
+"554","Costa Rica",1986,1,"Oscar Arias Sanchez",NA,NA,NA,NA,NA
+"555","Costa Rica",1986,1,"Rafael Calderon Fournier",NA,NA,NA,NA,NA
+"556","Costa Rica",1998,1,"Jose Miguel Corrales Bolanos",NA,NA,NA,NA,NA
+"557","Costa Rica",1998,1,"Miguel Angel Rodriguez Echeverria","PUSC",1.516,"VDEM",-1.244,"VDEM"
+"558","Costa Rica",2002,1,"Otto Guevara","PML",2.425,"VDEM",-2.503,"VDEM"
+"559","Costa Rica",2002,1,"Abel Pacheco de la Espriella","PUSC",1.516,"VDEM",-1.244,"VDEM"
+"560","Costa Rica",2002,1,"Otton Solis","PAC",-1.125,"VDEM",-2.486,"VDEM"
+"561","Costa Rica",2002,1,"Rolando Araya","PLN",0.603,"VDEM",-0.796,"VDEM"
+"562","Costa Rica",2002,1,"Pablo Galo Angulo Casasola",NA,NA,NA,NA,NA
+"563","Costa Rica",2002,1,"Jose Hine Garcia",NA,NA,NA,NA,NA
+"564","Costa Rica",2002,1,"Justo Orozco Alvarez",NA,NA,NA,NA,NA
+"565","Costa Rica",2002,1,"Jorge Walter Coto Molina",NA,NA,NA,NA,NA
+"566","Costa Rica",2002,1,"Marvin Calvo Montoya",NA,NA,NA,NA,NA
+"567","Costa Rica",2002,1,"Walter Munoz","PIN",NA,NA,NA,NA
+"568","Costa Rica",2002,1,"Daniel Reynolds Vargas",NA,NA,NA,NA,NA
+"569","Costa Rica",2002,1,"Vladimir de la Cruz de Lemos","FD",NA,NA,NA,NA
+"570","Costa Rica",2002,1,"Rolando Angulo Zeledon",NA,NA,NA,NA,NA
+"571","Costa Rica",2002,2,"Abel Pacheco de la Espriella","PUSC",1.516,"VDEM",-1.244,"VDEM"
+"572","Costa Rica",2002,2,"Rolando Araya","PLN",0.603,"VDEM",-0.796,"VDEM"
+"573","Costa Rica",2006,1,"Humberto Arce",NA,NA,NA,NA,NA
+"574","Costa Rica",2006,1,"Otton Solis","PAC",-1.125,"VDEM",-2.486,"VDEM"
+"575","Costa Rica",2006,1,"Otto Guevara","PML",2.097,"VDEM",-2.503,"VDEM"
+"576","Costa Rica",2006,1,"Abel Pacheco de la Espriella",NA,NA,NA,NA,NA
+"577","Costa Rica",2006,1,"Alvaro Montero",NA,NA,NA,NA,NA
+"578","Costa Rica",2006,1,"Ricardo Toledo","PUSC",1.516,"VDEM",-1.653,"VDEM"
+"579","Costa Rica",2006,1,"Vladimir de la Cruz","FD",NA,NA,NA,NA
+"580","Costa Rica",2006,1,"Bolivar Serrano Hidalgo",NA,NA,NA,NA,NA
+"581","Costa Rica",2006,1,"Jose Manuel Echandi",NA,NA,NA,NA,NA
+"582","Costa Rica",2006,1,"Antonio Alvarez Desanti",NA,NA,NA,NA,NA
+"583","Costa Rica",2006,1,"Walter Munoz","PIN",NA,NA,NA,NA
+"584","Costa Rica",2006,1,"Juan Jose Vargas Fallas",NA,NA,NA,NA,NA
+"585","Costa Rica",2006,1,"Jose Miguel Villalobos",NA,NA,NA,NA,NA
+"586","Costa Rica",2006,1,"Humberto Vargas",NA,NA,NA,NA,NA
+"587","Costa Rica",2006,1,"Oscar Arias","PLN",1.393,"VDEM",-0.938,"VDEM"
+"588","Costa Rica",2018,1,"Carlos Alvarado Quesada","PAC",0,"VDEM",-1.319,"VDEM"
+"589","Costa Rica",2018,1,"Otto Guevara","PML",2.097,"Proyectado. Ultimo valor disponible V-DEM",-2.503,"Proyectado. Ultimo valor disponible V-DEM"
+"590","Costa Rica",2018,1,"Edgardo Araya","FA",-2.46,"Proyectado. Ultimo valor disponible V-DEM",-2.532,"Proyectado. Ultimo valor disponible V-DEM"
+"591","Costa Rica",2018,1,"Mario Redondo Poveda",NA,NA,NA,NA,NA
+"592","Costa Rica",2018,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA
+"593","Costa Rica",2018,1,"Antonio Alvarez Desanti","PLN",0.633,"VDEM",-0.938,"VDEM"
+"594","Costa Rica",2018,1,"Fabricio Alvarado Munoz","PRN",2.047,"VDEM",-0.471,"VDEM"
+"595","Costa Rica",2018,1,"Oscar Lopez","PASE",1.57,"Proyectado. Ultimo valor disponible V-DEM",-2.464,"Proyectado. Ultimo valor disponible V-DEM"
+"596","Costa Rica",2018,1,"Sergio Mena",NA,NA,NA,NA,NA
+"597","Costa Rica",2018,1,"Jhon Vega",NA,NA,NA,NA,NA
+"598","Costa Rica",2010,1,"Laura Chinchilla","PLN",0.276,"VDEM",-0.938,"VDEM"
+"599","Costa Rica",2010,1,"Otton Solis","PAC",-1.125,"VDEM",-1.318,"VDEM"
+"600","Costa Rica",2010,1,"Otto Guevara","PML",2.097,"VDEM",-2.503,"VDEM"
+"601","Costa Rica",2010,1,"Luis Fishman","PUSC",1.516,"VDEM",-2.414,"VDEM"
+"602","Costa Rica",2010,1,"Walter Munoz","PIN",NA,NA,NA,NA
+"603","Costa Rica",2010,1,"Mayra Gonzalez",NA,NA,NA,NA,NA
+"604","Costa Rica",2010,1,"Eugenio Trejos","FA",NA,NA,NA,NA
+"605","Costa Rica",2010,1,"Oscar Lopez","PASE",1.57,"VDEM",-2.464,"VDEM"
+"606","Costa Rica",2010,1,"Rolando Araya",NA,NA,NA,NA,NA
+"607","Costa Rica",2014,1,"Johnny Araya Monge","PLN",0.633,"VDEM",-0.938,"VDEM"
+"608","Costa Rica",2014,1,"Jose Miguel Corrales Bolanos",NA,NA,NA,NA,NA
+"609","Costa Rica",2014,1,"Otto Guevara","PML",2.097,"VDEM",-2.503,"VDEM"
+"610","Costa Rica",2014,1,"Rodolfo Piza","PUSC",1.516,"VDEM",-2.414,"VDEM"
+"611","Costa Rica",2014,1,"Luis Guillermo Solis","PAC",0,"VDEM",-1.319,"VDEM"
+"612","Costa Rica",2014,1,"Jose Maria Villalta","FA",-2.46,"VDEM",-2.532,"VDEM"
+"613","Costa Rica",2014,1,"Jose Manuel Echandi",NA,NA,NA,NA,NA
+"614","Costa Rica",2014,1,"Hector Monestel Herrera",NA,NA,NA,NA,NA
+"615","Costa Rica",2014,1,"Sergio Mena",NA,NA,NA,NA,NA
+"616","Costa Rica",2014,1,"Oscar Lopez","PASE",1.57,"Proyectado. Ultimo valor disponible V-DEM",-2.464,"Proyectado. Ultimo valor disponible V-DEM"
+"617","Costa Rica",2014,1,"Carlos Avendano","PRN",NA,NA,NA,NA
+"618","Costa Rica",2014,1,"Walter Munoz","PIN",NA,NA,NA,NA
+"619","Costa Rica",2014,1,"Justo Orozco",NA,NA,NA,NA,NA
+"620","Costa Rica",2018,1,"Stephanie Campos",NA,NA,NA,NA,NA
+"621","Costa Rica",2018,2,"Fabricio Alvarado Munoz",NA,NA,NA,NA,NA
+"622","Costa Rica",2018,2,"Carlos Alvarado Quesada","PAC",0,"VDEM",-1.319,"VDEM"
+"623","Costa Rica",2018,1,"Juan Diego Castro","PIN",1.096,"VDEM",-2.495,"VDEM"
+"624","Costa Rica",2018,1,"Rodolfo Piza","PUSC",1.516,"VDEM",-2.414,"VDEM"
+"625","Costa Rica",2022,1,"Rodrigo Chaves",NA,NA,NA,NA,NA
+"626","Costa Rica",2022,1,"Fabricio Alvarado Munoz",NA,NA,NA,NA,NA
+"627","Costa Rica",2022,1,"Rolando Araya",NA,NA,NA,NA,NA
+"628","Costa Rica",2022,1,"Welmer Ramos","PAC",0,"Proyectado. Ultimo valor disponible V-DEM",-1.319,"Proyectado. Ultimo valor disponible V-DEM"
+"629","Costa Rica",2022,1,"Jose Maria Villalta","FA",-2.46,"Proyectado. Ultimo valor disponible V-DEM",-2.532,"Proyectado. Ultimo valor disponible V-DEM"
+"630","Costa Rica",2022,1,"Eliecer Feinzaig",NA,NA,NA,NA,NA
+"631","Costa Rica",2022,1,"Jose Maria Figueres","PLN",0.633,"Proyectado. Ultimo valor disponible V-DEM",-0.938,"Proyectado. Ultimo valor disponible V-DEM"
+"632","Costa Rica",2022,1,"Lineth Saborio","PUSC",1.516,"Proyectado. Ultimo valor disponible V-DEM",-2.414,"Proyectado. Ultimo valor disponible V-DEM"
+"633","Costa Rica",2022,1,"Rodolfo Hernandez",NA,NA,NA,NA,NA
+"634","Costa Rica",2022,1,"Rodolfo Piza",NA,NA,NA,NA,NA
+"635","Costa Rica",2022,1,"Federico Malavassi",NA,NA,NA,NA,NA
+"636","Costa Rica",2022,1,"Carmen Quesada",NA,NA,NA,NA,NA
+"637","Costa Rica",2022,1,"Greivin Moya",NA,NA,NA,NA,NA
+"638","Costa Rica",2022,1,"Martin Chinchilla","PU",NA,NA,NA,NA
+"639","Costa Rica",2022,1,"Luis Alberto Cordero","PML",2.097,"Proyectado. Ultimo valor disponible V-DEM",-2.503,"Proyectado. Ultimo valor disponible V-DEM"
+"640","Costa Rica",2022,1,"Eduardo Cruickshank","PRN",2.047,"Proyectado. Ultimo valor disponible V-DEM",-0.471,"Proyectado. Ultimo valor disponible V-DEM"
+"641","Costa Rica",2022,1,"Christian Rivera",NA,NA,NA,NA,NA
+"642","Costa Rica",2022,1,"Maricela Morales",NA,NA,NA,NA,NA
+"643","Costa Rica",2022,1,"Roulan Jimenez",NA,NA,NA,NA,NA
+"644","Costa Rica",2022,1,"Sergio Mena",NA,NA,NA,NA,NA
+"645","Costa Rica",2022,1,"Oscar Lopez","PASE",1.57,"Proyectado. Ultimo valor disponible V-DEM",-2.464,"Proyectado. Ultimo valor disponible V-DEM"
+"646","Costa Rica",2022,1,"Natalia Diaz",NA,NA,NA,NA,NA
+"647","Costa Rica",2022,1,"Oscar Campos",NA,NA,NA,NA,NA
+"648","Costa Rica",2022,1,"Walter Munoz","PIN",1.096,"Proyectado. Ultimo valor disponible V-DEM",-2.495,"Proyectado. Ultimo valor disponible V-DEM"
+"649","Costa Rica",2022,1,"Jhon Vega",NA,NA,NA,NA,NA
+"650","Costa Rica",2022,2,"Rodrigo Chaves",NA,NA,NA,NA,NA
+"651","Costa Rica",2022,2,"Jose Maria Figueres","PLN",0.633,"Proyectado. Ultimo valor disponible V-DEM",-0.938,"Proyectado. Ultimo valor disponible V-DEM"
+"652","Republica Dominicana",2016,1,"Luis Rodolfo Abinader","PRM",NA,NA,NA,NA
+"653","Republica Dominicana",2016,1,"Guillermo Moreno",NA,NA,NA,NA,NA
+"654","Republica Dominicana",2016,1,"Minerva Tavarez Mirabal",NA,NA,NA,NA,NA
+"655","Republica Dominicana",2016,1,"Soraya Aquino",NA,NA,NA,NA,NA
+"656","Republica Dominicana",2016,1,"Pelegrin Castillo",NA,NA,NA,NA,NA
+"657","Republica Dominicana",2016,1,"Elias Wessin Chavez","PQD",NA,NA,NA,NA
+"658","Republica Dominicana",2016,1,"Hatuey De Camps",NA,NA,NA,NA,NA
+"659","El Salvador",1999,1,"Rodolfo Parker","PDC",NA,NA,NA,NA
+"660","El Salvador",1999,1,"Facundo Guardado","FMLN",-2.503,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
+"661","El Salvador",1999,1,"Ruben Zamora",NA,NA,NA,NA,NA
+"662","El Salvador",1999,1,"Salvador Nestor Garcia",NA,NA,NA,NA,NA
+"663","El Salvador",2014,1,"Salvador Sanchez Ceren","FMLN",-1.292,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
+"664","El Salvador",2014,1,"Norman Quijano","ARENA",1.946,"Proyectado. Ultimo valor disponible V-DEM",1.936,"Proyectado. Ultimo valor disponible V-DEM"
+"665","El Salvador",2014,1,"Elias Antonio Saca",NA,NA,NA,NA,NA
+"666","El Salvador",2014,1,"Rene Rodriguez Hurtado",NA,NA,NA,NA,NA
+"667","El Salvador",2014,1,"Oscar Lemu",NA,NA,NA,NA,NA
+"668","El Salvador",2019,1,"Carlos Calleja",NA,NA,NA,NA,NA
+"669","El Salvador",2019,1,"Hugo Martinez","FMLN",-1.292,"Proyectado. Ultimo valor disponible V-DEM",1.953,"Proyectado. Ultimo valor disponible V-DEM"
+"670","El Salvador",2019,1,"Josue Alvarado",NA,NA,NA,NA,NA
+"671","Brasil",1989,1,"Fernando Collor de Mello","PRN",NA,NA,NA,NA
+"672","Brasil",1989,1,"Silvio Santos",NA,NA,NA,NA,NA
+"673","Brasil",1994,1,"Walter Queiroz","PRN",NA,NA,NA,NA
+"674","Brasil",2006,1,"Luiz Inacio Lula da Silva","PT",-1.455,"VDEM",0.818,"VDEM"
+"675","Brasil",2018,1,"Luiz Inacio Lula da Silva","PT",-1.896,"VDEM",0.567,"VDEM"
+"676","Argentina",2015,1,"Daniel Scioli","FPV-PJ",-1.659,"VDEM",2.17,"VDEM"
+"677","Peru",2016,1,"Cesar Acuna",NA,NA,NA,NA,NA
+"678","Peru",2016,1,"Daniel Urresti",NA,NA,NA,NA,NA
+"679","Peru",2016,1,"Renzo Reggiardo",NA,NA,NA,NA,NA
+"680","Ecuador",2006,1,"Luis Macas Ambuludi","MUPP-NP",-2.175,"VDEM",0.493,"VDEM"
+"681","Ecuador",2013,1,"Rafael Correa","PAIS",-1.61,"VDEM",1.932,"VDEM"
+"682","Ecuador",2013,1,"Alberto Acosta","MUPP-NP",-2.175,"VDEM",0.493,"VDEM"
+"683","Uruguay",2009,1,"Luis Alberto Lacalle Herrera","PN",1.373,"VDEM",1.78,"VDEM"
+"684","Uruguay",2009,1,"Jose Mujica","FA/EP",-1.334,"VDEM",1.152,"VDEM"
+"685","Uruguay",2014,1,"Tabare Vazquez","FA/EP",-1.334,"VDEM",1.152,"VDEM"
+"686","Nicaragua",2006,1,"Daniel Ortega","FSLN",-0.854,"VDEM",0.938,"VDEM"
+"687","Panama",1994,1,"Mireya Moscoso",NA,NA,NA,NA,NA
+"688","Panama",2009,1,"Guillermo Endara",NA,NA,NA,NA,NA
+"689","Venezuela",1963,1,"Raul Leoni","AD",NA,"VDEM",NA,"VDEM"
+"690","Venezuela",1998,1,"Irene Saez",NA,NA,NA,NA,NA
+"691","Bolivia",1993,1,"Carlos Palenque","CONDEPA",-1.013,"VDEM",-0.693,"VDEM"
+"692","Bolivia",1997,1,"Hugo Banzer","ADN",1.018,"VDEM",0.211,"VDEM"
+"693","Bolivia",2002,1,"Rene Blattmann",NA,NA,NA,NA,NA
+"694","Bolivia",2002,1,"Nicolas Valdivia","CONDEPA",-0.644,"Proyectado. Ultimo valor disponible V-DEM",-1.011,"Proyectado. Ultimo valor disponible V-DEM"
+"695","Bolivia",2002,1,"Costa Obregon",NA,NA,NA,NA,NA
+"696","Bolivia",2002,1,"Rolando Morales",NA,NA,NA,NA,NA
+"697","Bolivia",2002,1,"Johnny Fernandez","UCS",0.047,"Proyectado. Ultimo valor disponible V-DEM",-0.794,"Proyectado. Ultimo valor disponible V-DEM"
+"698","Bolivia",2005,1,"Evo Morales","MAS",-2.343,"VDEM",1.294,"VDEM"
+"699","Bolivia",2005,1,"Felipe Quispe",NA,NA,NA,NA,NA
+"700","Bolivia",2005,1,"Gildo Angulo","NFR",1.749,"Proyectado. Ultimo valor disponible V-DEM",-0.753,"Proyectado. Ultimo valor disponible V-DEM"
+"701","Bolivia",2005,1,"Nestor Garcia",NA,NA,NA,NA,NA
+"702","Bolivia",2005,1,"Eliseo Rodriguez",NA,NA,NA,NA,NA
+"703","Bolivia",2014,1,"Evo Morales","MAS",-2.343,"VDEM",1.895,"VDEM"
+"704","Guatemala",2003,1,"Oscar Berger",NA,NA,NA,NA,NA
+"705","Guatemala",2011,1,"Mario Estrada","UCN",0.449,"VDEM",-0.52,"VDEM"
+"706","Guatemala",2019,1,"Zury Rios",NA,NA,NA,NA,NA
+"707","Guatemala",2023,1,"Isaac Farchi",NA,NA,NA,NA,NA
+"708","Honduras",2017,1,"Juan Orlando Hernandez","PNH",2.129,"VDEM",1.522,"VDEM"
+"709","Honduras",2017,1,"Marlene Alvarenga","PAC",-0.064,"Proyectado. Ultimo valor disponible V-DEM",-0.347,"Proyectado. Ultimo valor disponible V-DEM"
+"710","Colombia",1986,1,"Virgilio Barco","PLC",-0.611,"VDEM",1.577,"VDEM"
+"711","Colombia",2002,1,"Ingrid Betancourt",NA,NA,NA,NA,NA
+"712","Colombia",2006,1,"Alvaro Uribe Velez","Primero Colombia",NA,NA,NA,NA
+"713","Colombia",2018,1,"Jorge Antonio Trujillo",NA,NA,NA,NA,NA
+"714","Republica Dominicana",2016,1,"Danilo Medina","PLD",NA,NA,NA,NA
+"715","El Salvador",1999,1,"Francisco Flores","ARENA",2.493,"Proyectado. Ultimo valor disponible V-DEM",1.515,"Proyectado. Ultimo valor disponible V-DEM"
+"716","El Salvador",2019,1,"Nayib Bukele",NA,NA,NA,NA,NA
