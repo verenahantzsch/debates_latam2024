@@ -1310,8 +1310,9 @@ text(x = 1:length(residuos_pearson_est), y = residuos_pearson_est,
 mtext("Gráfico Anexo 6.III.C.1 Residuos del Modelo", font = 2, side = 3, cex = 1.2, line = -1.2, outer = TRUE )
 mtext("Magnitud de Residuos", side = 2, line = -2, cex = 0.8, outer = TRUE )
 mtext("Elaboración propia. 
-      El eje horizontal representa el índice de cada observación. 
-      Cada panel (6.III.C.1 a 6.III.C.4) grafica la magnitud de un tipo de residuo en específico. ", 
+El eje horizontal representa el índice de cada observación. 
+Cada panel (6.III.C.1 a 6.III.C.4) grafica la magnitud de un tipo de residuo específico. 
+Elaborado con base en los resultados del Modelo Final (Tabla 17). ", 
       side = 1, line = -1.2, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
 
 
@@ -1437,11 +1438,11 @@ labels <- tibble( indicador = colnames(dfbetas),
                             "log NEC",
                             "% voto oficialista",
                             "Presidente a reelección",
-                            "Prop. individuos c internet",
+                            "Prop. individuos c/internet",
                             "Acceso gratuito a medios",        
                             "Prop. debates en región" ,
                             "Debates regulados" ,
-                            "Cant. elecc. pasadas c debates" ,
+                            "Cant. elecc. pasadas c/debates" ,
                             "log PBI per cápita" ,
                             "N° Democracia electoral",
                             "N° Corrupción en medios",
@@ -1509,11 +1510,11 @@ colnames(dfbetas)[1:13] <- c(
   "log NEC",
   "Votos oficialista",
   "Presidente a reelección",
-  "Prop. individuos c internet",
+  "Prop. individuos c/internet",
   "Acceso gratuito",
   "Prop. debates en región",
   "Debates regulados",
-  "Cant. elecc. pasadas c debates",
+  "Cant. elecc. pasadas c/debates",
   "log PBI per cápita",
   "N° Democracia electoral",
   "N° Corrupción de medios"
@@ -1612,9 +1613,10 @@ text(idx,
 #CAPTION
 mtext("
 El gráfico muestra la influencia global de cada clúster (país) sobre los parámetros del modelo.
-Si bien Chile y Uruguay superan levemente el umbral de consenso (4/J), su influencia es moderada (D < 0.5). 
+Si bien Chile y Uruguay superan levemente el umbral de consenso (4/J), su influencia es moderada (D < 0.5).
 Un análisis de sensibilidad indica que la exclusión de estos clústeres no altera la dirección ni la significancia de los efectos principales, 
-      lo que sugiere la robustez de los hallazgos.", 
+lo que sugiere la robustez de los hallazgos.
+Elaborado con base en los resultados del Modelo Final multinivel (Tabla 18). ", 
       side = 1, line = 5, cex = 0.75, outer = TRUE, adj = 1, font = 3 )
 #Figure X. Cluster-level DFBETAs for the final multilevel logistic regression model.
 
@@ -1654,11 +1656,11 @@ colnames(dfb) <- c(
   "log NEC",
   "Votos oficialista",
   "Presidente a reelección",
-  "Prop. individuos c internet",
+  "Prop. individuos c/internet",
   "Acceso gratuito",
   "Prop. debates en región",
   "Debates regulados",
-  "Cant. elecc. pasadas c debates",
+  "Cant. elecc. pasadas c/debates",
   "log PBI per cápita",
   "N° Democracia electoral",
   "N° Corrupción de medios"
@@ -1756,7 +1758,7 @@ corr_modelo_a_probar <- data_modelo_a_probar %>%
          democraciavdemelectoralcomp,
          mediaqualitycorruptvdem) %>% 
   dplyr::rename( "Acceso gratuito a TV" = accesogratuito,
-                 "Prop. identificados c partido" = alineamiento,
+                 "Prop. identificados c/partido" = alineamiento,
                  "Prop. elecciones c/debates región" = avgpropdebatesregionxciclo ,
                  "Cant. elecciones pasadas c/debates" = cumsum_pastciclos ,
                  "N° democracia electoral" = democraciavdemelectoralcomp ,
@@ -1766,7 +1768,7 @@ corr_modelo_a_probar <- data_modelo_a_probar %>%
                  "log Margen de victoria" = lnmarginvic, 
                  "N° corrupción en medios" = mediaqualitycorruptvdem ,
                  "Año electoral" = ncat_eleccion,
-                 "N.E.C." = nec ,
+                 "NEC" = nec ,
                  "Propaganda prohibida" = prohibicionpropaganda ,
                  "Prop. elecciones c/debates USA" =  prop_elec_usa_ciclo ,
                  "% individuos c/Internet" = propindivinternet ,
@@ -1776,7 +1778,7 @@ corr_modelo_a_probar <- data_modelo_a_probar %>%
                  "% voto oficialista" = voteshareincumbent,
                  "log % voto oficialista" = lnvoteshareincumbent,
                  "Presidente a reelección" =  dico_reeleccion ,
-                 "log N.E.C." = lnnec)
+                 "log NEC" = lnnec)
 
 
 summary(corr_modelo_a_probar)
@@ -1822,13 +1824,13 @@ new_order <- c("Año electoral",
                "log % individuos c/Internet",
                "PBI x capita" ,
                "log PBI x capita",
-               "Prop. identificados c partido" ,
+               "Prop. identificados c/partido" ,
                "N° democracia electoral",
                "N° corrupción en medios",
                "Margen de victoria",
                "log Margen de victoria",
-               "N.E.C.",
-               "log N.E.C.",
+               "NEC",
+               "log NEC",
                "% voto oficialista",
                "log % voto oficialista",
                "Presidente a reelección")
@@ -3008,14 +3010,14 @@ texreg::htmlreg(lista_logit,
                                       "Presidente a reelección",
                                       
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
                                       
-                                      "Prop. identificados c partido",
+                                      "Prop. identificados c/partido",
                                       "Prop. TV por hogar"		,
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Prohibición propaganda"	 ,
                                       "Acceso gratuito",
                                       "Prop. debates en región",
@@ -3050,7 +3052,7 @@ texreg::htmlreg(lista_logit,
                 file="anexos/tabla_modelos_logit_robustos.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla 17. Modelos parciales y final logit de un nivel, con errores robustos. 
+                 Tabla 17. Modelos parciales y Final logit de un nivel, con errores robustos. 
                </div>
                Se presentan los resultados de la serie de modelos estimados con regresión logística con errores estándar robustos agrupados por país. <br> Se trata de especificaciones de un nivel (sin efectos aleatorios). <br>
                Los coeficientes corresponden a variables estandarizadas (<i>z-scores</i>). 
@@ -3090,14 +3092,14 @@ texreg::htmlreg(lista_random,
                                       "Presidente a reelección",
                                       
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
                                       
-                                      "Prop. identificados c partido",
+                                      "Prop. identificados c/partido",
                                       "Prop. TV por hogar"		,
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Prohibición propaganda"	 ,
                                       "Acceso gratuito",
                                       "Prop. debates en región",
@@ -3136,7 +3138,7 @@ texreg::htmlreg(lista_random,
                 file="anexos/tabla_random_intercepts.html",
                 caption = "<div style='text-align:left;'>
                <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
-                 Tabla 18. Modelos parciales y final logit multinivel. 
+                 Tabla 18. Modelos parciales y Final logit multinivel. 
                </div>
                Se presentan los resultados de la serie de modelos estimados con regresión logística con efectos aleatorios por país. La técnica permite diferenciar el efecto de 'pertenencia' a los diferentes países de la muestra. <br>
                Los coeficientes corresponden a variables estandarizadas (<i>z-scores</i>).  
@@ -3172,11 +3174,11 @@ texreg::htmlreg(lista_s_outliers,
                                       "log NEC",
                                       "% votos oficialista",
                                       "Presidente a reelección",
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Acceso gratuito",
                                       "Prop. debates en región",
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios") ,
@@ -3248,15 +3250,15 @@ texreg::htmlreg(lista_variaciones_final,
                                       "log NEC",
                                       "Votos oficialista",
                                       "Presidente a reelección",
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Acceso gratuito",
                                       "Prop. debates en región",
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° democracia electoral",
                                       "N° corrupción de medios",
-                                      "Prop. identificados c partido",
+                                      "Prop. identificados c/partido",
                                       "Prop. TV por hogar",
                                        "Margen de victoria",
                                        "NEC",
@@ -3354,15 +3356,15 @@ texreg::htmlreg(lista_variaciones_modernizacion,
                                       "log NEC",
                                       "Votos oficialista",
                                       "Presidente a reelección",
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Acceso gratuito",
                                       "Prop. debates en región",
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
-                                      "Prop. identificados c partido",
+                                      "Prop. identificados c/partido",
                                       "Prop. TV por hogar",
                                       "Volatilidad",
                                       "Satisfaccion"
@@ -3394,10 +3396,10 @@ texreg::htmlreg(lista_variaciones_modernizacion,
   <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
     Tabla Anexa 6.IV.B. Pruebas de robustez: controles de la operacionalización de las hipótesis de la modernización.
   </div>
-  La primera columna reporta la especificación final preferida para facilitar la comparación con los modelos alternativos. Las columnas restantes presentan, en orden: <br>
+  La primera columna reporta la especificación Final preferida para facilitar la comparación con los modelos alternativos. Las columnas restantes presentan, en orden: <br>
   <br>
-  <b>Sistémico c/ volatilidad:</b> Una variación del modelo sistémico que incorpora un indicador de volatilidad electoral. <br>
-  <b>Final c/ volatilidad:</b> Una variación de la especificación final que incluye la misma medida de volatilidad. <br>
+  <b>Sistémico c/ volatilidad:</b> Una variación del modelo Sistémico que incorpora un indicador de volatilidad electoral. <br>
+  <b>Final c/ volatilidad:</b> Una variación de la especificación Final que incluye la misma medida de volatilidad. <br>
   <b>Final c/ satisfacción:</b> Una variación del modelo Final que incorpora un indicador de satisfacción con la democracia. <br>
   <br>
   Todos los modelos emplean regresión logística con errores estándar robustos agrupados por país (<i>clusters</i>). Los coeficientes corresponden a variables estandarizadas (<i>z-scores</i>) para permitir la comparación de magnitudes.
@@ -3453,16 +3455,16 @@ texreg::htmlreg(lista_variaciones_tradicion,
                                       "log NEC",
                                       "Votos oficialista",
                                       "Presidente a reelección",
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Acceso gratuito",
                                       "Prop. debates en región",
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
-                                      "Elección pasada c/ debates",
-                                      "log Cant. elecc. pasadas c/ debates"
+                                      "Elección pasada c/debates",
+                                      "log Cant. elecc. pasadas c/debates"
                 ),
                 reorder.coef =  c(1,
                                   2,
@@ -3494,7 +3496,7 @@ texreg::htmlreg(lista_variaciones_tradicion,
   <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
     Tabla Anexa 6.IV.C. Pruebas de robustez: operacionalización alternativa de la tradición de debates.
   </div>
-  La primera columna reporta la especificación final preferida para facilitar la comparación. En este modelo, la tradición se operacionaliza como la suma acumulada de elecciones con debates antecedentes. Las columnas restantes presentan: <br>
+  La primera columna reporta la especificación Final preferida para facilitar la comparación. En este modelo, la tradición se operacionaliza como la suma acumulada de elecciones con debates antecedentes. Las columnas restantes presentan: <br>
   <br>
   <b>Logit / Multinivel c/ antecedentes dummy:</b> Variantes que sustituyen la suma acumulada por un indicador dicotómico (1 = hubo debate en la elección inmediata anterior; 0 = no hubo), estimadas mediante logística agrupada y multinivel, respectivamente. <br>
   <b>Logit / Multinivel c/ antecedentes log:</b> Variantes que emplean el logaritmo de la suma acumulada de debates previos, estimadas mediante ambas técnicas. <br>
@@ -3532,11 +3534,11 @@ texreg::htmlreg(lista_regulacion,
                                       "log NEC",
                                       "Votos oficialista",
                                       "Presidente a reelección",
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Acceso gratuito",
                                       "Prop. debates en región",
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
@@ -3571,7 +3573,7 @@ texreg::htmlreg(lista_regulacion,
   <div style='font-weight:bold; font-size:110%; margin-bottom:4px;'>
     Tabla Anexa 6.IV.D. Pruebas de robustez: operacionalización alternativa del marco regulatorio.
   </div>
-  La primera columna reporta la especificación final preferida para facilitar la comparación. En este modelo, la regulación de los debates se mide mediante un indicador dicotómico. Las columnas restantes presentan: <br>
+  La primera columna reporta la especificación Final preferida para facilitar la comparación. En este modelo, la regulación de los debates se mide mediante un indicador dicotómico. Las columnas restantes presentan: <br>
   <br>
   <b>Final c/ regulación categórica:</b> Sustituye la medida dicotómica por una variable con tres niveles: (1) obligaciones legales, (2) otras formas regulatorias —principalmente reconocimiento de garantías— y (3) ausencia de regulación (categoría de referencia). <br>
   <b>Final c/ regulación ordinal:</b> Reemplaza el indicador dicotómico por una escala ordinal que captura el grado de exigencia incremental de la legislación vigente. <br>
@@ -3607,11 +3609,11 @@ texreg::htmlreg(lista_interactivo,
                                       "log NEC",
                                       "Votos oficialista",
                                       "Presidente a reelección",
-                                      "Prop. individuos c internet",
+                                      "Prop. individuos c/internet",
                                       "Acceso gratuito",
                                       "Prop. debates en región",
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates",
+                                      "Cant. elecc. pasadas c/debates",
                                       "log PBI per cápita",
                                       "N° Democracia electoral",
                                       "N° Corrupción de medios",
@@ -4375,7 +4377,7 @@ plot_data_to_predict_cumsum0_regulacion <- ggplot(data_to_predict_cumsum0_regula
   theme_classic() +
   geom_hline(aes(yintercept = 0.5), linetype = 3, colour = "red3") +
   labs(title = "Probabilidad de ocurrencia de un debate",
-       subtitle = "dada la existncia o no de regulaciones sobre la práctica",
+       subtitle = "dada la existencia o no de regulaciones sobre la práctica",
        x = "Regulación",
        y = "Probabilidad predicha",
        caption = "Elaboración propia con base en los resultados del modelo Final preferido (Tabla 17). 
@@ -5273,7 +5275,7 @@ texreg::htmlreg(modelos_capitulo,
                                       "log PBI per cápita" ,
                                       "N° Democracia electoral" ,
                                       "Debates regulados",
-                                      "Cant. elecc. pasadas c debates"
+                                      "Cant. elecc. pasadas c/debates"
 
                 ),
                 file="anexos/tabla_modelos_candidatos.html",
@@ -5358,7 +5360,7 @@ custom.coef.names = c("(Intercepto)",
                       "log PBI per cápita" ,
                       "N° Democracia electoral" ,
                       "Debates regulados",
-                      "Cant. elecc. pasadas c debates"
+                      "Cant. elecc. pasadas c/debates"
                       
 ),
                 file="anexos/tabla_modelos_candidatos2.html",

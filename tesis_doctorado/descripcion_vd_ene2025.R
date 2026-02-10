@@ -442,7 +442,7 @@ plot_point_anual2 <- democracias_anual_full %>%
   labs(x = "Año", y = "Cantidad de debates",
        title = "Gráfico Anexo 4.II. Debates a través del tiempo",
        subtitle = "Cuántos se hicieron y cuándo, por país",
-       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
+       caption = "Elaboración propia, con datos recopilados para la presente investigación.
        
        Las x indican elecciones sin debates.
        Para facilitar la visualización, el eje vertical se basa en el cálculo en escala logarítmica, 
@@ -612,7 +612,7 @@ plot_cuenta_subtipos_gral_2 <- cuenta_subtipos_gral_2  %>%
   labs(y = "n subtipo*", 
        x = "Subtipo de organizador", 
        fill = "Tipo de organizador",
-       caption = paste("Fuente: elaboración propia, con datos recopilados para la presente investigación.
+       caption = paste("Elaboración propia, con datos recopilados para la presente investigación.
        
        *Cada unidad representa un organizador-debate.
        Si un organizador participó en dos debates, se lo contabiliza dos veces.
@@ -827,7 +827,7 @@ tipos_organizadores_ev_anual_paisv2 <- base_tipos_countryear %>%
        y = "Tipo de organizador",
        title = "Gráfico Anexo 4.III.B Tipo de organizador de los debates ",
        subtitle = "A través el tiempo, por país",
-       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación. 
+       caption = "Elaboración propia, con datos recopilados para la presente investigación. 
        
                El tamaño de los círculos es proporcional a la cantidad de debates celebrados en un determinado año. 
                Si un debate fue organizado por más de un tipo de organizador, se lo contabiliza dos veces. 
@@ -862,7 +862,7 @@ tipos_organizadores_ev_anual_paisv3 <- base_tipos_countryear %>%
        fill = "Tipo de organizador",
        title = "Gráfico Anexo 4.III.B Tipo de organizador de los debates ",
        subtitle = "Incidencia relativa a lo largo del tiempo, por país",
-       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación. 
+       caption = "Elaboración propia, con datos recopilados para la presente investigación. 
        
                Se calcula la incidencia de cada tipo de organizador sobre el total de debates realizados en un determinado año.
                El gráfico no permite visualizar la cantidad absoluta de debates realizados. 
@@ -1546,7 +1546,7 @@ plot_prop_invitados_pais <- democracias_basedebates %>%
         axis.text.x = element_text(angle = 90),
         axis.title.y = element_text(margin = margin(r = 5),size = 8))  +
   labs(x = "", title = "Gráfico Anexo 4.VII Proporción de candidatos invitados",
-       caption = "Fuente: elaboración propia, con datos recopilados para la presente investigación.
+       caption = "Elaboración propia, con datos recopilados para la presente investigación.
        
        Se contemplan únicamente los debates previos a la primera ronda electoral. 
        Los valores superiores a 1 se explican por el retiro de candidatos durante el curso de la campaña. 
