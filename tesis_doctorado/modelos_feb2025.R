@@ -1493,7 +1493,8 @@ mtext("DFBETA", side = 2, line = 0.5, outer = TRUE, cex = 0.8)
 
 # CAPTION
 mtext(
-  "Cada panel (6.III.D.1.1 a 6.III.D.1.12) presenta los DFBETAs a nivel de observación para cada uno de los coeficientes del modelo.
+  "Cada panel (6.III.D.1.1 a 6.III.D.1.12) presenta los DFBETAs a nivel de observación para cada uno de los coeficientes del modelo. 
+  Elaborado con base en los resultados del Modelo Final (Tabla 17). 
 Las líneas punteadas representan el umbral máximo y mínimo de 2/√n utilizado para la detección de observaciones influyentes.
 Si bien algunas observaciones superan este umbral, no se identifican patrones sistemáticos, y ninguna excede el umbral más laxo de ∣1∣, 
 lo que sugiere una influencia limitada de observaciones individuales sobre las estimaciones.",
@@ -1509,7 +1510,7 @@ jpeg("images/plot_indivdfbetas.jpg", width = 800, height = 600, quality = 90)
 par(
   mfrow = c(1, 1),
   mar = c(5, 4, 3, 3),
-  oma = c(9, 0, 0, 0)
+  oma = c(9, 0, 1, 0)
 )
 
 # Renombrar coeficientes
@@ -1563,10 +1564,11 @@ text(
 
 # Caption
 mtext(
-  "Elaboración propia.
+  "Elaboración propia. 
 Distribución de los DFBETAs por observación (elección) para cada uno de los coeficientes fijos. 
-Las líneas punteadas indican el umbral de 2/√n utilizado para la detección de casos influyentes. 
-Ninguna supera el umbral alternativo de |1|. 
+ Elaborado con base en los resultados del Modelo Final (Tabla 17). 
+Las líneas punteadas indican el umbral de 2/√n utilizado para la detección de casos influyentes.  
+Ninguna supera el umbral alternativo de |1|.
 Se etiquetan las observaciones con valores máximos para cada coeficiente. ",
   side = 1, line = 7.5, cex = 0.85, outer = TRUE, adj = 1, font = 3
 )
@@ -1657,7 +1659,7 @@ jpeg("images/plot_clusterdfbetas.jpg", width = 800, height = 600, quality = 90)
 
 par(mfrow = c(1, 1),
     mar = c(5, 4, 3, 3),   # márgenes internos
-    oma = c(9, 0, 0, 0) ) # (bottom, left, top, right))
+    oma = c(10, 0, 0, 0) ) # (bottom, left, top, right))
 
 colnames(dfb) <- c(
   "(Intercepto)",
@@ -1699,13 +1701,14 @@ text(
 
 #CAPTION
 mtext("
-Distribución de los DFBETAs por clúster (país) para cada uno de los coeficientes fijos.
+Distribución de los DFBETAs por clúster (país) para cada uno de los coeficientes fijos. 
+Elaborado con base en los resultados del Modelo Final multinivel (Tabla 18). 
 Las líneas punteadas indican el umbral de∣1∣ utilizado para la detección de casos influyentes.
 La alta concentración de valores cercanos a cero respalda la robustez de la estimación, 
 junto con el hecho de que solo el 1,5 % de los pares país–parámetro supera este límite (Argentina, Chile, Ecuador, Perú y Uruguay en algunos predictores).
 La dirección y la significancia de los efectos principales se mantienen estables entre clústeres.
  ", 
-      side = 1, line = 8.5, cex = 0.75, outer = TRUE, adj = 1, font = 3 )
+      side = 1, line = 9, cex = 0.75, outer = TRUE, adj = 1, font = 3 )
 #Figure X. Cluster-level DFBETAs for the final multilevel logistic regression model.
 dev.off()
 
@@ -4330,9 +4333,11 @@ plot_cumsum <- ggplot(predicted_probs) +
     subtitle = "Según la cantidad de elecciones presidenciales anteriores con debates",
     x = "Cantidad de elecciones presidenciales pasadas con debates",
     y = "Probabilidad predicha de que se celebre un debate",
-    caption = "Elaboración propia con base en los resultados de la especificación final logit robusta.
-La línea punteada representa el umbral del 50% de probabilidad de que haya debate: por encima de esta línea, el modelo predice que habrá debate; por debajo, que no lo habrá.
-El resto de las variables predictoras se mantiene en sus valores típicos: la media en el caso de las intervalares y la moda en el de las dicotómicas."
+    caption = "Elaboración propia con base en los resultados de la especificación Final logit robusta. 
+La línea punteada representa el umbral del 50% de probabilidad de que haya debate: 
+por encima de esta línea, el modelo predice que habrá debate; por debajo, que no lo habrá. 
+El resto de las variables predictoras se mantiene en sus valores típicos: 
+    la media en el caso de las intervalares y la moda en el de las dicotómicas. "
   )
 plot_cumsum %>% ggsave(filename = "images/plot_cumsum.jpg", width = 8, height = 6)
 
