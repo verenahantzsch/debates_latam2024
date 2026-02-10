@@ -1247,8 +1247,11 @@ sum(residuals(modelo_a_probar)*residuals(modelo_a_probar))
 # In addition, we would like to see the minimum and maximum valuesbe less than about 3 in absolute value. 
 # This is because deviance residuals can be roughly approximated with a standard normal distribution when the model holds (Agresti, 2002). 
 # Residuals greater than the absolute value of 3 are in the tails of a standard normal distribution and usually indicate strain in the model.
+jpeg("images/plot_residuos_panels.jpg", width = 900, height = 700, quality = 90)
 
-par(mfrow = c(2, 2))
+par(mfrow = c(2, 2),
+    mar = c(4, 4, 3, 3),   # márgenes internos
+    oma = c(5, 0, 1, 0) ) # (bottom, left, top, right))
 
 # Response
 # raw residuals
@@ -1313,12 +1316,17 @@ mtext("Elaboración propia.
 El eje horizontal representa el índice de cada observación. 
 Cada panel (6.III.C.1 a 6.III.C.4) grafica la magnitud de un tipo de residuo específico. 
 Elaborado con base en los resultados del Modelo Final (Tabla 17). ", 
-      side = 1, line = -1.2, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
-
+      side = 1, line = 2, cex = 0.75, outer = TRUE, adj = 1, font = 3 )
+    #  side = 1, line = -1.2, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
+dev.off()
 
 ## ------------------------- ##
+jpeg("images/plot_qq.jpg", width = 700, height = 550, quality = 90)
 
-par(mfrow = c(1,2))
+par(mfrow = c(1,2),
+    mar = c(4, 4, 3, 3),   # márgenes internos
+    oma = c(4, 0, 1, 0) ) # (bottom, left, top, right))
+
 plot(modelo_a_probar, 
      which = 1, caption = "", main = "", sub.caption = "",
      labels.id = data_modelo_a_probar$obsid)
@@ -1339,9 +1347,10 @@ mtext("6.III.C.2.2 Residuos vs. valores predichos",
 
 #side: on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
 mtext("Gráfico Anexo 6.III.C.2 Diagnóstico visual de residuos del modelo", font = 2, side = 3, cex = 1.2, line = -1.2, outer = TRUE )
-mtext("Elaboración propia, con ayuda de la función plot(). ", 
-      side = 1, line = -1.2, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
-
+mtext("Elaboración propia. 
+      Con base en los resultados del Modelo Final (Tabla 17) y con auxilio de la función plot(). ", 
+      side = 1, line = 2, cex = 0.7, outer = TRUE, adj = 1, font = 3 )
+dev.off()
 ## ------------------------- ##
 
 data_modelo_a_probar$pred <- predict(modelo_a_probar, type = "response")
